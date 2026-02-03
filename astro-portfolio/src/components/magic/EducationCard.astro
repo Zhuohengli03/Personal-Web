@@ -46,8 +46,11 @@ const base = import.meta.env.BASE_URL;
 
 <style>
   .edu-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
     border-radius: var(--radius);
     overflow: hidden;
     margin-bottom: 1.5rem;
@@ -106,7 +109,9 @@ const base = import.meta.env.BASE_URL;
     width: 100%;
     max-height: 360px;
     overflow: hidden;
-    background: var(--bg);
+    background: rgba(15, 17, 22, 0.4);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
   }
   .edu-card-media-wrap:empty {
     display: none;
@@ -129,7 +134,7 @@ const base = import.meta.env.BASE_URL;
   }
   .edu-card-footer {
     padding: 0.75rem 1.25rem;
-    border-top: 1px solid var(--border);
+    border-top: 1px solid var(--glass-border);
     font-size: 0.875rem;
     color: var(--muted);
   }

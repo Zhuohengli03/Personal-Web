@@ -29,13 +29,17 @@ const base = import.meta.env.BASE_URL;
     <a href="https://www.linkedin.com/in/zhuoheng-li-3365b5351/" target="_blank" rel="noopener noreferrer">🔗 LinkedIn</a>
     <a href="https://github.com/Zhuohengli03" target="_blank" rel="noopener noreferrer">💻 GitHub</a>
   </div>
+  <div class="profile-cta">
+    <a href={`${base}projects/`} class="profile-btn profile-btn-primary" data-i18n="btnProjects">看看我的作品</a>
+    <a href={`${base}contact/`} class="profile-btn profile-btn-outline" data-i18n="btnContact">联系我</a>
+  </div>
 </aside>
 
 <style>
   .profile-sidebar {
     flex-shrink: 0;
     width: 200px;
-    padding: 1rem 0;
+    padding: 1rem;
     position: sticky;
     top: calc(var(--space) + 2rem);
     align-self: flex-start;
@@ -46,14 +50,23 @@ const base = import.meta.env.BASE_URL;
     gap: 0.75rem;
     font-size: 0.875rem;
     color: var(--muted);
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius);
+    box-shadow: var(--glass-shadow);
   }
   .profile-avatar {
     width: 96px;
     height: 96px;
     border-radius: 50%;
     overflow: hidden;
-    background: var(--surface);
-    border: 2px solid var(--border);
+    background: rgba(22, 27, 34, 0.6);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 2px solid var(--glass-border);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.06);
   }
   .profile-avatar img {
     width: 100%;
@@ -97,6 +110,42 @@ const base = import.meta.env.BASE_URL;
   .profile-contact a:hover {
     color: var(--accent);
     text-decoration: none;
+  }
+  .profile-cta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+    margin-top: 0.25rem;
+  }
+  .profile-btn {
+    display: block;
+    text-align: center;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border-radius: var(--radius);
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+  .profile-btn:hover {
+    text-decoration: none;
+    opacity: 0.9;
+  }
+  .profile-btn-primary {
+    background: var(--accent);
+    color: #fff;
+  }
+  .profile-btn-outline {
+    border: 1px solid var(--glass-border);
+    color: var(--text);
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+  }
+  .profile-btn-outline:hover {
+    border-color: var(--muted);
+    color: var(--text);
   }
   @media (max-width: 991px) {
     .profile-sidebar {

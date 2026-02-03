@@ -26,14 +26,18 @@ const href = `/projects/${slug}/`;
 
 <style>
   .card {
-    background: var(--surface);
-    border: 1px solid var(--border);
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
     border-radius: 8px;
     padding: 1.25rem;
-    transition: border-color 0.2s;
+    transition: border-color 0.2s, box-shadow 0.2s;
   }
   .card[data-featured='true'] {
     border-color: var(--accent);
+    box-shadow: var(--glass-shadow), 0 0 0 1px rgba(88, 166, 255, 0.2);
   }
   .card-title {
     font-size: 1.2rem;
@@ -63,7 +67,10 @@ const href = `/projects/${slug}/`;
   .card-tech li {
     font-size: 0.8rem;
     color: var(--muted);
-    background: var(--bg);
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border: 1px solid var(--glass-border);
     padding: 0.2rem 0.5rem;
     border-radius: 4px;
   }
