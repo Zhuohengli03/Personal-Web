@@ -23,24 +23,27 @@ const base = import.meta.env.BASE_URL;
     })();
   </script>
   <section id="about" class="home-about">
-    <h2 class="section-title" data-i18n="sectionAbout">关于我</h2>
-    <div class="about-content">
-      <div class="content-zh">
-        <p>我是纽约大学 SPS 管理与分析硕士在读，方向为<strong>数据分析与数据工程</strong>。喜欢搭建可靠的数据管道、把杂乱数据整理成可用数据集，并用清晰的指标和看板传达结论。</p>
-        <p><strong>求职方向：</strong>数据分析师、分析工程师、数据工程师、BI 或 AI 相关数据岗位的实习 / 全职机会。</p>
-        <p><strong>兴趣：</strong>摄影 · 游泳</p>
-      </div>
-      <div class="content-en">
-        <p>I'm a graduate student at NYU SPS studying Management & Analytics, with a technical focus on <strong>data analytics and data engineering</strong>. I enjoy building reliable data pipelines, turning messy data into usable datasets, and communicating insights with clear metrics and dashboards.</p>
-        <p><strong>What I'm looking for:</strong> Internships / opportunities in <strong>Data Analyst, Analytics Engineer, Data Engineer, BI, or AI-related data roles</strong>.</p>
-        <p><strong>Interests:</strong> Photography · Swimming</p>
+    <div class="home-widget">
+      <h2 class="section-title" data-i18n="sectionAbout">关于我</h2>
+      <div class="about-content">
+        <div class="content-zh">
+          <p>我是纽约大学 SPS 管理与分析硕士在读，方向为<strong>数据分析与数据工程</strong>。喜欢搭建可靠的数据管道、把杂乱数据整理成可用数据集，并用清晰的指标和看板传达结论。</p>
+          <p><strong>求职方向：</strong>数据分析师、分析工程师、数据工程师、BI 或 AI 相关数据岗位的实习 / 全职机会。</p>
+          <p><strong>兴趣：</strong>摄影 · 游泳</p>
+        </div>
+        <div class="content-en">
+          <p>I'm a graduate student at NYU SPS studying Management & Analytics, with a technical focus on <strong>data analytics and data engineering</strong>. I enjoy building reliable data pipelines, turning messy data into usable datasets, and communicating insights with clear metrics and dashboards.</p>
+          <p><strong>What I'm looking for:</strong> Internships / opportunities in <strong>Data Analyst, Analytics Engineer, Data Engineer, BI, or AI-related data roles</strong>.</p>
+          <p><strong>Interests:</strong> Photography · Swimming</p>
+        </div>
       </div>
     </div>
   </section>
 
   <section class="home-skills">
-    <h2 class="section-title" data-i18n="sectionSkills">技能</h2>
-    <div class="skills-grid">
+    <div class="home-widget">
+      <h2 class="section-title" data-i18n="sectionSkills">技能</h2>
+      <div class="skills-grid">
       <div class="skill-category">
         <h3 class="content-zh">编程与数据</h3>
         <h3 class="content-en">Programming & Data</h3>
@@ -58,13 +61,15 @@ const base = import.meta.env.BASE_URL;
         <p class="content-zh">KPI 体系设计、Tableau / Power BI、Excel、报表与可视化</p>
         <p class="content-en">KPI framework design, Tableau / Power BI, Excel, reporting & visualization</p>
       </div>
+      </div>
     </div>
   </section>
 
   <section class="home-education">
-    <h2 class="section-title" data-i18n="sectionEducation">教育背景</h2>
+    <div class="home-widget">
+      <h2 class="section-title" data-i18n="sectionEducation">教育背景</h2>
 
-    <EducationCard
+      <EducationCard
       titleZh="纽约大学"
       titleEn="New York University"
       subtitleZh="管理与管理分析硕士（商业分析）· 2025.09 – 2026.12（预计）· GPA 3.83/4.00"
@@ -113,13 +118,30 @@ const base = import.meta.env.BASE_URL;
         <a href={`${base}education/xian/`} data-i18n="btnViewMore">查看更多</a>
       </div>
     </EducationCard>
+    </div>
   </section>
 </BaseLayout>
 
 <style>
-  .section-title { font-family: var(--font-serif); font-size: 1.25rem; font-weight: 600; margin: 2rem 0 1rem; }
-  .home-about .about-content p { margin: 0 0 0.75rem; color: var(--muted); font-size: 0.95rem; }
-  .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 0.5rem; }
+  .home-widget {
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
+    border-radius: var(--radius);
+    padding: 1.25rem;
+    margin-bottom: 1.5rem;
+    font-family: var(--font-sans);
+  }
+  .section-title {
+    font-family: var(--font-serif);
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 0 0 1rem;
+  }
+  .home-about .about-content p { margin: 0 0 0.75rem; color: var(--muted); font-size: 0.95rem; font-family: var(--font-sans); line-height: 1.65; }
+  .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 0; }
   .skill-category {
     background: var(--glass-bg);
     backdrop-filter: blur(var(--glass-blur));
@@ -156,5 +178,9 @@ const base = import.meta.env.BASE_URL;
     margin-left: auto;
     margin-right: auto;
     line-height: 1.5;
+    font-family: var(--font-sans);
+  }
+  .hero-welcome {
+    font-family: var(--font-sans);
   }
 </style>

@@ -1,6 +1,7 @@
 ---
+import TechCloud from './magic/TechCloud.astro';
 /**
- * 左侧个人信息栏：头像、姓名、位置、联系方式
+ * 左侧个人信息栏：头像、姓名、位置、联系方式 + 技术栈标签云
  * 除「其他」页外各栏均显示，随页面下滑而 sticky
  */
 interface Props {
@@ -33,6 +34,7 @@ const base = import.meta.env.BASE_URL;
     <a href={`${base}projects/`} class="profile-btn profile-btn-primary" data-i18n="btnProjects">看看我的作品</a>
     <a href={`${base}contact/`} class="profile-btn profile-btn-outline" data-i18n="btnContact">联系我</a>
   </div>
+  <TechCloud />
 </aside>
 
 <style>
@@ -41,7 +43,7 @@ const base = import.meta.env.BASE_URL;
     width: 200px;
     padding: 1rem;
     position: sticky;
-    top: calc(var(--space) + 2rem);
+    top: 5.5rem;
     align-self: flex-start;
     display: flex;
     flex-direction: column;
