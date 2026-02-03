@@ -132,6 +132,11 @@ repo: https://github.com/you/repo
 4. **Lock file**  
    For reliable CI, run `npm install` inside `astro-portfolio/` once so `package-lock.json` exists; the workflow uses it for caching.
 
+5. **若子页面仍白底、无样式、导航竖排**  
+   说明线上还是旧构建。请确认：  
+   - 已把**当前全部修改**推送到 GitHub 的 `main` 分支（含 `astro.config.mjs` 里的 `inlineStylesheets: 'always'`）。  
+   - 打开仓库 **Actions**，看最新一次 “Deploy Astro portfolio to GitHub Pages” 是否**成功**（绿色勾）。  
+   - 部署成功后，在浏览器里对站点做**强制刷新**（Ctrl+Shift+R 或 Cmd+Shift+R），避免读到旧缓存。
 
 ---
 
