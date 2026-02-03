@@ -1,83 +1,451 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import ProjectCard from '../components/ProjectCard.astro';
-import Skills from '../components/Skills.astro';
-import { getCollection } from 'astro:content';
-
-const allProjects = await getCollection('projects');
-const featured = allProjects
-  .filter((p) => p.data.featured)
-  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
-const recent = allProjects
-  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
-  .slice(0, 3);
+import AnimatedGradientText from '../components/magic/AnimatedGradientText.astro';
+import BorderBeam from '../components/magic/BorderBeam.astro';
+import DotPattern from '../components/magic/DotPattern.astro';
 ---
-<BaseLayout title="Home" description="Data & analytics portfolio — projects, resume, and more.">
-  <section class="hero">
-    <h1>Data &amp; Analytics Portfolio</h1>
-    <p class="tagline">
-      MS in Management &amp; Analytics · Python, SQL, ETL, BI. Building pipelines and turning data into decisions.
-    </p>
+<BaseLayout title="Zhuoheng Li | 个人网站" description="Zhuoheng (卓衡) Li - MS in Management & Analytics @ NYU | Data Analytics & Data Engineering">
+  <section id="home" class="hero">
+    <DotPattern class="hero-pattern" />
+    <p class="hero-greeting" data-i18n="heroGreeting">你好，我是</p>
+    <AnimatedGradientText tag="h1" class="hero-name">Zhuoheng (卓衡) Li</AnimatedGradientText>
+    <p class="hero-tagline" data-i18n="heroTagline">MS in Management & Analytics @ NYU · Data Analytics & Data Engineering · Python · SQL · ETL · BI</p>
+    <div class="hero-meta">
+      <span>📍 New York, US</span>
+      <a href="mailto:zhuohengli03@gmail.com">📧 zhuohengli03@gmail.com</a>
+      <span>📱 +1 332-265-8772 / +86 188-3893-2716</span>
+      <a href="https://www.linkedin.com/in/zhuoheng-li-3365b5351/" target="_blank" rel="noopener noreferrer">🔗 LinkedIn</a>
+      <a href="https://github.com/Zhuohengli03" target="_blank" rel="noopener noreferrer">💻 GitHub</a>
+    </div>
+    <div class="hero-cta">
+      <a href="#projects" class="btn btn-primary" data-i18n="btnProjects">看看我的作品</a>
+      <a href="#contact" class="btn btn-outline" data-i18n="btnContact">联系我</a>
+    </div>
   </section>
 
-  <section class="about">
-    <h2 class="section-title">About</h2>
-    <p>
-      I focus on <strong>data analytics and data engineering</strong>: reliable pipelines, clean datasets, and clear metrics and dashboards. Open to roles in data analysis, analytics engineering, data engineering, and BI.
-    </p>
+  <section id="about" class="section about">
+    <h2 class="section-title" data-i18n="sectionAbout">关于我</h2>
+    <div class="about-content">
+      <div class="content-zh">
+        <p>我是纽约大学 SPS 管理与分析硕士在读，方向为<strong>数据分析与数据工程</strong>。喜欢搭建可靠的数据管道、把杂乱数据整理成可用数据集，并用清晰的指标和看板传达结论。</p>
+        <p><strong>求职方向：</strong>数据分析师、分析工程师、数据工程师、BI 或 AI 相关数据岗位的实习 / 全职机会。</p>
+      </div>
+      <div class="content-en">
+        <p>I'm a graduate student at NYU SPS studying Management & Analytics, with a technical focus on <strong>data analytics and data engineering</strong>. I enjoy building reliable data pipelines, turning messy data into usable datasets, and communicating insights with clear metrics and dashboards.</p>
+        <p><strong>What I'm looking for:</strong> Internships / opportunities in <strong>Data Analyst, Analytics Engineer, Data Engineer, BI, or AI-related data roles</strong>.</p>
+      </div>
+    </div>
   </section>
 
-  <Skills />
+  <section id="skills" class="section skills">
+    <h2 class="section-title" data-i18n="sectionSkills">技能</h2>
+    <div class="skills-grid">
+      <div class="skill-category">
+        <h3 class="content-zh">编程与数据</h3>
+        <h3 class="content-en">Programming & Data</h3>
+        <p>Python (Pandas, NumPy, scikit-learn), SQL (MySQL/PostgreSQL), Git</p>
+      </div>
+      <div class="skill-category">
+        <h3 class="content-zh">数据工程</h3>
+        <h3 class="content-en">Data Engineering</h3>
+        <p class="content-zh">API 集成、多源数据接入、ETL 设计、批处理、去重与数据质量校验、表结构设计</p>
+        <p class="content-en">API integration, multi-source data ingestion, ETL design, batch processing, deduplication, data quality checks, schema design</p>
+      </div>
+      <div class="skill-category">
+        <h3 class="content-zh">分析与 BI</h3>
+        <h3 class="content-en">Analytics & BI</h3>
+        <p class="content-zh">KPI 体系设计、Tableau / Power BI、Excel、报表与可视化</p>
+        <p class="content-en">KPI framework design, Tableau / Power BI, Excel, reporting & visualization</p>
+      </div>
+    </div>
+  </section>
 
-  <section class="featured-projects">
-    <h2 class="section-title">Featured Projects</h2>
-    {featured.length > 0 ? (
-      <div class="project-grid">
-        {featured.map((entry) => (
-          <ProjectCard entry={entry} />
-        ))}
-      </div>
-    ) : (
-      <div class="project-grid">
-        {recent.map((entry) => (
-          <ProjectCard entry={entry} />
-        ))}
-      </div>
-    )}
-    <p class="more-link"><a href="/projects/">View all projects →</a></p>
+  <section id="education" class="section education">
+    <h2 class="section-title" data-i18n="sectionEducation">教育背景</h2>
+    <div class="timeline">
+      <article class="timeline-item">
+        <h3>New York University (NYU)</h3>
+        <p class="timeline-meta content-zh">管理与管理分析硕士（商业分析） | 2025.09 – 2026.12（预计） · GPA 3.83/4.00</p>
+        <p class="timeline-meta content-en">M.S. in Management & Analytics (Business Analytics) | 2025.09 – 2026.12 (Expected) · GPA <strong>3.83 / 4.00</strong></p>
+      </article>
+      <article class="timeline-item">
+        <h3>Xi'an Conservatory of Music</h3>
+        <p class="timeline-meta content-zh">音乐表演学士（古琴） | 2021.09 – 2025.07</p>
+        <p class="timeline-meta content-en">B.M. in Music Performance (Guqin) | 2021.09 – 2025.07</p>
+      </article>
+    </div>
+  </section>
+
+  <section id="experience" class="section experience">
+    <h2 class="section-title" data-i18n="sectionExperience">工作经历</h2>
+    <div class="timeline">
+      <article class="timeline-item experience-item">
+        <h3>Luoyang Shangxian Technology Co., Ltd. — <span class="content-zh">数据分析实习生</span><span class="content-en">Data Analyst Intern</span></h3>
+        <p class="timeline-meta">2025.06 – 2025.08</p>
+        <ul class="content-zh">
+          <li>使用 <strong>Python (Pandas/NumPy)</strong> 与 <strong>SQL</strong> 清洗、汇总并分析业务日志与运营数据，处理 <strong>10 万+</strong> 条结构化记录。</li>
+          <li>搭建并维护<strong>核心 KPI 体系</strong>（活跃、转化、留存），统一指标口径。</li>
+          <li>使用 <strong>Tableau</strong> 与 <strong>Excel</strong> 产出周报/月报，监控趋势与异常，支持产品与运营决策。</li>
+          <li>优化关键 SQL 查询（索引与查询结构），运行时间缩短约 <strong>20%</strong>。</li>
+          <li>与产品、运营协作，将结论转化为可落地的数据建议。</li>
+        </ul>
+        <ul class="content-en">
+          <li>Cleaned, aggregated, and analyzed business logs and operations data using <strong>Python (Pandas/NumPy)</strong> and <strong>SQL</strong>, processing <strong>100,000+</strong> structured records.</li>
+          <li>Built and maintained a <strong>core KPI system</strong> (activity, conversion, retention), standardizing metric definitions for consistency.</li>
+          <li>Produced weekly/monthly analysis reports with <strong>Tableau</strong> and <strong>Excel</strong>, monitoring trends and anomalies to support product/ops decisions.</li>
+          <li>Optimized key SQL queries (indexing + query structure), reducing runtime by ~<strong>20%</strong> to improve reporting efficiency.</li>
+          <li>Collaborated with product and operations teams; translated findings into actionable, data-driven recommendations.</li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <section id="projects" class="section projects">
+    <h2 class="section-title" data-i18n="sectionProjects">项目</h2>
+    <div class="project-grid">
+      <BorderBeam class="project-card-wrap">
+      <article class="project-card">
+        <h3 class="project-title content-zh">动态爬虫与数据采集平台</h3>
+        <h3 class="project-title content-en">Dynamic Web Crawler & Data Collection Platform</h3>
+        <div class="content-zh">
+          <p>使用 <strong>Selenium + BeautifulSoup</strong> 搭建可复用动态页爬虫，支持无限滚动与复杂 DOM；设计标准化 <strong>ETL</strong> 清洗/解析并写入 <strong>MySQL/PostgreSQL</strong>；可配置 XPath/CSS/正则提取框架；错误处理与重试保证稳定性；<strong>Streamlit</strong> 配置任务、批量运行与导出。</p>
+        </div>
+        <div class="content-en">
+          <p>Built a reusable crawler for dynamic pages using <strong>Selenium + BeautifulSoup</strong>, supporting infinite scroll and complex DOM structures. Designed a standardized <strong>ETL pipeline</strong> to clean/parse data and load into <strong>MySQL/PostgreSQL</strong>. Created a configurable extraction framework (XPath/CSS selector/regex). Implemented error handling and retry mechanisms. Developed a <strong>Streamlit</strong> UI for task configuration, batch runs, monitoring, and export.</p>
+        </div>
+      </article>
+      </BorderBeam>
+      <BorderBeam class="project-card-wrap">
+      <article class="project-card">
+        <h3 class="project-title content-zh">游戏市场数据分析与预测系统</h3>
+        <h3 class="project-title content-en">Computer Game Market Data Analysis & Forecasting System</h3>
+        <div class="content-zh">
+          <p>基于 <strong>PostgreSQL</strong> 自动化采集与存储，含去重与批量写入；调度与中断恢复实现 <strong>24/7</strong> 更新；特征工程与多模型预测（<strong>Random Forest、Gradient Boosting、ARIMA、Prophet</strong>）；输出 7 日预测、趋势与风险区间，支持买卖决策。</p>
+        </div>
+        <div class="content-en">
+          <p>Automated data ingestion and storage with <strong>PostgreSQL</strong>, including scraping, deduplication, and batch inserts. Built a resilient pipeline with scheduling and interruption control for <strong>24/7</strong> updates. Performed feature engineering + multi-model forecasting (<strong>Random Forest, Gradient Boosting, ARIMA, Prophet</strong>). Delivered <strong>7-day forecasts</strong>, trend indicators, and risk intervals to support buy/sell/hold decisions.</p>
+        </div>
+      </article>
+      </BorderBeam>
+      <BorderBeam class="project-card-wrap">
+      <article class="project-card">
+        <h3 class="project-title content-zh">NASA Space Apps Challenge — 数据分析项目</h3>
+        <h3 class="project-title content-en">NASA Space Apps Challenge — Data Analytics Project</h3>
+        <div class="content-zh">
+          <p>整合多个 NASA/JPL 开放 API，将多源 JSON 统一为一致 schema；参与后端 API 设计（参数与响应结构），支撑地图/图表/模拟页；结合影响范围与人口、经济数据做暴露与风险可视化。</p>
+        </div>
+        <div class="content-en">
+          <p>Integrated multiple NASA/JPL open APIs; standardized multi-source JSON into consistent schemas. Supported backend API design (parameters + response structures) to power maps/charts/simulation pages. Combined impact range outputs with population/economic data for exposure and risk visualization.</p>
+        </div>
+      </article>
+      </BorderBeam>
+      <BorderBeam class="project-card-wrap">
+      <article class="project-card">
+        <h3 class="project-title content-zh">电商用户与营销分析</h3>
+        <h3 class="project-title content-en">E-commerce User & Marketing Analytics</h3>
+        <div class="content-zh">
+          <p>搭建 KPI 体系（UV/PV、漏斗转化、留存、复购），端到端分析用户行为；构建 cohort 数据集与统一指标；<strong>RFM + K-means</strong> 用户分群，识别高价值与流失风险；基于分群表现给出营销与广告优化建议。</p>
+        </div>
+        <div class="content-en">
+          <p>Built KPI system (UV/PV, funnel conversion, retention, repurchase) to analyze user behavior end-to-end. Created cohort datasets with consistent metric definitions. Segmented users via <strong>RFM + K-means</strong>, identifying high-value and churn-risk groups. Produced targeted marketing and ad optimization recommendations based on segment performance.</p>
+        </div>
+      </article>
+      </BorderBeam>
+      <BorderBeam class="project-card-wrap">
+      <article class="project-card">
+        <h3 class="project-title content-zh">社交网络与起薪分析</h3>
+        <h3 class="project-title content-en">Social Networks & Starting Salary Analysis</h3>
+        <div class="content-zh">
+          <p>基于问卷数据构建分析数据集，完成清洗、重编码与缺失值处理；描述统计、分组比较与相关分析探索社交网络使用与结果的关系；产出图表与结论用于团队报告与课堂展示。</p>
+        </div>
+        <div class="content-en">
+          <p>Built an analysis dataset from survey data; performed cleaning, recoding, and missing-value handling. Used descriptive stats, group comparisons, and correlation analysis to explore links between social network usage and outcomes. Delivered visuals and insights for team report and class presentation.</p>
+        </div>
+      </article>
+      </BorderBeam>
+    </div>
+  </section>
+
+  <section id="honors" class="section honors">
+    <h2 class="section-title" data-i18n="sectionHonors">荣誉与奖项</h2>
+    <ul class="honors-list content-zh">
+      <li>优秀毕业生（2025届）— 西安音乐学院</li>
+      <li>校助学金（2022–2023）</li>
+      <li>优秀学生干部（2022–2023）</li>
+      <li>国家励志奖学金（2023–2024）</li>
+      <li>校奖学金（2023–2024）</li>
+      <li>优秀学生（2023–2024）</li>
+      <li>校荣誉奖学金（2023–2024）</li>
+      <li>「幽兰·阳春」比赛专业组表演奖（2024）</li>
+      <li>陕西省民族器乐展演专业组优秀奖（2024）</li>
+    </ul>
+    <ul class="honors-list content-en">
+      <li>Outstanding Graduate, Class of 2025 — Xi'an Conservatory of Music</li>
+      <li>University Financial Aid Scholarship (2022–2023)</li>
+      <li>Outstanding Student Leader (2022–2023)</li>
+      <li>National Inspirational Scholarship (2023–2024)</li>
+      <li>University Scholarship (2023–2024)</li>
+      <li>Outstanding Student (2023–2024)</li>
+      <li>University Honor Scholarship (2023–2024)</li>
+      <li>Performance Award (Professional Division), "Youlan · Yangchun" Competition (2024)</li>
+      <li>Excellence Award (Professional Division), Shaanxi Provincial Traditional Instrument Exhibition (2024)</li>
+    </ul>
+  </section>
+
+  <section id="campus" class="section campus">
+    <h2 class="section-title" data-i18n="sectionCampus">校园与志愿</h2>
+    <ul class="campus-list content-zh">
+      <li>系开学典礼学生代表发言；参与迎新等事务。</li>
+      <li>参与国旗护卫、阳光体育、展演等活动的协调与现场执行。</li>
+      <li>独立完成活动拍摄与后期，产出官方平台物料。</li>
+      <li>参与乐器录音项目，支持教学与宣传。</li>
+      <li>学生会秘书处：撰写与编辑微信公众号推文与公告。</li>
+      <li>疫情期间多次志愿：招生支持、考务支持、学生服务等。</li>
+    </ul>
+    <ul class="campus-list content-en">
+      <li>Student representative speaker at department opening ceremony; supported new-student onboarding operations.</li>
+      <li>Supported campus events (National Flag Guard, Sunshine Sports Games, showcases) with coordination and on-site operations.</li>
+      <li>Produced event media content independently (shooting + post-production) for official platforms.</li>
+      <li>Participated in instrument recording projects supporting teaching and promotion.</li>
+      <li>Student Union (Secretariat): drafted and edited official WeChat public account articles and announcements.</li>
+      <li>Multiple volunteer roles during COVID: admissions support, exam operations support, and student services.</li>
+    </ul>
+  </section>
+
+  <section id="interests" class="section interests">
+    <h2 class="section-title" data-i18n="sectionInterests">兴趣</h2>
+    <p class="interests-text content-zh">摄影 · 游泳</p>
+    <p class="interests-text content-en">Photography · Swimming</p>
+  </section>
+
+  <section id="contact" class="section contact">
+    <h2 class="section-title" data-i18n="sectionContact">联系我</h2>
+    <p class="contact-intro" data-i18n="contactIntro">欢迎通过以下方式与我交流：</p>
+    <ul class="contact-links">
+      <li><a href="mailto:zhuohengli03@gmail.com">zhuohengli03@gmail.com</a></li>
+      <li><a href="https://github.com/Zhuohengli03" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+      <li><a href="https://www.linkedin.com/in/zhuoheng-li-3365b5351/" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+    </ul>
   </section>
 </BaseLayout>
 
 <style>
   .hero {
-    margin-bottom: 2.5rem;
+    position: relative;
+    padding: 2rem 0 3rem;
+    text-align: center;
   }
-  .hero h1 {
-    font-size: 1.75rem;
+  .hero-pattern {
+    border-radius: var(--radius);
+  }
+  .hero-greeting {
+    font-size: 0.95rem;
+    color: var(--muted);
+    margin: 0 0 0.5rem;
+  }
+  .hero-name {
+    font-family: var(--font-serif);
+    font-size: clamp(1.75rem, 5vw, 2.5rem);
     font-weight: 700;
     margin: 0 0 0.5rem;
   }
-  .tagline {
+  .hero-tagline {
+    font-size: 1rem;
     color: var(--muted);
-    margin: 0;
-    font-size: 1.05rem;
+    max-width: 540px;
+    margin: 0 auto 1.25rem;
+    line-height: 1.5;
   }
-  .section-title {
-    font-size: 1.25rem;
+  .hero-meta {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem 1.25rem;
+    font-size: 0.9rem;
+    color: var(--muted);
+    margin-bottom: 1.5rem;
+  }
+  .hero-meta a:hover {
+    text-decoration: none;
+    color: var(--accent);
+  }
+  .hero-cta {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .btn {
+    display: inline-block;
+    padding: 0.6rem 1.25rem;
+    font-size: 0.95rem;
     font-weight: 600;
-    margin: 2rem 0 1rem;
+    border-radius: var(--radius);
+    transition: opacity 0.2s;
+  }
+  .btn:hover {
+    text-decoration: none;
+    opacity: 0.9;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+  }
+  .btn-outline {
+    border: 1px solid var(--border);
     color: var(--text);
   }
-  .about p {
+  .btn-outline:hover {
+    border-color: var(--muted);
+    color: var(--text);
+  }
+  .section {
+    padding: 2rem 0;
+    border-top: 1px solid var(--border);
+    scroll-margin-top: 4rem;
+  }
+  .hero {
+    scroll-margin-top: 4rem;
+  }
+  .section-title {
+    font-family: var(--font-serif);
+    font-size: 1.35rem;
+    font-weight: 600;
+    margin: 0 0 1rem;
+  }
+  .about-content p {
+    margin: 0 0 0.75rem;
     color: var(--muted);
+    font-size: 0.95rem;
+  }
+  .about-content p:last-child {
+    margin-bottom: 0;
+  }
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+  }
+  .skill-category {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1rem;
+  }
+  .skill-category h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0 0 0.5rem;
+  }
+  .skill-category p {
     margin: 0;
+    font-size: 0.9rem;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+  .timeline {
+    padding: 0;
+  }
+  .timeline-item {
+    padding-left: 1.25rem;
+    border-left: 2px solid var(--border);
+    margin-left: 0.25rem;
+    padding-bottom: 1.25rem;
+    position: relative;
+  }
+  .timeline-item::before {
+    content: "";
+    position: absolute;
+    left: -5px;
+    top: 0.35rem;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+  .timeline-item:last-child {
+    padding-bottom: 0;
+    border-left-color: transparent;
+  }
+  .timeline-item h3 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin: 0 0 0.25rem;
+  }
+  .timeline-meta {
+    font-size: 0.9rem;
+    color: var(--muted);
+    margin: 0 0 0.5rem;
+  }
+  .experience-item ul {
+    margin: 0.5rem 0 0;
+    padding-left: 1.25rem;
+    color: var(--muted);
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+  .experience-item li {
+    margin-bottom: 0.3rem;
   }
   .project-grid {
     display: grid;
+    gap: 1.25rem;
+  }
+  .project-card-wrap {
+    border-radius: var(--radius);
+    padding: 2px;
+  }
+  .project-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: calc(var(--radius) - 2px);
+    padding: 1.25rem;
+    position: relative;
+    z-index: 0;
+  }
+  .project-title {
+    font-family: var(--font-serif);
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0 0 0.5rem;
+  }
+  .project-card .content-zh p,
+  .project-card .content-en p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+  .honors-list,
+  .campus-list {
+    margin: 0;
+    padding-left: 1.25rem;
+    color: var(--muted);
+    font-size: 0.9rem;
+    line-height: 1.65;
+  }
+  .honors-list li,
+  .campus-list li {
+    margin-bottom: 0.35rem;
+  }
+  .interests-text {
+    margin: 0;
+    color: var(--muted);
+  }
+  .contact-intro {
+    color: var(--muted);
+    margin: 0 0 0.75rem;
+    font-size: 0.95rem;
+  }
+  .contact-links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
     gap: 1rem;
   }
-  .more-link {
-    margin: 1rem 0 0;
-    font-size: 0.95rem;
+  .contact-links a {
+    font-weight: 500;
   }
 </style>

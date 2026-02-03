@@ -1,0 +1,36 @@
+---
+interface Props {
+  tag?: 'h1' | 'h2' | 'span' | 'p';
+  class?: string;
+}
+const { tag = 'h1', class: className = '' } = Astro.props;
+const Tag = tag;
+---
+<Tag class:list={['magic-gradient-text', className]}>
+  <slot />
+</Tag>
+
+<style>
+  .magic-gradient-text {
+    background: linear-gradient(
+      90deg,
+      #58a6ff,
+      #a78bfa,
+      #f472b6,
+      #58a6ff
+    );
+    background-size: 300% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: magic-gradient-shift 4s ease infinite;
+  }
+  @keyframes magic-gradient-shift {
+    0%, 100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+</style>
