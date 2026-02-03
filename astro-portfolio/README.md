@@ -119,6 +119,7 @@ repo: https://github.com/you/repo
 4. **Lock file**  
    For reliable CI, run `npm install` inside `astro-portfolio/` once so `package-lock.json` exists; the workflow uses it for caching.
 
+
 ---
 
 ## Adding a blog later
