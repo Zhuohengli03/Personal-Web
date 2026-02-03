@@ -38,10 +38,13 @@ const resumePath = '/resume.pdf';
     font-size: 0.95rem;
   }
   .embed-wrap {
-    border: 1px solid var(--border);
+    border: 1px solid var(--glass-border);
     border-radius: 8px;
     overflow: hidden;
-    background: var(--surface);
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    box-shadow: var(--glass-shadow);
   }
   .pdf-embed {
     display: block;
