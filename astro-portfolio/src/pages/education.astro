@@ -1,0 +1,30 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+const base = import.meta.env.BASE_URL;
+---
+<BaseLayout title="教育 | 李卓衡" description="Education - NYU, Xi'an Conservatory">
+  <h1 class="page-title" data-i18n="sectionEducation">教育背景</h1>
+  <div class="timeline">
+    <article class="timeline-item">
+      <h3>New York University (NYU)</h3>
+      <p class="timeline-meta content-zh">管理与管理分析硕士（商业分析） | 2025.09 – 2026.12（预计） · GPA 3.83/4.00</p>
+      <p class="timeline-meta content-en">M.S. in Management & Analytics (Business Analytics) | 2025.09 – 2026.12 (Expected) · GPA <strong>3.83 / 4.00</strong></p>
+    </article>
+    <article class="timeline-item">
+      <h3>Xi'an Conservatory of Music</h3>
+      <p class="timeline-meta content-zh">音乐表演学士（古琴） | 2021.09 – 2025.07</p>
+      <p class="timeline-meta content-en">B.M. in Music Performance (Guqin) | 2021.09 – 2025.07</p>
+    </article>
+  </div>
+  <p class="page-footer"><a href={base}>← 首页</a></p>
+</BaseLayout>
+
+<style>
+  .page-title { font-family: var(--font-serif); font-size: 1.5rem; font-weight: 600; margin: 0 0 1.5rem; }
+  .timeline-item { padding-left: 1.25rem; border-left: 2px solid var(--border); margin-left: 0.25rem; padding-bottom: 1.25rem; position: relative; }
+  .timeline-item::before { content: ""; position: absolute; left: -5px; top: 0.35rem; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
+  .timeline-item:last-child { padding-bottom: 0; }
+  .timeline-item h3 { font-size: 1.05rem; font-weight: 600; margin: 0 0 0.25rem; }
+  .timeline-meta { font-size: 0.9rem; color: var(--muted); margin: 0; }
+  .page-footer { margin-top: 2rem; font-size: 0.9rem; color: var(--muted); }
+</style>

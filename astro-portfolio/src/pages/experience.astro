@@ -1,0 +1,39 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+const base = import.meta.env.BASE_URL;
+---
+<BaseLayout title="经历 | 李卓衡" description="Work experience">
+  <h1 class="page-title" data-i18n="sectionExperience">工作经历</h1>
+  <div class="timeline">
+    <article class="timeline-item experience-item">
+      <h3>Luoyang Shangxian Technology Co., Ltd. — <span class="content-zh">数据分析实习生</span><span class="content-en">Data Analyst Intern</span></h3>
+      <p class="timeline-meta">2025.06 – 2025.08</p>
+      <ul class="content-zh">
+        <li>使用 <strong>Python (Pandas/NumPy)</strong> 与 <strong>SQL</strong> 清洗、汇总并分析业务日志与运营数据，处理 <strong>10 万+</strong> 条结构化记录。</li>
+        <li>搭建并维护<strong>核心 KPI 体系</strong>（活跃、转化、留存），统一指标口径。</li>
+        <li>使用 <strong>Tableau</strong> 与 <strong>Excel</strong> 产出周报/月报，监控趋势与异常，支持产品与运营决策。</li>
+        <li>优化关键 SQL 查询（索引与查询结构），运行时间缩短约 <strong>20%</strong>。</li>
+        <li>与产品、运营协作，将结论转化为可落地的数据建议。</li>
+      </ul>
+      <ul class="content-en">
+        <li>Cleaned, aggregated, and analyzed business logs and operations data using <strong>Python (Pandas/NumPy)</strong> and <strong>SQL</strong>, processing <strong>100,000+</strong> structured records.</li>
+        <li>Built and maintained a <strong>core KPI system</strong> (activity, conversion, retention), standardizing metric definitions for consistency.</li>
+        <li>Produced weekly/monthly analysis reports with <strong>Tableau</strong> and <strong>Excel</strong>, monitoring trends and anomalies to support product/ops decisions.</li>
+        <li>Optimized key SQL queries (indexing + query structure), reducing runtime by ~<strong>20%</strong> to improve reporting efficiency.</li>
+        <li>Collaborated with product and operations teams; translated findings into actionable, data-driven recommendations.</li>
+      </ul>
+    </article>
+  </div>
+  <p class="page-footer"><a href={base}>← 首页</a></p>
+</BaseLayout>
+
+<style>
+  .page-title { font-family: var(--font-serif); font-size: 1.5rem; font-weight: 600; margin: 0 0 1.5rem; }
+  .timeline-item { padding-left: 1.25rem; border-left: 2px solid var(--border); margin-left: 0.25rem; padding-bottom: 1.25rem; position: relative; }
+  .timeline-item::before { content: ""; position: absolute; left: -5px; top: 0.35rem; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
+  .timeline-item h3 { font-size: 1.05rem; font-weight: 600; margin: 0 0 0.25rem; }
+  .timeline-meta { font-size: 0.9rem; color: var(--muted); margin: 0 0 0.5rem; }
+  .experience-item ul { margin: 0.5rem 0 0; padding-left: 1.25rem; color: var(--muted); font-size: 0.9rem; line-height: 1.6; }
+  .experience-item li { margin-bottom: 0.3rem; }
+  .page-footer { margin-top: 2rem; font-size: 0.9rem; color: var(--muted); }
+</style>

@@ -1,0 +1,36 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+const base = import.meta.env.BASE_URL;
+---
+<BaseLayout title="技能 | 李卓衡" description="Skills - Python, SQL, ETL, BI">
+  <h1 class="page-title" data-i18n="sectionSkills">技能</h1>
+  <div class="skills-grid">
+    <div class="skill-category">
+      <h3 class="content-zh">编程与数据</h3>
+      <h3 class="content-en">Programming & Data</h3>
+      <p>Python (Pandas, NumPy, scikit-learn), SQL (MySQL/PostgreSQL), Git</p>
+    </div>
+    <div class="skill-category">
+      <h3 class="content-zh">数据工程</h3>
+      <h3 class="content-en">Data Engineering</h3>
+      <p class="content-zh">API 集成、多源数据接入、ETL 设计、批处理、去重与数据质量校验、表结构设计</p>
+      <p class="content-en">API integration, multi-source data ingestion, ETL design, batch processing, deduplication, data quality checks, schema design</p>
+    </div>
+    <div class="skill-category">
+      <h3 class="content-zh">分析与 BI</h3>
+      <h3 class="content-en">Analytics & BI</h3>
+      <p class="content-zh">KPI 体系设计、Tableau / Power BI、Excel、报表与可视化</p>
+      <p class="content-en">KPI framework design, Tableau / Power BI, Excel, reporting & visualization</p>
+    </div>
+  </div>
+  <p class="page-footer"><a href={base}>← 首页</a></p>
+</BaseLayout>
+
+<style>
+  .page-title { font-family: var(--font-serif); font-size: 1.5rem; font-weight: 600; margin: 0 0 1.5rem; }
+  .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
+  .skill-category { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem; }
+  .skill-category h3 { font-size: 1rem; font-weight: 600; margin: 0 0 0.5rem; }
+  .skill-category p { margin: 0; font-size: 0.9rem; color: var(--muted); line-height: 1.5; }
+  .page-footer { margin-top: 2rem; font-size: 0.9rem; color: var(--muted); }
+</style>
