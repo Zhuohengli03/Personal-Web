@@ -13,6 +13,7 @@ const translations = {
     navHonors: "荣誉",
     navCampus: "校园",
     navContact: "联系",
+    navOthers: "其他",
     navResume: "简历",
     navMenuAria: "打开菜单",
     heroGreeting: "你好，我是",
@@ -28,6 +29,7 @@ const translations = {
     sectionCampus: "校园与志愿",
     sectionInterests: "兴趣",
     sectionContact: "联系我",
+    sectionOthers: "其他",
     contactIntro: "欢迎通过以下方式与我交流：",
     footerSite: "个人网站",
     resumePageTitle: "李卓衡 | 简历",
@@ -39,6 +41,7 @@ const translations = {
     campusPageTitle: "校园 | 李卓衡",
     contactPageTitle: "联系 | 李卓衡",
     projectsPageTitle: "项目 | 李卓衡",
+    othersPageTitle: "其他 | 李卓衡",
   },
   en: {
     navHome: "Home",
@@ -50,6 +53,7 @@ const translations = {
     navHonors: "Honors",
     navCampus: "Campus",
     navContact: "Contact",
+    navOthers: "Others",
     navResume: "Resume",
     navMenuAria: "Open menu",
     heroGreeting: "Hi, I'm",
@@ -65,6 +69,7 @@ const translations = {
     sectionCampus: "Campus Leadership & Volunteering",
     sectionInterests: "Interests",
     sectionContact: "Contact",
+    sectionOthers: "Others",
     contactIntro: "Feel free to reach out:",
     footerSite: "Personal Site",
     resumePageTitle: "Zhuoheng Li | Resume",
@@ -76,6 +81,7 @@ const translations = {
     campusPageTitle: "Campus | Zhuoheng Li",
     contactPageTitle: "Contact | Zhuoheng Li",
     projectsPageTitle: "Projects | Zhuoheng Li",
+    othersPageTitle: "Others | Zhuoheng Li",
   },
 };
 
@@ -103,7 +109,7 @@ function applyPageTitle(lang, pathname) {
     document.title = lang === "zh" ? "李卓衡 | 个人网站" : "Zhuoheng Li | Personal Website";
     return;
   }
-  const key = p.includes("about") ? "aboutPageTitle" : p.includes("skills") ? "skillsPageTitle" : p.includes("education") ? "educationPageTitle" : p.includes("experience") ? "experiencePageTitle" : p.includes("honors") ? "honorsPageTitle" : p.includes("campus") ? "campusPageTitle" : p.includes("contact") ? "contactPageTitle" : p.includes("projects") ? "projectsPageTitle" : p.includes("resume") ? "resumePageTitle" : null;
+  const key = p.includes("about") ? "aboutPageTitle" : p.includes("skills") ? "skillsPageTitle" : p.includes("education") ? "educationPageTitle" : p.includes("experience") ? "experiencePageTitle" : p.includes("honors") ? "honorsPageTitle" : p.includes("campus") ? "campusPageTitle" : p.includes("contact") ? "contactPageTitle" : p.includes("projects") ? "projectsPageTitle" : p.includes("others") ? "othersPageTitle" : p.includes("resume") ? "resumePageTitle" : null;
   if (key && t[key]) document.title = t[key];
 }
 function isHomePage() {

@@ -19,8 +19,12 @@ astro-portfolio/
 │   │       └── etl-pipeline.md
 │   ├── layouts/
 │   │   └── BaseLayout.astro
+│   ├── components/
+│   │   └── ProfileSidebar.astro  # Left sidebar: avatar, name, location, contact (hidden on Others page)
 │   └── pages/
 │       ├── index.astro     # Home (about, skills, featured projects)
+│       ├── about.astro     # About + skills + education (with EducationCard)
+│       ├── others.astro    # Others (photos etc.; no sidebar)
 │       ├── projects/
 │       │   ├── index.astro # Projects list
 │       │   └── [slug].astro # Project detail (static paths from collection)
@@ -44,6 +48,9 @@ astro-portfolio/
 | **Shiki for code blocks** | Astro’s built-in Markdown uses Shiki; Python, SQL, and Bash are supported. No extra integration. |
 | **Blog collection in schema only** | `blog` is defined in `content/config.ts` with a schema; when you add a Blog section later, add `src/content/blog/*.md` and a page that uses `getCollection('blog')`. |
 | **No heavy client framework** | Astro ships HTML + CSS; islands only if you add a framework later. Keeps the site fast and simple. |
+| **Bilingual (zh / en)** | `content-zh` / `content-en` + `data-i18n` + `public/js/i18n.js`; language switcher in nav; `html[lang]` toggles visibility. |
+| **Profile sidebar** | Left sticky sidebar (avatar, name, location, contact) on all pages except **Others**; hidden on small screens. |
+| **Others page** | Nav item “其他” / “Others”; full-width layout (no sidebar) for photos and extra content. |
 
 ---
 
@@ -126,8 +133,10 @@ repo: https://github.com/you/repo
 ## Summary
 
 - **Home**: about, skills, featured projects.  
+- **About**: combined about + skills + education (EducationCard for NYU / Xi'an Conservatory).  
+- **Others**: “其他” / “Others” — full-width page for photos and more; no sidebar.  
+- **Profile sidebar**: avatar, name, location, contact; sticky on the left (except on Others and on small screens).  
 - **Projects**: list + per-project pages from Markdown.  
 - **Resume**: PDF embed + download.  
-- **Code**: Python, SQL, Bash (and more) via Shiki.  
-- **Scale**: add projects/articles by adding Markdown; blog collection ready when you need it.  
+- **i18n**: Chinese/English via `content-zh` / `content-en` and `data-i18n`; nav and page titles switch with language.  
 - **Deploy**: static build → GitHub Pages via the provided workflow.
