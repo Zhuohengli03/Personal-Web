@@ -1,31 +1,16 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 const base = import.meta.env.BASE_URL;
+const homeUrl = base ? base : '/';
 ---
-<BaseLayout title="校园 | 李卓衡" description="Campus leadership and volunteering">
-  <h1 class="page-title" data-i18n="sectionCampus">校园与志愿</h1>
-  <ul class="campus-list content-zh">
-    <li>系开学典礼学生代表发言；参与迎新等事务。</li>
-    <li>参与国旗护卫、阳光体育、展演等活动的协调与现场执行。</li>
-    <li>独立完成活动拍摄与后期，产出官方平台物料。</li>
-    <li>参与乐器录音项目，支持教学与宣传。</li>
-    <li>学生会秘书处：撰写与编辑微信公众号推文与公告。</li>
-    <li>疫情期间多次志愿：招生支持、考务支持、学生服务等。</li>
-  </ul>
-  <ul class="campus-list content-en">
-    <li>Student representative speaker at department opening ceremony; supported new-student onboarding operations.</li>
-    <li>Supported campus events (National Flag Guard, Sunshine Sports Games, showcases) with coordination and on-site operations.</li>
-    <li>Produced event media content independently (shooting + post-production) for official platforms.</li>
-    <li>Participated in instrument recording projects supporting teaching and promotion.</li>
-    <li>Student Union (Secretariat): drafted and edited official WeChat public account articles and announcements.</li>
-    <li>Multiple volunteer roles during COVID: admissions support, exam operations support, and student services.</li>
-  </ul>
-  <p class="page-footer"><a href={base}>← <span data-i18n="navHome">首页</span></a></p>
+<BaseLayout title="校园 | 李卓衡" description="Campus - now on Home">
+  <meta http-equiv="refresh" content={`0;url=${homeUrl}`} />
+  <p class="redirect-msg">
+    <span class="content-zh">校园与志愿已移至<a href={homeUrl}>首页</a>西安音乐学院卡片下，正在跳转…</span>
+    <span class="content-en">Campus & volunteering is now on the <a href={homeUrl}>Home</a> page under Xi'an Conservatory. Redirecting…</span>
+  </p>
 </BaseLayout>
-
 <style>
-  .page-title { font-family: var(--font-serif); font-size: 1.5rem; font-weight: 600; margin: 0 0 1.5rem; }
-  .campus-list { margin: 0; padding-left: 1.25rem; color: var(--muted); font-size: 0.9rem; line-height: 1.7; }
-  .campus-list li { margin-bottom: 0.4rem; }
-  .page-footer { margin-top: 2rem; font-size: 0.9rem; color: var(--muted); }
+  .redirect-msg { margin: 2rem 0; color: var(--muted); }
+  .redirect-msg a { color: var(--accent); }
 </style>
