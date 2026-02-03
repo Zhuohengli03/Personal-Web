@@ -1,5 +1,5 @@
-# Deploy Astro portfolio (astro-portfolio/) to GitHub Pages.
-# Uses the gh-pages branch; GitHub Pages must be set to serve from branch "gh-pages" / (root).
+# 部署 Astro 作品集到 GitHub Pages
+# 要求：Settings → Pages → Source = GitHub Actions
 name: Deploy Astro portfolio to GitHub Pages
 
 on:
