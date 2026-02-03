@@ -87,6 +87,19 @@ repo: https://github.com/you/repo
 
 ---
 
+## Editing content and translations
+
+- **Navigation, section titles, buttons, page titles, resume copy, footer**  
+  Edit **`public/js/i18n.js`**: `translations.zh` and `translations.en` must have matching keys; keep terminology consistent (e.g. 校园与志愿 / Campus & Volunteering).
+- **Long-form bilingual content** (about, skills, experience, education, home page)  
+  Edit the corresponding **`src/pages/*.astro`** files; use `content-zh` / `content-en` wrappers so the correct language shows by `html[lang]`.
+- **Home page quotes**  
+  Edit **`src/data/quotes.json`** (fields: `zh`, `authorZh`, `en`, `authorEn`).
+- **Projects from Markdown**  
+  Add or edit **`src/content/projects/*.md`**; project list and detail pages use this content.
+
+---
+
 ## Resume
 
 - Put your PDF at **`public/resume.pdf`**.

@@ -8,6 +8,8 @@ export default defineConfig({
   base: '/Personal-Web/',
   build: {
     format: 'directory',
+    /** 子页面样式丢失：只有首页会加载 index.xxx.css，其他页缺少布局样式。改为 always 后所有 CSS 内联到每页，各栏目样式一致。 */
+    inlineStylesheets: 'always',
   },
   integrations: [tailwind()],
   markdown: {
