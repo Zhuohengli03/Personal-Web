@@ -1,7 +1,6 @@
 ---
-import TechCloud from './magic/TechCloud.astro';
 /**
- * 左侧个人信息栏：头像、姓名、位置、联系方式 + 技术栈标签云
+ * 左侧个人信息栏：头像、姓名、位置、联系方式
  * 除「其他」页外各栏均显示，随页面下滑而 sticky
  */
 interface Props {
@@ -26,16 +25,14 @@ const base = import.meta.env.BASE_URL;
   <p class="profile-location">📍 <span class="content-zh">美国纽约</span><span class="content-en">New York, US</span></p>
   <div class="profile-contact">
     <a href="mailto:zhuohengli03@gmail.com">📧 zhuohengli03@gmail.com</a>
-    <span>📱 +1 332-265-8772</span>
+    <a href="tel:+13322658772">📱 +1 332-265-8772</a>
+    <a href="tel:+8618838932716">📱 +86 18838932716</a>
     <a href="https://www.linkedin.com/in/zhuoheng-li-3365b5351/" target="_blank" rel="noopener noreferrer">🔗 LinkedIn</a>
     <a href="https://github.com/Zhuohengli03" target="_blank" rel="noopener noreferrer">💻 GitHub</a>
   </div>
   <div class="profile-cta">
     <a href={`${base}projects/`} class="profile-btn profile-btn-primary" data-i18n="btnProjects">查看我的项目</a>
     <a href={`${base}contact/`} class="profile-btn profile-btn-outline" data-i18n="btnContact">联系我</a>
-  </div>
-  <div class="icon-cloud-wrap">
-    <TechCloud />
   </div>
 </aside>
 
@@ -150,11 +147,6 @@ const base = import.meta.env.BASE_URL;
   .profile-btn-outline:hover {
     border-color: var(--muted);
     color: var(--text);
-  }
-  .icon-cloud-wrap {
-    position: relative;
-    overflow: hidden;
-    width: 100%;
   }
   @media (max-width: 991px) {
     .profile-sidebar {
