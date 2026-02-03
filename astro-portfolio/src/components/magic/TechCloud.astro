@@ -1,0 +1,65 @@
+---
+/**
+ * 技术栈标签云 - Magic UI 风格，大小错落 + 轻微浮动动画
+ */
+const techStack = [
+  'Python', 'SQL', 'Java', 'JavaScript', 'Pandas', 'NumPy', 'scikit-learn',
+  'ARIMA', 'Prophet', 'Random Forest', 'Gradient Boosting', 'SVR', 'MLP', 'LSTM',
+  'PostgreSQL', 'MySQL', 'Selenium', 'Streamlit', 'Power BI', 'Tableau', 'Excel',
+  'Git', 'Maven', 'Three.js', 'REST APIs', 'K-means', 'RFM',
+];
+const sizeClass = (i: number) => {
+  const r = i % 5;
+  if (r === 0) return 'tag-lg';
+  if (r === 1) return 'tag-sm';
+  if (r === 2) return 'tag-md';
+  if (r === 3) return 'tag-sm';
+  return 'tag-md';
+};
+---
+<div class="tech-cloud" aria-label="技术栈">
+  {techStack.map((tech, i) => (
+    <span class={`tech-tag ${sizeClass(i)}`} style={`--i: ${i}`}>{tech}</span>
+  ))}
+</div>
+
+<style>
+  .tech-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.4rem 0.5rem;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--glass-border);
+  }
+  .tech-tag {
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    border-radius: 999px;
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: var(--muted);
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    white-space: nowrap;
+    animation: tech-float 6s ease-in-out infinite;
+    animation-delay: calc(var(--i) * -0.18s);
+  }
+  .tech-tag:hover {
+    color: var(--accent);
+    border-color: rgba(88, 166, 255, 0.3);
+    transform: scale(1.05);
+    animation: none;
+  }
+  .tag-sm { font-size: 0.65rem; padding: 0.18rem 0.4rem; }
+  .tag-md { font-size: 0.7rem; padding: 0.25rem 0.5rem; }
+  .tag-lg { font-size: 0.78rem; padding: 0.3rem 0.55rem; font-weight: 600; }
+  @keyframes tech-float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-3px); }
+  }
+</style>
