@@ -4,7 +4,9 @@
  * 结构：logo + 机构名 + 副标题 | 正文 | 图片区（可多图 1/N）| 底部
  */
 interface Props {
-  title: string;
+  title?: string;
+  titleZh?: string;
+  titleEn?: string;
   subtitle?: string;
   subtitleZh?: string;
   subtitleEn?: string;
@@ -13,7 +15,7 @@ interface Props {
   /** 多图时显示 "1/6" 等，如 "1/6" */
   imageBadge?: string;
 }
-const { title, subtitle, subtitleZh, subtitleEn, logoSrc, logoAlt = "", imageBadge } = Astro.props;
+const { title, titleZh, titleEn, subtitle, subtitleZh, subtitleEn, logoSrc, logoAlt = "", imageBadge } = Astro.props;
 const base = import.meta.env.BASE_URL;
 ---
 <article class="edu-card">
@@ -22,7 +24,9 @@ const base = import.meta.env.BASE_URL;
       <img class="edu-card-logo" src={logoSrc.startsWith("/") || logoSrc.startsWith("http") ? logoSrc : `${base}${logoSrc}`} alt={logoAlt} width="48" height="48" />
     )}
     <div class="edu-card-heading">
-      <h3 class="edu-card-title">{title}</h3>
+      {titleZh && <h3 class="edu-card-title content-zh">{titleZh}</h3>}
+      {titleEn && <h3 class="edu-card-title content-en">{titleEn}</h3>}
+      {title && !titleZh && !titleEn && <h3 class="edu-card-title">{title}</h3>}
       {subtitle && <p class="edu-card-subtitle">{subtitle}</p>}
       {subtitleZh && <p class="edu-card-subtitle content-zh">{subtitleZh}</p>}
       {subtitleEn && <p class="edu-card-subtitle content-en">{subtitleEn}</p>}

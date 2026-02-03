@@ -11,11 +11,15 @@ const base = import.meta.env.BASE_URL;
     <AnimatedGradientText tag="h1" class="hero-name"><span class="content-zh">李卓衡</span><span class="content-en">Zhuoheng Li</span></AnimatedGradientText>
     <p class="hero-tagline" data-i18n="heroTagline">MS in Management & Analytics @ NYU · Data Analytics & Data Engineering · Python · SQL · ETL · BI</p>
     <div class="hero-meta">
-      <span>📍 New York, US</span>
-      <a href="mailto:zhuohengli03@gmail.com">📧 zhuohengli03@gmail.com</a>
-      <span>📱 +1 332-265-8772 / +86 188-3893-2716</span>
-      <a href="https://www.linkedin.com/in/zhuoheng-li-3365b5351/" target="_blank" rel="noopener noreferrer">🔗 LinkedIn</a>
-      <a href="https://github.com/Zhuohengli03" target="_blank" rel="noopener noreferrer">💻 GitHub</a>
+      <p class="hero-meta-row hero-meta-location">📍 <span class="content-zh">美国纽约</span><span class="content-en">New York, US</span></p>
+      <p class="hero-meta-row">
+        <a href="mailto:zhuohengli03@gmail.com">📧 zhuohengli03@gmail.com</a>
+        <span>📱 +1 332-265-8772 / +86 188-3893-2716</span>
+      </p>
+      <p class="hero-meta-row hero-meta-links">
+        <a href="https://www.linkedin.com/in/zhuoheng-li-3365b5351/" target="_blank" rel="noopener noreferrer">🔗 LinkedIn</a>
+        <a href="https://github.com/Zhuohengli03" target="_blank" rel="noopener noreferrer">💻 GitHub</a>
+      </p>
     </div>
     <div class="hero-cta">
       <a href={`${base}about/`} class="btn btn-outline" data-i18n="navAbout">关于</a>
@@ -31,7 +35,10 @@ const base = import.meta.env.BASE_URL;
   .hero-greeting { font-size: 0.95rem; color: var(--muted); margin: 0 0 0.5rem; }
   .hero-name { font-family: var(--font-serif); font-size: clamp(1.75rem, 5vw, 2.5rem); font-weight: 700; margin: 0 0 0.5rem; }
   .hero-tagline { font-size: 1rem; color: var(--muted); max-width: 540px; margin: 0 auto 1.25rem; line-height: 1.5; }
-  .hero-meta { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem 1.25rem; font-size: 0.9rem; color: var(--muted); margin-bottom: 1.5rem; }
+  .hero-meta { display: flex; flex-direction: column; align-items: center; gap: 0.25rem; font-size: 0.9rem; color: var(--muted); margin-bottom: 1.5rem; }
+  .hero-meta-row { margin: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem 1.25rem; }
+  .hero-meta-location { display: block; }
+  .hero-meta-links { display: flex; gap: 1.25rem; }
   .hero-meta a:hover { text-decoration: none; color: var(--accent); }
   .hero-cta { display: flex; gap: 0.75rem; flex-wrap: wrap; justify-content: center; }
   .btn { display: inline-block; padding: 0.6rem 1.25rem; font-size: 0.95rem; font-weight: 600; border-radius: var(--radius); transition: opacity 0.2s; }
