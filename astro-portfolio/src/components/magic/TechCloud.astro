@@ -53,7 +53,7 @@ function spherePositions(n: number): { theta: number; phi: number }[] {
 
 const positions = spherePositions(techList.length);
 ---
-<div class="tech-sphere-wrap">
+<div class="icon-cloud">
   <div class="tech-sphere" aria-label="技术栈">
     {techList.map((t, i) => {
       const pos = positions[i];
@@ -72,7 +72,9 @@ const positions = spherePositions(techList.length);
 </div>
 
 <style>
-  .tech-sphere-wrap {
+  .icon-cloud {
+    position: relative;
+    overflow: hidden;
     margin-top: 1rem;
     padding-top: 1rem;
     border-top: 1px solid var(--glass-border);
@@ -80,7 +82,6 @@ const positions = spherePositions(techList.length);
     justify-content: center;
     align-items: center;
     min-height: 160px;
-    overflow: visible;
   }
   .tech-sphere {
     position: relative;

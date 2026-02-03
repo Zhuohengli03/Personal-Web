@@ -5,7 +5,8 @@
 ## 使用方式
 
 **图片背景**（任选其一即可）：
-- 放入 `background.jpg` 或 `background.png`
+- 放入 `background.jpg`、`background.png` 或 `background.jpeg`（任选其一即可）
+- 若使用现有文件 `F4467B54-CFF9-4477-8126-FAA472AB0E39.jpeg`，无需改名即可生效
 - 建议尺寸：1920×1080 或更大，比例 16:9 较佳
 
 **视频背景**（任选其一即可）：
