@@ -1,0 +1,28 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+const base = import.meta.env.BASE_URL;
+---
+<BaseLayout title="西安音乐学院 | 李卓衡" description="Xi'an Conservatory of Music - Music Performance">
+  <h1 class="page-title">
+    <span class="content-zh">西安音乐学院</span>
+    <span class="content-en">Xi'an Conservatory of Music</span>
+  </h1>
+  <p class="page-subtitle content-zh">音乐表演学士（古琴）· 2021.09 – 2025.07</p>
+  <p class="page-subtitle content-en">B.M. in Music Performance (Guqin) · 2021.09 – 2025.07</p>
+
+  <div class="edu-page-body content-zh">
+    <p>此处可添加西安音乐学院相关照片与文字。</p>
+  </div>
+  <div class="edu-page-body content-en">
+    <p>Add photos and text about Xi'an Conservatory here.</p>
+  </div>
+
+  <p class="page-footer"><a href={base}>← <span data-i18n="navHome">首页</span></a></p>
+</BaseLayout>
+
+<style>
+  .page-title { font-family: var(--font-serif); font-size: 1.5rem; font-weight: 600; margin: 0 0 0.25rem; }
+  .page-subtitle { font-size: 0.9rem; color: var(--muted); margin: 0 0 1.5rem; }
+  .edu-page-body p { color: var(--muted); font-size: 0.95rem; margin: 0 0 1rem; line-height: 1.6; }
+  .page-footer { margin-top: 2rem; font-size: 0.9rem; color: var(--muted); }
+</style>

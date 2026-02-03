@@ -2,9 +2,28 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import AnimatedGradientText from '../components/magic/AnimatedGradientText.astro';
 import DotPattern from '../components/magic/DotPattern.astro';
+import EducationCard from '../components/magic/EducationCard.astro';
+import quotes from '../data/quotes.json';
 const base = import.meta.env.BASE_URL;
 ---
 <BaseLayout title="李卓衡 | 个人网站" description="Zhuoheng Li - MS in Management & Analytics @ NYU | Data Analytics & Data Engineering">
+  <section class="hero-welcome">
+    <h2 class="welcome-text content-zh">欢迎来到我的小站</h2>
+    <h2 class="welcome-text content-en">Welcome</h2>
+    <p class="quote-line" id="random-quote" aria-live="polite">
+      <span class="content-zh" id="quote-zh"></span>
+      <span class="content-en" id="quote-en"></span>
+    </p>
+  </section>
+  <script define:vars={{ quotes }}>
+    (function () {
+      var q = quotes[Math.floor(Math.random() * quotes.length)];
+      var zh = document.getElementById('quote-zh');
+      var en = document.getElementById('quote-en');
+      if (zh) zh.textContent = '"' + q.zh + '" — ' + q.authorZh;
+      if (en) en.textContent = '"' + q.en + '" — ' + q.authorEn;
+    })();
+  </script>
   <section class="hero">
     <DotPattern class="hero-pattern" />
     <p class="hero-greeting" data-i18n="heroGreeting">你好，我是</p>
@@ -22,10 +41,103 @@ const base = import.meta.env.BASE_URL;
       </p>
     </div>
     <div class="hero-cta">
-      <a href={`${base}about/`} class="btn btn-outline" data-i18n="navAbout">关于</a>
+      <a href={`${base}#about`} class="btn btn-outline" data-i18n="navAbout">关于</a>
       <a href={`${base}projects/`} class="btn btn-primary" data-i18n="btnProjects">看看我的作品</a>
       <a href={`${base}contact/`} class="btn btn-outline" data-i18n="btnContact">联系我</a>
     </div>
+  </section>
+
+  <section id="about" class="home-about">
+    <h2 class="section-title" data-i18n="sectionAbout">关于我</h2>
+    <div class="about-content">
+      <div class="content-zh">
+        <p>我是纽约大学 SPS 管理与分析硕士在读，方向为<strong>数据分析与数据工程</strong>。喜欢搭建可靠的数据管道、把杂乱数据整理成可用数据集，并用清晰的指标和看板传达结论。</p>
+        <p><strong>求职方向：</strong>数据分析师、分析工程师、数据工程师、BI 或 AI 相关数据岗位的实习 / 全职机会。</p>
+        <p><strong>兴趣：</strong>摄影 · 游泳</p>
+      </div>
+      <div class="content-en">
+        <p>I'm a graduate student at NYU SPS studying Management & Analytics, with a technical focus on <strong>data analytics and data engineering</strong>. I enjoy building reliable data pipelines, turning messy data into usable datasets, and communicating insights with clear metrics and dashboards.</p>
+        <p><strong>What I'm looking for:</strong> Internships / opportunities in <strong>Data Analyst, Analytics Engineer, Data Engineer, BI, or AI-related data roles</strong>.</p>
+        <p><strong>Interests:</strong> Photography · Swimming</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="home-skills">
+    <h2 class="section-title" data-i18n="sectionSkills">技能</h2>
+    <div class="skills-grid">
+      <div class="skill-category">
+        <h3 class="content-zh">编程与数据</h3>
+        <h3 class="content-en">Programming & Data</h3>
+        <p>Python (Pandas, NumPy, scikit-learn), SQL (MySQL/PostgreSQL), Git</p>
+      </div>
+      <div class="skill-category">
+        <h3 class="content-zh">数据工程</h3>
+        <h3 class="content-en">Data Engineering</h3>
+        <p class="content-zh">API 集成、多源数据接入、ETL 设计、批处理、去重与数据质量校验、表结构设计</p>
+        <p class="content-en">API integration, multi-source data ingestion, ETL design, batch processing, deduplication, data quality checks, schema design</p>
+      </div>
+      <div class="skill-category">
+        <h3 class="content-zh">分析与 BI</h3>
+        <h3 class="content-en">Analytics & BI</h3>
+        <p class="content-zh">KPI 体系设计、Tableau / Power BI、Excel、报表与可视化</p>
+        <p class="content-en">KPI framework design, Tableau / Power BI, Excel, reporting & visualization</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="home-education">
+    <h2 class="section-title" data-i18n="sectionEducation">教育背景</h2>
+
+    <EducationCard
+      titleZh="纽约大学"
+      titleEn="New York University"
+      subtitleZh="管理与管理分析硕士（商业分析）· 2025.09 – 2026.12（预计）· GPA 3.83/4.00"
+      subtitleEn="M.S. in Management & Analytics (Business Analytics) · 2025.09 – 2026.12 (Expected) · GPA 3.83/4.00"
+    >
+      <div slot="footer" class="edu-card-viewmore">
+        <a href={`${base}education/nyu/`} data-i18n="btnViewMore">查看更多</a>
+      </div>
+    </EducationCard>
+
+    <EducationCard
+      titleZh="西安音乐学院"
+      titleEn="Xi'an Conservatory of Music"
+      subtitleZh="音乐表演学士（古琴）· 2021.09 – 2025.07"
+      subtitleEn="B.M. in Music Performance (Guqin) · 2021.09 – 2025.07"
+    >
+      <div class="content-zh">
+        <p><strong>荣誉与奖项：</strong></p>
+        <ul>
+          <li>优秀毕业生（2025届）</li>
+          <li>校助学金（2022–2023）</li>
+          <li>优秀学生干部（2022–2023）</li>
+          <li>国家励志奖学金（2023–2024）</li>
+          <li>校奖学金（2023–2024）</li>
+          <li>优秀学生（2023–2024）</li>
+          <li>校荣誉奖学金（2023–2024）</li>
+          <li>「幽兰·阳春」比赛专业组表演奖（2024）</li>
+          <li>陕西省民族器乐展演专业组优秀奖（2024）</li>
+        </ul>
+      </div>
+      <div class="content-en">
+        <p><strong>Honors & Awards:</strong></p>
+        <ul>
+          <li>Outstanding Graduate, Class of 2025</li>
+          <li>University Financial Aid Scholarship (2022–2023)</li>
+          <li>Outstanding Student Leader (2022–2023)</li>
+          <li>National Inspirational Scholarship (2023–2024)</li>
+          <li>University Scholarship (2023–2024)</li>
+          <li>Outstanding Student (2023–2024)</li>
+          <li>University Honor Scholarship (2023–2024)</li>
+          <li>Performance Award (Professional Division), "Youlan · Yangchun" Competition (2024)</li>
+          <li>Excellence Award (Professional Division), Shaanxi Provincial Traditional Instrument Exhibition (2024)</li>
+        </ul>
+      </div>
+      <div slot="footer" class="edu-card-viewmore">
+        <a href={`${base}education/xian/`} data-i18n="btnViewMore">查看更多</a>
+      </div>
+    </EducationCard>
   </section>
 </BaseLayout>
 
@@ -46,4 +158,37 @@ const base = import.meta.env.BASE_URL;
   .btn-primary { background: var(--accent); color: #fff; }
   .btn-outline { border: 1px solid var(--border); color: var(--text); }
   .btn-outline:hover { border-color: var(--muted); color: var(--text); }
+
+  .section-title { font-family: var(--font-serif); font-size: 1.25rem; font-weight: 600; margin: 2rem 0 1rem; }
+  .home-about .about-content p { margin: 0 0 0.75rem; color: var(--muted); font-size: 0.95rem; }
+  .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 0.5rem; }
+  .skill-category { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem; }
+  .skill-category h3 { font-size: 1rem; font-weight: 600; margin: 0 0 0.5rem; }
+  .skill-category p { margin: 0; font-size: 0.9rem; color: var(--muted); line-height: 1.5; }
+  .edu-card-viewmore { padding: 0; border: none; }
+  .edu-card-viewmore a { font-weight: 500; }
+
+  .hero-welcome {
+    text-align: center;
+    padding: 1.5rem 0 1rem;
+    margin-bottom: 0.5rem;
+  }
+  .welcome-text {
+    font-family: "Dancing Script", "ZCOOL XiaoWei", "Noto Serif SC", cursive;
+    font-size: clamp(2rem, 8vw, 3.5rem);
+    font-weight: 700;
+    margin: 0 0 0.5rem;
+    color: var(--text);
+    letter-spacing: 0.02em;
+  }
+  .quote-line {
+    font-size: 0.85rem;
+    color: var(--muted);
+    font-style: italic;
+    margin: 0;
+    max-width: 540px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.5;
+  }
 </style>

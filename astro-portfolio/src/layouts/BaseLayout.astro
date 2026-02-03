@@ -20,7 +20,7 @@ const base = import.meta.env.BASE_URL;
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&family=Dancing+Script:wght@400;600;700&family=ZCOOL+XiaoWei&display=swap"
       rel="stylesheet"
     />
     <style is:global>
@@ -87,7 +87,7 @@ const base = import.meta.env.BASE_URL;
       <nav class="nav">
         <ul class="nav-links">
           <li><a href={base} class="nav-home" data-i18n="navHome">首页</a></li>
-          <li><a href={`${base}about/`} data-i18n="navAbout">关于</a></li>
+          <li><a href={`${base}#about`} data-i18n="navAbout">关于</a></li>
           <li><a href={`${base}experience/`} data-i18n="navExperience">经历</a></li>
           <li><a href={`${base}projects/`} data-i18n="navProjects">项目</a></li>
           <li><a href={`${base}campus/`} data-i18n="navCampus">校园</a></li>
