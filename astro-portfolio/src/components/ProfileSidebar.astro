@@ -1,0 +1,106 @@
+---
+/**
+ * 左侧个人信息栏：头像、姓名、位置、联系方式
+ * 除「其他」页外各栏均显示，随页面下滑而 sticky
+ */
+interface Props {
+  /** 头像图片路径，不传则显示占位 */
+  avatarSrc?: string;
+}
+const { avatarSrc } = Astro.props;
+const base = import.meta.env.BASE_URL;
+---
+<aside class="profile-sidebar">
+  <div class="profile-avatar">
+    {avatarSrc ? (
+      <img src={avatarSrc.startsWith("/") || avatarSrc.startsWith("http") ? avatarSrc : `${base}${avatarSrc}`} alt="" width="96" height="96" />
+    ) : (
+      <div class="profile-avatar-placeholder"><span class="content-zh">李</span><span class="content-en">Z</span></div>
+    )}
+  </div>
+  <h2 class="profile-name">
+    <span class="content-zh">李卓衡</span>
+    <span class="content-en">Zhuoheng Li</span>
+  </h2>
+  <p class="profile-location">📍 <span class="content-zh">美国纽约</span><span class="content-en">New York, US</span></p>
+  <div class="profile-contact">
+    <a href="mailto:zhuohengli03@gmail.com">📧 zhuohengli03@gmail.com</a>
+    <span>📱 +1 332-265-8772</span>
+    <a href="https://www.linkedin.com/in/zhuoheng-li-3365b5351/" target="_blank" rel="noopener noreferrer">🔗 LinkedIn</a>
+    <a href="https://github.com/Zhuohengli03" target="_blank" rel="noopener noreferrer">💻 GitHub</a>
+  </div>
+</aside>
+
+<style>
+  .profile-sidebar {
+    flex-shrink: 0;
+    width: 200px;
+    padding: 1rem 0;
+    position: sticky;
+    top: calc(var(--space) + 2rem);
+    align-self: flex-start;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.75rem;
+    font-size: 0.875rem;
+    color: var(--muted);
+  }
+  .profile-avatar {
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: var(--surface);
+    border: 2px solid var(--border);
+  }
+  .profile-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .profile-avatar-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-serif);
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--accent);
+  }
+  .profile-name {
+    font-family: var(--font-serif);
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text);
+    margin: 0;
+  }
+  .profile-location {
+    margin: 0;
+    font-size: 0.85rem;
+  }
+  .profile-contact {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35rem;
+  }
+  .profile-contact a,
+  .profile-contact span {
+    display: block;
+    color: var(--muted);
+    font-size: 0.8rem;
+  }
+  .profile-contact a:hover {
+    color: var(--accent);
+    text-decoration: none;
+  }
+  @media (max-width: 991px) {
+    .profile-sidebar {
+      display: none;
+    }
+  }
+</style>

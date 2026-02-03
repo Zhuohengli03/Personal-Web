@@ -1,9 +1,12 @@
 ---
+import ProfileSidebar from '../components/ProfileSidebar.astro';
 interface Props {
   title: string;
   description?: string;
+  /** 是否显示左侧个人信息栏，设为 false 时（如「其他」页）不显示 */
+  showSidebar?: boolean;
 }
-const { title, description = 'Zhuoheng Li - MS in Management & Analytics @ NYU | Data Analytics & Data Engineering' } = Astro.props;
+const { title, description = 'Zhuoheng Li - MS in Management & Analytics @ NYU | Data Analytics & Data Engineering', showSidebar = true } = Astro.props;
 const base = import.meta.env.BASE_URL;
 ---
 <!DOCTYPE html>
@@ -89,6 +92,7 @@ const base = import.meta.env.BASE_URL;
           <li><a href={`${base}projects/`} data-i18n="navProjects">项目</a></li>
           <li><a href={`${base}campus/`} data-i18n="navCampus">校园</a></li>
           <li><a href={`${base}contact/`} data-i18n="navContact">联系</a></li>
+          <li><a href={`${base}others/`} data-i18n="navOthers">其他</a></li>
           <li><a href={`${base}resume/`} data-i18n="navResume">简历</a></li>
         </ul>
         <div class="nav-lang">
@@ -101,8 +105,11 @@ const base = import.meta.env.BASE_URL;
         </button>
       </nav>
     </header>
-    <main class="main">
-      <slot />
+    <main class={showSidebar ? "main-with-sidebar" : "main"}>
+      {showSidebar && <ProfileSidebar />}
+      <div class={showSidebar ? "main-content" : "main-inner"}>
+        <slot />
+      </div>
     </main>
     <footer class="site-footer">
       <p>© <span id="year"></span> <span class="content-zh">李卓衡</span><span class="content-en">Zhuoheng Li</span> · <span class="content-zh">个人网站</span><span class="content-en">Personal Site</span></p>
@@ -202,6 +209,32 @@ const base = import.meta.env.BASE_URL;
     margin: 0 auto;
     padding: 0 1.5rem 2rem;
     min-height: 60vh;
+  }
+  .main-with-sidebar {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 1.5rem 2rem;
+    min-height: 60vh;
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+  }
+  .main-inner,
+  .main-content {
+    flex: 1;
+    min-width: 0;
+  }
+  .main .main-inner {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  .main-with-sidebar .main-content {
+    max-width: 720px;
+  }
+  @media (max-width: 991px) {
+    .main-with-sidebar {
+      display: block;
+    }
   }
   .site-footer {
     text-align: center;
