@@ -82,14 +82,11 @@ const base = import.meta.env.BASE_URL;
   <body>
     <header class="site-header">
       <nav class="nav">
-        <a href={base} class="nav-logo" data-i18n="navHome">首页</a>
         <ul class="nav-links">
+          <li><a href={base} class="nav-home" data-i18n="navHome">首页</a></li>
           <li><a href={`${base}about/`} data-i18n="navAbout">关于</a></li>
-          <li><a href={`${base}skills/`} data-i18n="navSkills">技能</a></li>
-          <li><a href={`${base}education/`} data-i18n="navEducation">教育</a></li>
           <li><a href={`${base}experience/`} data-i18n="navExperience">经历</a></li>
           <li><a href={`${base}projects/`} data-i18n="navProjects">项目</a></li>
-          <li><a href={`${base}honors/`} data-i18n="navHonors">荣誉</a></li>
           <li><a href={`${base}campus/`} data-i18n="navCampus">校园</a></li>
           <li><a href={`${base}contact/`} data-i18n="navContact">联系</a></li>
           <li><a href={`${base}resume/`} data-i18n="navResume">简历</a></li>
@@ -132,12 +129,12 @@ const base = import.meta.env.BASE_URL;
     align-items: center;
     justify-content: space-between;
   }
-  .nav-logo {
+  .nav-home {
     font-family: var(--font-serif);
     font-weight: 600;
     color: var(--text);
   }
-  .nav-logo:hover {
+  .nav-home:hover {
     text-decoration: none;
     color: var(--accent);
   }

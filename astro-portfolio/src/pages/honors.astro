@@ -3,35 +3,13 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 const base = import.meta.env.BASE_URL;
 ---
 <BaseLayout title="荣誉 | 李卓衡" description="Honors and awards">
-  <h1 class="page-title" data-i18n="sectionHonors">荣誉与奖项</h1>
-  <ul class="honors-list content-zh">
-    <li>优秀毕业生（2025届）— 西安音乐学院</li>
-    <li>校助学金（2022–2023）</li>
-    <li>优秀学生干部（2022–2023）</li>
-    <li>国家励志奖学金（2023–2024）</li>
-    <li>校奖学金（2023–2024）</li>
-    <li>优秀学生（2023–2024）</li>
-    <li>校荣誉奖学金（2023–2024）</li>
-    <li>「幽兰·阳春」比赛专业组表演奖（2024）</li>
-    <li>陕西省民族器乐展演专业组优秀奖（2024）</li>
-  </ul>
-  <ul class="honors-list content-en">
-    <li>Outstanding Graduate, Class of 2025 — Xi'an Conservatory of Music</li>
-    <li>University Financial Aid Scholarship (2022–2023)</li>
-    <li>Outstanding Student Leader (2022–2023)</li>
-    <li>National Inspirational Scholarship (2023–2024)</li>
-    <li>University Scholarship (2023–2024)</li>
-    <li>Outstanding Student (2023–2024)</li>
-    <li>University Honor Scholarship (2023–2024)</li>
-    <li>Performance Award (Professional Division), "Youlan · Yangchun" Competition (2024)</li>
-    <li>Excellence Award (Professional Division), Shaanxi Provincial Traditional Instrument Exhibition (2024)</li>
-  </ul>
-  <p class="page-footer"><a href={base}>← 首页</a></p>
+  <meta http-equiv="refresh" content={`0;url=${base ? base + 'about/' : '/about/'}`} />
+  <p class="redirect-msg">
+    <span class="content-zh">荣誉已合并至<a href={`${base}about/`}>关于</a>页（西安音乐学院卡片下），正在跳转…</span>
+    <span class="content-en">Honors are now on the <a href={`${base}about/`}>About</a> page (under Xi'an Conservatory). Redirecting…</span>
+  </p>
 </BaseLayout>
-
 <style>
-  .page-title { font-family: var(--font-serif); font-size: 1.5rem; font-weight: 600; margin: 0 0 1.5rem; }
-  .honors-list { margin: 0; padding-left: 1.25rem; color: var(--muted); font-size: 0.9rem; line-height: 1.65; }
-  .honors-list li { margin-bottom: 0.4rem; }
-  .page-footer { margin-top: 2rem; font-size: 0.9rem; color: var(--muted); }
+  .redirect-msg { margin: 2rem 0; color: var(--muted); }
+  .redirect-msg a { color: var(--accent); }
 </style>

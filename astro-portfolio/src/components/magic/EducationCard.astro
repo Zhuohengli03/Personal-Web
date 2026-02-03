@@ -1,0 +1,135 @@
+---
+/**
+ * 教育经历卡片 - 类似图2（LinkedIn 帖子）样式
+ * 结构：logo + 机构名 + 副标题 | 正文 | 图片区（可多图 1/N）| 底部
+ */
+interface Props {
+  title: string;
+  subtitle?: string;
+  subtitleZh?: string;
+  subtitleEn?: string;
+  logoSrc?: string;
+  logoAlt?: string;
+  /** 多图时显示 "1/6" 等，如 "1/6" */
+  imageBadge?: string;
+}
+const { title, subtitle, subtitleZh, subtitleEn, logoSrc, logoAlt = "", imageBadge } = Astro.props;
+const base = import.meta.env.BASE_URL;
+---
+<article class="edu-card">
+  <header class="edu-card-header">
+    {logoSrc && (
+      <img class="edu-card-logo" src={logoSrc.startsWith("/") || logoSrc.startsWith("http") ? logoSrc : `${base}${logoSrc}`} alt={logoAlt} width="48" height="48" />
+    )}
+    <div class="edu-card-heading">
+      <h3 class="edu-card-title">{title}</h3>
+      {subtitle && <p class="edu-card-subtitle">{subtitle}</p>}
+      {subtitleZh && <p class="edu-card-subtitle content-zh">{subtitleZh}</p>}
+      {subtitleEn && <p class="edu-card-subtitle content-en">{subtitleEn}</p>}
+    </div>
+  </header>
+  <div class="edu-card-body">
+    <slot />
+  </div>
+  <div class="edu-card-media-wrap">
+    {imageBadge && <span class="edu-card-media-badge">{imageBadge}</span>}
+    <slot name="media" />
+  </div>
+  <footer class="edu-card-footer">
+    <slot name="footer" />
+  </footer>
+</article>
+
+<style>
+  .edu-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+  }
+  .edu-card-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 1rem 1.25rem;
+  }
+  .edu-card-logo {
+    width: 48px;
+    height: 48px;
+    border-radius: 8px;
+    object-fit: cover;
+    flex-shrink: 0;
+  }
+  .edu-card-heading {
+    min-width: 0;
+  }
+  .edu-card-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin: 0 0 0.15rem;
+    color: var(--text);
+  }
+  .edu-card-subtitle {
+    font-size: 0.875rem;
+    color: var(--muted);
+    margin: 0;
+    line-height: 1.4;
+  }
+  .edu-card-body {
+    padding: 0 1.25rem 1rem;
+    font-size: 0.95rem;
+    color: var(--text);
+    line-height: 1.6;
+  }
+  .edu-card-body :global(p) {
+    margin: 0 0 0.5rem;
+  }
+  .edu-card-body :global(p:last-child) {
+    margin-bottom: 0;
+  }
+  .edu-card-body :global(ul) {
+    margin: 0.5rem 0 0;
+    padding-left: 1.25rem;
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+  .edu-card-body :global(ul li) {
+    margin-bottom: 0.25rem;
+  }
+  .edu-card-media-wrap {
+    position: relative;
+    width: 100%;
+    max-height: 360px;
+    overflow: hidden;
+    background: var(--bg);
+  }
+  .edu-card-media-wrap:empty {
+    display: none;
+  }
+  .edu-card-media-wrap :global(img) {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+  }
+  .edu-card-media-badge {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    background: rgba(0, 0, 0, 0.6);
+    color: #fff;
+    font-size: 0.75rem;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+  }
+  .edu-card-footer {
+    padding: 0.75rem 1.25rem;
+    border-top: 1px solid var(--border);
+    font-size: 0.875rem;
+    color: var(--muted);
+  }
+  .edu-card-footer:empty {
+    display: none;
+  }
+</style>
