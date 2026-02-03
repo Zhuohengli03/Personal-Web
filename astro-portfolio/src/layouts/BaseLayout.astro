@@ -3,7 +3,7 @@ interface Props {
   title: string;
   description?: string;
 }
-const { title, description = 'Zhuoheng (卓衡) Li - MS in Management & Analytics @ NYU | Data Analytics & Data Engineering' } = Astro.props;
+const { title, description = 'Zhuoheng Li - MS in Management & Analytics @ NYU | Data Analytics & Data Engineering' } = Astro.props;
 const base = import.meta.env.BASE_URL;
 ---
 <!DOCTYPE html>
@@ -82,16 +82,16 @@ const base = import.meta.env.BASE_URL;
   <body>
     <header class="site-header">
       <nav class="nav">
-        <a href={`${base}#home`} class="nav-logo" data-i18n="navHome">首页</a>
+        <a href={base} class="nav-logo" data-i18n="navHome">首页</a>
         <ul class="nav-links">
-          <li><a href={`${base}#about`} data-i18n="navAbout">关于</a></li>
-          <li><a href={`${base}#skills`} data-i18n="navSkills">技能</a></li>
-          <li><a href={`${base}#education`} data-i18n="navEducation">教育</a></li>
-          <li><a href={`${base}#experience`} data-i18n="navExperience">经历</a></li>
-          <li><a href={`${base}#projects`} data-i18n="navProjects">项目</a></li>
-          <li><a href={`${base}#honors`} data-i18n="navHonors">荣誉</a></li>
-          <li><a href={`${base}#campus`} data-i18n="navCampus">校园</a></li>
-          <li><a href={`${base}#contact`} data-i18n="navContact">联系</a></li>
+          <li><a href={`${base}about/`} data-i18n="navAbout">关于</a></li>
+          <li><a href={`${base}skills/`} data-i18n="navSkills">技能</a></li>
+          <li><a href={`${base}education/`} data-i18n="navEducation">教育</a></li>
+          <li><a href={`${base}experience/`} data-i18n="navExperience">经历</a></li>
+          <li><a href={`${base}projects/`} data-i18n="navProjects">项目</a></li>
+          <li><a href={`${base}honors/`} data-i18n="navHonors">荣誉</a></li>
+          <li><a href={`${base}campus/`} data-i18n="navCampus">校园</a></li>
+          <li><a href={`${base}contact/`} data-i18n="navContact">联系</a></li>
           <li><a href={`${base}resume/`} data-i18n="navResume">简历</a></li>
         </ul>
         <div class="nav-lang">
@@ -108,7 +108,7 @@ const base = import.meta.env.BASE_URL;
       <slot />
     </main>
     <footer class="site-footer">
-      <p>© <span id="year"></span> Zhuoheng (卓衡) Li · <span class="content-zh">个人网站</span><span class="content-en">Personal Site</span></p>
+      <p>© <span id="year"></span> <span class="content-zh">李卓衡</span><span class="content-en">Zhuoheng Li</span> · <span class="content-zh">个人网站</span><span class="content-en">Personal Site</span></p>
     </footer>
     <script is:inline src={`${base}js/i18n.js`}></script>
     <script is:inline src={`${base}js/main.js`}></script>

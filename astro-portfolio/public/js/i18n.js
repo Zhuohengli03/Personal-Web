@@ -30,7 +30,15 @@ const translations = {
     sectionContact: "联系我",
     contactIntro: "欢迎通过以下方式与我交流：",
     footerSite: "个人网站",
-    resumePageTitle: "Zhuoheng Li | 简历",
+    resumePageTitle: "李卓衡 | 简历",
+    aboutPageTitle: "关于 | 李卓衡",
+    skillsPageTitle: "技能 | 李卓衡",
+    educationPageTitle: "教育 | 李卓衡",
+    experiencePageTitle: "经历 | 李卓衡",
+    honorsPageTitle: "荣誉 | 李卓衡",
+    campusPageTitle: "校园 | 李卓衡",
+    contactPageTitle: "联系 | 李卓衡",
+    projectsPageTitle: "项目 | 李卓衡",
   },
   en: {
     navHome: "Home",
@@ -60,6 +68,14 @@ const translations = {
     contactIntro: "Feel free to reach out:",
     footerSite: "Personal Site",
     resumePageTitle: "Zhuoheng Li | Resume",
+    aboutPageTitle: "About | Zhuoheng Li",
+    skillsPageTitle: "Skills | Zhuoheng Li",
+    educationPageTitle: "Education | Zhuoheng Li",
+    experiencePageTitle: "Experience | Zhuoheng Li",
+    honorsPageTitle: "Honors | Zhuoheng Li",
+    campusPageTitle: "Campus | Zhuoheng Li",
+    contactPageTitle: "Contact | Zhuoheng Li",
+    projectsPageTitle: "Projects | Zhuoheng Li",
   },
 };
 
@@ -77,8 +93,18 @@ function setLang(lang) {
   updateSwitcher(lang);
   document.documentElement.lang = lang === "zh" ? "zh-CN" : "en";
   const p = typeof location !== "undefined" && location.pathname ? location.pathname : "";
-  if (isHomePage()) document.title = lang === "zh" ? "Zhuoheng Li | 个人网站" : "Zhuoheng Li | Personal Website";
-  else if (p.includes("resume")) document.title = translations[lang].resumePageTitle;
+  applyPageTitle(lang, p);
+}
+function applyPageTitle(lang, pathname) {
+  const p = (pathname || (typeof location !== "undefined" && location.pathname) || "").replace(/\/$/, "");
+  const t = translations[lang];
+  if (!t) return;
+  if (isHomePage()) {
+    document.title = lang === "zh" ? "李卓衡 | 个人网站" : "Zhuoheng Li | Personal Website";
+    return;
+  }
+  const key = p.includes("about") ? "aboutPageTitle" : p.includes("skills") ? "skillsPageTitle" : p.includes("education") ? "educationPageTitle" : p.includes("experience") ? "experiencePageTitle" : p.includes("honors") ? "honorsPageTitle" : p.includes("campus") ? "campusPageTitle" : p.includes("contact") ? "contactPageTitle" : p.includes("projects") ? "projectsPageTitle" : p.includes("resume") ? "resumePageTitle" : null;
+  if (key && t[key]) document.title = t[key];
 }
 function isHomePage() {
   if (typeof location === "undefined" || !location.pathname) return true;
@@ -110,8 +136,7 @@ function updateSwitcher(lang) {
 function initI18n() {
   const lang = getLang();
   document.documentElement.lang = lang === "zh" ? "zh-CN" : "en";
-  if (isHomePage()) document.title = lang === "zh" ? "Zhuoheng Li | 个人网站" : "Zhuoheng Li | Personal Website";
-  else if (typeof location !== "undefined" && location.pathname.includes("resume")) document.title = translations[lang].resumePageTitle;
+  applyPageTitle(lang);
   applyLang(lang);
   updateSwitcher(lang);
   document.getElementById("lang-zh")?.addEventListener("click", () => setLang("zh"));
