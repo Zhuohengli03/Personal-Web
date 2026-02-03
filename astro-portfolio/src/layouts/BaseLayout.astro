@@ -3,20 +3,21 @@ interface Props {
   title: string;
   description?: string;
 }
-const { title, description = 'Data & analytics portfolio' } = Astro.props;
+const { title, description = 'Zhuoheng (卓衡) Li - MS in Management & Analytics @ NYU | Data Analytics & Data Engineering' } = Astro.props;
+const base = import.meta.env.BASE_URL;
 ---
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
     <title>{title}</title>
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,600;0,9..40,700&family=JetBrains+Mono:wght@400;500&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap"
       rel="stylesheet"
     />
     <style is:global>
@@ -26,9 +27,13 @@ const { title, description = 'Data & analytics portfolio' } = Astro.props;
         --text: #e6edf3;
         --muted: #8b949e;
         --accent: #58a6ff;
+        --accent-hover: #79b8ff;
         --border: #30363d;
-        --font-sans: 'DM Sans', system-ui, sans-serif;
-        --font-mono: 'JetBrains Mono', monospace;
+        --font-serif: "Noto Serif SC", "Noto Serif", serif;
+        --font-sans: "Source Sans 3", system-ui, sans-serif;
+        --space: 1.5rem;
+        --space-lg: 3rem;
+        --radius: 8px;
       }
       *,
       *::before,
@@ -38,11 +43,17 @@ const { title, description = 'Data & analytics portfolio' } = Astro.props;
       html {
         scroll-behavior: smooth;
       }
+      html[lang="en"] .content-zh {
+        display: none !important;
+      }
+      html[lang="zh-CN"] .content-en {
+        display: none !important;
+      }
       body {
         margin: 0;
         font-family: var(--font-sans);
         font-size: 1rem;
-        line-height: 1.6;
+        line-height: 1.65;
         color: var(--text);
         background: var(--bg);
         -webkit-font-smoothing: antialiased;
@@ -54,18 +65,16 @@ const { title, description = 'Data & analytics portfolio' } = Astro.props;
       a:hover {
         text-decoration: underline;
       }
-      /* Shiki/Prism code blocks inherit from layout */
       pre {
         background: var(--surface);
         border: 1px solid var(--border);
-        border-radius: 8px;
+        border-radius: var(--radius);
         padding: 1rem 1.25rem;
         overflow-x: auto;
-        font-family: var(--font-mono);
         font-size: 0.9rem;
       }
       code {
-        font-family: var(--font-mono);
+        font-family: ui-monospace, monospace;
         font-size: 0.9em;
       }
     </style>
@@ -73,27 +82,48 @@ const { title, description = 'Data & analytics portfolio' } = Astro.props;
   <body>
     <header class="site-header">
       <nav class="nav">
-        <a href="/" class="nav-logo">Portfolio</a>
+        <a href={`${base}#home`} class="nav-logo" data-i18n="navHome">首页</a>
         <ul class="nav-links">
-          <li><a href="/">Home</a></li>
-          <li><a href="/projects/">Projects</a></li>
-          <li><a href="/resume/">Resume</a></li>
+          <li><a href={`${base}#about`} data-i18n="navAbout">关于</a></li>
+          <li><a href={`${base}#skills`} data-i18n="navSkills">技能</a></li>
+          <li><a href={`${base}#education`} data-i18n="navEducation">教育</a></li>
+          <li><a href={`${base}#experience`} data-i18n="navExperience">经历</a></li>
+          <li><a href={`${base}#projects`} data-i18n="navProjects">项目</a></li>
+          <li><a href={`${base}#honors`} data-i18n="navHonors">荣誉</a></li>
+          <li><a href={`${base}#campus`} data-i18n="navCampus">校园</a></li>
+          <li><a href={`${base}#contact`} data-i18n="navContact">联系</a></li>
+          <li><a href={`${base}resume/`} data-i18n="navResume">简历</a></li>
         </ul>
+        <div class="nav-lang">
+          <button type="button" id="lang-zh" class="lang-btn active" aria-label="中文">中文</button>
+          <span class="lang-divider">/</span>
+          <button type="button" id="lang-en" class="lang-btn" aria-label="English">EN</button>
+        </div>
+        <button class="nav-toggle" aria-label="打开菜单" data-i18n-aria="navMenuAria">
+          <span></span><span></span><span></span>
+        </button>
       </nav>
     </header>
     <main class="main">
       <slot />
     </main>
     <footer class="site-footer">
-      <p>© {new Date().getFullYear()} — Data &amp; Analytics Portfolio</p>
+      <p>© <span id="year"></span> Zhuoheng (卓衡) Li · <span class="content-zh">个人网站</span><span class="content-en">Personal Site</span></p>
     </footer>
+    <script is:inline src={`${base}js/i18n.js`}></script>
+    <script is:inline src={`${base}js/main.js`}></script>
   </body>
 </html>
 
 <style>
   .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(15, 17, 22, 0.92);
+    backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--border);
-    padding: 0.75rem 1.5rem;
+    padding: var(--space) var(--space-lg);
   }
   .nav {
     max-width: 720px;
@@ -103,27 +133,102 @@ const { title, description = 'Data & analytics portfolio' } = Astro.props;
     justify-content: space-between;
   }
   .nav-logo {
-    font-weight: 700;
+    font-family: var(--font-serif);
+    font-weight: 600;
     color: var(--text);
+  }
+  .nav-logo:hover {
+    text-decoration: none;
+    color: var(--accent);
   }
   .nav-links {
     list-style: none;
     margin: 0;
     padding: 0;
     display: flex;
-    gap: 1.5rem;
+    flex-wrap: wrap;
+    gap: 1.25rem;
+  }
+  .nav-links a {
+    color: var(--muted);
+    font-weight: 500;
+  }
+  .nav-links a:hover {
+    color: var(--text);
+    text-decoration: none;
+  }
+  .nav-lang {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+  .lang-btn {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--muted);
+    background: none;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  .lang-btn:hover {
+    color: var(--text);
+  }
+  .lang-btn.active {
+    color: var(--accent);
+    font-weight: 600;
+  }
+  .lang-divider {
+    color: var(--border);
+    user-select: none;
+  }
+  .nav-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    padding: 8px;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  .nav-toggle span {
+    width: 20px;
+    height: 2px;
+    background: var(--text);
+    border-radius: 1px;
   }
   .main {
     max-width: 720px;
     margin: 0 auto;
-    padding: 2rem 1.5rem;
+    padding: 0 1.5rem 2rem;
     min-height: 60vh;
   }
   .site-footer {
     text-align: center;
-    padding: 1.5rem;
+    padding: var(--space-lg) 1.5rem;
     color: var(--muted);
     font-size: 0.875rem;
     border-top: 1px solid var(--border);
+  }
+  @media (max-width: 768px) {
+    .nav-links {
+      display: none;
+    }
+    .nav.open .nav-links {
+      display: flex;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      flex-direction: column;
+      padding: 1rem 1.5rem;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      gap: 0.75rem;
+    }
+    .nav-toggle {
+      display: flex;
+    }
   }
 </style>

@@ -1,0 +1,25 @@
+---
+interface Props {
+  class?: string;
+}
+const { class: className = '' } = Astro.props;
+---
+<div class:list={['magic-dot-pattern', className]} aria-hidden="true">
+  <div class="magic-dot-pattern-grid" />
+</div>
+
+<style>
+  .magic-dot-pattern {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  .magic-dot-pattern-grid {
+    position: absolute;
+    inset: -50%;
+    background-image: radial-gradient(circle at 1px 1px, var(--muted, #8b949e) 1px, transparent 0);
+    background-size: 32px 32px;
+    opacity: 0.25;
+  }
+</style>
