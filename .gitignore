@@ -16,6 +16,11 @@ build/
 instance/
 .webassets-cache
 
+# Astro
+astro-portfolio/node_modules/
+astro-portfolio/dist/
+astro-portfolio/.astro/
+
 # IDE
 .idea/
 .vscode/
