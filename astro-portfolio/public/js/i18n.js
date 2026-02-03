@@ -20,6 +20,7 @@ const translations = {
     heroTagline: "纽约大学 管理与分析硕士 · 数据分析与数据工程 · Python · SQL · ETL · BI",
     btnProjects: "看看我的作品",
     btnContact: "联系我",
+    btnViewMore: "查看更多",
     sectionAbout: "关于我",
     sectionSkills: "技能",
     sectionEducation: "教育背景",
@@ -42,6 +43,8 @@ const translations = {
     contactPageTitle: "联系 | 李卓衡",
     projectsPageTitle: "项目 | 李卓衡",
     othersPageTitle: "其他 | 李卓衡",
+    nyuPageTitle: "纽约大学 | 李卓衡",
+    xianPageTitle: "西安音乐学院 | 李卓衡",
   },
   en: {
     navHome: "Home",
@@ -60,6 +63,7 @@ const translations = {
     heroTagline: "MS in Management & Analytics @ NYU · Data Analytics & Data Engineering · Python · SQL · ETL · BI",
     btnProjects: "View my work",
     btnContact: "Contact me",
+    btnViewMore: "View more",
     sectionAbout: "About me",
     sectionSkills: "Skills",
     sectionEducation: "Education",
@@ -82,6 +86,8 @@ const translations = {
     contactPageTitle: "Contact | Zhuoheng Li",
     projectsPageTitle: "Projects | Zhuoheng Li",
     othersPageTitle: "Others | Zhuoheng Li",
+    nyuPageTitle: "New York University | Zhuoheng Li",
+    xianPageTitle: "Xi'an Conservatory | Zhuoheng Li",
   },
 };
 
@@ -109,7 +115,7 @@ function applyPageTitle(lang, pathname) {
     document.title = lang === "zh" ? "李卓衡 | 个人网站" : "Zhuoheng Li | Personal Website";
     return;
   }
-  const key = p.includes("about") ? "aboutPageTitle" : p.includes("skills") ? "skillsPageTitle" : p.includes("education") ? "educationPageTitle" : p.includes("experience") ? "experiencePageTitle" : p.includes("honors") ? "honorsPageTitle" : p.includes("campus") ? "campusPageTitle" : p.includes("contact") ? "contactPageTitle" : p.includes("projects") ? "projectsPageTitle" : p.includes("others") ? "othersPageTitle" : p.includes("resume") ? "resumePageTitle" : null;
+  const key = p.includes("about") ? "aboutPageTitle" : p.includes("skills") ? "skillsPageTitle" : p.includes("nyu") ? "nyuPageTitle" : p.includes("xian") ? "xianPageTitle" : p.includes("education") ? "educationPageTitle" : p.includes("experience") ? "experiencePageTitle" : p.includes("honors") ? "honorsPageTitle" : p.includes("campus") ? "campusPageTitle" : p.includes("contact") ? "contactPageTitle" : p.includes("projects") ? "projectsPageTitle" : p.includes("others") ? "othersPageTitle" : p.includes("resume") ? "resumePageTitle" : null;
   if (key && t[key]) document.title = t[key];
 }
 function isHomePage() {
