@@ -1,9 +1,14 @@
 /**
- * 中英文切换：与 Flask 版一致
- * data-i18n="key" 的节点会被替换为对应文案；content-zh / content-en 由 CSS 根据 html[lang] 显示/隐藏
+ * 中英文案统一配置
+ * - data-i18n="key" 的节点会被替换为当前语言的文案
+ * - content-zh / content-en 由 CSS 根据 html[lang] 显示/隐藏
+ *
+ * 键名分组：导航 nav* | 首页欢迎 hero* | 按钮 btn* | 区块标题 section* | 联系 contact* |
+ * 页脚 footer* | 页面标题 *PageTitle | 简历 resume* | 其他页 others*
  */
 const translations = {
   zh: {
+    // 导航
     navHome: "首页",
     navAbout: "关于",
     navSkills: "技能",
@@ -16,11 +21,15 @@ const translations = {
     navOthers: "其他",
     navResume: "简历",
     navMenuAria: "打开菜单",
+    // 首页欢迎
     heroGreeting: "你好，我是",
+    heroWelcomeZh: "欢迎来到我的小站",
     heroTagline: "纽约大学 管理与分析硕士 · 数据分析与数据工程 · Python · SQL · ETL · BI",
+    // 按钮
     btnProjects: "查看我的项目",
     btnContact: "联系我",
     btnViewMore: "查看更多",
+    // 区块标题
     sectionAbout: "关于我",
     sectionSkills: "技能",
     sectionEducation: "教育背景",
@@ -31,8 +40,13 @@ const translations = {
     sectionInterests: "兴趣",
     sectionContact: "联系我",
     sectionOthers: "其他",
+    projectsMoreMarkdown: "更多（Markdown）",
+    // 联系
     contactIntro: "欢迎通过以下方式与我交流：",
+    // 页脚
+    footerSiteZh: "个人网站",
     footerSite: "个人网站",
+    // 页面标题（用于 document.title）
     resumePageTitle: "李卓衡 | 简历",
     aboutPageTitle: "关于 | 李卓衡",
     skillsPageTitle: "技能 | 李卓衡",
@@ -45,6 +59,14 @@ const translations = {
     othersPageTitle: "其他 | 李卓衡",
     nyuPageTitle: "纽约大学 | 李卓衡",
     xianPageTitle: "西安音乐学院 | 李卓衡",
+    // 简历页
+    resumeDownloadPdf: "下载 PDF",
+    resumeViewBelow: "下方预览或新标签打开",
+    resumeFallbackPrefix: "若无法加载，请",
+    resumeFallbackLink: "在新标签页打开",
+    resumeFallbackSuffix: "。",
+    // 其他页
+    othersIntroZh: "此处可添加照片等内容。",
   },
   en: {
     navHome: "Home",
@@ -60,6 +82,8 @@ const translations = {
     navResume: "Resume",
     navMenuAria: "Open menu",
     heroGreeting: "Hi, I'm",
+    heroWelcomeZh: "欢迎来到我的小站",
+    heroWelcomeEn: "Welcome",
     heroTagline: "MS in Management & Analytics @ NYU · Data Analytics & Data Engineering · Python · SQL · ETL · BI",
     btnProjects: "View my projects",
     btnContact: "Contact me",
@@ -70,11 +94,14 @@ const translations = {
     sectionExperience: "Experience",
     sectionProjects: "Projects",
     sectionHonors: "Honors & Awards",
-    sectionCampus: "Campus Leadership & Volunteering",
+    sectionCampus: "Campus & Volunteering",
     sectionInterests: "Interests",
     sectionContact: "Contact",
     sectionOthers: "Others",
+    projectsMoreMarkdown: "More (from Markdown)",
     contactIntro: "Feel free to reach out:",
+    footerSiteZh: "个人网站",
+    footerSiteEn: "Personal Site",
     footerSite: "Personal Site",
     resumePageTitle: "Zhuoheng Li | Resume",
     aboutPageTitle: "About | Zhuoheng Li",
@@ -88,6 +115,12 @@ const translations = {
     othersPageTitle: "Others | Zhuoheng Li",
     nyuPageTitle: "New York University | Zhuoheng Li",
     xianPageTitle: "Xi'an Conservatory | Zhuoheng Li",
+    resumeDownloadPdf: "Download PDF",
+    resumeViewBelow: "View below or open in a new tab",
+    resumeFallbackPrefix: "If the PDF doesn't load, ",
+    resumeFallbackLink: "open in a new tab",
+    resumeFallbackSuffix: ".",
+    othersIntroEn: "Add photos and more content here.",
   },
 };
 
@@ -107,6 +140,7 @@ function setLang(lang) {
   const p = typeof location !== "undefined" && location.pathname ? location.pathname : "";
   applyPageTitle(lang, p);
 }
+
 function applyPageTitle(lang, pathname) {
   const p = (pathname || (typeof location !== "undefined" && location.pathname) || "").replace(/\/$/, "");
   const t = translations[lang];
@@ -118,6 +152,7 @@ function applyPageTitle(lang, pathname) {
   const key = p.includes("about") ? "aboutPageTitle" : p.includes("skills") ? "skillsPageTitle" : p.includes("nyu") ? "nyuPageTitle" : p.includes("xian") ? "xianPageTitle" : p.includes("education") ? "educationPageTitle" : p.includes("experience") ? "experiencePageTitle" : p.includes("honors") ? "honorsPageTitle" : p.includes("campus") ? "campusPageTitle" : p.includes("contact") ? "contactPageTitle" : p.includes("projects") ? "projectsPageTitle" : p.includes("others") ? "othersPageTitle" : p.includes("resume") ? "resumePageTitle" : null;
   if (key && t[key]) document.title = t[key];
 }
+
 function isHomePage() {
   if (typeof location === "undefined" || !location.pathname) return true;
   const p = location.pathname.replace(/\/$/, "") || "/";
@@ -154,3 +189,4 @@ function initI18n() {
   document.getElementById("lang-zh")?.addEventListener("click", () => setLang("zh"));
   document.getElementById("lang-en")?.addEventListener("click", () => setLang("en"));
 }
+

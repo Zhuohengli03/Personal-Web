@@ -7,9 +7,9 @@ const resumePath = '/resume.pdf';
 <BaseLayout title="李卓衡 | 简历" description="Zhuoheng Li — Resume (PDF) download and view.">
   <h1 data-i18n="navResume">简历</h1>
   <p class="intro">
-    <a href={resumePath} download><span class="content-zh">下载 PDF</span><span class="content-en">Download PDF</span></a>
-    <span class="content-zh"> · 下方预览或新标签打开</span>
-    <span class="content-en"> · View below or open in a new tab</span>
+    <a href={resumePath} download><span class="content-zh" data-i18n="resumeDownloadPdf">下载 PDF</span><span class="content-en" data-i18n="resumeDownloadPdf">Download PDF</span></a>
+    <span class="content-zh"> · </span><span class="content-zh" data-i18n="resumeViewBelow">下方预览或新标签打开</span>
+    <span class="content-en"> · </span><span class="content-en" data-i18n="resumeViewBelow">View below or open in a new tab</span>
   </p>
   <div class="embed-wrap">
     <iframe
@@ -21,8 +21,8 @@ const resumePath = '/resume.pdf';
     />
   </div>
   <p class="fallback">
-    <span class="content-zh">若无法加载，请</span><span class="content-en">If the PDF doesn’t load, </span>
-    <a href={resumePath} target="_blank" rel="noopener"><span class="content-zh">在新标签页打开</span><span class="content-en">open it in a new tab</span></a><span class="content-zh">。</span><span class="content-en">.</span>
+    <span class="content-zh" data-i18n="resumeFallbackPrefix">若无法加载，请</span><span class="content-en" data-i18n="resumeFallbackPrefix">If the PDF doesn't load, </span>
+    <a href={resumePath} target="_blank" rel="noopener"><span class="content-zh" data-i18n="resumeFallbackLink">在新标签页打开</span><span class="content-en" data-i18n="resumeFallbackLink">open in a new tab</span></a><span class="content-zh" data-i18n="resumeFallbackSuffix">。</span><span class="content-en" data-i18n="resumeFallbackSuffix">.</span>
   </p>
 </BaseLayout>
 
