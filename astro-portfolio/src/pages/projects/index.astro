@@ -1,0 +1,40 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import { getCollection } from 'astro:content';
+
+const projects = await getCollection('projects');
+const sorted = [...projects].sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+<BaseLayout title="Projects" description="Data and analytics projects — ETL, pipelines, dashboards, and more.">
+  <h1>Projects</h1>
+  <p class="intro">Selected data engineering and analytics work. Each project is described in a Markdown file; add more by dropping new <code>.md</code> files into <code>src/content/projects/</code>.</p>
+  <div class="project-grid">
+    {sorted.map((entry) => (
+      <ProjectCard entry={entry} />
+    ))}
+  </div>
+</BaseLayout>
+
+<style>
+  h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0 0 0.5rem;
+  }
+  .intro {
+    color: var(--muted);
+    margin: 0 0 1.5rem;
+    font-size: 0.95rem;
+  }
+  .intro code {
+    background: var(--surface);
+    padding: 0.15rem 0.4rem;
+    border-radius: 4px;
+    font-size: 0.85em;
+  }
+  .project-grid {
+    display: grid;
+    gap: 1rem;
+  }
+</style>

@@ -1,0 +1,82 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import type { CollectionEntry } from 'astro:content';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+interface Props {
+  entry: CollectionEntry<'projects'>;
+}
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+const { title, description, pubDate, tech, repo, link } = entry.data;
+---
+<BaseLayout title={title} description={description}>
+  <article class="project-detail">
+    <header>
+      <h1>{title}</h1>
+      <p class="meta">
+        <time datetime={pubDate.toISOString()}>
+          {pubDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+        </time>
+        {tech.length > 0 && (
+          <span class="tech"> · {tech.join(', ')}</span>
+        )}
+      </p>
+      {(repo || link) && (
+        <p class="links">
+          {repo && <a href={repo} target="_blank" rel="noopener noreferrer">Repository</a>}
+          {repo && link && ' · '}
+          {link && <a href={link} target="_blank" rel="noopener noreferrer">Live demo</a>}
+        </p>
+      )}
+    </header>
+    <div class="prose">
+      <Content />
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .project-detail header {
+    margin-bottom: 1.5rem;
+  }
+  .project-detail h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0 0 0.5rem;
+  }
+  .meta {
+    color: var(--muted);
+    font-size: 0.9rem;
+    margin: 0 0 0.25rem;
+  }
+  .links {
+    font-size: 0.9rem;
+    margin: 0;
+  }
+  .prose :global(h2) {
+    font-size: 1.2rem;
+    margin: 1.5rem 0 0.5rem;
+  }
+  .prose :global(h3) {
+    font-size: 1.05rem;
+    margin: 1.25rem 0 0.5rem;
+  }
+  .prose :global(p) {
+    margin: 0 0 0.75rem;
+    color: var(--muted);
+  }
+  .prose :global(ul) {
+    margin: 0 0 0.75rem;
+    padding-left: 1.25rem;
+    color: var(--muted);
+  }
+</style>

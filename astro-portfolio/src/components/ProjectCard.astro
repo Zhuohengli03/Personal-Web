@@ -1,0 +1,74 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  entry: CollectionEntry<'projects'>;
+}
+const { entry } = Astro.props;
+const { slug, data, body } = entry;
+const { title, description, tech, featured } = data;
+const href = `/projects/${slug}/`;
+---
+<article class="card" data-featured={featured}>
+  <h2 class="card-title">
+    <a href={href}>{title}</a>
+  </h2>
+  <p class="card-desc">{description}</p>
+  {tech.length > 0 && (
+    <ul class="card-tech" aria-label="Technologies">
+      {tech.map((t) => (
+        <li>{t}</li>
+      ))}
+    </ul>
+  )}
+  <a href={href} class="card-link">Read more →</a>
+</article>
+
+<style>
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.25rem;
+    transition: border-color 0.2s;
+  }
+  .card[data-featured='true'] {
+    border-color: var(--accent);
+  }
+  .card-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin: 0 0 0.5rem;
+  }
+  .card-title a {
+    color: var(--text);
+  }
+  .card-title a:hover {
+    color: var(--accent);
+    text-decoration: none;
+  }
+  .card-desc {
+    color: var(--muted);
+    margin: 0 0 0.75rem;
+    font-size: 0.95rem;
+  }
+  .card-tech {
+    list-style: none;
+    margin: 0 0 0.75rem;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .card-tech li {
+    font-size: 0.8rem;
+    color: var(--muted);
+    background: var(--bg);
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+  }
+  .card-link {
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+</style>

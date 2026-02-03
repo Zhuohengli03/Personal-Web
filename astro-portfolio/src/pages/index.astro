@@ -1,0 +1,83 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import Skills from '../components/Skills.astro';
+import { getCollection } from 'astro:content';
+
+const allProjects = await getCollection('projects');
+const featured = allProjects
+  .filter((p) => p.data.featured)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const recent = allProjects
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 3);
+---
+<BaseLayout title="Home" description="Data & analytics portfolio — projects, resume, and more.">
+  <section class="hero">
+    <h1>Data &amp; Analytics Portfolio</h1>
+    <p class="tagline">
+      MS in Management &amp; Analytics · Python, SQL, ETL, BI. Building pipelines and turning data into decisions.
+    </p>
+  </section>
+
+  <section class="about">
+    <h2 class="section-title">About</h2>
+    <p>
+      I focus on <strong>data analytics and data engineering</strong>: reliable pipelines, clean datasets, and clear metrics and dashboards. Open to roles in data analysis, analytics engineering, data engineering, and BI.
+    </p>
+  </section>
+
+  <Skills />
+
+  <section class="featured-projects">
+    <h2 class="section-title">Featured Projects</h2>
+    {featured.length > 0 ? (
+      <div class="project-grid">
+        {featured.map((entry) => (
+          <ProjectCard entry={entry} />
+        ))}
+      </div>
+    ) : (
+      <div class="project-grid">
+        {recent.map((entry) => (
+          <ProjectCard entry={entry} />
+        ))}
+      </div>
+    )}
+    <p class="more-link"><a href="/projects/">View all projects →</a></p>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero {
+    margin-bottom: 2.5rem;
+  }
+  .hero h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin: 0 0 0.5rem;
+  }
+  .tagline {
+    color: var(--muted);
+    margin: 0;
+    font-size: 1.05rem;
+  }
+  .section-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 2rem 0 1rem;
+    color: var(--text);
+  }
+  .about p {
+    color: var(--muted);
+    margin: 0;
+  }
+  .project-grid {
+    display: grid;
+    gap: 1rem;
+  }
+  .more-link {
+    margin: 1rem 0 0;
+    font-size: 0.95rem;
+  }
+</style>
