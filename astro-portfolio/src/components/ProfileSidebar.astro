@@ -34,7 +34,9 @@ const base = import.meta.env.BASE_URL;
     <a href={`${base}projects/`} class="profile-btn profile-btn-primary" data-i18n="btnProjects">查看我的项目</a>
     <a href={`${base}contact/`} class="profile-btn profile-btn-outline" data-i18n="btnContact">联系我</a>
   </div>
-  <TechCloud />
+  <div class="icon-cloud-wrap">
+    <TechCloud />
+  </div>
 </aside>
 
 <style>
@@ -148,6 +150,11 @@ const base = import.meta.env.BASE_URL;
   .profile-btn-outline:hover {
     border-color: var(--muted);
     color: var(--text);
+  }
+  .icon-cloud-wrap {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
   }
   @media (max-width: 991px) {
     .profile-sidebar {
