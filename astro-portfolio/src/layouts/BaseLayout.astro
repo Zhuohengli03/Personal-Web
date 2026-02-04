@@ -1,5 +1,6 @@
 ---
 import ProfileSidebar from '../components/ProfileSidebar.astro';
+import MusicPlayer from '../components/MusicPlayer.astro';
 interface Props {
   title: string;
   description?: string;
@@ -139,6 +140,7 @@ const base = import.meta.env.BASE_URL;
       </video>
       <div class="site-bg-overlay"></div>
     </div>
+    <MusicPlayer />
     <header class="site-header">
       <nav class="nav">
         <!-- 导航：校园已移除，内容在首页西安音乐学院卡片下。勿加 campus 链接。 -->
@@ -151,9 +153,9 @@ const base = import.meta.env.BASE_URL;
           <li class="nav-dropdown">
             <span class="nav-dropdown-trigger" aria-haspopup="true" aria-expanded="false" data-i18n="navOthers">其他</span>
             <ul class="nav-dropdown-menu" role="menu">
-              <li role="none"><a href={`${base}photography/`} role="menuitem">Photography</a></li>
-              <li role="none"><a href={`${base}blog/`} role="menuitem">Blog</a></li>
-              <li role="none"><a href={`${base}playground/`} role="menuitem">Playground</a></li>
+              <li role="none"><a href={`${base}photography/`} role="menuitem" data-i18n="sectionPhotography">摄影</a></li>
+              <li role="none"><a href={`${base}blog/`} role="menuitem" data-i18n="sectionBlog">博客</a></li>
+              <li role="none"><a href={`${base}playground/`} role="menuitem" data-i18n="sectionPlayground">游乐场</a></li>
             </ul>
           </li>
           <li><a href={`${base}resume/`} data-i18n="navResume">简历</a></li>

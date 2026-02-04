@@ -21,6 +21,7 @@ const translations = {
     navOthers: "其他",
     navResume: "简历",
     navMenuAria: "打开菜单",
+    navBack: "返回上一页",
     // 首页欢迎
     heroGreeting: "你好，我是",
     heroWelcomeZh: "欢迎来到我的小站",
@@ -44,6 +45,8 @@ const translations = {
     xianGuqinIntro: "古琴简介",
     xianMomentsFeed: "动态",
     projectsMoreMarkdown: "更多（Markdown）",
+    projectGalleryTitleZh: "项目图片",
+    projectGalleryTitleEn: "Project images",
     // 联系
     contactIntro: "欢迎通过以下方式与我交流：",
     // 页脚
@@ -98,6 +101,7 @@ const translations = {
     navOthers: "Others",
     navResume: "Resume",
     navMenuAria: "Open menu",
+    navBack: "Back",
     heroGreeting: "Hi, I'm",
     heroWelcomeZh: "欢迎来到我的小站",
     heroWelcomeEn: "Welcome",
@@ -127,6 +131,8 @@ const translations = {
     playgroundIntroZh: "敬请期待。",
     playgroundIntroEn: "Coming soon.",
     projectsMoreMarkdown: "More (from Markdown)",
+    projectGalleryTitleZh: "项目图片",
+    projectGalleryTitleEn: "Project images",
     contactIntro: "Feel free to reach out:",
     footerSiteZh: "个人网站",
     footerSiteEn: "Personal Site",

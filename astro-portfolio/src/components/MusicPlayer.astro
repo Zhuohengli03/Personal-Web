@@ -1,0 +1,207 @@
+---
+const base = import.meta.env.BASE_URL || '/';
+---
+<div class="music-player" data-base={base} aria-label="音乐播放器">
+  <audio id="music-audio" preload="metadata"></audio>
+  <div class="music-controls">
+    <button type="button" class="music-btn" id="music-prev" aria-label="上一首">⏮</button>
+    <button type="button" class="music-btn music-btn-play" id="music-play" aria-label="播放/暂停">▶</button>
+    <button type="button" class="music-btn" id="music-next" aria-label="下一首">⏭</button>
+  </div>
+  <p class="music-title" id="music-title">—</p>
+  <div class="music-progress-wrap">
+    <progress id="music-progress" value="0" max="100" aria-hidden="true"></progress>
+  </div>
+</div>
+
+<script define:vars={{ base }}>
+  (function () {
+    const BASE = typeof base !== 'undefined' ? base : (document.querySelector('.music-player')?.getAttribute('data-base') || '/');
+    const playlistUrl = (BASE.endsWith('/') ? BASE : BASE + '/') + 'music/playlist.json';
+    let playlist = [];
+    let index = 0;
+    const audio = document.getElementById('music-audio');
+    const playBtn = document.getElementById('music-play');
+    const prevBtn = document.getElementById('music-prev');
+    const nextBtn = document.getElementById('music-next');
+    const titleEl = document.getElementById('music-title');
+    const progressEl = document.getElementById('music-progress');
+
+    function resolveSrc(item) {
+      const s = item.src || '';
+      if (s.startsWith('http://') || s.startsWith('https://')) return s;
+      const prefix = BASE.endsWith('/') ? BASE + 'music/' : BASE + '/music/';
+      return prefix + s;
+    }
+
+    function loadPlaylist() {
+      fetch(playlistUrl)
+        .then((r) => (r.ok ? r.json() : []))
+        .then((data) => {
+          playlist = Array.isArray(data) ? data : [];
+          if (playlist.length) {
+            index = 0;
+            playTrack();
+          } else if (titleEl) titleEl.textContent = '—';
+        })
+        .catch(() => {
+          if (titleEl) titleEl.textContent = '—';
+        });
+    }
+
+    function playTrack() {
+      if (!playlist.length || !audio) return;
+      const item = playlist[index];
+      audio.src = resolveSrc(item);
+      const title = item.title || '—';
+      if (titleEl) titleEl.textContent = title;
+      audio.load();
+      audio.play().catch(() => {});
+      if (playBtn) playBtn.textContent = '⏸';
+    }
+
+    function setPlaying(playing) {
+      if (playBtn) playBtn.textContent = playing ? '⏸' : '▶';
+    }
+
+    if (audio) {
+      audio.addEventListener('play', () => setPlaying(true));
+      audio.addEventListener('pause', () => setPlaying(false));
+      audio.addEventListener('ended', () => {
+        index = (index + 1) % playlist.length;
+        if (playlist.length) playTrack();
+        else setPlaying(false);
+      });
+      audio.addEventListener('timeupdate', () => {
+        if (progressEl && audio.duration) progressEl.value = (audio.currentTime / audio.duration) * 100;
+      });
+    }
+
+    playBtn?.addEventListener('click', () => {
+      if (!playlist.length) return;
+      if (audio.paused) {
+        if (audio.src) audio.play();
+        else playTrack();
+      } else audio.pause();
+    });
+    prevBtn?.addEventListener('click', () => {
+      if (!playlist.length) return;
+      index = (index - 1 + playlist.length) % playlist.length;
+      playTrack();
+    });
+    nextBtn?.addEventListener('click', () => {
+      if (!playlist.length) return;
+      index = (index + 1) % playlist.length;
+      playTrack();
+    });
+
+    progressEl?.addEventListener('click', (e) => {
+      if (!audio.duration) return;
+      const rect = progressEl.getBoundingClientRect();
+      const p = (e.clientX - rect.left) / rect.width;
+      audio.currentTime = p * audio.duration;
+    });
+
+    loadPlaylist();
+  })();
+</script>
+
+<style>
+  .music-player {
+    position: fixed;
+    top: 5.5rem;
+    left: 1.5rem;
+    z-index: 10;
+    width: 200px;
+    padding: 0.75rem 1rem;
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius);
+    box-shadow: var(--glass-shadow);
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+  .music-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+  .music-btn {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--text);
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background 0.2s, color 0.2s;
+  }
+  .music-btn:hover {
+    background: rgba(255, 255, 255, 0.12);
+    color: var(--accent);
+  }
+  .music-btn-play {
+    width: 36px;
+    height: 36px;
+    font-size: 1rem;
+  }
+  .music-title {
+    margin: 0 0 0.5rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 0.8rem;
+  }
+  .music-progress-wrap {
+    margin-top: 0.25rem;
+  }
+  .music-progress-wrap progress {
+    width: 100%;
+    height: 4px;
+    border: none;
+    border-radius: 2px;
+    background: rgba(255, 255, 255, 0.08);
+    cursor: pointer;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  .music-progress-wrap progress::-webkit-progress-bar {
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 2px;
+  }
+  .music-progress-wrap progress::-webkit-progress-value {
+    background: var(--accent);
+    border-radius: 2px;
+  }
+  .music-progress-wrap progress::-moz-progress-bar {
+    background: var(--accent);
+    border-radius: 2px;
+  }
+  @media (max-width: 991px) {
+    .music-player {
+      top: auto;
+      bottom: 1rem;
+      left: 1rem;
+      right: 1rem;
+      width: auto;
+      max-width: 280px;
+      margin: 0 auto;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  }
+  @media (max-width: 768px) {
+    .music-player {
+      top: auto;
+      bottom: 1rem;
+    }
+  }
+</style>
