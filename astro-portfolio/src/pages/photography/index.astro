@@ -36,12 +36,15 @@ try {
     {photographyImages.map((filename) => (
       <div class="photo-grid-item">
         <img
+          class="photo-zoom-img"
           src={photoUrl(filename)}
+          data-full-src={photoUrl(filename)}
           alt=""
           width="400"
           height="300"
           loading="lazy"
           decoding="async"
+          title="Double-click to zoom"
         />
       </div>
     ))}

@@ -136,6 +136,65 @@ const base = import.meta.env.BASE_URL;
         font-family: ui-monospace, monospace;
         font-size: 0.9em;
       }
+      /* 全站 lightbox：挂 body 下、最高 z-index，避免被导航/侧栏/iframe 遮挡 */
+      .global-lightbox {
+        position: fixed;
+        inset: 0;
+        z-index: 2147483647;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        box-sizing: border-box;
+        isolation: isolate;
+      }
+      .global-lightbox[hidden] {
+        display: none !important;
+      }
+      .global-lightbox-backdrop {
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.9);
+        cursor: pointer;
+      }
+      .global-lightbox-img {
+        position: relative;
+        z-index: 1;
+        max-width: 95vw;
+        max-height: 90vh;
+        width: auto;
+        height: auto;
+        object-fit: contain;
+        border-radius: var(--radius);
+        box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
+        pointer-events: none;
+      }
+      .global-lightbox-close {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        z-index: 2;
+        width: 2.5rem;
+        height: 2.5rem;
+        border: none;
+        border-radius: 50%;
+        background: var(--glass-bg);
+        color: var(--text);
+        font-size: 1.5rem;
+        line-height: 1;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.2s;
+      }
+      .global-lightbox-close:hover {
+        background: var(--muted);
+      }
+      .gallery-zoom-img,
+      .photo-zoom-img {
+        cursor: zoom-in;
+      }
     </style>
   </head>
   <body>
@@ -184,8 +243,53 @@ const base = import.meta.env.BASE_URL;
     <footer class="site-footer">
       <p>© <span id="year"></span> <span class="content-zh">李卓衡</span><span class="content-en">Zhuoheng Li</span> · <span class="content-zh" data-i18n="footerSiteZh">个人网站</span><span class="content-en" data-i18n="footerSiteEn">Personal Site</span></p>
     </footer>
+    <!-- 全站共用 lightbox，挂到 body 下避免被遮挡 -->
+    <div class="global-lightbox" id="global-lightbox" role="dialog" aria-modal="true" aria-label="Zoomed image" hidden>
+      <div class="global-lightbox-backdrop"></div>
+      <img class="global-lightbox-img" src="" alt="" />
+      <button type="button" class="global-lightbox-close" aria-label="Close">×</button>
+    </div>
     <script is:inline src={`${base}js/i18n.js`}></script>
     <script is:inline src={`${base}js/main.js`}></script>
+    <script is:inline>
+      (function () {
+        var lb = document.getElementById('global-lightbox');
+        var lbImg = lb && lb.querySelector('.global-lightbox-img');
+        var backdrop = lb && lb.querySelector('.global-lightbox-backdrop');
+        var closeBtn = lb && lb.querySelector('.global-lightbox-close');
+        function openLightbox(src) {
+          if (!lb || !lbImg) return;
+          lbImg.src = src;
+          lb.hidden = false;
+          document.body.style.overflow = 'hidden';
+        }
+        function closeLightbox() {
+          if (!lb) return;
+          lb.hidden = true;
+          document.body.style.overflow = '';
+        }
+        function bindZoomImages() {
+          document.querySelectorAll('.gallery-zoom-img, .photo-zoom-img').forEach(function (img) {
+            if (img.dataset.zoomBound) return;
+            img.dataset.zoomBound = '1';
+            img.addEventListener('dblclick', function () {
+              var src = img.dataset.fullSrc || img.currentSrc || img.src;
+              openLightbox(src);
+            });
+          });
+        }
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', bindZoomImages);
+        } else {
+          bindZoomImages();
+        }
+        backdrop && backdrop.addEventListener('click', closeLightbox);
+        closeBtn && closeBtn.addEventListener('click', closeLightbox);
+        document.addEventListener('keydown', function (e) {
+          if (e.key === 'Escape' && lb && !lb.hidden) closeLightbox();
+        });
+      })();
+    </script>
   </body>
 </html>
 

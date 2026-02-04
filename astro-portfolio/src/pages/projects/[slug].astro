@@ -161,11 +161,6 @@ if (isMarkdown && entry) {
             ))}
           </div>
         </section>
-        <div class="gallery-lightbox" id="gallery-lightbox" role="dialog" aria-modal="true" aria-label="Zoomed image" hidden>
-          <div class="gallery-lightbox-backdrop"></div>
-          <img class="gallery-lightbox-img" src="" alt="" />
-          <button type="button" class="gallery-lightbox-close" aria-label="Close">×</button>
-        </div>
       </>
     )}
     <p class="back-link"><a href="#" role="button" data-back>← <span data-i18n="navBack">返回上一页</span></a></p>
@@ -280,62 +275,6 @@ if (isMarkdown && entry) {
     object-fit: cover;
     aspect-ratio: 4 / 3;
     border: 1px solid var(--glass-border);
-    cursor: zoom-in;
-  }
-  /* 双击放大 lightbox：高层级避免被导航/其他层遮挡 */
-  .gallery-lightbox {
-    position: fixed;
-    inset: 0;
-    z-index: 9999;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 2rem;
-    box-sizing: border-box;
-    isolation: isolate;
-  }
-  .gallery-lightbox[hidden] {
-    display: none !important;
-  }
-  .gallery-lightbox-backdrop {
-    position: absolute;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.9);
-    cursor: pointer;
-  }
-  .gallery-lightbox-img {
-    position: relative;
-    z-index: 1;
-    max-width: 95vw;
-    max-height: 90vh;
-    width: auto;
-    height: auto;
-    object-fit: contain;
-    border-radius: var(--radius);
-    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
-    pointer-events: none;
-  }
-  .gallery-lightbox-close {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    z-index: 2;
-    width: 2.5rem;
-    height: 2.5rem;
-    border: none;
-    border-radius: 50%;
-    background: var(--glass-bg);
-    color: var(--text);
-    font-size: 1.5rem;
-    line-height: 1;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background 0.2s;
-  }
-  .gallery-lightbox-close:hover {
-    background: var(--muted);
   }
   .back-link {
     margin-top: 1.5rem;
@@ -343,41 +282,3 @@ if (isMarkdown && entry) {
     color: var(--muted);
   }
 </style>
-
-{projectImages.length > 0 && (
-  <script>
-    (function () {
-      const lightbox = document.getElementById('gallery-lightbox');
-      const lightboxImg = lightbox?.querySelector('.gallery-lightbox-img');
-      const backdrop = lightbox?.querySelector('.gallery-lightbox-backdrop');
-      const closeBtn = lightbox?.querySelector('.gallery-lightbox-close');
-      const zoomImages = document.querySelectorAll('.gallery-zoom-img');
-
-      function openLightbox(src) {
-        if (!lightbox || !lightboxImg) return;
-        lightboxImg.src = src;
-        lightbox.hidden = false;
-        document.body.style.overflow = 'hidden';
-      }
-
-      function closeLightbox() {
-        if (!lightbox) return;
-        lightbox.hidden = true;
-        document.body.style.overflow = '';
-      }
-
-      zoomImages.forEach((img) => {
-        img.addEventListener('dblclick', () => {
-          const src = img.dataset.fullSrc || img.currentSrc || img.src;
-          openLightbox(src);
-        });
-      });
-
-      backdrop?.addEventListener('click', closeLightbox);
-      closeBtn?.addEventListener('click', closeLightbox);
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && lightbox && !lightbox.hidden) closeLightbox();
-      });
-    })();
-  </script>
-)}
