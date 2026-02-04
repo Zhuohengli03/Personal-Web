@@ -1,15 +1,158 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import BorderBeam from '../components/magic/BorderBeam.astro';
+import EducationCard from '../components/magic/EducationCard.astro';
 const base = import.meta.env.BASE_URL;
 ---
 <BaseLayout title="教育 | 李卓衡" description="Education - NYU, Xi'an Conservatory">
-  <meta http-equiv="refresh" content={`0;url=${base ? base + 'about/' : '/about/'}`} />
-  <p class="redirect-msg">
-    <span class="content-zh">教育内容已合并至<a href={`${base}about/`}>关于</a>页，正在跳转…</span>
-    <span class="content-en">Education is now on the <a href={`${base}about/`}>About</a> page. Redirecting…</span>
-  </p>
+  <h1 class="page-title" data-i18n="sectionEducation">教育背景</h1>
+  <div class="edu-card-grid">
+    <BorderBeam class="project-card-wrap">
+      <div class="project-card">
+        <EducationCard
+          titleZh="纽约大学"
+          titleEn="New York University"
+          locationZh="美国纽约"
+          locationEn="New York, USA"
+          subtitleZh="管理与管理分析硕士（商业分析）· 2025.09 – 2026.12（预计）· GPA 3.83/4.00"
+          subtitleEn="M.S. in Management & Analytics (Business Analytics) · 2025.09 – 2026.12 (Expected) · GPA 3.83/4.00"
+        >
+          <div slot="footer" class="edu-card-viewmore">
+            <a href={`${base}education/nyu/`} data-i18n="btnViewMore">查看更多</a>
+          </div>
+        </EducationCard>
+      </div>
+    </BorderBeam>
+    <BorderBeam class="project-card-wrap">
+      <div class="project-card">
+        <EducationCard
+          titleZh="西安音乐学院"
+          titleEn="Xi'an Conservatory of Music"
+          locationZh="中国西安"
+          locationEn="Xi'an, China"
+          subtitleZh="音乐表演学士（古琴）· 2021.09 – 2025.07"
+          subtitleEn="B.M. in Music Performance (Guqin) · 2021.09 – 2025.07"
+        >
+          <div class="content-zh">
+            <p><strong>荣誉与奖项：</strong></p>
+            <ul>
+              <li>优秀毕业生（2025届）</li>
+              <li>校助学金（2022–2023）</li>
+              <li>优秀学生干部（2022–2023）</li>
+              <li>国家励志奖学金（2023–2024）</li>
+              <li>校奖学金（2023–2024）</li>
+              <li>优秀学生（2023–2024）</li>
+              <li>校荣誉奖学金（2023–2024）</li>
+              <li>「幽兰·阳春」比赛专业组表演奖（2024）</li>
+              <li>陕西省民族器乐展演专业组优秀奖（2024）</li>
+            </ul>
+          </div>
+          <div class="content-en">
+            <p><strong>Honors & Awards:</strong></p>
+            <ul>
+              <li>Outstanding Graduate, Class of 2025</li>
+              <li>University Financial Aid Scholarship (2022–2023)</li>
+              <li>Outstanding Student Leader (2022–2023)</li>
+              <li>National Inspirational Scholarship (2023–2024)</li>
+              <li>University Scholarship (2023–2024)</li>
+              <li>Outstanding Student (2023–2024)</li>
+              <li>University Honor Scholarship (2023–2024)</li>
+              <li>Performance Award (Professional Division), "Youlan · Yangchun" Competition (2024)</li>
+              <li>Excellence Award (Professional Division), Shaanxi Provincial Traditional Instrument Exhibition (2024)</li>
+            </ul>
+          </div>
+          <p class="edu-card-subsection content-zh"><strong>校园与志愿：</strong></p>
+          <p class="edu-card-subsection content-en"><strong>Campus & Volunteering:</strong></p>
+          <ul class="campus-list content-zh">
+            <li>系开学典礼学生代表发言；参与迎新等事务。</li>
+            <li>参与国旗护卫、阳光体育、展演等活动的协调与现场执行。</li>
+            <li>独立完成活动拍摄与后期，产出官方平台物料。</li>
+            <li>参与乐器录音项目，支持教学与宣传。</li>
+            <li>学生会秘书处：撰写与编辑微信公众号推文与公告。</li>
+            <li>疫情期间多次志愿：招生支持、考务支持、学生服务等。</li>
+          </ul>
+          <ul class="campus-list content-en">
+            <li>Student representative speaker at department opening ceremony; supported new-student onboarding operations.</li>
+            <li>Supported campus events (National Flag Guard, Sunshine Sports Games, showcases) with coordination and on-site operations.</li>
+            <li>Produced event media content independently (shooting + post-production) for official platforms.</li>
+            <li>Participated in instrument recording projects supporting teaching and promotion.</li>
+            <li>Student Union (Secretariat): drafted and edited official WeChat public account articles and announcements.</li>
+            <li>Multiple volunteer roles during COVID: admissions support, exam operations support, and student services.</li>
+          </ul>
+          <div slot="footer" class="edu-card-viewmore">
+            <a href={`${base}education/xian/`} data-i18n="btnViewMore">查看更多</a>
+          </div>
+        </EducationCard>
+      </div>
+    </BorderBeam>
+  </div>
+  <p class="page-footer"><a href={base}>← <span data-i18n="navHome">首页</span></a></p>
 </BaseLayout>
+
 <style>
-  .redirect-msg { margin: 2rem 0; color: var(--muted); }
-  .redirect-msg a { color: var(--accent); }
+  .page-title {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0 0 1.25rem;
+  }
+  .edu-card-grid {
+    display: grid;
+    gap: 1.25rem;
+  }
+  .project-card-wrap {
+    border-radius: var(--radius);
+    padding: 2px;
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
+  }
+  .project-card {
+    background: rgba(22, 27, 34, 0.2);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid var(--glass-border);
+    border-radius: calc(var(--radius) - 2px);
+    padding: 1.25rem;
+    position: relative;
+    z-index: 0;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    font-family: var(--font-sans);
+  }
+  .project-card :global(.edu-card) {
+    margin-bottom: 0;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+  .edu-card-viewmore {
+    padding: 0;
+    border: none;
+  }
+  .edu-card-viewmore a {
+    font-weight: 500;
+  }
+  .edu-card-subsection {
+    margin: 1rem 0 0.35rem;
+    font-size: 0.95rem;
+  }
+  .campus-list {
+    margin: 0 0 0.5rem;
+    padding-left: 1.25rem;
+    color: var(--muted);
+    font-size: 0.9rem;
+    line-height: 1.7;
+  }
+  .campus-list li {
+    margin-bottom: 0.35rem;
+  }
+  .page-footer {
+    margin-top: 2rem;
+    font-size: 0.9rem;
+    color: var(--muted);
+  }
 </style>
