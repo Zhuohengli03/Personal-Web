@@ -5,14 +5,32 @@ import fs from 'fs';
 import path from 'path';
 
 const base = import.meta.env.BASE_URL;
-const img = (name: string) => `${base}education/xian/${name}`;
+const imgIntro = (name: string) => `${base}education/xian/${name}`;
+const imgMoment = (name: string) => `${base}education/xian/moments/${name}`;
 
 const imageExtensions = new Set(['.jpg', '.jpeg', '.png', '.webp', '.gif']);
-const dir = path.join(process.cwd(), 'public', 'education', 'xian');
-let imageFiles: string[] = [];
+
+// 中间「古琴简介」配图：public/education/xian/ 根目录（不含子文件夹）
+const dirIntro = path.join(process.cwd(), 'public', 'education', 'xian');
+let introImageFiles: string[] = [];
 try {
-  const files = fs.readdirSync(dir);
-  imageFiles = files
+  const files = fs.readdirSync(dirIntro);
+  introImageFiles = files
+    .filter((f) => {
+      const full = path.join(dirIntro, f);
+      return fs.statSync(full).isFile() && imageExtensions.has(path.extname(f).toLowerCase()) && !f.startsWith('.');
+    })
+    .sort();
+} catch {
+  // 目录不存在或无法读取
+}
+
+// 右侧「动态」照片：public/education/xian/moments/
+const dirMoments = path.join(process.cwd(), 'public', 'education', 'xian', 'moments');
+let momentImageFiles: string[] = [];
+try {
+  const files = fs.readdirSync(dirMoments);
+  momentImageFiles = files
     .filter((f) => imageExtensions.has(path.extname(f).toLowerCase()) && !f.startsWith('.'))
     .sort();
 } catch {
@@ -23,20 +41,22 @@ try {
   <div class="xian-page">
     <p class="xian-back"><a href={base}>← <span data-i18n="navHome">首页</span></a></p>
 
+    <!-- 页面大标题：西安音乐学院 + 学士·时间，艺术字 -->
+    <header class="xian-hero">
+      <h1 class="xian-hero-title">
+        <span class="content-zh">西安音乐学院</span>
+        <span class="content-en">Xi'an Conservatory of Music</span>
+      </h1>
+      <p class="xian-hero-subtitle">
+        <span class="content-zh">音乐表演学士（古琴）· 2021.09 – 2025.07</span>
+        <span class="content-en">B.M. in Music Performance (Guqin) · 2021.09 – 2025.07</span>
+      </p>
+    </header>
+
     <div class="xian-columns">
-      <!-- 中列：古琴简介（静态） -->
+      <!-- 中列：古琴简介（标题仅「古琴简介」，正文 + 配图） -->
       <section class="xian-intro-card detail-card" aria-label="Guqin introduction">
-        <header class="xian-intro-header">
-          <h2 class="xian-intro-title">
-            <span class="content-zh">西安音乐学院</span>
-            <span class="content-en">Xi'an Conservatory of Music</span>
-          </h2>
-          <p class="xian-intro-subtitle">
-            <span class="content-zh">音乐表演学士（古琴）· 2021.09 – 2025.07</span>
-            <span class="content-en">B.M. in Music Performance (Guqin) · 2021.09 – 2025.07</span>
-          </p>
-          <h3 class="xian-intro-label" data-i18n="xianGuqinIntro">古琴简介</h3>
-        </header>
+        <h2 class="xian-intro-label" data-i18n="xianGuqinIntro">古琴简介</h2>
         <div class="xian-intro-body">
           <div class="content-zh">
             <p>古琴起源极早，一般认为其雏形可追溯至先秦时期，在战国至汉代逐渐定型，距今已有三千年以上历史。作为中国最古老、延续时间最长的弦乐器之一，古琴自古被视为“士人之器”，不仅是一种音乐工具，也承载着中国传统审美、修养与精神追求。</p>
@@ -53,19 +73,22 @@ try {
             <p>Regional and lineage traditions have given rise to distinct schools, differing in tempo, rhythm, ornamentation, and tone. Instrument shapes (e.g. Zhongni, Fuxi, Jiaoye, Luoxia) and construction—different woods for top and back, lacquer and filler—further define each instrument’s character. A fine qin is often described as “松、透、沉、润” (loose, transparent, deep, moist). Together, the qin’s structure, sound world, and diverse traditions form one of the most symbolic and refined systems in Chinese traditional music.</p>
           </div>
         </div>
+        <!-- 古琴简介配图（来自 xian/ 根目录） -->
+        {introImageFiles.length > 0 && (
+          <div class="xian-intro-photos">
+            {introImageFiles.map((filename) => (
+              <img src={imgIntro(filename)} alt="" loading="lazy" />
+            ))}
+          </div>
+        )}
       </section>
 
-      <!-- 右列：朋友圈动态（图片/动态） -->
+      <!-- 右列：朋友圈动态（照片来自 xian/moments/） -->
       <aside class="xian-moments-col" aria-label="Moments feed">
-        <MomentsPost
-          titleZh="动态"
-          titleEn="Moments"
-          subtitleZh=""
-          subtitleEn=""
-        >
+        <MomentsPost titleZh="动态" titleEn="Moments" subtitleZh="" subtitleEn="">
           <div slot="images">
-            {imageFiles.map((filename) => (
-              <img src={img(filename)} alt="" />
+            {momentImageFiles.map((filename) => (
+              <img src={imgMoment(filename)} alt="" />
             ))}
           </div>
         </MomentsPost>
@@ -86,6 +109,26 @@ try {
     margin: 0 0 1rem;
   }
   .xian-back a { color: var(--accent); }
+
+  /* 页面大标题：艺术字 */
+  .xian-hero {
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+  .xian-hero-title {
+    font-family: "Dancing Script", "ZCOOL XiaoWei", "Noto Serif SC", cursive;
+    font-size: clamp(1.75rem, 5vw, 2.5rem);
+    font-weight: 700;
+    margin: 0 0 0.35rem;
+    color: var(--text);
+    letter-spacing: 0.02em;
+  }
+  .xian-hero-subtitle {
+    font-size: 0.9rem;
+    color: var(--muted);
+    margin: 0;
+  }
+
   .xian-columns {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
@@ -101,26 +144,11 @@ try {
     padding: 1rem 1.25rem;
     box-shadow: var(--glass-shadow);
   }
-  .xian-intro-header {
-    margin-bottom: 1rem;
-  }
-  .xian-intro-title {
-    font-family: var(--font-serif);
-    font-size: 1.1rem;
-    font-weight: 600;
-    margin: 0 0 0.2rem;
-    color: var(--text);
-  }
-  .xian-intro-subtitle {
-    font-size: 0.8rem;
-    color: var(--muted);
-    margin: 0 0 0.75rem;
-  }
   .xian-intro-label {
-    font-size: 0.95rem;
+    font-size: 1rem;
     font-weight: 600;
-    color: var(--muted);
-    margin: 0;
+    color: var(--text);
+    margin: 0 0 0.75rem;
   }
   .xian-intro-body {
     font-size: 0.95rem;
@@ -132,6 +160,23 @@ try {
   }
   .xian-intro-body :global(p:last-child) {
     margin-bottom: 0;
+  }
+  .xian-intro-photos {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+    margin-top: 1rem;
+  }
+  .xian-intro-photos img {
+    aspect-ratio: 1;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 1px solid var(--glass-border);
+  }
+  .xian-intro-photos img:only-child {
+    max-width: 240px;
+    aspect-ratio: 4/3;
   }
   .xian-moments-col {
     min-width: 0;
