@@ -1,0 +1,64 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+const base = import.meta.env.BASE_URL;
+---
+<BaseLayout title="Photography | Zhuoheng Li" description="Photography portfolio">
+  <h1 class="page-title">Photography</h1>
+  <p class="page-intro">A responsive grid placeholder for future gallery and lightbox integration.</p>
+
+  <div class="photo-grid" aria-label="Photo gallery">
+    <!-- Placeholder cells: replace with real images and add lightbox later -->
+    <div class="photo-grid-item"><span class="photo-placeholder">1</span></div>
+    <div class="photo-grid-item"><span class="photo-placeholder">2</span></div>
+    <div class="photo-grid-item"><span class="photo-placeholder">3</span></div>
+    <div class="photo-grid-item"><span class="photo-placeholder">4</span></div>
+    <div class="photo-grid-item"><span class="photo-placeholder">5</span></div>
+    <div class="photo-grid-item"><span class="photo-placeholder">6</span></div>
+  </div>
+
+  <p class="page-footer"><a href={base}>← Home</a></p>
+</BaseLayout>
+
+<style>
+  .page-title {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0 0 0.5rem;
+  }
+  .page-intro {
+    color: var(--muted);
+    font-size: 0.95rem;
+    margin: 0 0 1.5rem;
+  }
+  .photo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  .photo-grid-item {
+    aspect-ratio: 4 / 3;
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .photo-placeholder {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--muted);
+    opacity: 0.6;
+  }
+  .page-footer {
+    margin-top: 2rem;
+    font-size: 0.9rem;
+    color: var(--muted);
+  }
+</style>

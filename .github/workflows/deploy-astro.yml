@@ -1,5 +1,6 @@
 # 部署 Astro 作品集到 GitHub Pages
 # 要求：Settings → Pages → Source = GitHub Actions
+# 推送 main 后会自动构建并更新 https://<用户名>.github.io/Personal-Web/
 name: Deploy Astro portfolio to GitHub Pages
 
 on:

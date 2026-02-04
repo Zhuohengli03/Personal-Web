@@ -1,50 +1,48 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import MomentsPost from '../../components/magic/MomentsPost.astro';
 const base = import.meta.env.BASE_URL;
+const img = (name: string) => `${base}education/nyu/${name}`;
 ---
 <BaseLayout title="纽约大学 | 李卓衡" description="NYU - Master of Management & Analytics">
-  <h1 class="page-title">
-    <span class="content-zh">纽约大学</span>
-    <span class="content-en">New York University</span>
-  </h1>
-  <p class="page-subtitle content-zh">管理与管理分析硕士（商业分析）· 2025.09 – 2026.12（预计）· GPA 3.83/4.00</p>
-  <p class="page-subtitle content-en">M.S. in Management & Analytics (Business Analytics) · 2025.09 – 2026.12 (Expected) · GPA 3.83/4.00</p>
+  <div class="edu-feed">
+    <p class="feed-back"><a href={base}>← <span data-i18n="navHome">首页</span></a></p>
 
-  <div class="edu-page-body">
-    <div class="content-zh">
-      <p>此处可填写纽约大学就读经历、校园生活、课程与项目等文字。您可上传照片后替换下方占位区域。</p>
-    </div>
-    <div class="content-en">
-      <p>Add your NYU experience, campus life, courses and projects here. Replace the placeholder below with your photos.</p>
-    </div>
-  </div>
-
-  <div class="edu-media-placeholder">
-    <span class="content-zh">照片与文字待上传</span>
-    <span class="content-en">Photos & text to be added</span>
+    <MomentsPost
+      titleZh="纽约大学"
+      titleEn="New York University"
+      subtitleZh="管理与管理分析硕士（商业分析）· 2025.09 – 2026.12（预计）· GPA 3.83/4.00"
+      subtitleEn="M.S. in Management & Analytics (Business Analytics) · 2025.09 – 2026.12 (Expected) · GPA 3.83/4.00"
+    >
+      <div class="content-zh">
+        <p>此处可填写纽约大学就读经历、校园生活、课程与项目等。可增加多段：复制下面一行再改内容。</p>
+        <p>第二段示例：如核心课程、数据工程/分析相关项目、与导师或同学合作经历等。</p>
+      </div>
+      <div class="content-en">
+        <p>Add your NYU experience, campus life, courses and projects here. Add more paragraphs by copying a line below.</p>
+        <p>Second paragraph example: e.g. core courses, data engineering/analytics projects, collaboration with faculty or peers.</p>
+      </div>
+      <!-- 图片：把图片放到 public/education/nyu/，取消下面注释并改文件名；多张图会排成朋友圈九宫格 -->
+      <div slot="images">
+        <!-- <img src={img('campus.jpg')} alt="NYU campus" /> -->
+        <!-- <img src={img('class.jpg')} alt="Course" /> -->
+      </div>
+    </MomentsPost>
   </div>
 
   <p class="page-footer"><a href={base}>← <span data-i18n="navHome">首页</span></a></p>
 </BaseLayout>
 
 <style>
-  .page-title { font-family: var(--font-serif); font-size: 1.5rem; font-weight: 600; margin: 0 0 0.25rem; }
-  .page-subtitle { font-size: 0.9rem; color: var(--muted); margin: 0 0 1.5rem; }
-  .edu-page-body p { color: var(--muted); font-size: 0.95rem; margin: 0 0 1rem; line-height: 1.6; }
-  .edu-media-placeholder {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 200px;
-    background: rgba(22, 27, 34, 0.22);
-    backdrop-filter: blur(var(--glass-blur));
-    -webkit-backdrop-filter: blur(var(--glass-blur));
-    border: 1px dashed var(--glass-border);
-    border-radius: var(--radius);
-    color: var(--muted);
-    font-size: 0.9rem;
-    margin-bottom: 1.5rem;
-    box-shadow: var(--glass-shadow);
+  .edu-feed {
+    max-width: 520px;
+    margin: 0 auto;
   }
+  .feed-back {
+    font-size: 0.9rem;
+    color: var(--muted);
+    margin: 0 0 1rem;
+  }
+  .feed-back a { color: var(--accent); }
   .page-footer { margin-top: 2rem; font-size: 0.9rem; color: var(--muted); }
 </style>

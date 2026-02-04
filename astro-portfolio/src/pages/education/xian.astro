@@ -1,28 +1,48 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import MomentsPost from '../../components/magic/MomentsPost.astro';
 const base = import.meta.env.BASE_URL;
+const img = (name: string) => `${base}education/xian/${name}`;
 ---
 <BaseLayout title="西安音乐学院 | 李卓衡" description="Xi'an Conservatory of Music - Music Performance">
-  <h1 class="page-title">
-    <span class="content-zh">西安音乐学院</span>
-    <span class="content-en">Xi'an Conservatory of Music</span>
-  </h1>
-  <p class="page-subtitle content-zh">音乐表演学士（古琴）· 2021.09 – 2025.07</p>
-  <p class="page-subtitle content-en">B.M. in Music Performance (Guqin) · 2021.09 – 2025.07</p>
+  <div class="edu-feed">
+    <p class="feed-back"><a href={base}>← <span data-i18n="navHome">首页</span></a></p>
 
-  <div class="edu-page-body content-zh">
-    <p>此处可添加西安音乐学院相关照片与文字。</p>
-  </div>
-  <div class="edu-page-body content-en">
-    <p>Add photos and text about Xi'an Conservatory here.</p>
+    <MomentsPost
+      titleZh="西安音乐学院"
+      titleEn="Xi'an Conservatory of Music"
+      subtitleZh="音乐表演学士（古琴）· 2021.09 – 2025.07"
+      subtitleEn="B.M. in Music Performance (Guqin) · 2021.09 – 2025.07"
+    >
+      <div class="content-zh">
+        <p>此处可添加西安音乐学院相关照片与文字。可增加多段：复制下面一行再改内容。</p>
+        <p>第二段示例：如古琴专业学习、演出与比赛、校园与志愿等。</p>
+      </div>
+      <div class="content-en">
+        <p>Add photos and text about Xi'an Conservatory here. Add more paragraphs by copying a line below.</p>
+        <p>Second paragraph example: e.g. Guqin studies, performances and competitions, campus and volunteering.</p>
+      </div>
+      <!-- 图片：把图片放到 public/education/xian/，取消下面注释并改文件名；多张图会排成朋友圈九宫格 -->
+      <div slot="images">
+        <!-- <img src={img('campus.jpg')} alt="Campus" /> -->
+        <!-- <img src={img('performance.jpg')} alt="Performance" /> -->
+      </div>
+    </MomentsPost>
   </div>
 
   <p class="page-footer"><a href={base}>← <span data-i18n="navHome">首页</span></a></p>
 </BaseLayout>
 
 <style>
-  .page-title { font-family: var(--font-serif); font-size: 1.5rem; font-weight: 600; margin: 0 0 0.25rem; }
-  .page-subtitle { font-size: 0.9rem; color: var(--muted); margin: 0 0 1.5rem; }
-  .edu-page-body p { color: var(--muted); font-size: 0.95rem; margin: 0 0 1rem; line-height: 1.6; }
+  .edu-feed {
+    max-width: 520px;
+    margin: 0 auto;
+  }
+  .feed-back {
+    font-size: 0.9rem;
+    color: var(--muted);
+    margin: 0 0 1rem;
+  }
+  .feed-back a { color: var(--accent); }
   .page-footer { margin-top: 2rem; font-size: 0.9rem; color: var(--muted); }
 </style>
