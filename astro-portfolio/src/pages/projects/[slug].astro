@@ -2,30 +2,103 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import type { CollectionEntry } from 'astro:content';
 import { getCollection } from 'astro:content';
+import fs from 'fs';
+import path from 'path';
+import { hardcodedProjects } from '../../data/hardcodedProjects';
+
+const imageExtensions = new Set(['.jpg', '.jpeg', '.png', '.webp', '.gif']);
+
+function getProjectImages(slug: string): string[] {
+  const dir = path.join(process.cwd(), 'public', 'projects', slug);
+  try {
+    if (!fs.existsSync(dir) || !fs.statSync(dir).isDirectory()) return [];
+    const files = fs.readdirSync(dir);
+    return files
+      .filter((f) => imageExtensions.has(path.extname(f).toLowerCase()) && !f.startsWith('.'))
+      .sort();
+  } catch {
+    return [];
+  }
+}
+
+function formatBody(text: string): string {
+  if (!text.trim()) return '';
+  return text
+    .trim()
+    .split(/\n\n+/)
+    .map((p) => `<p>${p.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')}</p>`)
+    .join('');
+}
 
 export async function getStaticPaths() {
-  const projects = await getCollection('projects');
-  return projects.map((entry) => ({
+  const fromMarkdown = await getCollection('projects');
+  const markdownPaths = fromMarkdown.map((entry) => ({
     params: { slug: entry.slug },
-    props: { entry },
+    props: { entry, hardcoded: null as null },
   }));
+  const hardcodedPaths = hardcodedProjects.map((project) => ({
+    params: { slug: project.slug },
+    props: { entry: null as null, hardcoded: project },
+  }));
+  return [...markdownPaths, ...hardcodedPaths];
 }
 
 interface Props {
-  entry: CollectionEntry<'projects'>;
+  entry: CollectionEntry<'projects'> | null;
+  hardcoded: import('../../data/hardcodedProjects').HardcodedProject | null;
 }
-const { entry } = Astro.props;
-const { Content } = await entry.render();
-const { title, description, pubDate, tech, repo, link } = entry.data;
+const { entry, hardcoded } = Astro.props;
+const slug = entry?.slug ?? hardcoded?.slug ?? Astro.params.slug ?? '';
+const isMarkdown = entry != null;
+const isHardcoded = hardcoded != null;
+
+const projectImages = getProjectImages(slug);
+const base = import.meta.env.BASE_URL;
+const imgUrl = (filename: string) => `${base}projects/${slug}/${filename}`;
+
+let Content: import('astro').Component | null = null;
+let title = '';
+let description = '';
+let pubDate: Date | null = null;
+let tech: string[] = [];
+let repo: string | undefined;
+let link: string | undefined;
+
+if (isMarkdown && entry) {
+  const rendered = await entry.render();
+  Content = rendered.Content;
+  title = entry.data.title;
+  description = entry.data.description;
+  pubDate = entry.data.pubDate;
+  tech = entry.data.tech ?? [];
+  repo = entry.data.repo;
+  link = entry.data.link;
+} else if (isHardcoded && hardcoded) {
+  title = hardcoded.titleEn;
+  description = hardcoded.descriptionEn;
+  pubDate = new Date(hardcoded.pubDate);
+  tech = hardcoded.tech;
+  repo = hardcoded.repo;
+  link = hardcoded.link;
+}
 ---
 <BaseLayout title={title} description={description}>
   <article class="project-detail">
     <header>
-      <h1>{title}</h1>
+      {isMarkdown ? (
+        <h1>{title}</h1>
+      ) : (
+        <>
+          <h1 class="content-zh">{hardcoded!.titleZh}</h1>
+          <h1 class="content-en">{hardcoded!.titleEn}</h1>
+        </>
+      )}
       <p class="meta">
-        <time datetime={pubDate.toISOString()}>
-          {pubDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
-        </time>
+        {pubDate && (
+          <time datetime={pubDate.toISOString()}>
+            {pubDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+          </time>
+        )}
         {tech.length > 0 && (
           <span class="tech"> · {tech.join(', ')}</span>
         )}
@@ -39,8 +112,32 @@ const { title, description, pubDate, tech, repo, link } = entry.data;
       )}
     </header>
     <div class="prose">
-      <Content />
+      {isMarkdown && Content && <Content />}
+      {isHardcoded && hardcoded && (
+        <>
+          <div class="content-zh"><p set:html={hardcoded.descriptionZh.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')} /></div>
+          <div class="content-en"><p set:html={hardcoded.descriptionEn.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')} /></div>
+          {(hardcoded.bodyZh || hardcoded.bodyEn) && (
+            <>
+              {hardcoded.bodyZh && <div class="content-zh project-body" set:html={formatBody(hardcoded.bodyZh)} />}
+              {hardcoded.bodyEn && <div class="content-en project-body" set:html={formatBody(hardcoded.bodyEn)} />}
+            </>
+          )}
+        </>
+      )}
     </div>
+    {projectImages.length > 0 && (
+      <section class="project-gallery" aria-label="Project images">
+        <h2 class="gallery-title content-zh" data-i18n="projectGalleryTitleZh">项目图片</h2>
+        <h2 class="gallery-title content-en" data-i18n="projectGalleryTitleEn">Project images</h2>
+        <div class="gallery-grid">
+          {projectImages.map((filename) => (
+            <img src={imgUrl(filename)} alt="" loading="lazy" />
+          ))}
+        </div>
+      </section>
+    )}
+    <p class="back-link"><a href="#" role="button" data-back>← <span data-i18n="navBack">返回上一页</span></a></p>
   </article>
 </BaseLayout>
 
@@ -77,6 +174,38 @@ const { title, description, pubDate, tech, repo, link } = entry.data;
   .prose :global(ul) {
     margin: 0 0 0.75rem;
     padding-left: 1.25rem;
+    color: var(--muted);
+  }
+  .project-body :global(p) {
+    margin: 0 0 0.75rem;
+    color: var(--muted);
+  }
+  .project-gallery {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--glass-border);
+  }
+  .gallery-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0 0 1rem;
+  }
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 0.75rem;
+  }
+  .gallery-grid img {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius);
+    object-fit: cover;
+    aspect-ratio: 4 / 3;
+    border: 1px solid var(--glass-border);
+  }
+  .back-link {
+    margin-top: 1.5rem;
+    font-size: 0.9rem;
     color: var(--muted);
   }
 </style>

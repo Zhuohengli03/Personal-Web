@@ -3,6 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import BorderBeam from '../../components/magic/BorderBeam.astro';
 import ProjectCard from '../../components/ProjectCard.astro';
 import { getCollection } from 'astro:content';
+import { hardcodedProjects } from '../../data/hardcodedProjects';
 const base = import.meta.env.BASE_URL;
 const fromMarkdown = await getCollection('projects');
 const sorted = [...fromMarkdown].sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
@@ -11,46 +12,18 @@ const sorted = [...fromMarkdown].sort((a, b) => b.data.pubDate.valueOf() - a.dat
   <h1 class="page-title" data-i18n="sectionProjects">项目</h1>
 
   <div class="project-grid">
-    <BorderBeam class="project-card-wrap">
-    <article class="project-card">
-      <h2 class="project-title content-zh">动态爬虫与数据采集平台</h2>
-      <h2 class="project-title content-en">Dynamic Web Crawler & Data Collection Platform</h2>
-      <div class="content-zh"><p>使用 <strong>Selenium + BeautifulSoup</strong> 搭建可复用动态页爬虫，支持无限滚动与复杂 DOM；设计标准化 <strong>ETL</strong> 清洗/解析并写入 <strong>MySQL/PostgreSQL</strong>；可配置 XPath/CSS/正则提取框架；错误处理与重试保证稳定性；<strong>Streamlit</strong> 配置任务、批量运行与导出。</p></div>
-      <div class="content-en"><p>Built a reusable crawler for dynamic pages using <strong>Selenium + BeautifulSoup</strong>, supporting infinite scroll and complex DOM structures. Designed a standardized <strong>ETL pipeline</strong> to clean/parse data and load into <strong>MySQL/PostgreSQL</strong>. Created a configurable extraction framework (XPath/CSS selector/regex). Implemented error handling and retry mechanisms. Developed a <strong>Streamlit</strong> UI for task configuration, batch runs, monitoring, and export.</p></div>
-    </article>
-    </BorderBeam>
-    <BorderBeam class="project-card-wrap">
-    <article class="project-card">
-      <h2 class="project-title content-zh">游戏市场数据分析与预测系统</h2>
-      <h2 class="project-title content-en">Computer Game Market Data Analysis & Forecasting System</h2>
-      <div class="content-zh"><p>基于 <strong>PostgreSQL</strong> 自动化采集与存储，含去重与批量写入；调度与中断恢复实现 <strong>24/7</strong> 更新；特征工程与多模型预测（<strong>Random Forest、Gradient Boosting、ARIMA、Prophet</strong>）；输出 7 日预测、趋势与风险区间，支持买卖决策。</p></div>
-      <div class="content-en"><p>Automated data ingestion and storage with <strong>PostgreSQL</strong>, including scraping, deduplication, and batch inserts. Built a resilient pipeline with scheduling and interruption control for <strong>24/7</strong> updates. Performed feature engineering + multi-model forecasting (<strong>Random Forest, Gradient Boosting, ARIMA, Prophet</strong>). Delivered <strong>7-day forecasts</strong>, trend indicators, and risk intervals to support buy/sell/hold decisions.</p></div>
-    </article>
-    </BorderBeam>
-    <BorderBeam class="project-card-wrap">
-    <article class="project-card">
-      <h2 class="project-title content-zh">NASA Space Apps Challenge — 数据分析项目</h2>
-      <h2 class="project-title content-en">NASA Space Apps Challenge — Data Analytics Project</h2>
-      <div class="content-zh"><p>整合多个 NASA/JPL 开放 API，将多源 JSON 统一为一致 schema；参与后端 API 设计（参数与响应结构），支撑地图/图表/模拟页；结合影响范围与人口、经济数据做暴露与风险可视化。</p></div>
-      <div class="content-en"><p>Integrated multiple NASA/JPL open APIs; standardized multi-source JSON into consistent schemas. Supported backend API design (parameters + response structures) to power maps/charts/simulation pages. Combined impact range outputs with population/economic data for exposure and risk visualization.</p></div>
-    </article>
-    </BorderBeam>
-    <BorderBeam class="project-card-wrap">
-    <article class="project-card">
-      <h2 class="project-title content-zh">电商用户与营销分析</h2>
-      <h2 class="project-title content-en">E-commerce User & Marketing Analytics</h2>
-      <div class="content-zh"><p>搭建 KPI 体系（UV/PV、漏斗转化、留存、复购），端到端分析用户行为；构建 cohort 数据集与统一指标；<strong>RFM + K-means</strong> 用户分群，识别高价值与流失风险；基于分群表现给出营销与广告优化建议。</p></div>
-      <div class="content-en"><p>Built KPI system (UV/PV, funnel conversion, retention, repurchase) to analyze user behavior end-to-end. Created cohort datasets with consistent metric definitions. Segmented users via <strong>RFM + K-means</strong>, identifying high-value and churn-risk groups. Produced targeted marketing and ad optimization recommendations based on segment performance.</p></div>
-    </article>
-    </BorderBeam>
-    <BorderBeam class="project-card-wrap">
-    <article class="project-card">
-      <h2 class="project-title content-zh">社交网络与起薪分析</h2>
-      <h2 class="project-title content-en">Social Networks & Starting Salary Analysis</h2>
-      <div class="content-zh"><p>基于问卷数据构建分析数据集，完成清洗、重编码与缺失值处理；描述统计、分组比较与相关分析探索社交网络使用与结果的关系；产出图表与结论用于团队报告与课堂展示。</p></div>
-      <div class="content-en"><p>Built an analysis dataset from survey data; performed cleaning, recoding, and missing-value handling. Used descriptive stats, group comparisons, and correlation analysis to explore links between social network usage and outcomes. Delivered visuals and insights for team report and class presentation.</p></div>
-    </article>
-    </BorderBeam>
+    {hardcodedProjects.map((project) => (
+      <BorderBeam class="project-card-wrap">
+        <a class="project-card-link" href={`${base}projects/${project.slug}/`}>
+          <article class="project-card">
+            <h2 class="project-title content-zh">{project.titleZh}</h2>
+            <h2 class="project-title content-en">{project.titleEn}</h2>
+            <div class="content-zh"><p set:html={project.descriptionZh.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')} /></div>
+            <div class="content-en"><p set:html={project.descriptionEn.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')} /></div>
+          </article>
+        </a>
+      </BorderBeam>
+    ))}
   </div>
 
   {sorted.length > 0 && (
@@ -79,6 +52,14 @@ const sorted = [...fromMarkdown].sort((a, b) => b.data.pubDate.valueOf() - a.dat
     -webkit-backdrop-filter: blur(var(--glass-blur));
     border: 1px solid var(--glass-border);
     box-shadow: var(--glass-shadow);
+  }
+  .project-card-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+  }
+  .project-card-link:hover {
+    color: inherit;
   }
   .project-card {
     background: rgba(22, 27, 34, 0.2);
