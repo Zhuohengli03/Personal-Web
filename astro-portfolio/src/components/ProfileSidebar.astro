@@ -24,7 +24,7 @@ const base = import.meta.env.BASE_URL;
   </h2>
   <p class="profile-location">📍 <span class="content-zh">美国纽约</span><span class="content-en">New York, USA</span></p>
   <div class="profile-contact">
-    <a href="mailto:zhuohengli03@gmail.com">📧 zhuohengli03@gmail.com</a>
+    <a href="mailto:zhuohengli03@gmail.com"><span class="profile-contact-line">📧 zhuohengli03@gmail.com</span></a>
     <a href="tel:+13322658772">📱 +1 332-265-8772</a>
     <a href="tel:+8618838932716">📱 +86 18838932716</a>
     <a href="https://www.linkedin.com/in/zhuoheng-li-3365b5351/" target="_blank" rel="noopener noreferrer">🔗 LinkedIn</a>
@@ -39,7 +39,7 @@ const base = import.meta.env.BASE_URL;
 <style>
   .profile-sidebar {
     flex-shrink: 0;
-    width: 200px;
+    width: 240px;
     padding: 1rem;
     position: sticky;
     top: 5.5rem;
@@ -102,11 +102,18 @@ const base = import.meta.env.BASE_URL;
     align-items: center;
     gap: 0.35rem;
   }
-  .profile-contact a,
-  .profile-contact span {
+  .profile-contact a {
     display: block;
     color: var(--muted);
     font-size: 0.8rem;
+  }
+  .profile-contact-line {
+    display: inline-block;
+    white-space: nowrap;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: bottom;
   }
   .profile-contact a:hover {
     color: var(--accent);
