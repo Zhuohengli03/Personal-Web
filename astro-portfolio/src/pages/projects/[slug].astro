@@ -282,16 +282,17 @@ if (isMarkdown && entry) {
     border: 1px solid var(--glass-border);
     cursor: zoom-in;
   }
-  /* 双击放大 lightbox */
+  /* 双击放大 lightbox：高层级避免被导航/其他层遮挡 */
   .gallery-lightbox {
     position: fixed;
     inset: 0;
-    z-index: 1000;
+    z-index: 9999;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 2rem;
     box-sizing: border-box;
+    isolation: isolate;
   }
   .gallery-lightbox[hidden] {
     display: none !important;
@@ -299,7 +300,7 @@ if (isMarkdown && entry) {
   .gallery-lightbox-backdrop {
     position: absolute;
     inset: 0;
-    background: rgba(0, 0, 0, 0.85);
+    background: rgba(0, 0, 0, 0.9);
     cursor: pointer;
   }
   .gallery-lightbox-img {
