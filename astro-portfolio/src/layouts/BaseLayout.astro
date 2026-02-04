@@ -140,9 +140,9 @@ const base = import.meta.env.BASE_URL;
       </video>
       <div class="site-bg-overlay"></div>
     </div>
-    <MusicPlayer />
     <header class="site-header">
       <nav class="nav">
+        <MusicPlayer inNav />
         <!-- 导航：校园已移除，内容在首页西安音乐学院卡片下。勿加 campus 链接。 -->
         <ul class="nav-links">
           <li><a href={base} class="nav-home" data-i18n="navHome">首页</a></li>
@@ -202,6 +202,7 @@ const base = import.meta.env.BASE_URL;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 0.75rem;
   }
   .nav-home {
     font-family: var(--font-serif);
@@ -352,7 +353,8 @@ const base = import.meta.env.BASE_URL;
   .main-with-sidebar .main-content {
     max-width: 720px;
   }
-  .main-content.xian-detail {
+  .main-content.xian-detail,
+  .main-content.nyu-detail {
     max-width: 960px;
   }
   @media (max-width: 991px) {
