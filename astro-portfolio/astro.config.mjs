@@ -2,10 +2,10 @@ import { defineConfig } from 'astro/config';
 import tailwind from '@astrojs/tailwind';
 
 // https://astro.build/config
-// 项目站（例如 https://Zhuohengli03.github.io/Personal-Web/）必须设置 base 为仓库名
+// 使用自定义域名 www.lzhpw.com 时，base 应为 '/'
 export default defineConfig({
-  site: 'https://Zhuohengli03.github.io',
-  base: '/Personal-Web/',
+  site: 'https://www.lzhpw.com',
+  base: '/',
   build: {
     format: 'directory',
   },
