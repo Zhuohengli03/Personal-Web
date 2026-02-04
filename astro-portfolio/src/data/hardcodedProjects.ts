@@ -1,4 +1,14 @@
 /**
+ * 核心代码片段，用于在项目详情页展示（如爬虫项目）
+ */
+export interface CodeSnippet {
+  titleZh: string;
+  titleEn: string;
+  lang: string;
+  code: string;
+}
+
+/**
  * Hardcoded project entries shown on /projects/.
  * Each has a slug used for the detail page: /projects/[slug]/
  */
@@ -12,6 +22,8 @@ export interface HardcodedProject {
   bodyZh?: string;
   /** 详情页正文英文（可选）。支持 **bold**，段落用空行分隔。 */
   bodyEn?: string;
+  /** 核心代码片段（可选），在正文后、图库前展示 */
+  codeSnippets?: CodeSnippet[];
   tech: string[];
   pubDate: string; // ISO date for display
   repo?: string;
@@ -27,6 +39,143 @@ export const hardcodedProjects: HardcodedProject[] = [
     descriptionEn: 'Built a reusable crawler for dynamic pages using **Selenium + BeautifulSoup**, supporting infinite scroll and complex DOM structures. Designed a standardized **ETL pipeline** to clean/parse data and load into **MySQL/PostgreSQL**. Created a configurable extraction framework (XPath/CSS selector/regex). Implemented error handling and retry mechanisms. Developed a **Streamlit** UI for task configuration, batch runs, monitoring, and export.',
     bodyZh: '本项目是一个基于 **Streamlit** 与 **Selenium** 的动态网页爬虫系统，面向具有无限滚动加载和复杂 DOM 结构的网页场景，实现从页面采集、字段抽取、数据清洗到数据库存储与检索的一体化流程。\n\n系统支持通过多种定位方式（XPath、CSS Selector、ID、Class、Tag）对页面元素进行精确定位，并提供关键词与正则匹配模式，用于自动提取网页中的链接、图片、邮箱和电话号码等信息。同时支持新闻详情页与列表页混合爬取，并通过自动滚动机制解决动态加载页面的数据获取问题。\n\n在数据处理层面，系统支持将爬取结果导出为 CSV / Excel 文件，并可直接写入 **MySQL** 数据库，同时提供基于关键词和正则表达式的本地数据库检索功能，方便后续分析与复用。\n\n该项目完整覆盖了动态数据采集、结构化抽取、数据存储与检索等关键流程，提升了对复杂网页数据获取和工程化爬虫系统设计的实践能力。',
     bodyEn: 'This project is a dynamic web crawler system based on **Streamlit** and **Selenium**, targeting pages with infinite scroll and complex DOM structures. It implements an integrated workflow from page fetching, field extraction, data cleaning, to database storage and retrieval.\n\nThe system supports precise element location via multiple methods (XPath, CSS Selector, ID, Class, Tag), and provides keyword and regex matching to automatically extract links, images, email addresses, and phone numbers. It supports mixed crawling of news detail and list pages, and uses automatic scrolling to handle dynamically loaded content.\n\nOn the data side, results can be exported to CSV/Excel and written directly to **MySQL**, with local database search by keyword and regex for later analysis and reuse.\n\nThe project covers dynamic data collection, structured extraction, storage, and retrieval, and demonstrates practical ability in complex web data acquisition and engineered crawler design.',
+    codeSnippets: [
+      {
+        titleZh: '页面滚动加载 scroll_and_collect()',
+        titleEn: 'Scroll & collect: scroll_and_collect()',
+        lang: 'python',
+        code: `def scroll_and_collect(self):
+    y = 0
+    max_scroll_attempts = 20  # Reduced max attempts
+    previous_count = 0
+
+    st.info("开始滚动收集内容...")
+
+    while len(self.collected_urls) < self.total_need and y < max_scroll_attempts:
+        # Simple scroll to bottom
+        self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+        time.sleep(self.time_sleep)  # Wait for content to load
+
+        y += 1
+
+        # Find elements and check progress
+        current_elements = self._safe_find_elements(self.main_locator)
+
+        # Check if we're making progress
+        if len(current_elements) == previous_count:
+            if y >= 3:  # No progress for 3 consecutive scrolls
+                break
+        else:
+            previous_count = len(current_elements)
+
+        # Collect URLs from current view
+        self.collect()
+
+        if len(self.collected_urls) >= self.total_need:
+            break`,
+      },
+      {
+        titleZh: 'URL 收集 collect() — 关键词模式',
+        titleEn: 'URL collection collect() — keyword mode',
+        lang: 'python',
+        code: `if self.main_key_words:
+    xpath_query = f"//\${self.main_url_key_words}[contains(@\${select_1}, '\${select_2}')]"
+    all_elements = self.driver.find_elements(By.XPATH, xpath_query)
+
+    # Collect URLs from elements
+    zhengze_list = []
+    for i, element in enumerate(all_elements):
+        zhengze_url = element.get_attribute("href")
+        if zhengze_url and zhengze_url not in self.collected_urls:
+            zhengze_list.append(zhengze_url)
+            if len(self.collected_urls) + len(zhengze_list) >= self.total_need:
+                break
+
+    # Process the new URLs
+    for url in zhengze_list:
+        hurl = urljoin(self.url, url)
+        self.zhengze_calculate(hurl)
+        self.collected_urls.append(url)`,
+      },
+      {
+        titleZh: '详情页内容提取 content()',
+        titleEn: 'Detail page extraction content()',
+        lang: 'python',
+        code: `def content(self):
+    for sin_url in self.collected_urls:
+        final_content = {"title": "", "url": sin_url, "content": "", "image": "", "HTML": ""}
+
+        self.driver.get(sin_url)
+        time.sleep(self.time_sleep)
+
+        # 获取HTML
+        page = self.driver.page_source
+        content = BeautifulSoup(page, "lxml")
+        final_content["HTML"] = str(content)
+
+        # 提取标题
+        title_element = self.driver.find_elements(*self.title_locator)
+        if title_element:
+            final_content["title"] = title_element[0].text
+
+        # 提取正文
+        content_element = self.driver.find_elements(*self.content_locator)
+        if content_element:
+            final_content["content"] = content_element[0].text
+
+        # 提取图片
+        img_urls = []
+        img_element = self.driver.find_elements(*self.image_locator)
+        for src in img_element:
+            img_url = src.get_attribute("src")
+            img_urls.append(img_url)
+        final_content["image"] = "\\n".join(img_urls)
+
+        self.results.append(final_content)
+
+    return self.results`,
+      },
+      {
+        titleZh: '正则提取 zhengze_calculate()',
+        titleEn: 'Regex extraction zhengze_calculate()',
+        lang: 'python',
+        code: `def zhengze_calculate(self, hurl: str) -> None:
+    """使用正则表达式提取页面内容"""
+    self.driver.get(hurl)
+
+    page = self.driver.page_source
+    content = BeautifulSoup(page, "lxml")
+
+    zhengze_content = {"URL": hurl}
+    key_words = self.main_key_words
+
+    # 使用配置的正则模式
+    if key_words in REGEX_PATTERNS:
+        pattern = REGEX_PATTERNS[key_words]
+        matches = re.findall(pattern, str(content))
+
+        if matches:
+            results = set(str(m) for m in matches)
+            zhengze_content[key_words] = "\\n".join(results)
+
+    self.zhengze_text.append(zhengze_content)`,
+      },
+      {
+        titleZh: '正则模式配置 config.py',
+        titleEn: 'Regex patterns config.py',
+        lang: 'python',
+        code: `REGEX_PATTERNS = {
+    "网址": r'https?://[^\\s<>"\\']+',
+    "URL": r'https?://[^\\s<>"\\']+',
+    "电话": r'1[3-9]\\d{9}|0\\d{2,3}-?\\d{7,8}',
+    "Phone": r'1[3-9]\\d{9}|0\\d{2,3}-?\\d{7,8}',
+    "邮箱": r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}',
+    "Email": r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}',
+    "图片": r'<img[^>]+src=["\\']([^"\\']+)["\\']',
+    "Image": r'<img[^>]+src=["\\']([^"\\']+)["\\']',
+}`,
+      },
+    ],
     tech: ['Selenium', 'BeautifulSoup', 'PostgreSQL', 'MySQL', 'Streamlit', 'ETL'],
     pubDate: '2024-06-01',
   },

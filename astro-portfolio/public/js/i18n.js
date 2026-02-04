@@ -49,6 +49,8 @@ const translations = {
     projectIntroTitleEn: "Introduction",
     projectGalleryTitleZh: "展示",
     projectGalleryTitleEn: "Showcase",
+    projectCodeTitleZh: "核心代码",
+    projectCodeTitleEn: "Core Code",
     // 联系
     contactIntro: "欢迎通过以下方式与我交流：",
     // 页脚
@@ -137,6 +139,8 @@ const translations = {
     projectIntroTitleEn: "Introduction",
     projectGalleryTitleZh: "展示",
     projectGalleryTitleEn: "Showcase",
+    projectCodeTitleZh: "核心代码",
+    projectCodeTitleEn: "Core Code",
     contactIntro: "Feel free to reach out:",
     footerSiteZh: "个人网站",
     footerSiteEn: "Personal Site",
