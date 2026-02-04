@@ -1,6 +1,5 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import BorderBeam from '../components/magic/BorderBeam.astro';
 import quotes from '../data/quotes.json';
 const base = import.meta.env.BASE_URL;
 ---
@@ -23,56 +22,42 @@ const base = import.meta.env.BASE_URL;
     })();
   </script>
   <section id="about" class="home-about">
-    <BorderBeam class="project-card-wrap">
-      <div class="project-card">
-        <h2 class="section-title" data-i18n="sectionAbout">关于我</h2>
-        <div class="about-content">
-          <div class="content-zh">
-            <p>我是纽约大学 SPS 管理与分析硕士在读，方向为<strong>数据分析与数据工程</strong>。喜欢搭建可靠的数据管道、把杂乱数据整理成可用数据集，并用清晰的指标和看板传达结论。</p>
-            <p><strong>求职方向：</strong>数据分析师、分析工程师、数据工程师、BI 或 AI 相关数据岗位的实习 / 全职机会。</p>
-            <p><strong>兴趣：</strong>摄影 · 游泳</p>
-          </div>
-          <div class="content-en">
-            <p>I'm a graduate student at NYU SPS studying Management & Analytics, with a technical focus on <strong>data analytics and data engineering</strong>. I enjoy building reliable data pipelines, turning messy data into usable datasets, and communicating insights with clear metrics and dashboards.</p>
-            <p><strong>What I'm looking for:</strong> Internships / opportunities in <strong>Data Analyst, Analytics Engineer, Data Engineer, BI, or AI-related data roles</strong>.</p>
-            <p><strong>Interests:</strong> Photography · Swimming</p>
-          </div>
-        </div>
+    <h2 class="section-title" data-i18n="sectionAbout">关于我</h2>
+    <div class="about-content">
+      <div class="content-zh">
+        <p>目前就读于<strong>纽约大学（NYU）管理与分析（Management & Analytics）</strong>硕士项目，研究方向偏向技术型数据分析与数据工程。</p>
+        <p>我的本科专业为<strong>音乐表演（古琴）</strong>，在系统学习数据分析与编程之前，我长期接受的是艺术与演奏训练。这段跨学科背景让我在面对复杂问题时，既具备结构化分析能力，也保持对细节和整体逻辑的高度敏感。</p>
+        <p>在研究生阶段，我系统学习并实践了 <strong>Python、SQL、关系型数据库与数据处理流程</strong>，熟悉从数据采集、清洗、建模分析到可视化呈现的完整数据分析工作流。我曾参与多个数据分析与数据建模项目，包括广告与用户行为分析、用户分群与 RFM 用户价值模型构建、运营指标体系设计以及多源数据整合分析，能够将业务问题转化为可落地的数据分析方案。</p>
+        <p>我目前专注于<strong>数据分析与数据工程</strong>方向，希望未来从事以数据驱动业务决策、数据建模、数据平台建设，以及支持 AI 与智能应用的数据分析与数据工程相关岗位。</p>
       </div>
-    </BorderBeam>
+      <div class="content-en">
+        <p>I am currently pursuing a Master's degree in <strong>Management & Analytics at New York University (NYU)</strong>, with a focus on technical data analytics and data engineering.</p>
+        <p>My undergraduate major was <strong>Music Performance (Guqin)</strong>. Before systematically studying data analytics and programming, I spent years training in art and performance. This interdisciplinary background enables me to approach complex problems with both structured analytical thinking and a keen sensitivity to details and overall logic.</p>
+        <p>During my graduate studies, I have systematically learned and practiced <strong>Python, SQL, relational databases, and data processing workflows</strong>, and I am familiar with the complete data analytics workflow from data collection, cleaning, modeling, to visualization. I have participated in multiple data analytics and modeling projects, including advertising and user behavior analysis, user segmentation and RFM value modeling, operational metrics system design, and multi-source data integration analysis, with the ability to translate business problems into actionable data analytics solutions.</p>
+        <p>I am currently focused on <strong>data analytics and data engineering</strong>, and I hope to pursue roles in data-driven business decision-making, data modeling, data platform development, and data analytics/engineering positions that support AI and intelligent applications.</p>
+      </div>
+    </div>
   </section>
 </BaseLayout>
 
 <style>
   .home-about { margin-bottom: 1.5rem; }
-  .project-card-wrap {
-    border-radius: var(--radius);
-    padding: 2px;
-    background: var(--glass-bg);
-    backdrop-filter: blur(var(--glass-blur));
-    -webkit-backdrop-filter: blur(var(--glass-blur));
-    border: 1px solid var(--glass-border);
-    box-shadow: var(--glass-shadow);
-  }
-  .project-card {
-    background: rgba(22, 27, 34, 0.2);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border: 1px solid var(--glass-border);
-    border-radius: calc(var(--radius) - 2px);
-    padding: 1.25rem;
-    position: relative;
-    z-index: 0;
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
-    font-family: var(--font-sans);
-  }
   .section-title {
     font-family: var(--font-serif);
     font-size: 1.25rem;
     font-weight: 600;
     margin: 0 0 1rem;
   }
-  .home-about .about-content p { margin: 0 0 0.75rem; color: var(--muted); font-size: 0.95rem; font-family: var(--font-sans); line-height: 1.65; }
+  .home-about .about-content p {
+    margin: 0 0 0.85rem;
+    color: var(--muted);
+    font-size: 0.95rem;
+    font-family: var(--font-sans);
+    line-height: 1.7;
+  }
+  .home-about .about-content p:last-child {
+    margin-bottom: 0;
+  }
 
   .hero-welcome {
     text-align: center;
