@@ -210,8 +210,9 @@ const base = import.meta.env.BASE_URL;
     gap: 0.75rem;
   }
   .nav-home {
-    font-family: var(--font-serif);
-    font-weight: 600;
+    font-family: inherit;
+    font-weight: 500;
+    font-size: 0.875rem;
     color: var(--text);
   }
   .nav-home:hover {
@@ -243,12 +244,12 @@ const base = import.meta.env.BASE_URL;
   .nav-dropdown-trigger {
     color: var(--muted);
     font-weight: 500;
+    font-size: 0.875rem;
+    font-family: inherit;
     cursor: default;
     padding: 0;
     background: none;
     border: none;
-    font-size: inherit;
-    font-family: inherit;
     white-space: nowrap;
   }
   .nav-dropdown:hover .nav-dropdown-trigger {
