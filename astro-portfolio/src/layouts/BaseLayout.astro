@@ -129,6 +129,15 @@ const base = import.meta.env.BASE_URL;
         font-family: ui-monospace, monospace;
         font-size: 0.9em;
       }
+      /* 流体光标效果 */
+      .fluid-canvas {
+        position: fixed;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        pointer-events: none;
+      }
       /* 全站 lightbox：挂 body 下、最高 z-index，避免被导航/侧栏/iframe 遮挡 */
       .global-lightbox {
         position: fixed;
@@ -191,6 +200,8 @@ const base = import.meta.env.BASE_URL;
     </style>
   </head>
   <body>
+    <!-- 流体光标效果 canvas -->
+    <canvas class="fluid-canvas" aria-hidden="true"></canvas>
     <div class="site-bg" aria-hidden="true">
       <div class="site-bg-image" style={`background-image: url('${base}background/F4467B54-CFF9-4477-8126-FAA472AB0E39.jpeg');`}></div>
       <div class="site-bg-overlay"></div>
@@ -279,6 +290,7 @@ const base = import.meta.env.BASE_URL;
         });
       })();
     </script>
+    <script is:inline src={`${base}js/fluid-cursor.js`}></script>
   </body>
 </html>
 
