@@ -1,12 +1,13 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 const base = import.meta.env.BASE_URL;
+const educationUrl = base ? `${base}education/` : '/education/';
 ---
 <BaseLayout title="荣誉 | 李卓衡" description="Honors and awards">
-  <meta http-equiv="refresh" content={`0;url=${base ? base + 'about/' : '/about/'}`} />
+  <meta http-equiv="refresh" content={`0;url=${educationUrl}`} />
   <p class="redirect-msg">
-    <span class="content-zh">荣誉已合并至<a href={`${base}about/`}>关于</a>页（西安音乐学院卡片下），正在跳转…</span>
-    <span class="content-en">Honors are now on the <a href={`${base}about/`}>About</a> page (under Xi'an Conservatory). Redirecting…</span>
+    <span class="content-zh">荣誉已合并至<a href={educationUrl}>教育</a>页（西安音乐学院卡片下），正在跳转…</span>
+    <span class="content-en">Honors are now on the <a href={educationUrl}>Education</a> page (under Xi'an Conservatory). Redirecting…</span>
   </p>
 </BaseLayout>
 <style>

@@ -24,6 +24,7 @@ const translations = {
     // 首页欢迎
     heroGreeting: "你好，我是",
     heroWelcomeZh: "欢迎来到我的小站",
+    heroWelcomeEn: "Welcome",
     heroTagline: "纽约大学 管理与分析硕士 · 数据分析与数据工程 · Python · SQL · ETL · BI",
     // 按钮
     btnProjects: "查看我的项目",
@@ -45,7 +46,18 @@ const translations = {
     contactIntro: "欢迎通过以下方式与我交流：",
     // 页脚
     footerSiteZh: "个人网站",
+    footerSiteEn: "Personal Site",
     footerSite: "个人网站",
+    // 摄影 / 博客 / 游乐场
+    sectionPhotography: "摄影",
+    photographyIntroZh: "响应式图片网格，后续可接入灯箱等。",
+    photographyIntroEn: "A responsive grid; add lightbox later if needed.",
+    sectionBlog: "博客",
+    blogIntroZh: "敬请期待。",
+    blogIntroEn: "Coming soon.",
+    sectionPlayground: "游乐场",
+    playgroundIntroZh: "敬请期待。",
+    playgroundIntroEn: "Coming soon.",
     // 页面标题（用于 document.title）
     resumePageTitle: "李卓衡 | 简历",
     aboutPageTitle: "关于 | 李卓衡",
@@ -59,6 +71,9 @@ const translations = {
     othersPageTitle: "其他 | 李卓衡",
     nyuPageTitle: "纽约大学 | 李卓衡",
     xianPageTitle: "西安音乐学院 | 李卓衡",
+    photographyPageTitle: "摄影 | 李卓衡",
+    blogPageTitle: "博客 | 李卓衡",
+    playgroundPageTitle: "游乐场 | 李卓衡",
     // 简历页
     resumeDownloadPdf: "下载 PDF",
     resumeViewBelow: "下方预览或新标签打开",
@@ -98,6 +113,15 @@ const translations = {
     sectionInterests: "Interests",
     sectionContact: "Contact",
     sectionOthers: "Others",
+    sectionPhotography: "Photography",
+    photographyIntroZh: "响应式图片网格，后续可接入灯箱等。",
+    photographyIntroEn: "A responsive grid; add lightbox later if needed.",
+    sectionBlog: "Blog",
+    blogIntroZh: "敬请期待。",
+    blogIntroEn: "Coming soon.",
+    sectionPlayground: "Playground",
+    playgroundIntroZh: "敬请期待。",
+    playgroundIntroEn: "Coming soon.",
     projectsMoreMarkdown: "More (from Markdown)",
     contactIntro: "Feel free to reach out:",
     footerSiteZh: "个人网站",
@@ -115,6 +139,9 @@ const translations = {
     othersPageTitle: "Others | Zhuoheng Li",
     nyuPageTitle: "New York University | Zhuoheng Li",
     xianPageTitle: "Xi'an Conservatory | Zhuoheng Li",
+    photographyPageTitle: "Photography | Zhuoheng Li",
+    blogPageTitle: "Blog | Zhuoheng Li",
+    playgroundPageTitle: "Playground | Zhuoheng Li",
     resumeDownloadPdf: "Download PDF",
     resumeViewBelow: "View below or open in a new tab",
     resumeFallbackPrefix: "If the PDF doesn't load, ",
@@ -149,7 +176,7 @@ function applyPageTitle(lang, pathname) {
     document.title = lang === "zh" ? "李卓衡 | 个人网站" : "Zhuoheng Li | Personal Website";
     return;
   }
-  const key = p.includes("about") ? "aboutPageTitle" : p.includes("skills") ? "skillsPageTitle" : p.includes("nyu") ? "nyuPageTitle" : p.includes("xian") ? "xianPageTitle" : p.includes("education") ? "educationPageTitle" : p.includes("experience") ? "experiencePageTitle" : p.includes("honors") ? "honorsPageTitle" : p.includes("campus") ? "campusPageTitle" : p.includes("contact") ? "contactPageTitle" : p.includes("projects") ? "projectsPageTitle" : p.includes("others") ? "othersPageTitle" : p.includes("resume") ? "resumePageTitle" : null;
+  const key = p.includes("about") ? "aboutPageTitle" : p.includes("skills") ? "skillsPageTitle" : p.includes("nyu") ? "nyuPageTitle" : p.includes("xian") ? "xianPageTitle" : p.includes("education") ? "educationPageTitle" : p.includes("experience") ? "experiencePageTitle" : p.includes("honors") ? "honorsPageTitle" : p.includes("campus") ? "campusPageTitle" : p.includes("contact") ? "contactPageTitle" : p.includes("projects") ? "projectsPageTitle" : p.includes("photography") ? "photographyPageTitle" : p.includes("blog") ? "blogPageTitle" : p.includes("playground") ? "playgroundPageTitle" : p.includes("others") ? "othersPageTitle" : p.includes("resume") ? "resumePageTitle" : null;
   if (key && t[key]) document.title = t[key];
 }
 

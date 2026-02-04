@@ -22,9 +22,15 @@ try {
   // 目录不存在或无法读取时保持空数组
 }
 ---
-<BaseLayout title="Photography | Zhuoheng Li" description="Photography portfolio">
-  <h1 class="page-title">Photography</h1>
-  <p class="page-intro">A responsive grid; add lightbox later if needed.</p>
+<BaseLayout title="摄影 | 李卓衡" description="Photography portfolio">
+  <h1 class="page-title">
+    <span class="content-zh" data-i18n="sectionPhotography">摄影</span>
+    <span class="content-en" data-i18n="sectionPhotography">Photography</span>
+  </h1>
+  <p class="page-intro">
+    <span class="content-zh" data-i18n="photographyIntroZh">响应式图片网格，后续可接入灯箱等。</span>
+    <span class="content-en" data-i18n="photographyIntroEn">A responsive grid; add lightbox later if needed.</span>
+  </p>
 
   <div class="photo-grid" aria-label="Photo gallery">
     {photographyImages.map((filename) => (
@@ -41,7 +47,7 @@ try {
     ))}
   </div>
 
-  <p class="page-footer"><a href={base}>← Home</a></p>
+  <p class="page-footer"><a href={base}>← <span data-i18n="navHome">首页</span></a></p>
 </BaseLayout>
 
 <style>
