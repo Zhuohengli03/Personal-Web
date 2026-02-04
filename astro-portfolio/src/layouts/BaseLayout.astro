@@ -5,8 +5,10 @@ interface Props {
   description?: string;
   /** 是否显示左侧个人信息栏，设为 false 时（如「其他」页）不显示 */
   showSidebar?: boolean;
+  /** 主内容区额外 class，如 xian-detail 用于放宽宽度 */
+  contentClass?: string;
 }
-const { title, description = 'Zhuoheng Li - MS in Management & Analytics @ NYU | Data Analytics & Data Engineering', showSidebar = true } = Astro.props;
+const { title, description = 'Zhuoheng Li - MS in Management & Analytics @ NYU | Data Analytics & Data Engineering', showSidebar = true, contentClass } = Astro.props;
 const base = import.meta.env.BASE_URL;
 ---
 <!DOCTYPE html>
@@ -168,7 +170,7 @@ const base = import.meta.env.BASE_URL;
     </header>
     <main class={showSidebar ? "main-with-sidebar" : "main"}>
       {showSidebar && <ProfileSidebar />}
-      <div class={showSidebar ? "main-content" : "main-inner"}>
+      <div class={[showSidebar ? "main-content" : "main-inner", contentClass].filter(Boolean).join(" ")}>
         <slot />
       </div>
     </main>
@@ -347,6 +349,9 @@ const base = import.meta.env.BASE_URL;
   }
   .main-with-sidebar .main-content {
     max-width: 720px;
+  }
+  .main-content.xian-detail {
+    max-width: 960px;
   }
   @media (max-width: 991px) {
     .main-with-sidebar {

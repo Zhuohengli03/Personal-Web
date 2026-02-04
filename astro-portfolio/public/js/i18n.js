@@ -41,6 +41,8 @@ const translations = {
     sectionInterests: "兴趣",
     sectionContact: "联系我",
     sectionOthers: "其他",
+    xianGuqinIntro: "古琴简介",
+    xianMomentsFeed: "动态",
     projectsMoreMarkdown: "更多（Markdown）",
     // 联系
     contactIntro: "欢迎通过以下方式与我交流：",
@@ -113,6 +115,8 @@ const translations = {
     sectionInterests: "Interests",
     sectionContact: "Contact",
     sectionOthers: "Others",
+    xianGuqinIntro: "Guqin Introduction",
+    xianMomentsFeed: "Moments",
     sectionPhotography: "Photography",
     photographyIntroZh: "响应式图片网格，后续可接入灯箱等。",
     photographyIntroEn: "A responsive grid; add lightbox later if needed.",
