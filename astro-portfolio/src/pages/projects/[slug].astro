@@ -119,6 +119,8 @@ if (isMarkdown && entry) {
           <div class="content-en"><p set:html={hardcoded.descriptionEn.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')} /></div>
           {(hardcoded.bodyZh || hardcoded.bodyEn) && (
             <>
+              <h2 class="project-intro-title content-zh" data-i18n="projectIntroTitleZh">简介</h2>
+              <h2 class="project-intro-title content-en" data-i18n="projectIntroTitleEn">Introduction</h2>
               {hardcoded.bodyZh && <div class="content-zh project-body" set:html={formatBody(hardcoded.bodyZh)} />}
               {hardcoded.bodyEn && <div class="content-en project-body" set:html={formatBody(hardcoded.bodyEn)} />}
             </>
@@ -128,8 +130,8 @@ if (isMarkdown && entry) {
     </div>
     {projectImages.length > 0 && (
       <section class="project-gallery" aria-label="Project images">
-        <h2 class="gallery-title content-zh" data-i18n="projectGalleryTitleZh">项目图片</h2>
-        <h2 class="gallery-title content-en" data-i18n="projectGalleryTitleEn">Project images</h2>
+        <h2 class="gallery-title content-zh" data-i18n="projectGalleryTitleZh">展示</h2>
+        <h2 class="gallery-title content-en" data-i18n="projectGalleryTitleEn">Showcase</h2>
         <div class="gallery-grid">
           {projectImages.map((filename) => (
             <img src={imgUrl(filename)} alt="" loading="lazy" />
@@ -175,6 +177,11 @@ if (isMarkdown && entry) {
     margin: 0 0 0.75rem;
     padding-left: 1.25rem;
     color: var(--muted);
+  }
+  .project-intro-title {
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin: 1.25rem 0 0.5rem;
   }
   .project-body :global(p) {
     margin: 0 0 0.75rem;
