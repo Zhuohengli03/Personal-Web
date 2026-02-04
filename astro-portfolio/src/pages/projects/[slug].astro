@@ -8,6 +8,7 @@ import { hardcodedProjects } from '../../data/hardcodedProjects';
 import { createHighlighter } from 'shiki';
 
 const imageExtensions = new Set(['.jpg', '.jpeg', '.png', '.webp', '.gif']);
+const videoExtensions = new Set(['.mp4', '.webm', '.mov']);
 
 function getProjectImages(slug: string): string[] {
   const dir = path.join(process.cwd(), 'public', 'projects', slug);
@@ -16,6 +17,19 @@ function getProjectImages(slug: string): string[] {
     const files = fs.readdirSync(dir);
     return files
       .filter((f) => imageExtensions.has(path.extname(f).toLowerCase()) && !f.startsWith('.'))
+      .sort();
+  } catch {
+    return [];
+  }
+}
+
+function getProjectVideos(slug: string): string[] {
+  const dir = path.join(process.cwd(), 'public', 'projects', slug);
+  try {
+    if (!fs.existsSync(dir) || !fs.statSync(dir).isDirectory()) return [];
+    const files = fs.readdirSync(dir);
+    return files
+      .filter((f) => videoExtensions.has(path.extname(f).toLowerCase()) && !f.startsWith('.'))
       .sort();
   } catch {
     return [];
@@ -74,8 +88,10 @@ const isMarkdown = entry != null;
 const isHardcoded = hardcoded != null;
 
 const projectImages = getProjectImages(slug);
+const projectVideos = getProjectVideos(slug);
 const base = import.meta.env.BASE_URL;
 const imgUrl = (filename: string) => `${base}projects/${slug}/${filename}`;
+const videoUrl = (filename: string) => `${base}projects/${slug}/${filename}`;
 
 let Content: import('astro').Component | null = null;
 let title = '';
@@ -171,6 +187,20 @@ if (isHardcoded && hardcoded?.codeSnippets) {
               <h3 class="project-code-block-title content-en">{snippet.titleEn}</h3>
               <div class="project-code-pre" set:html={snippet.highlightedHtml} />
             </div>
+          ))}
+        </div>
+      </section>
+    )}
+    {projectVideos.length > 0 && (
+      <section class="project-video-section" aria-label="Project videos">
+        <h2 class="gallery-title content-zh">演示视频</h2>
+        <h2 class="gallery-title content-en">Demo Video</h2>
+        <div class="video-list">
+          {projectVideos.map((filename) => (
+            <video class="project-video" controls preload="metadata">
+              <source src={videoUrl(filename)} type={filename.endsWith('.webm') ? 'video/webm' : filename.endsWith('.mov') ? 'video/quicktime' : 'video/mp4'} />
+              Your browser does not support the video tag.
+            </video>
           ))}
         </div>
       </section>
@@ -282,6 +312,23 @@ if (isHardcoded && hardcoded?.codeSnippets) {
     font-family: ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, monospace;
     font-size: 0.8rem;
     line-height: 1.5;
+  }
+  .project-video-section {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--glass-border);
+  }
+  .video-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .project-video {
+    width: 100%;
+    max-width: 100%;
+    border-radius: var(--radius);
+    border: 1px solid var(--glass-border);
+    background: rgba(0, 0, 0, 0.3);
   }
   .project-gallery {
     margin-top: 2rem;
