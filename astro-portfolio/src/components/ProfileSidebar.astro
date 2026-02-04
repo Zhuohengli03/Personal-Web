@@ -27,8 +27,8 @@ const base = import.meta.env.BASE_URL;
     <a href="mailto:zhuohengli03@gmail.com"><span class="profile-contact-line">📧 zhuohengli03@gmail.com</span></a>
     <a href="tel:+13322658772">📱 +1 332-265-8772</a>
     <a href="tel:+8618838932716">📱 +86 18838932716</a>
-    <a href="https://www.linkedin.com/in/zhuoheng-li-3365b5351/" target="_blank" rel="noopener noreferrer">🔗 LinkedIn</a>
-    <a href="https://github.com/Zhuohengli03" target="_blank" rel="noopener noreferrer">💻 GitHub</a>
+    <a class="profile-social" href="https://www.linkedin.com/in/zhuoheng-li-3365b5351/" target="_blank" rel="noopener noreferrer">🔗 LinkedIn</a>
+    <a class="profile-social" href="https://github.com/Zhuohengli03" target="_blank" rel="noopener noreferrer">💻 GitHub</a>
   </div>
   <div class="profile-cta">
     <a href={`${base}projects/`} class="profile-btn profile-btn-interactive profile-btn-primary" data-i18n="btnProjects">查看我的项目</a>
@@ -91,6 +91,11 @@ const base = import.meta.env.BASE_URL;
     font-weight: 600;
     color: var(--text);
     margin: 0;
+    transition: text-shadow 0.3s ease, transform 0.25s ease;
+  }
+  .profile-name:hover {
+    text-shadow: 0 0 20px rgba(88, 166, 255, 0.4), 0 0 40px rgba(88, 166, 255, 0.2);
+    transform: scale(1.02);
   }
   .profile-location {
     margin: 0;
@@ -118,6 +123,27 @@ const base = import.meta.env.BASE_URL;
   .profile-contact a:hover {
     color: var(--accent);
     text-decoration: none;
+  }
+  .profile-social {
+    position: relative;
+    transition: color 0.25s ease, transform 0.2s ease;
+  }
+  .profile-social::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), rgba(88, 166, 255, 0.6));
+    transition: width 0.3s ease;
+  }
+  .profile-social:hover {
+    color: var(--accent);
+    transform: translateX(4px);
+  }
+  .profile-social:hover::after {
+    width: 100%;
   }
   .profile-cta {
     display: flex;
