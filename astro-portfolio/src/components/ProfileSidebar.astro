@@ -9,11 +9,17 @@ interface Props {
 }
 const { avatarSrc } = Astro.props;
 const base = import.meta.env.BASE_URL;
+// 始终用 base 拼出绝对路径，避免子页面相对路径解析错误导致头像 404
+const avatarUrl = avatarSrc
+  ? (avatarSrc.startsWith("http")
+    ? avatarSrc
+    : `${base.startsWith("/") ? base : "/" + base}${avatarSrc.replace(/^\//, "")}`)
+  : "";
 ---
 <aside class="profile-sidebar">
   <div class="profile-avatar">
-    {avatarSrc ? (
-      <img src={avatarSrc.startsWith("/") || avatarSrc.startsWith("http") ? avatarSrc : `${base}${avatarSrc}`} alt="" width="96" height="96" />
+    {avatarUrl ? (
+      <img src={avatarUrl} alt="" width="96" height="96" />
     ) : (
       <div class="profile-avatar-placeholder"><span class="content-zh">李</span><span class="content-en">Z</span></div>
     )}
