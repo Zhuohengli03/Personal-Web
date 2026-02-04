@@ -22,7 +22,7 @@ const base = import.meta.env.BASE_URL;
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&family=Dancing+Script:wght@400;600;700&family=ZCOOL+XiaoWei&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&family=Noto+Serif+SC:wght@400;600;700&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&family=Dancing+Script:wght@400;600;700&family=ZCOOL+XiaoWei&display=swap"
       rel="stylesheet"
     />
     <style is:global>
@@ -34,8 +34,6 @@ const base = import.meta.env.BASE_URL;
         --accent: #58a6ff;
         --accent-hover: #79b8ff;
         --border: #30363d;
-        --font-serif: "Noto Serif SC", "Noto Serif", serif;
-        --font-sans: "Source Sans 3", system-ui, sans-serif;
         --space: 1.5rem;
         --space-lg: 3rem;
         --radius: 8px;
@@ -58,6 +56,16 @@ const base = import.meta.env.BASE_URL;
       }
       html[lang="zh-CN"] .content-en {
         display: none !important;
+      }
+      /* 中文版：正文 Noto Sans SC，标题 Noto Serif SC */
+      html[lang="zh-CN"] {
+        --font-sans: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+        --font-serif: "Noto Serif SC", "Source Han Serif SC", serif;
+      }
+      /* 英文版：统一 Source Sans 3 */
+      html[lang="en"] {
+        --font-sans: "Source Sans 3", system-ui, -apple-system, sans-serif;
+        --font-serif: "Source Sans 3", system-ui, -apple-system, sans-serif;
       }
       body {
         margin: 0;
