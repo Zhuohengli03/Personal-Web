@@ -1,48 +1,62 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import BorderBeam from '../../components/magic/BorderBeam.astro';
-import ProjectCard from '../../components/ProjectCard.astro';
-import { getCollection } from 'astro:content';
 import { hardcodedProjects } from '../../data/hardcodedProjects';
 const base = import.meta.env.BASE_URL;
-const fromMarkdown = await getCollection('projects');
-const sorted = [...fromMarkdown].sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+// 校园及社会项目的 slug 列表
+const academicSlugs = new Set(['nasa-space-apps', 'social-salary']);
+const personalProjects = hardcodedProjects.filter(p => !academicSlugs.has(p.slug));
+const academicProjects = hardcodedProjects.filter(p => academicSlugs.has(p.slug));
 ---
 <BaseLayout title="项目 | 李卓衡" description="Data and analytics projects">
   <h1 class="page-title" data-i18n="sectionProjects">项目</h1>
 
-  <div class="project-grid">
-    {hardcodedProjects.map((project) => (
-      <BorderBeam class="project-card-wrap">
-        <a class="project-card-link" href={`${base}projects/${project.slug}/`}>
-          <article class="project-card">
-            <h2 class="project-title content-zh">{project.titleZh}</h2>
-            <h2 class="project-title content-en">{project.titleEn}</h2>
-            <div class="content-zh"><p set:html={project.descriptionZh.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')} /></div>
-            <div class="content-en"><p set:html={project.descriptionEn.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')} /></div>
-          </article>
-        </a>
-      </BorderBeam>
-    ))}
-  </div>
+  <section class="project-section">
+    <h2 class="section-subtitle content-zh">个人项目</h2>
+    <h2 class="section-subtitle content-en">Personal Projects</h2>
+    <div class="project-grid">
+      {personalProjects.map((project) => (
+        <BorderBeam class="project-card-wrap">
+          <a class="project-card-link" href={`${base}projects/${project.slug}/`}>
+            <article class="project-card">
+              <h3 class="project-title content-zh">{project.titleZh}</h3>
+              <h3 class="project-title content-en">{project.titleEn}</h3>
+              <div class="content-zh"><p set:html={project.descriptionZh.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')} /></div>
+              <div class="content-en"><p set:html={project.descriptionEn.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')} /></div>
+            </article>
+          </a>
+        </BorderBeam>
+      ))}
+    </div>
+  </section>
 
-  {sorted.length > 0 && (
-    <section class="markdown-projects">
-      <h2 class="subsection-title content-zh" data-i18n="projectsMoreMarkdown">更多（Markdown）</h2>
-      <h2 class="subsection-title content-en" data-i18n="projectsMoreMarkdown">More (from Markdown)</h2>
-      <div class="project-grid markdown-grid">
-        {sorted.map((entry) => (
-          <ProjectCard entry={entry} />
-        ))}
-      </div>
-    </section>
-  )}
+  <section class="project-section">
+    <h2 class="section-subtitle content-zh">校园及社会项目</h2>
+    <h2 class="section-subtitle content-en">Academic & Social Projects</h2>
+    <div class="project-grid">
+      {academicProjects.map((project) => (
+        <BorderBeam class="project-card-wrap">
+          <a class="project-card-link" href={`${base}projects/${project.slug}/`}>
+            <article class="project-card">
+              <h3 class="project-title content-zh">{project.titleZh}</h3>
+              <h3 class="project-title content-en">{project.titleEn}</h3>
+              <div class="content-zh"><p set:html={project.descriptionZh.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')} /></div>
+              <div class="content-en"><p set:html={project.descriptionEn.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')} /></div>
+            </article>
+          </a>
+        </BorderBeam>
+      ))}
+    </div>
+  </section>
 
   <p class="page-footer"><a href={base}>← <span data-i18n="navHome">首页</span></a></p>
 </BaseLayout>
 
 <style>
   .page-title { font-family: var(--font-serif); font-size: 1.5rem; font-weight: 600; margin: 0 0 1.5rem; }
+  .project-section { margin-bottom: 2rem; }
+  .section-subtitle { font-family: var(--font-serif); font-size: 1.15rem; font-weight: 600; margin: 0 0 1rem; color: var(--text); }
   .project-grid { display: grid; gap: 1.25rem; }
   .project-card-wrap {
     border-radius: var(--radius);
@@ -74,7 +88,5 @@ const sorted = [...fromMarkdown].sort((a, b) => b.data.pubDate.valueOf() - a.dat
   }
   .project-title { font-family: var(--font-serif); font-size: 1.1rem; font-weight: 600; margin: 0 0 0.5rem; }
   .project-card .content-zh p, .project-card .content-en p { margin: 0; font-size: 0.9rem; color: var(--muted); line-height: 1.6; }
-  .markdown-projects { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid var(--glass-border); }
-  .subsection-title { font-size: 1.1rem; font-weight: 600; margin: 0 0 1rem; }
   .page-footer { margin-top: 2rem; font-size: 0.9rem; color: var(--muted); }
 </style>

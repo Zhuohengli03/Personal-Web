@@ -5,6 +5,7 @@ import { getCollection } from 'astro:content';
 import fs from 'fs';
 import path from 'path';
 import { hardcodedProjects } from '../../data/hardcodedProjects';
+import { createHighlighter } from 'shiki';
 
 const imageExtensions = new Set(['.jpg', '.jpeg', '.png', '.webp', '.gif']);
 
@@ -30,13 +31,24 @@ function formatBody(text: string): string {
     .join('');
 }
 
-function escapeHtml(code: string): string {
-  return code
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#39;');
+// Shiki highlighter 实例（懒加载）
+let highlighterPromise: ReturnType<typeof createHighlighter> | null = null;
+async function getHighlighter() {
+  if (!highlighterPromise) {
+    highlighterPromise = createHighlighter({
+      themes: ['github-dark'],
+      langs: ['python', 'sql', 'bash', 'json', 'javascript', 'typescript'],
+    });
+  }
+  return highlighterPromise;
+}
+
+async function highlightCode(code: string, lang: string): Promise<string> {
+  const highlighter = await getHighlighter();
+  // 如果语言不支持，回退到纯文本
+  const supportedLangs = highlighter.getLoadedLanguages();
+  const finalLang = supportedLangs.includes(lang as any) ? lang : 'text';
+  return highlighter.codeToHtml(code, { lang: finalLang, theme: 'github-dark' });
 }
 
 export async function getStaticPaths() {
@@ -90,6 +102,24 @@ if (isMarkdown && entry) {
   repo = hardcoded.repo;
   link = hardcoded.link;
 }
+
+// 预先高亮所有代码片段
+interface HighlightedSnippet {
+  titleZh: string;
+  titleEn: string;
+  highlightedHtml: string;
+}
+const highlightedSnippets: HighlightedSnippet[] = [];
+if (isHardcoded && hardcoded?.codeSnippets) {
+  for (const snippet of hardcoded.codeSnippets) {
+    const html = await highlightCode(snippet.code, snippet.lang);
+    highlightedSnippets.push({
+      titleZh: snippet.titleZh,
+      titleEn: snippet.titleEn,
+      highlightedHtml: html,
+    });
+  }
+}
 ---
 <BaseLayout title={title} description={description}>
   <article class="project-detail">
@@ -102,16 +132,11 @@ if (isMarkdown && entry) {
           <h1 class="content-en">{hardcoded!.titleEn}</h1>
         </>
       )}
-      <p class="meta">
-        {pubDate && (
-          <time datetime={pubDate.toISOString()}>
-            {pubDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
-          </time>
-        )}
-        {tech.length > 0 && (
-          <span class="tech"> · {tech.join(', ')}</span>
-        )}
-      </p>
+      {tech.length > 0 && (
+        <p class="meta">
+          <span class="tech">{tech.join(' · ')}</span>
+        </p>
+      )}
       {(repo || link) && (
         <p class="links">
           {repo && <a href={repo} target="_blank" rel="noopener noreferrer">Repository</a>}
@@ -135,16 +160,16 @@ if (isMarkdown && entry) {
         </>
       )}
     </div>
-    {isHardcoded && hardcoded?.codeSnippets && hardcoded.codeSnippets.length > 0 && (
+    {highlightedSnippets.length > 0 && (
       <section class="project-code-section">
         <h2 class="project-code-section-title content-zh" data-i18n="projectCodeTitleZh">核心代码</h2>
         <h2 class="project-code-section-title content-en" data-i18n="projectCodeTitleEn">Core Code</h2>
         <div class="project-code-list">
-          {hardcoded.codeSnippets.map((snippet) => (
+          {highlightedSnippets.map((snippet) => (
             <div class="project-code-block">
               <h3 class="project-code-block-title content-zh">{snippet.titleZh}</h3>
               <h3 class="project-code-block-title content-en">{snippet.titleEn}</h3>
-              <pre class="project-code-pre"><code class={`language-${snippet.lang}`} set:html={escapeHtml(snippet.code)} /></pre>
+              <div class="project-code-pre" set:html={snippet.highlightedHtml} />
             </div>
           ))}
         </div>
@@ -243,15 +268,20 @@ if (isMarkdown && entry) {
   }
   .project-code-pre {
     margin: 0;
-    padding: 1rem;
     font-size: 0.8rem;
     line-height: 1.5;
     overflow-x: auto;
-    color: var(--muted);
   }
-  .project-code-pre code {
+  .project-code-pre :global(pre) {
+    margin: 0;
+    padding: 1rem;
+    border-radius: 0;
+    overflow-x: auto;
+  }
+  .project-code-pre :global(code) {
     font-family: ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, monospace;
-    white-space: pre;
+    font-size: 0.8rem;
+    line-height: 1.5;
   }
   .project-gallery {
     margin-top: 2rem;
