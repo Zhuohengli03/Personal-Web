@@ -1,8 +1,23 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import MomentsPost from '../../components/magic/MomentsPost.astro';
+import fs from 'fs';
+import path from 'path';
+
 const base = import.meta.env.BASE_URL;
 const img = (name: string) => `${base}education/nyu/${name}`;
+
+const imageExtensions = new Set(['.jpg', '.jpeg', '.png', '.webp', '.gif']);
+const dir = path.join(process.cwd(), 'public', 'education', 'nyu');
+let imageFiles: string[] = [];
+try {
+  const files = fs.readdirSync(dir);
+  imageFiles = files
+    .filter((f) => imageExtensions.has(path.extname(f).toLowerCase()) && !f.startsWith('.'))
+    .sort();
+} catch {
+  // 目录不存在或无法读取
+}
 ---
 <BaseLayout title="纽约大学 | 李卓衡" description="NYU - Master of Management & Analytics">
   <div class="edu-feed">
@@ -22,10 +37,11 @@ const img = (name: string) => `${base}education/nyu/${name}`;
         <p>Add your NYU experience, campus life, courses and projects here. Add more paragraphs by copying a line below.</p>
         <p>Second paragraph example: e.g. core courses, data engineering/analytics projects, collaboration with faculty or peers.</p>
       </div>
-      <!-- 图片：把图片放到 public/education/nyu/，取消下面注释并改文件名；多张图会排成朋友圈九宫格 -->
+      <!-- 图片：把图片放到 public/education/nyu/ 即可，构建时自动扫描并按文件名排序展示 -->
       <div slot="images">
-        <!-- <img src={img('campus.jpg')} alt="NYU campus" /> -->
-        <!-- <img src={img('class.jpg')} alt="Course" /> -->
+        {imageFiles.map((filename) => (
+          <img src={img(filename)} alt="" />
+        ))}
       </div>
     </MomentsPost>
   </div>
