@@ -235,7 +235,7 @@ const base = import.meta.env.BASE_URL;
       </nav>
     </header>
     <main class={showSidebar ? "main-with-sidebar" : "main"}>
-      {showSidebar && <ProfileSidebar />}
+      {showSidebar && <ProfileSidebar avatarSrc="/微信图片.jpg" />}
       <div class={[showSidebar ? "main-content" : "main-inner", contentClass].filter(Boolean).join(" ")}>
         <slot />
       </div>
