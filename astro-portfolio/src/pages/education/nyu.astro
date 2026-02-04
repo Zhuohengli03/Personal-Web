@@ -34,6 +34,79 @@ try {
       </p>
     </header>
 
+    <section class="nyu-courses">
+      <h2 class="nyu-section-title">
+        <span class="content-zh">课程经历</span>
+        <span class="content-en">Coursework</span>
+      </h2>
+
+      <div class="semester-block">
+        <h3 class="semester-title">
+          <span class="content-zh">第一学期</span>
+          <span class="content-en">Semester 1</span>
+        </h3>
+        <ul class="course-list">
+          <li>
+            <span class="course-code">MASY1-GC 1015</span>
+            <span class="course-name content-zh">商业分析定量方法 (Core)</span>
+            <span class="course-name content-en">Quantitative Methods for Business Analysis (Core)</span>
+            <span class="course-credits">3 credits</span>
+          </li>
+          <li>
+            <span class="course-code">MASY1-GC 1600</span>
+            <span class="course-name content-zh">技术项目管理 (Core)</span>
+            <span class="course-name content-en">Managing Technical Projects (Core)</span>
+            <span class="course-credits">3 credits</span>
+          </li>
+          <li>
+            <span class="course-code">MASY1-GC 1500</span>
+            <span class="course-name content-zh">数据库管理 (Core)</span>
+            <span class="course-name content-en">Database Management (Core)</span>
+            <span class="course-credits">3 credits</span>
+          </li>
+          <li>
+            <span class="course-code">MASY1-GC 1700</span>
+            <span class="course-name content-zh">组织风险管理与信息安全 (Core)</span>
+            <span class="course-name content-en">Organizational Risk Management and Information Security (Core)</span>
+            <span class="course-credits">3 credits</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="semester-block">
+        <h3 class="semester-title">
+          <span class="content-zh">第二学期</span>
+          <span class="content-en">Semester 2</span>
+        </h3>
+        <ul class="course-list">
+          <li>
+            <span class="course-code">MASY1-GC 1315</span>
+            <span class="course-name content-zh">变革与创新管理 (Core)</span>
+            <span class="course-name content-en">Managing Change and Innovation (Core)</span>
+            <span class="course-credits">3 credits</span>
+          </li>
+          <li>
+            <span class="course-code">MASY1-GC 1115</span>
+            <span class="course-name content-zh">技术专业人员管理技能 (Core)</span>
+            <span class="course-name content-en">Managing Skills for Technology Professionals (Core)</span>
+            <span class="course-credits">3 credits</span>
+          </li>
+          <li>
+            <span class="course-code">MASY1-GC 1215</span>
+            <span class="course-name content-zh">数据驱动决策 (Core)</span>
+            <span class="course-name content-en">Data-Driven Decision Making (Core)</span>
+            <span class="course-credits">3 credits</span>
+          </li>
+          <li>
+            <span class="course-code">MASY1-GC 2000</span>
+            <span class="course-name content-zh">商业分析基础</span>
+            <span class="course-name content-en">Foundations of Business Analytics</span>
+            <span class="course-credits">3 credits</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
     <section class="nyu-moments-col" aria-label="Moments feed">
       <MomentsPost titleZh="动态" titleEn="Moments" subtitleZh="" subtitleEn="">
         <div slot="images">
@@ -77,6 +150,79 @@ try {
     font-size: 0.9rem;
     color: var(--muted);
     margin: 0;
+  }
+
+  .nyu-courses {
+    margin-bottom: 2rem;
+  }
+  .nyu-section-title {
+    font-family: var(--font-serif);
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin: 0 0 1rem;
+    color: var(--text);
+  }
+  .semester-block {
+    margin-bottom: 1.25rem;
+    padding: 1rem;
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius);
+  }
+  .semester-title {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0 0 0.75rem;
+    color: var(--accent);
+  }
+  .course-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .course-list li {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.5rem;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--glass-border);
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+  .course-list li:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+  .course-code {
+    font-family: ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, monospace;
+    font-size: 0.8rem;
+    color: var(--muted);
+    background: rgba(255, 255, 255, 0.05);
+    padding: 0.15rem 0.4rem;
+    border-radius: 4px;
+    flex-shrink: 0;
+  }
+  .course-name {
+    flex: 1;
+    min-width: 200px;
+    color: var(--text);
+  }
+  .course-credits {
+    font-size: 0.8rem;
+    color: var(--muted);
+    flex-shrink: 0;
+  }
+  @media (max-width: 600px) {
+    .course-list li {
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+    .course-name {
+      min-width: 0;
+    }
   }
 
   .nyu-moments-col {
