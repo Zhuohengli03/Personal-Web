@@ -27,14 +27,20 @@ npm run build
 ## 项目结构
 
 ```
-├── .github/workflows/     # GitHub Actions 部署
+├── .github/workflows/     # GitHub Actions 部署（deploy-astro.yml）
 ├── astro-portfolio/       # Astro 站点
-│   ├── public/            # 静态资源、i18n 脚本
+│   ├── public/            # 静态资源
+│   │   ├── background/    # 全页背景图/视频（见内 README）
+│   │   ├── education/     # 教育详情页图片（nyu/、xian/、xian/moments/）
+│   │   ├── js/            # i18n.js、main.js
+│   │   ├── photography/   # 摄影页图片
+│   │   └── projects/      # 各项目详情页配图（crawler/、game-market/ 等）
 │   ├── src/
-│   │   ├── components/    # 组件（Magic UI、ProjectCard）
+│   │   ├── components/    # 组件（ProfileSidebar、ProjectCard、MomentsPost 等）
 │   │   ├── content/       # Markdown 内容（项目）
+│   │   ├── data/          # 硬编码项目、quotes 等
 │   │   ├── layouts/
-│   │   └── pages/         # 各页面（首页、关于、技能、教育、经历、项目、荣誉、校园、联系、简历）
+│   │   └── pages/         # 首页、关于、技能、教育、经历、项目、联系、简历、摄影/博客/游乐场等
 │   ├── astro.config.mjs
 │   └── package.json
 └── README.md
@@ -42,7 +48,8 @@ npm run build
 
 ## 修改内容
 
-- **首页**：`astro-portfolio/src/pages/index.astro`
-- **关于 / 技能 / 教育 / 经历 / 荣誉 / 校园 / 联系**：`astro-portfolio/src/pages/*.astro`
-- **项目**：`astro-portfolio/src/pages/projects/index.astro`，或新增 `src/content/projects/*.md`
-- **中英文案**：`astro-portfolio/public/js/i18n.js`
+- **首页**：`src/pages/index.astro`
+- **关于 / 技能 / 教育 / 经历 / 联系 / 简历**：`src/pages/*.astro`
+- **项目**：`src/pages/projects/index.astro`、`src/data/hardcodedProjects.ts`，或新增 `src/content/projects/*.md`
+- **教育详情配图**：见 `public/education/README.md`；**项目配图**：见 `public/projects/README.md`
+- **中英文案**：`public/js/i18n.js`

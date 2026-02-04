@@ -1,17 +1,14 @@
 # 本仓库的 GitHub Actions 说明
 
-## 当前有哪些 workflow
+## 当前 workflow
 
 | 文件 | 名称 | 触发条件 | 作用 |
 |------|------|----------|------|
 | **deploy-astro.yml** | Deploy Astro portfolio to GitHub Pages | 推送到 `main` 或 手动运行 | 构建并部署 Astro 站点到 GitHub Pages |
-| **deploy.yml** | Deploy Astro site to GitHub Pages | 推送到 `main` | 同上（功能重复） |
-
-两个 workflow 做的是同一件事，推送到 main 时**都会跑**，会部署两次（后者会覆盖前者）。建议只保留一个。
 
 ---
 
-## 推荐使用：deploy-astro.yml
+## deploy-astro.yml 说明
 
 - 有 **configure-pages**，和官方推荐写法一致。
 - 有 **npm 缓存**（有 `package-lock.json` 时用 `npm ci`，没有则 `npm install`）。
@@ -42,9 +39,3 @@
   - **Source** 选 **GitHub Actions**（不要选 “Deploy from a branch”）。
 
 这样每次推 main（或手动跑 deploy-astro）后，就会用 `astro-portfolio/dist` 更新 Pages。
-
----
-
-## 建议：删掉重复的 deploy.yml
-
-保留 **deploy-astro.yml**，删除 **deploy.yml**，避免每次 push 跑两遍、也不知道最终用的是哪次部署。若你同意，可以删掉 `deploy.yml`。

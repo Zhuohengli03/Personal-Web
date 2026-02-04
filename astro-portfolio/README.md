@@ -8,27 +8,21 @@ A **static**, content-first technical portfolio built with [Astro](https://astro
 
 ```
 astro-portfolio/
-├── public/                 # Static assets (favicon, resume PDF)
+├── public/                 # Static assets
+│   ├── background/         # Full-page background image/video (see README there)
+│   ├── education/          # Education detail images (nyu/, xian/, xian/moments/) — see README
+│   ├── js/                 # i18n.js, main.js
+│   ├── photography/        # Photography page images
+│   ├── projects/           # Per-project images (crawler/, game-market/, …) — see README
 │   ├── favicon.svg
 │   └── resume.pdf          # Add your resume here
 ├── src/
-│   ├── components/         # Reusable UI (ProjectCard, Skills)
-│   ├── content/            # Content collections (Markdown)
-│   │   ├── config.ts       # Schema for projects (and optional blog)
-│   │   └── projects/       # One .md file per project
-│   │       └── etl-pipeline.md
-│   ├── layouts/
-│   │   └── BaseLayout.astro
-│   ├── components/
-│   │   └── ProfileSidebar.astro  # Left sidebar: avatar, name, location, contact (hidden on Others page)
-│   └── pages/
-│       ├── index.astro     # Home (about, skills, featured projects)
-│       ├── about.astro     # About + skills + education (with EducationCard)
-│       ├── others.astro    # Others (photos etc.; no sidebar)
-│       ├── projects/
-│       │   ├── index.astro # Projects list
-│       │   └── [slug].astro # Project detail (static paths from collection)
-│       └── resume.astro    # PDF embed + download link
+│   ├── components/         # ProfileSidebar, ProjectCard, MomentsPost, etc.
+│   ├── content/            # Content collections (projects Markdown)
+│   │   └── projects/       # One .md per project (e.g. etl-pipeline.md)
+│   ├── data/               # hardcodedProjects.ts, quotes.json
+│   ├── layouts/            # BaseLayout.astro
+│   └── pages/              # index, about, education, experience, projects, contact, resume, photography, blog, playground, etc.
 ├── astro.config.mjs
 ├── package.json
 └── tsconfig.json
@@ -158,4 +152,4 @@ repo: https://github.com/you/repo
 - **Projects**: list + per-project pages from Markdown.  
 - **Resume**: PDF embed + download.  
 - **i18n**: Chinese/English via `content-zh` / `content-en` and `data-i18n`; nav and page titles switch with language.  
-- **Deploy**: static build → GitHub Pages via the provided workflow.
+- **Deploy**: static build → GitHub Pages via `.github/workflows/deploy-astro.yml`.
