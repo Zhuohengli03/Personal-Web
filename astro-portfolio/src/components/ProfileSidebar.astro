@@ -91,13 +91,8 @@ const base = import.meta.env.BASE_URL;
     font-weight: 600;
     color: var(--text);
     margin: 0;
-    cursor: default;
-    transition: text-shadow 0.3s ease, transform 0.25s ease, color 0.2s ease;
-  }
-  .profile-name:hover {
-    text-shadow: 0 0 24px rgba(88, 166, 255, 0.5), 0 0 48px rgba(88, 166, 255, 0.25);
-    transform: scale(1.04);
-    color: var(--accent);
+    text-shadow: 0 0 16px rgba(88, 166, 255, 0.25);
+    letter-spacing: 0.02em;
   }
   .profile-location {
     margin: 0;
@@ -114,6 +109,10 @@ const base = import.meta.env.BASE_URL;
     color: var(--muted);
     font-size: 0.8rem;
   }
+  .profile-contact a[href^="mailto:"],
+  .profile-contact a[href^="tel:"] {
+    color: var(--muted);
+  }
   .profile-contact-line {
     display: inline-block;
     white-space: nowrap;
@@ -127,27 +126,16 @@ const base = import.meta.env.BASE_URL;
     text-decoration: none;
   }
   .profile-social {
-    position: relative;
-    transition: color 0.25s ease, transform 0.2s ease, text-shadow 0.2s ease;
-  }
-  .profile-social::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: -2px;
-    width: 0;
-    height: 3px;
-    background: linear-gradient(90deg, var(--accent), rgba(88, 166, 255, 0.7));
-    border-radius: 2px;
-    transition: width 0.3s ease;
+    color: var(--accent);
+    font-weight: 500;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-color: rgba(88, 166, 255, 0.55);
+    transition: color 0.2s ease, text-decoration-color 0.2s ease;
   }
   .profile-social:hover {
-    color: var(--accent);
-    transform: translateX(6px);
-    text-shadow: 0 0 12px rgba(88, 166, 255, 0.35);
-  }
-  .profile-social:hover::after {
-    width: 100%;
+    color: var(--accent-hover);
+    text-decoration-color: var(--accent);
   }
   .profile-cta {
     display: flex;
