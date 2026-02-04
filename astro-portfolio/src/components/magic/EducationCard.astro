@@ -7,9 +7,6 @@ interface Props {
   title?: string;
   titleZh?: string;
   titleEn?: string;
-  /** 学校所在地，显示在标题后 */
-  locationZh?: string;
-  locationEn?: string;
   subtitle?: string;
   subtitleZh?: string;
   subtitleEn?: string;
@@ -18,7 +15,7 @@ interface Props {
   /** 多图时显示 "1/6" 等，如 "1/6" */
   imageBadge?: string;
 }
-const { title, titleZh, titleEn, locationZh, locationEn, subtitle, subtitleZh, subtitleEn, logoSrc, logoAlt = "", imageBadge } = Astro.props;
+const { title, titleZh, titleEn, subtitle, subtitleZh, subtitleEn, logoSrc, logoAlt = "", imageBadge } = Astro.props;
 const base = import.meta.env.BASE_URL;
 ---
 <article class="edu-card">
@@ -27,8 +24,8 @@ const base = import.meta.env.BASE_URL;
       <img class="edu-card-logo" src={logoSrc.startsWith("/") || logoSrc.startsWith("http") ? logoSrc : `${base}${logoSrc}`} alt={logoAlt} width="48" height="48" />
     )}
     <div class="edu-card-heading">
-      {titleZh && <h3 class="edu-card-title content-zh">{titleZh}{locationZh && <span class="edu-card-location"> · {locationZh}</span>}</h3>}
-      {titleEn && <h3 class="edu-card-title content-en">{titleEn}{locationEn && <span class="edu-card-location"> · {locationEn}</span>}</h3>}
+      {titleZh && <h3 class="edu-card-title content-zh">{titleZh}</h3>}
+      {titleEn && <h3 class="edu-card-title content-en">{titleEn}</h3>}
       {title && !titleZh && !titleEn && <h3 class="edu-card-title">{title}</h3>}
       {subtitle && <p class="edu-card-subtitle">{subtitle}</p>}
       {subtitleZh && <p class="edu-card-subtitle content-zh">{subtitleZh}</p>}
@@ -80,10 +77,6 @@ const base = import.meta.env.BASE_URL;
     margin: 0 0 0.15rem;
     color: var(--text);
   }
-  .edu-card-location {
-    font-weight: 500;
-    color: var(--muted);
-  }
   .edu-card-subtitle {
     font-size: 0.875rem;
     color: var(--muted);
@@ -116,7 +109,7 @@ const base = import.meta.env.BASE_URL;
     width: 100%;
     max-height: 360px;
     overflow: hidden;
-    background: rgba(15, 17, 22, 0.22);
+    background: rgba(15, 17, 22, 0.4);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
   }
@@ -133,7 +126,7 @@ const base = import.meta.env.BASE_URL;
     position: absolute;
     top: 0.5rem;
     right: 0.5rem;
-    background: rgba(0, 0, 0, 0.35);
+    background: rgba(0, 0, 0, 0.6);
     color: #fff;
     font-size: 0.75rem;
     padding: 0.2rem 0.5rem;
