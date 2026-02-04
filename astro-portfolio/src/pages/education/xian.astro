@@ -1,8 +1,23 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import MomentsPost from '../../components/magic/MomentsPost.astro';
+import fs from 'fs';
+import path from 'path';
+
 const base = import.meta.env.BASE_URL;
 const img = (name: string) => `${base}education/xian/${name}`;
+
+const imageExtensions = new Set(['.jpg', '.jpeg', '.png', '.webp', '.gif']);
+const dir = path.join(process.cwd(), 'public', 'education', 'xian');
+let imageFiles: string[] = [];
+try {
+  const files = fs.readdirSync(dir);
+  imageFiles = files
+    .filter((f) => imageExtensions.has(path.extname(f).toLowerCase()) && !f.startsWith('.'))
+    .sort();
+} catch {
+  // 目录不存在或无法读取
+}
 ---
 <BaseLayout title="西安音乐学院 | 李卓衡" description="Xi'an Conservatory of Music - Music Performance">
   <div class="edu-feed">
@@ -22,10 +37,11 @@ const img = (name: string) => `${base}education/xian/${name}`;
         <p>Add photos and text about Xi'an Conservatory here. Add more paragraphs by copying a line below.</p>
         <p>Second paragraph example: e.g. Guqin studies, performances and competitions, campus and volunteering.</p>
       </div>
-      <!-- 图片：把图片放到 public/education/xian/，取消下面注释并改文件名；多张图会排成朋友圈九宫格 -->
+      <!-- 图片：把图片放到 public/education/xian/ 即可，构建时自动扫描并按文件名排序展示 -->
       <div slot="images">
-        <!-- <img src={img('campus.jpg')} alt="Campus" /> -->
-        <!-- <img src={img('performance.jpg')} alt="Performance" /> -->
+        {imageFiles.map((filename) => (
+          <img src={img(filename)} alt="" />
+        ))}
       </div>
     </MomentsPost>
   </div>
