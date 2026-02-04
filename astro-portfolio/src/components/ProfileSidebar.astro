@@ -29,12 +29,9 @@ const avatarUrl = avatarSrc
     <span class="content-en">Zhuoheng Li</span>
   </h2>
   <p class="profile-location">📍 <span class="content-zh">美国纽约</span><span class="content-en">New York, USA</span></p>
-  <div class="profile-contact">
-    <a href="mailto:zhuohengli03@gmail.com"><span class="profile-contact-line">📧 zhuohengli03@gmail.com</span></a>
-    <a href="tel:+13322658772">📱 +1 332-265-8772</a>
-    <a href="tel:+8618838932716">📱 +86 18838932716</a>
-    <a class="profile-social" href="https://www.linkedin.com/in/zhuoheng-li-3365b5351/" target="_blank" rel="noopener noreferrer">🔗 LinkedIn</a>
-    <a class="profile-social" href="https://github.com/Zhuohengli03" target="_blank" rel="noopener noreferrer">💻 GitHub</a>
+  <div class="profile-status">
+    <p class="profile-student">🎓 NYU Student</p>
+    <p class="profile-program">MS in Management & Analytics</p>
   </div>
   <div class="profile-cta">
     <a href={`${base}projects/`} class="profile-btn profile-btn-interactive profile-btn-primary" data-i18n="btnProjects">查看我的项目</a>
@@ -48,7 +45,8 @@ const avatarUrl = avatarSrc
     width: 240px;
     padding: 1rem;
     position: sticky;
-    top: 5.5rem;
+    top: 50vh;
+    transform: translateY(-50%);
     align-self: flex-start;
     display: flex;
     flex-direction: column;
@@ -104,44 +102,22 @@ const avatarUrl = avatarSrc
     margin: 0;
     font-size: 0.85rem;
   }
-  .profile-contact {
+  .profile-status {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.35rem;
+    gap: 0.15rem;
   }
-  .profile-contact a {
-    display: block;
-    color: var(--muted);
-    font-size: 0.8rem;
-  }
-  .profile-contact a[href^="mailto:"],
-  .profile-contact a[href^="tel:"] {
-    color: var(--muted);
-  }
-  .profile-contact-line {
-    display: inline-block;
-    white-space: nowrap;
-    max-width: 100%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    vertical-align: bottom;
-  }
-  .profile-contact a:hover {
-    color: var(--accent);
-    text-decoration: none;
-  }
-  .profile-social {
+  .profile-student {
+    margin: 0;
+    font-size: 0.85rem;
     color: var(--accent);
     font-weight: 500;
-    text-decoration: underline;
-    text-underline-offset: 3px;
-    text-decoration-color: rgba(88, 166, 255, 0.55);
-    transition: color 0.2s ease, text-decoration-color 0.2s ease;
   }
-  .profile-social:hover {
-    color: var(--accent-hover);
-    text-decoration-color: var(--accent);
+  .profile-program {
+    margin: 0;
+    font-size: 0.8rem;
+    color: var(--muted);
   }
   .profile-cta {
     display: flex;

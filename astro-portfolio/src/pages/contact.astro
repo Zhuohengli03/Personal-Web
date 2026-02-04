@@ -7,9 +7,13 @@ const base = import.meta.env.BASE_URL;
   <h1 class="page-title" data-i18n="sectionContact">联系我</h1>
   <BorderBeam class="project-card-wrap">
     <div class="project-card">
-      <p class="contact-intro" data-i18n="contactIntro">欢迎通过以下方式与我交流：</p>
+      <p class="contact-intro content-zh">如有实习或全职岗位机会、项目合作或学术与技术交流需求，欢迎通过以下方式与我联系。</p>
+      <p class="contact-intro content-en">For internship or full-time opportunities, project collaborations, or academic and technical discussions, feel free to reach out via the following channels.</p>
       <ul class="contact-links">
         <li><a href="mailto:zhuohengli03@gmail.com">📧 zhuohengli03@gmail.com</a></li>
+        <li><a href="tel:+13322658772">📱 +1 332-265-8772</a></li>
+        <li><a href="tel:+8618838932716">📱 +86 18838932716</a></li>
+        <li><span class="wechat-item">💬 <span class="content-zh">微信</span><span class="content-en">WeChat</span>: L1679614707</span></li>
         <li><a href="https://github.com/Zhuohengli03" target="_blank" rel="noopener noreferrer">💻 GitHub</a></li>
         <li><a href="https://www.linkedin.com/in/zhuoheng-li-3365b5351/" target="_blank" rel="noopener noreferrer">🔗 LinkedIn</a></li>
       </ul>
@@ -43,5 +47,6 @@ const base = import.meta.env.BASE_URL;
   .contact-intro { color: var(--muted); margin: 0 0 1rem; font-size: 0.95rem; }
   .contact-links { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.5rem; }
   .contact-links a { font-weight: 500; }
+  .wechat-item { font-weight: 500; color: var(--text); }
   .page-footer { margin-top: 2rem; font-size: 0.9rem; color: var(--muted); }
 </style>
