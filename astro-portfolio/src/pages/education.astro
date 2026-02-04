@@ -17,6 +17,39 @@ const base = import.meta.env.BASE_URL;
           subtitleZh="管理与管理分析硕士（商业分析）· 2025.09 – 2026.12（预计）· GPA 3.83/4.00"
           subtitleEn="M.S. in Management & Analytics (Business Analytics) · 2025.09 – 2026.12 (Expected) · GPA 3.83/4.00"
         >
+          <p class="edu-card-subsection content-zh"><strong>课程经历：</strong></p>
+          <p class="edu-card-subsection content-en"><strong>Coursework:</strong></p>
+          
+          <p class="semester-label content-zh">第一学期</p>
+          <p class="semester-label content-en">Semester 1</p>
+          <ul class="course-list content-zh">
+            <li><span class="course-code">MASY1-GC 1015</span> 商业分析定量方法 (Core)</li>
+            <li><span class="course-code">MASY1-GC 1600</span> 技术项目管理 (Core)</li>
+            <li><span class="course-code">MASY1-GC 1500</span> 数据库管理 (Core)</li>
+            <li><span class="course-code">MASY1-GC 1700</span> 组织风险管理与信息安全 (Core)</li>
+          </ul>
+          <ul class="course-list content-en">
+            <li><span class="course-code">MASY1-GC 1015</span> Quantitative Methods for Business Analysis (Core)</li>
+            <li><span class="course-code">MASY1-GC 1600</span> Managing Technical Projects (Core)</li>
+            <li><span class="course-code">MASY1-GC 1500</span> Database Management (Core)</li>
+            <li><span class="course-code">MASY1-GC 1700</span> Organizational Risk Management and Information Security (Core)</li>
+          </ul>
+
+          <p class="semester-label content-zh">第二学期</p>
+          <p class="semester-label content-en">Semester 2</p>
+          <ul class="course-list content-zh">
+            <li><span class="course-code">MASY1-GC 1315</span> 变革与创新管理 (Core)</li>
+            <li><span class="course-code">MASY1-GC 1115</span> 技术专业人员管理技能 (Core)</li>
+            <li><span class="course-code">MASY1-GC 1215</span> 数据驱动决策 (Core)</li>
+            <li><span class="course-code">MASY1-GC 2000</span> 商业分析基础</li>
+          </ul>
+          <ul class="course-list content-en">
+            <li><span class="course-code">MASY1-GC 1315</span> Managing Change and Innovation (Core)</li>
+            <li><span class="course-code">MASY1-GC 1115</span> Managing Skills for Technology Professionals (Core)</li>
+            <li><span class="course-code">MASY1-GC 1215</span> Data-Driven Decision Making (Core)</li>
+            <li><span class="course-code">MASY1-GC 2000</span> Foundations of Business Analytics</li>
+          </ul>
+
           <div slot="footer" class="edu-card-viewmore">
             <a href={`${base}education/nyu/`} data-i18n="btnViewMore">查看更多</a>
           </div>
@@ -147,6 +180,31 @@ const base = import.meta.env.BASE_URL;
   }
   .campus-list li {
     margin-bottom: 0.35rem;
+  }
+  .semester-label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--accent);
+    margin: 0.75rem 0 0.35rem;
+  }
+  .course-list {
+    margin: 0 0 0.5rem;
+    padding-left: 1.25rem;
+    color: var(--muted);
+    font-size: 0.85rem;
+    line-height: 1.7;
+  }
+  .course-list li {
+    margin-bottom: 0.25rem;
+  }
+  .course-code {
+    font-family: ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, monospace;
+    font-size: 0.75rem;
+    color: var(--muted);
+    background: rgba(255, 255, 255, 0.05);
+    padding: 0.1rem 0.35rem;
+    border-radius: 3px;
+    margin-right: 0.35rem;
   }
   .page-footer {
     margin-top: 2rem;
