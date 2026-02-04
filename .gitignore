@@ -1,21 +1,3 @@
-# Python
-__pycache__/
-*.py[cod]
-*$py.class
-.Python
-venv/
-.venv/
-env/
-.env
-*.egg-info/
-.eggs/
-dist/
-build/
-
-# Flask
-instance/
-.webassets-cache
-
 # Astro
 astro-portfolio/node_modules/
 astro-portfolio/dist/

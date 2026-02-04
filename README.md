@@ -1,39 +1,48 @@
 # 个人网站
 
-基于 Flask 的简洁个人网站，包含首页、关于、项目展示与联系方式。
+基于 **Astro** 的静态个人网站，中英双语，部署到 GitHub Pages。
 
-## 运行方式
-
-1. 安装依赖：
+## 本地运行
 
 ```bash
-pip install -r requirements.txt
+cd astro-portfolio
+npm install
+npm run dev
 ```
 
-2. 启动服务：
+浏览器打开：<http://localhost:4321>
+
+## 构建与部署
 
 ```bash
-python main.py
+cd astro-portfolio
+npm run build
 ```
 
-3. 在浏览器打开：<http://127.0.0.1:5000>
+构建产物在 `astro-portfolio/dist/`。推送到 `main` 分支后，GitHub Actions 会自动构建并部署到 GitHub Pages。
+
+- 部署说明见：`astro-portfolio/DEPLOY.md`
+- 项目说明见：`astro-portfolio/README.md`
 
 ## 项目结构
 
 ```
-├── main.py              # Flask 入口
-├── requirements.txt
-├── templates/
-│   └── index.html       # 首页模板
-└── static/
-    ├── css/style.css    # 样式
-    └── js/main.js       # 脚本
+├── .github/workflows/     # GitHub Actions 部署
+├── astro-portfolio/       # Astro 站点
+│   ├── public/            # 静态资源、i18n 脚本
+│   ├── src/
+│   │   ├── components/    # 组件（Magic UI、ProjectCard）
+│   │   ├── content/       # Markdown 内容（项目）
+│   │   ├── layouts/
+│   │   └── pages/         # 各页面（首页、关于、技能、教育、经历、项目、荣誉、校园、联系、简历）
+│   ├── astro.config.mjs
+│   └── package.json
+└── README.md
 ```
 
-## 自定义内容
+## 修改内容
 
-- **姓名与介绍**：在 `templates/index.html` 中修改「你的名字」、标语和关于我段落。
-- **项目**：在「项目与作品」区域编辑或新增 `.project-card`，并填入链接。
-- **联系方式**：在「联系我」区域替换邮箱与社交媒体链接。
-
-修改后刷新页面即可看到效果（开发模式下会自动重载）。
+- **首页**：`astro-portfolio/src/pages/index.astro`
+- **关于 / 技能 / 教育 / 经历 / 荣誉 / 校园 / 联系**：`astro-portfolio/src/pages/*.astro`
+- **项目**：`astro-portfolio/src/pages/projects/index.astro`，或新增 `src/content/projects/*.md`
+- **中英文案**：`astro-portfolio/public/js/i18n.js`

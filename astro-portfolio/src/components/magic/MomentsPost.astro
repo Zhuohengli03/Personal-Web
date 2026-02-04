@@ -1,0 +1,148 @@
+---
+/**
+ * 朋友圈风格单条帖子：头像 + 名字/时间 + 正文 + 图片网格（1–9 张）
+ */
+interface Props {
+  titleZh?: string;
+  titleEn?: string;
+  /** 时间/副标题，显示在名字下方 */
+  subtitleZh?: string;
+  subtitleEn?: string;
+  /** 头像图，不传则显示首字占位 */
+  avatarSrc?: string;
+}
+const { titleZh, titleEn, subtitleZh, subtitleEn, avatarSrc } = Astro.props;
+const base = import.meta.env.BASE_URL;
+const avatarUrl = avatarSrc ? (avatarSrc.startsWith("/") || avatarSrc.startsWith("http") ? avatarSrc : `${base}${avatarSrc}`) : "";
+const initialZh = titleZh ? titleZh.charAt(0) : "";
+const initialEn = titleEn ? titleEn.charAt(0) : "";
+---
+<article class="moments-post">
+  <header class="moments-header">
+    <div class="moments-avatar" aria-hidden="true">
+      {avatarUrl ? (
+        <img src={avatarUrl} alt="" width="40" height="40" />
+      ) : (
+        <span class="moments-avatar-initial content-zh">{initialZh}</span>
+        <span class="moments-avatar-initial content-en">{initialEn}</span>
+      )}
+    </div>
+    <div class="moments-meta">
+      <h2 class="moments-name">
+        {titleZh && <span class="content-zh">{titleZh}</span>}
+        {titleEn && <span class="content-en">{titleEn}</span>}
+      </h2>
+      {(subtitleZh || subtitleEn) && (
+        <p class="moments-time">
+          {subtitleZh && <span class="content-zh">{subtitleZh}</span>}
+          {subtitleEn && <span class="content-en">{subtitleEn}</span>}
+        </p>
+      )}
+    </div>
+  </header>
+  <div class="moments-body">
+    <slot />
+  </div>
+  <div class="moments-photo-grid">
+    <slot name="images" />
+  </div>
+</article>
+
+<style>
+  .moments-post {
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+    margin-bottom: 1rem;
+    box-shadow: var(--glass-shadow);
+  }
+  .moments-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+  .moments-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+    background: rgba(88, 166, 255, 0.2);
+    border: 1px solid var(--glass-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .moments-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .moments-avatar-initial {
+    font-family: var(--font-serif);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--accent);
+  }
+  .moments-meta {
+    min-width: 0;
+  }
+  .moments-name {
+    font-family: var(--font-serif);
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0 0 0.15rem;
+    color: var(--text);
+  }
+  .moments-time {
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin: 0;
+  }
+  .moments-body {
+    font-size: 0.95rem;
+    color: var(--text);
+    line-height: 1.6;
+    margin-bottom: 0.5rem;
+  }
+  .moments-body :global(p) {
+    margin: 0 0 0.4em;
+  }
+  .moments-body :global(p:last-child) {
+    margin-bottom: 0;
+  }
+  /* 朋友圈式图片网格：1 张略大，2–9 张为小方格 */
+  .moments-photo-grid {
+    display: grid;
+    gap: 4px;
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 100%;
+    margin-top: 0.5rem;
+  }
+  .moments-photo-grid:empty,
+  .moments-photo-grid:not(:has(:global(img))) {
+    display: none;
+  }
+  /* 允许 slot 用 div 包多张图，div 不占格，子元素参与网格 */
+  .moments-photo-grid > :global(*) {
+    display: contents;
+  }
+  .moments-photo-grid :global(img) {
+    aspect-ratio: 1;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 1px solid var(--glass-border);
+    background: rgba(0, 0, 0, 0.15);
+  }
+  /* 仅 1 张图时显示大一些 */
+  .moments-photo-grid:has(:global(img:only-child)) :global(img) {
+    max-width: 240px;
+    aspect-ratio: 4/3;
+  }
+</style>
+
