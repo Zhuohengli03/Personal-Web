@@ -76,5 +76,521 @@
     "authorZh": "贝多芬",
     "en": "Music is a higher revelation than all wisdom and philosophy.",
     "authorEn": "Ludwig van Beethoven"
+  },
+  {
+    "zh": "天行健，君子以自强不息。",
+    "authorZh": "《周易》",
+    "en": "Heaven moves on; the superior man never ceases to strengthen himself.",
+    "authorEn": "I Ching"
+  },
+  {
+    "zh": "上善若水，水善利万物而不争。",
+    "authorZh": "老子",
+    "en": "The highest good is like water, which benefits all things without contention.",
+    "authorEn": "Lao Tzu"
+  },
+  {
+    "zh": "不积跬步，无以至千里。",
+    "authorZh": "荀子",
+    "en": "Without accumulating small steps, one cannot reach a thousand miles.",
+    "authorEn": "Xunzi"
+  },
+  {
+    "zh": "博学之，审问之，慎思之，明辨之，笃行之。",
+    "authorZh": "《中庸》",
+    "en": "Study extensively, inquire accurately, reflect carefully, discriminate clearly, practice earnestly.",
+    "authorEn": "The Doctrine of the Mean"
+  },
+  {
+    "zh": "己所不欲，勿施于人。",
+    "authorZh": "孔子",
+    "en": "Do not do unto others what you would not have them do unto you.",
+    "authorEn": "Confucius"
+  },
+  {
+    "zh": "路漫漫其修远兮，吾将上下而求索。",
+    "authorZh": "屈原",
+    "en": "The road ahead is long and arduous; I shall search high and low.",
+    "authorEn": "Qu Yuan"
+  },
+  {
+    "zh": "纸上得来终觉浅，绝知此事要躬行。",
+    "authorZh": "陆游",
+    "en": "What you learn from books is shallow; true knowledge comes from practice.",
+    "authorEn": "Lu You"
+  },
+  {
+    "zh": "世上无难事，只怕有心人。",
+    "authorZh": "中国谚语",
+    "en": "Nothing is impossible to a willing mind.",
+    "authorEn": "Chinese Proverb"
+  },
+  {
+    "zh": "失败是成功之母。",
+    "authorZh": "中国谚语",
+    "en": "Failure is the mother of success.",
+    "authorEn": "Chinese Proverb"
+  },
+  {
+    "zh": "温故而知新，可以为师矣。",
+    "authorZh": "孔子",
+    "en": "By reviewing the old, one learns the new; such a person can be a teacher.",
+    "authorEn": "Confucius"
+  },
+  {
+    "zh": "业精于勤，荒于嬉。",
+    "authorZh": "韩愈",
+    "en": "Excellence comes from diligence; neglect leads to ruin.",
+    "authorEn": "Han Yu"
+  },
+  {
+    "zh": "海纳百川，有容乃大。",
+    "authorZh": "林则徐",
+    "en": "The sea embraces all rivers because of its vastness.",
+    "authorEn": "Lin Zexu"
+  },
+  {
+    "zh": "生活不止眼前的苟且，还有诗和远方。",
+    "authorZh": "高晓松",
+    "en": "Life is not just about the immediate struggles, but also poetry and distant horizons.",
+    "authorEn": "Gao Xiaosong"
+  },
+  {
+    "zh": "天下兴亡，匹夫有责。",
+    "authorZh": "顾炎武",
+    "en": "Every person shares responsibility for the fate of the nation.",
+    "authorEn": "Gu Yanwu"
+  },
+  {
+    "zh": "读万卷书，行万里路。",
+    "authorZh": "刘彝",
+    "en": "Read ten thousand books, travel ten thousand miles.",
+    "authorEn": "Liu Yi"
+  },
+  {
+    "zh": "知行合一。",
+    "authorZh": "王阳明",
+    "en": "Knowledge and action are one.",
+    "authorEn": "Wang Yangming"
+  },
+  {
+    "zh": "生于忧患，死于安乐。",
+    "authorZh": "孟子",
+    "en": "We survive through adversity and perish in comfort.",
+    "authorEn": "Mencius"
+  },
+  {
+    "zh": "我思故我在。",
+    "authorZh": "笛卡尔",
+    "en": "I think, therefore I am.",
+    "authorEn": "René Descartes"
+  },
+  {
+    "zh": "知识就是力量。",
+    "authorZh": "弗朗西斯·培根",
+    "en": "Knowledge is power.",
+    "authorEn": "Francis Bacon"
+  },
+  {
+    "zh": "生存还是毁灭，这是一个问题。",
+    "authorZh": "莎士比亚",
+    "en": "To be, or not to be, that is the question.",
+    "authorEn": "William Shakespeare"
+  },
+  {
+    "zh": "天才是百分之一的灵感加百分之九十九的汗水。",
+    "authorZh": "爱迪生",
+    "en": "Genius is one percent inspiration and ninety-nine percent perspiration.",
+    "authorEn": "Thomas Edison"
+  },
+  {
+    "zh": "给我一个支点，我就能撬动地球。",
+    "authorZh": "阿基米德",
+    "en": "Give me a lever long enough and a fulcrum on which to place it, and I shall move the world.",
+    "authorEn": "Archimedes"
+  },
+  {
+    "zh": "想象力比知识更重要。",
+    "authorZh": "爱因斯坦",
+    "en": "Imagination is more important than knowledge.",
+    "authorEn": "Albert Einstein"
+  },
+  {
+    "zh": "疯狂就是重复做同样的事情，却期待不同的结果。",
+    "authorZh": "爱因斯坦",
+    "en": "Insanity is doing the same thing over and over again and expecting different results.",
+    "authorEn": "Albert Einstein"
+  },
+  {
+    "zh": "人生苦短，我用Python。",
+    "authorZh": "程序员格言",
+    "en": "Life is short, I use Python.",
+    "authorEn": "Programmer's Motto"
+  },
+  {
+    "zh": "简单是终极的复杂。",
+    "authorZh": "达·芬奇",
+    "en": "Simplicity is the ultimate sophistication.",
+    "authorEn": "Leonardo da Vinci"
+  },
+  {
+    "zh": "优秀的设计是显而易见的，伟大的设计是透明的。",
+    "authorZh": "乔·斯帕拉诺",
+    "en": "Good design is obvious. Great design is transparent.",
+    "authorEn": "Joe Sparano"
+  },
+  {
+    "zh": "少即是多。",
+    "authorZh": "密斯·凡德罗",
+    "en": "Less is more.",
+    "authorEn": "Mies van der Rohe"
+  },
+  {
+    "zh": "代码写给人看的，只是偶尔让机器执行。",
+    "authorZh": "哈罗德·阿伯尔森",
+    "en": "Programs must be written for people to read, and only incidentally for machines to execute.",
+    "authorEn": "Harold Abelson"
+  },
+  {
+    "zh": "过早优化是万恶之源。",
+    "authorZh": "唐纳德·克努特",
+    "en": "Premature optimization is the root of all evil.",
+    "authorEn": "Donald Knuth"
+  },
+  {
+    "zh": "软件工程的目标是控制复杂性，而不是增加它。",
+    "authorZh": "帕梅拉·扎夫",
+    "en": "The goal of software engineering is to control complexity, not to create it.",
+    "authorEn": "Pamela Zave"
+  },
+  {
+    "zh": "先让它工作，再让它正确，最后让它快。",
+    "authorZh": "肯特·贝克",
+    "en": "Make it work, make it right, make it fast.",
+    "authorEn": "Kent Beck"
+  },
+  {
+    "zh": "任何可能出错的事情，最终都会出错。",
+    "authorZh": "墨菲定律",
+    "en": "Anything that can go wrong will go wrong.",
+    "authorEn": "Murphy's Law"
+  },
+  {
+    "zh": "没有银弹。",
+    "authorZh": "弗雷德·布鲁克斯",
+    "en": "There is no silver bullet.",
+    "authorEn": "Fred Brooks"
+  },
+  {
+    "zh": "Talk is cheap. Show me the code.",
+    "authorZh": "林纳斯·托瓦兹",
+    "en": "Talk is cheap. Show me the code.",
+    "authorEn": "Linus Torvalds"
+  },
+  {
+    "zh": "好的程序员用脑袋写代码，伟大的程序员用心写代码。",
+    "authorZh": "编程格言",
+    "en": "Good programmers write code with their heads; great programmers write code with their hearts.",
+    "authorEn": "Programming Maxim"
+  },
+  {
+    "zh": "生活就像骑自行车，要保持平衡就得不断前进。",
+    "authorZh": "爱因斯坦",
+    "en": "Life is like riding a bicycle. To keep your balance, you must keep moving.",
+    "authorEn": "Albert Einstein"
+  },
+  {
+    "zh": "成功不是最终的，失败也不是致命的，重要的是继续前进的勇气。",
+    "authorZh": "丘吉尔",
+    "en": "Success is not final, failure is not fatal: it is the courage to continue that counts.",
+    "authorEn": "Winston Churchill"
+  },
+  {
+    "zh": "真正的智慧是知道自己一无所知。",
+    "authorZh": "苏格拉底",
+    "en": "True wisdom is knowing that you know nothing.",
+    "authorEn": "Socrates"
+  },
+  {
+    "zh": "教育不是灌输，而是点燃火焰。",
+    "authorZh": "苏格拉底",
+    "en": "Education is not the filling of a pail, but the lighting of a fire.",
+    "authorEn": "Socrates"
+  },
+  {
+    "zh": "一个人的价值不在于他获得了什么，而在于他贡献了什么。",
+    "authorZh": "爱因斯坦",
+    "en": "The value of a man lies not in what he obtains, but in what he contributes.",
+    "authorEn": "Albert Einstein"
+  },
+  {
+    "zh": "机会总是留给有准备的人。",
+    "authorZh": "巴斯德",
+    "en": "Chance favors the prepared mind.",
+    "authorEn": "Louis Pasteur"
+  },
+  {
+    "zh": "我没有失败，我只是找到了一万种行不通的方法。",
+    "authorZh": "爱迪生",
+    "en": "I have not failed. I've just found 10,000 ways that won't work.",
+    "authorEn": "Thomas Edison"
+  },
+  {
+    "zh": "逻辑会把你从A带到B，想象力能带你去任何地方。",
+    "authorZh": "爱因斯坦",
+    "en": "Logic will get you from A to B. Imagination will take you everywhere.",
+    "authorEn": "Albert Einstein"
+  },
+  {
+    "zh": "不要问你的国家能为你做什么，要问你能为国家做什么。",
+    "authorZh": "肯尼迪",
+    "en": "Ask not what your country can do for you — ask what you can do for your country.",
+    "authorEn": "John F. Kennedy"
+  },
+  {
+    "zh": "我有一个梦想。",
+    "authorZh": "马丁·路德·金",
+    "en": "I have a dream.",
+    "authorEn": "Martin Luther King Jr."
+  },
+  {
+    "zh": "世界上只有一种英雄主义：看清生活的真相之后，依然热爱生活。",
+    "authorZh": "罗曼·罗兰",
+    "en": "There is only one heroism in the world: to see the world as it is, and to love it.",
+    "authorEn": "Romain Rolland"
+  },
+  {
+    "zh": "人不是生来就会被打败的。",
+    "authorZh": "海明威",
+    "en": "A man is not made for defeat.",
+    "authorEn": "Ernest Hemingway"
+  },
+  {
+    "zh": "勇气不是不恐惧，而是判断有比恐惧更重要的事情。",
+    "authorZh": "安布罗斯·雷德蒙",
+    "en": "Courage is not the absence of fear, but the judgment that something else is more important than fear.",
+    "authorEn": "Ambrose Redmoon"
+  },
+  {
+    "zh": "如果你想走得快，就一个人走；如果你想走得远，就一起走。",
+    "authorZh": "非洲谚语",
+    "en": "If you want to go fast, go alone. If you want to go far, go together.",
+    "authorEn": "African Proverb"
+  },
+  {
+    "zh": "伟大的事情不是一蹴而就的，而是由一系列小事汇集而成。",
+    "authorZh": "梵高",
+    "en": "Great things are not done by impulse, but by a series of small things brought together.",
+    "authorEn": "Vincent van Gogh"
+  },
+  {
+    "zh": "每一个不曾起舞的日子，都是对生命的辜负。",
+    "authorZh": "尼采",
+    "en": "And those who were seen dancing were thought to be insane by those who could not hear the music.",
+    "authorEn": "Friedrich Nietzsche"
+  },
+  {
+    "zh": "人是会思考的芦苇。",
+    "authorZh": "帕斯卡",
+    "en": "Man is but a reed, the weakest thing in nature; but he is a thinking reed.",
+    "authorEn": "Blaise Pascal"
+  },
+  {
+    "zh": "自由不是做你想做的事，而是做你应该做的事。",
+    "authorZh": "卢梭",
+    "en": "Liberty is not doing what you want, but wanting what you ought.",
+    "authorEn": "Jean-Jacques Rousseau"
+  },
+  {
+    "zh": "历史不会重演，但会押韵。",
+    "authorZh": "马克·吐温",
+    "en": "History doesn't repeat itself, but it often rhymes.",
+    "authorEn": "Mark Twain"
+  },
+  {
+    "zh": "二十年后，你会更后悔那些没做的事，而不是做过的事。",
+    "authorZh": "马克·吐温",
+    "en": "Twenty years from now you will be more disappointed by the things you didn't do than by the ones you did.",
+    "authorEn": "Mark Twain"
+  },
+  {
+    "zh": "凡是过往，皆为序章。",
+    "authorZh": "莎士比亚",
+    "en": "What's past is prologue.",
+    "authorEn": "William Shakespeare"
+  },
+  {
+    "zh": "没有人是一座孤岛。",
+    "authorZh": "约翰·多恩",
+    "en": "No man is an island.",
+    "authorEn": "John Donne"
+  },
+  {
+    "zh": "活着就是为了改变世界，难道还有其他原因吗？",
+    "authorZh": "史蒂夫·乔布斯",
+    "en": "We're here to put a dent in the universe. Otherwise, why else even be here?",
+    "authorEn": "Steve Jobs"
+  },
+  {
+    "zh": "你的时间有限，不要浪费在过别人的生活上。",
+    "authorZh": "史蒂夫·乔布斯",
+    "en": "Your time is limited, don't waste it living someone else's life.",
+    "authorEn": "Steve Jobs"
+  },
+  {
+    "zh": "创新区分领导者和追随者。",
+    "authorZh": "史蒂夫·乔布斯",
+    "en": "Innovation distinguishes between a leader and a follower.",
+    "authorEn": "Steve Jobs"
+  },
+  {
+    "zh": "设计不仅是外观和感觉，设计是它如何工作。",
+    "authorZh": "史蒂夫·乔布斯",
+    "en": "Design is not just what it looks like and feels like. Design is how it works.",
+    "authorEn": "Steve Jobs"
+  },
+  {
+    "zh": "最危险的事情就是维持现状。",
+    "authorZh": "鲍勃·迪伦",
+    "en": "The only thing more dangerous than holding on is letting go.",
+    "authorEn": "Bob Dylan"
+  },
+  {
+    "zh": "不要因为走得太远，而忘记了为什么出发。",
+    "authorZh": "纪伯伦",
+    "en": "Do not forget your reason for the journey, no matter how far you've traveled.",
+    "authorEn": "Khalil Gibran"
+  },
+  {
+    "zh": "在最深的绝望里，遇见最美的惊喜。",
+    "authorZh": "几米",
+    "en": "In the deepest despair, discover the most beautiful surprise.",
+    "authorEn": "Jimmy Liao"
+  },
+  {
+    "zh": "人生就像一盒巧克力，你永远不知道下一颗是什么味道。",
+    "authorZh": "《阿甘正传》",
+    "en": "Life is like a box of chocolates. You never know what you're gonna get.",
+    "authorEn": "Forrest Gump"
+  },
+  {
+    "zh": "要么忙着生，要么忙着死。",
+    "authorZh": "《肖申克的救赎》",
+    "en": "Get busy living, or get busy dying.",
+    "authorEn": "The Shawshank Redemption"
+  },
+  {
+    "zh": "希望是好事，也许是人间至善，而美好的事物永不消逝。",
+    "authorZh": "《肖申克的救赎》",
+    "en": "Hope is a good thing, maybe the best of things, and no good thing ever dies.",
+    "authorEn": "The Shawshank Redemption"
+  },
+  {
+    "zh": "愿原力与你同在。",
+    "authorZh": "《星球大战》",
+    "en": "May the Force be with you.",
+    "authorEn": "Star Wars"
+  },
+  {
+    "zh": "能力越大，责任越大。",
+    "authorZh": "《蜘蛛侠》",
+    "en": "With great power comes great responsibility.",
+    "authorEn": "Spider-Man"
+  },
+  {
+    "zh": "昨天是历史，明天是谜团，只有今天是礼物。",
+    "authorZh": "《功夫熊猫》",
+    "en": "Yesterday is history, tomorrow is a mystery, but today is a gift.",
+    "authorEn": "Kung Fu Panda"
+  },
+  {
+    "zh": "做你自己，因为别人都有人做了。",
+    "authorZh": "王尔德",
+    "en": "Be yourself; everyone else is already taken.",
+    "authorEn": "Oscar Wilde"
+  },
+  {
+    "zh": "我们都在阴沟里，但仍有人仰望星空。",
+    "authorZh": "王尔德",
+    "en": "We are all in the gutter, but some of us are looking at the stars.",
+    "authorEn": "Oscar Wilde"
+  },
+  {
+    "zh": "教育的目的是用能接受新思想的头脑取代空空如也的头脑。",
+    "authorZh": "马尔科姆·福布斯",
+    "en": "The purpose of education is to replace an empty mind with an open one.",
+    "authorEn": "Malcolm Forbes"
+  },
+  {
+    "zh": "唯一真正的智慧是知道自己一无所知。",
+    "authorZh": "苏格拉底",
+    "en": "The only true wisdom is in knowing you know nothing.",
+    "authorEn": "Socrates"
+  },
+  {
+    "zh": "未经审视的人生不值得过。",
+    "authorZh": "苏格拉底",
+    "en": "The unexamined life is not worth living.",
+    "authorEn": "Socrates"
+  },
+  {
+    "zh": "吾爱吾师，吾更爱真理。",
+    "authorZh": "亚里士多德",
+    "en": "Plato is dear to me, but dearer still is truth.",
+    "authorEn": "Aristotle"
+  },
+  {
+    "zh": "人是万物的尺度。",
+    "authorZh": "普罗泰戈拉",
+    "en": "Man is the measure of all things.",
+    "authorEn": "Protagoras"
+  },
+  {
+    "zh": "我唯一知道的就是我一无所知。",
+    "authorZh": "苏格拉底",
+    "en": "I know that I know nothing.",
+    "authorEn": "Socrates"
+  },
+  {
+    "zh": "时间是最好的老师，但不幸的是它杀死了所有学生。",
+    "authorZh": "罗宾·威廉姆斯",
+    "en": "Time is the best teacher, but unfortunately, it kills all its students.",
+    "authorEn": "Robin Williams"
+  },
+  {
+    "zh": "幽默是人类面对困境时最高贵的自我解嘲。",
+    "authorZh": "马克·吐温",
+    "en": "Humor is mankind's greatest blessing.",
+    "authorEn": "Mark Twain"
+  },
+  {
+    "zh": "成功的秘诀在于永不改变你的目标。",
+    "authorZh": "巴菲特",
+    "en": "The secret of success is constancy to purpose.",
+    "authorEn": "Warren Buffett"
+  },
+  {
+    "zh": "价格是你付出的，价值是你得到的。",
+    "authorZh": "巴菲特",
+    "en": "Price is what you pay. Value is what you get.",
+    "authorEn": "Warren Buffett"
+  },
+  {
+    "zh": "在别人贪婪时恐惧，在别人恐惧时贪婪。",
+    "authorZh": "巴菲特",
+    "en": "Be fearful when others are greedy and greedy when others are fearful.",
+    "authorEn": "Warren Buffett"
+  },
+  {
+    "zh": "投资自己是你能做的最好的投资。",
+    "authorZh": "巴菲特",
+    "en": "The best investment you can make is in yourself.",
+    "authorEn": "Warren Buffett"
+  },
+  {
+    "zh": "永远不要浪费一场危机。",
+    "authorZh": "丘吉尔",
+    "en": "Never let a good crisis go to waste.",
+    "authorEn": "Winston Churchill"
   }
 ]
