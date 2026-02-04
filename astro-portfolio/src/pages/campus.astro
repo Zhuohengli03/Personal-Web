@@ -1,13 +1,13 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 const base = import.meta.env.BASE_URL;
-const educationUrl = base ? `${base}education/` : '/education/';
+const homeUrl = base ? base : '/';
 ---
-<BaseLayout title="校园 | 李卓衡" description="Campus - now on Education page">
-  <meta http-equiv="refresh" content={`0;url=${educationUrl}`} />
+<BaseLayout title="校园 | 李卓衡" description="Campus - now on Home">
+  <meta http-equiv="refresh" content={`0;url=${homeUrl}`} />
   <p class="redirect-msg">
-    <span class="content-zh">校园与志愿已移至<a href={educationUrl}>教育</a>页西安音乐学院卡片下，正在跳转…</span>
-    <span class="content-en">Campus & volunteering is now on the <a href={educationUrl}>Education</a> page under Xi'an Conservatory. Redirecting…</span>
+    <span class="content-zh">校园与志愿已移至<a href={homeUrl}>首页</a>西安音乐学院卡片下，正在跳转…</span>
+    <span class="content-en">Campus & volunteering is now on the <a href={homeUrl}>Home</a> page under Xi'an Conservatory. Redirecting…</span>
   </p>
 </BaseLayout>
 <style>

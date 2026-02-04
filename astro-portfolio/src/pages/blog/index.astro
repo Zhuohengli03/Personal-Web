@@ -2,16 +2,10 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 const base = import.meta.env.BASE_URL;
 ---
-<BaseLayout title="博客 | 李卓衡" description="Blog">
-  <h1 class="page-title">
-    <span class="content-zh" data-i18n="sectionBlog">博客</span>
-    <span class="content-en" data-i18n="sectionBlog">Blog</span>
-  </h1>
-  <p class="page-intro">
-    <span class="content-zh" data-i18n="blogIntroZh">敬请期待。</span>
-    <span class="content-en" data-i18n="blogIntroEn">Coming soon.</span>
-  </p>
-  <p class="page-footer"><a href={base}>← <span data-i18n="navHome">首页</span></a></p>
+<BaseLayout title="Blog | Zhuoheng Li" description="Blog">
+  <h1 class="page-title">Blog</h1>
+  <p class="page-intro">Coming soon.</p>
+  <p class="page-footer"><a href={base}>← Home</a></p>
 </BaseLayout>
 
 <style>
