@@ -375,6 +375,17 @@ TASKS = [
     tech: ['Survey data', 'Statistical analysis', 'Visualization'],
     pubDate: '2023-12-01',
   },
+  {
+    slug: 'operations-product-analytics',
+    titleZh: '运营与选品分析项目',
+    titleEn: 'Operations & Product Selection Analytics Project',
+    descriptionZh: '整合多业务系统数据，构建选品指标框架（销量、销售额、增长率、转化率、退款率等）；输出每日运营简报，支撑快速决策；聚焦商品与品类表现差异，识别异常并协助业务调整策略。',
+    descriptionEn: 'Integrated multi-system data to build a product selection metrics framework (sales volume, revenue, growth rate, conversion, refund rate, etc.). Delivered daily operations briefs for rapid decision-making. Focused on product/category performance gaps, identified anomalies, and supported business strategy adjustments.',
+    bodyZh: '该项目围绕运营监控与选品分析构建了一套可复用的数据分析与报表体系，负责从多业务系统中整合销售、库存、页面访问、退款及商品维度数据，对原始数据进行清洗、字段标准化与口径统一，形成稳定的分析数据集。在此基础上，设计并搭建了以商品表现为核心的选品指标框架，系统覆盖**销量、销售额、增长率、页面浏览量、转化表现与退款率**等关键运营指标，并将指标结果结构化输出为每日运营简报，为团队提供可快速决策的监控视图。\n\n在分析过程中，重点聚焦商品层级与品类层级的表现差异，通过趋势分析与对比分析识别销量波动与异常变化，尤其对退款率异常商品进行专项排查，结合商品属性、销售节奏及库存状态定位潜在问题原因，协助业务团队及时调整运营策略和商品管理方案。同时，将指标体系应用于选品评估场景，从**商品成长性、稳定性与风险表现**三个维度对候选商品进行数据支持，为新品引入与商品结构优化提供定量依据。',
+    bodyEn: 'This project built a reusable data analytics and reporting framework centered on operations monitoring and product selection analysis. It integrates sales, inventory, page traffic, refunds, and product-dimension data from multiple business systems, performing data cleaning, field standardization, and metric alignment to create a stable analytical dataset. Based on this foundation, a product-performance-centric selection metrics framework was designed, systematically covering key operational indicators including **sales volume, revenue, growth rate, page views, conversion performance, and refund rate**, with structured output as daily operations briefs to provide the team with rapid decision-making dashboards.\n\nDuring analysis, the focus was on performance gaps at both product and category levels. Trend analysis and comparative analysis were used to identify sales fluctuations and anomalies, with special attention to products with abnormal refund rates. By combining product attributes, sales rhythm, and inventory status, potential root causes were identified to help the business team promptly adjust operations strategies and product management plans. Additionally, the metrics framework was applied to product selection evaluation, providing data support for candidate products across three dimensions: **growth potential, stability, and risk performance**, offering quantitative evidence for new product introduction and product portfolio optimization.',
+    tech: ['Data Analytics', 'KPI', 'Reporting', 'Product Selection'],
+    pubDate: '2024-02-01',
+  },
 ];
 
 export function getHardcodedProjectBySlug(slug: string): HardcodedProject | undefined {
