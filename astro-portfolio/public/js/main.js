@@ -5,3 +5,15 @@ const nav = document.querySelector(".nav");
 const toggle = document.querySelector(".nav-toggle");
 if (toggle) toggle.addEventListener("click", () => nav?.classList.toggle("open"));
 document.querySelectorAll(".nav-links a").forEach((a) => a.addEventListener("click", () => nav?.classList.remove("open")));
+
+// 处理 data-back 返回上一页
+document.querySelectorAll("[data-back]").forEach((el) => {
+  el.addEventListener("click", (e) => {
+    e.preventDefault();
+    if (window.history.length > 1) {
+      window.history.back();
+    } else {
+      window.location.href = "/";
+    }
+  });
+});
