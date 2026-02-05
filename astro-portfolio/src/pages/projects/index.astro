@@ -18,8 +18,6 @@ const base = import.meta.env.BASE_URL;
             <h3 class="project-title content-en">Dynamic Web Crawler & Data Collection Platform</h3>
             <div class="content-zh"><p>使用 <strong>Selenium + BeautifulSoup</strong> 搭建可复用动态页爬虫，支持无限滚动与复杂 DOM；设计标准化 <strong>ETL</strong> 清洗/解析并写入 <strong>MySQL/PostgreSQL</strong>。</p></div>
             <div class="content-en"><p>Built a reusable crawler for dynamic pages using <strong>Selenium + BeautifulSoup</strong>, supporting infinite scroll and complex DOM structures. Designed a standardized <strong>ETL pipeline</strong>.</p></div>
-            <span class="view-detail content-zh">查看详情 →</span>
-            <span class="view-detail content-en">View details →</span>
           </article>
         </BorderBeam>
       </a>
@@ -30,8 +28,6 @@ const base = import.meta.env.BASE_URL;
             <h3 class="project-title content-en">Computer Game Market Data Analysis & Forecasting System</h3>
             <div class="content-zh"><p>基于 <strong>PostgreSQL</strong> 自动化采集与存储；特征工程与多模型预测（<strong>Random Forest、Gradient Boosting、ARIMA、Prophet</strong>）；输出 7 日预测与风险区间。</p></div>
             <div class="content-en"><p>Automated data ingestion with <strong>PostgreSQL</strong>. Feature engineering + multi-model forecasting (<strong>Random Forest, Gradient Boosting, ARIMA, Prophet</strong>). Delivered <strong>7-day forecasts</strong> and risk intervals.</p></div>
-            <span class="view-detail content-zh">查看详情 →</span>
-            <span class="view-detail content-en">View details →</span>
           </article>
         </BorderBeam>
       </a>
@@ -42,8 +38,6 @@ const base = import.meta.env.BASE_URL;
             <h3 class="project-title content-en">E-commerce User & Marketing Analytics</h3>
             <div class="content-zh"><p>搭建 KPI 体系（UV/PV、漏斗转化、留存、复购）；<strong>RFM + K-means</strong> 用户分群，识别高价值与流失风险用户。</p></div>
             <div class="content-en"><p>Built KPI system (UV/PV, funnel conversion, retention, repurchase). Segmented users via <strong>RFM + K-means</strong>, identifying high-value and churn-risk groups.</p></div>
-            <span class="view-detail content-zh">查看详情 →</span>
-            <span class="view-detail content-en">View details →</span>
           </article>
         </BorderBeam>
       </a>
@@ -54,8 +48,6 @@ const base = import.meta.env.BASE_URL;
             <h3 class="project-title content-en">Operations & Product Selection Analytics</h3>
             <div class="content-zh"><p>整合多业务系统数据，构建选品指标框架（销量、销售额、增长率、转化率、退款率等）；输出每日运营简报。</p></div>
             <div class="content-en"><p>Integrated multi-system data to build a product selection metrics framework. Delivered daily operations briefs for rapid decision-making.</p></div>
-            <span class="view-detail content-zh">查看详情 →</span>
-            <span class="view-detail content-en">View details →</span>
           </article>
         </BorderBeam>
       </a>
@@ -74,8 +66,6 @@ const base = import.meta.env.BASE_URL;
             <h3 class="project-title content-en">NASA Space Apps Challenge — Asteroid Impact Simulation</h3>
             <div class="content-zh"><p>基于 NASA 开放数据的交互式小行星撞击模拟与分析平台；负责 Prediction 模块，实现 API 接入与可视化联动。</p></div>
             <div class="content-en"><p>Web-based interactive asteroid impact simulation platform using NASA open data. Led the Prediction module: API integration and visualization linkage.</p></div>
-            <span class="view-detail content-zh">查看详情 →</span>
-            <span class="view-detail content-en">View details →</span>
           </article>
         </BorderBeam>
       </a>
@@ -86,8 +76,6 @@ const base = import.meta.env.BASE_URL;
             <h3 class="project-title content-en">Social Networks & Starting Salary Analysis</h3>
             <div class="content-zh"><p>基于问卷数据构建分析数据集；描述统计、分组比较与相关分析探索社交网络使用与结果的关系。</p></div>
             <div class="content-en"><p>Built an analysis dataset from survey data. Used descriptive stats and correlation analysis to explore links between social network usage and outcomes.</p></div>
-            <span class="view-detail content-zh">查看详情 →</span>
-            <span class="view-detail content-en">View details →</span>
           </article>
         </BorderBeam>
       </a>
@@ -145,15 +133,6 @@ const base = import.meta.env.BASE_URL;
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
   }
   .project-title { font-family: var(--font-serif); font-size: 1.1rem; font-weight: 600; margin: 0 0 0.5rem; color: var(--text); }
-  .project-card .content-zh p, .project-card .content-en p { margin: 0 0 0.75rem; font-size: 0.9rem; color: var(--muted); line-height: 1.6; }
-  .view-detail {
-    display: inline-block;
-    font-size: 0.85rem;
-    color: var(--accent);
-    font-weight: 500;
-  }
-  .project-card-link:hover .view-detail {
-    text-decoration: underline;
-  }
+  .project-card .content-zh p, .project-card .content-en p { margin: 0; font-size: 0.9rem; color: var(--muted); line-height: 1.6; }
   .page-footer { margin-top: 2rem; font-size: 0.9rem; color: var(--muted); }
 </style>
