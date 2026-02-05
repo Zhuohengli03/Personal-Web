@@ -2,9 +2,9 @@ import { defineConfig } from 'astro/config';
 import tailwind from '@astrojs/tailwind';
 
 // https://astro.build/config
-// 使用自定义域名 www.lzhpw.com 时，base 应为 '/'
+// 使用自定义域名 lizhuoheng.com 时，base 应为 '/'
 export default defineConfig({
-  site: 'https://www.lzhpw.com',
+  site: 'https://lizhuoheng.com',
   base: '/',
   build: {
     format: 'directory',
