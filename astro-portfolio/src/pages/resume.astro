@@ -1,29 +1,45 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import fs from 'fs';
+import path from 'path';
 
-// Place your resume PDF at public/resume.pdf; the embed and link will use it.
+// Check if resume.pdf exists
 const resumePath = '/resume.pdf';
+const resumeExists = fs.existsSync(path.join(process.cwd(), 'public', 'resume.pdf'));
 ---
 <BaseLayout title="李卓衡 | 简历" description="Zhuoheng Li — Resume (PDF) download and view.">
   <h1 data-i18n="navResume">简历</h1>
-  <p class="intro">
-    <a href={resumePath} download><span class="content-zh">下载 PDF</span><span class="content-en">Download PDF</span></a>
-    <span class="content-zh"> · 下方预览或新标签打开</span>
-    <span class="content-en"> · View below or open in a new tab</span>
-  </p>
-  <div class="embed-wrap">
-    <iframe
-      title="Resume (PDF)"
-      src={`${resumePath}#view=FitH`}
-      class="pdf-embed"
-      width="100%"
-      height="720"
-    />
-  </div>
-  <p class="fallback">
-    <span class="content-zh">若无法加载，请</span><span class="content-en">If the PDF doesn’t load, </span>
-    <a href={resumePath} target="_blank" rel="noopener"><span class="content-zh">在新标签页打开</span><span class="content-en">open it in a new tab</span></a><span class="content-zh">。</span><span class="content-en">.</span>
-  </p>
+  
+  {resumeExists ? (
+    <>
+      <p class="intro">
+        <a href={resumePath} download><span class="content-zh">下载 PDF</span><span class="content-en">Download PDF</span></a>
+        <span class="content-zh"> · 下方预览或新标签打开</span>
+        <span class="content-en"> · View below or open in a new tab</span>
+      </p>
+      <div class="embed-wrap">
+        <iframe
+          title="Resume (PDF)"
+          src={`${resumePath}#view=FitH`}
+          class="pdf-embed"
+          width="100%"
+          height="720"
+        />
+      </div>
+      <p class="fallback">
+        <span class="content-zh">若无法加载，请</span><span class="content-en">If the PDF doesn't load, </span>
+        <a href={resumePath} target="_blank" rel="noopener"><span class="content-zh">在新标签页打开</span><span class="content-en">open it in a new tab</span></a><span class="content-zh">。</span><span class="content-en">.</span>
+      </p>
+    </>
+  ) : (
+    <div class="no-resume">
+      <div class="placeholder-icon">📄</div>
+      <p class="content-zh">简历 PDF 尚未上传</p>
+      <p class="content-en">Resume PDF has not been uploaded yet</p>
+      <p class="hint content-zh">请将 PDF 文件放到 <code>public/resume.pdf</code></p>
+      <p class="hint content-en">Please place your PDF at <code>public/resume.pdf</code></p>
+    </div>
+  )}
 </BaseLayout>
 
 <style>
@@ -40,19 +56,55 @@ const resumePath = '/resume.pdf';
   .embed-wrap {
     border: 1px solid var(--glass-border);
     border-radius: 8px;
-    overflow: hidden;
+    overflow: visible;
     background: var(--glass-bg);
     backdrop-filter: blur(var(--glass-blur));
     -webkit-backdrop-filter: blur(var(--glass-blur));
     box-shadow: var(--glass-shadow);
+    width: 100%;
+    max-width: 100%;
   }
   .pdf-embed {
     display: block;
     border: none;
+    width: 100%;
+    min-height: 720px;
+    background: #fff;
+    border-radius: 8px;
   }
   .fallback {
     margin: 1rem 0 0;
     font-size: 0.9rem;
     color: var(--muted);
+  }
+  .no-resume {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    box-shadow: var(--glass-shadow);
+  }
+  .placeholder-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    opacity: 0.6;
+  }
+  .no-resume p {
+    margin: 0.5rem 0;
+    font-size: 1.1rem;
+  }
+  .no-resume .hint {
+    margin-top: 1.5rem;
+    font-size: 0.9rem;
+    color: var(--muted);
+  }
+  .no-resume code {
+    background: rgba(255,255,255,0.15);
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    font-family: monospace;
   }
 </style>

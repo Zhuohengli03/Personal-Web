@@ -45,8 +45,7 @@ const avatarUrl = avatarSrc
     width: 240px;
     padding: 1rem;
     position: sticky;
-    top: 50vh;
-    transform: translateY(-50%);
+    top: 100px; /* 留出导航栏空间 */
     align-self: flex-start;
     display: flex;
     flex-direction: column;
@@ -61,6 +60,8 @@ const avatarUrl = avatarSrc
     border: 1px solid var(--glass-border);
     border-radius: var(--radius);
     box-shadow: var(--glass-shadow);
+    max-height: calc(100vh - 120px); /* 防止超出视口 */
+    overflow-y: auto;
   }
   .profile-avatar {
     width: 96px;
