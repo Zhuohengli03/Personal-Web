@@ -42,6 +42,11 @@ const base = import.meta.env.BASE_URL;
         --glass-border: rgba(255, 255, 255, 0.06);
         --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.05);
         --glass-blur: 12px;
+        /* 布局尺寸 - 全站统一 */
+        --layout-max-width: 900px;
+        --sidebar-width: 220px;
+        --content-width: 600px;
+        --layout-gap: 32px;
       }
       *,
       *::before,
@@ -450,13 +455,11 @@ const base = import.meta.env.BASE_URL;
   }
   .main-with-sidebar {
     width: 100%;
-    max-width: 920px;
+    max-width: var(--layout-max-width);
     margin: 0 auto;
     padding: 0 1.5rem 2rem;
+    padding-left: calc(var(--sidebar-width) + var(--layout-gap) + 1.5rem);
     min-height: 60vh;
-    display: flex;
-    gap: 2rem;
-    align-items: flex-start;
     flex: 1;
   }
   .main-inner,
@@ -468,19 +471,18 @@ const base = import.meta.env.BASE_URL;
     margin: 0 auto;
   }
   .main-with-sidebar .main-content {
-    flex: 1;
-    width: 640px;
-    min-width: 640px;
-    max-width: 640px;
+    width: var(--content-width) !important;
+    min-width: var(--content-width) !important;
+    max-width: var(--content-width) !important;
   }
   @media (max-width: 991px) {
     .main-with-sidebar {
-      display: block;
+      padding-left: 1.5rem;
     }
     .main-with-sidebar .main-content {
-      width: 100%;
-      min-width: 0;
-      max-width: 100%;
+      width: 100% !important;
+      min-width: 0 !important;
+      max-width: 100% !important;
     }
   }
   .site-footer {

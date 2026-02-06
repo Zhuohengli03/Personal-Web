@@ -41,12 +41,12 @@ const avatarUrl = avatarSrc
 
 <style>
   .profile-sidebar {
-    flex-shrink: 0;
-    width: 220px;
+    position: fixed;
+    left: max(1.5rem, calc(50% - var(--layout-max-width, 900px) / 2 + 1.5rem));
+    top: 50%;
+    transform: translateY(calc(-50% + 30px));
+    width: var(--sidebar-width, 220px);
     padding: 1rem;
-    position: sticky;
-    top: 100px;
-    align-self: flex-start;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -60,9 +60,9 @@ const avatarUrl = avatarSrc
     border: 1px solid var(--glass-border);
     border-radius: var(--radius);
     box-shadow: var(--glass-shadow);
-    max-height: calc(100vh - 120px);
+    max-height: calc(100vh - 160px);
     overflow-y: auto;
-    z-index: 50;
+    z-index: 10;
   }
   .profile-avatar {
     width: 96px;
