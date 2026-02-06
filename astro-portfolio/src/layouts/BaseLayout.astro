@@ -528,7 +528,7 @@ const base = import.meta.env.BASE_URL;
       flex-direction: column !important;
       padding: 5rem 1.5rem 2rem !important;
       margin: 0 !important;
-      background: rgba(20, 25, 34, 0.98) !important;
+      background: rgba(20, 25, 34, 0.88) !important;
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       border: none;
@@ -565,18 +565,25 @@ const base = import.meta.env.BASE_URL;
       font-size: 1rem;
     }
     .nav.open .nav-links .nav-dropdown-menu {
-      display: block !important;
-      position: static !important;
-      opacity: 1 !important;
-      visibility: visible !important;
+      display: none !important;
       margin: 0.35rem 0 0 1rem;
       padding: 0.35rem 0;
       border: none;
       box-shadow: none;
       background: transparent;
     }
+    .nav.open .nav-links .nav-dropdown.dropdown-open .nav-dropdown-menu {
+      display: block !important;
+      position: static !important;
+      opacity: 1 !important;
+      visibility: visible !important;
+    }
     .nav.open .nav-links .nav-dropdown-menu a {
       padding: 0.5rem 0;
+    }
+    .nav.open .nav-links .nav-dropdown .nav-dropdown-trigger {
+      cursor: pointer;
+      user-select: none;
     }
     .nav-dropdown {
       flex-direction: column;
@@ -600,22 +607,24 @@ const base = import.meta.env.BASE_URL;
       position: relative;
       z-index: 101;
     }
-    .nav.open .nav-toggle {
-      z-index: 9999;
+    .nav.open .nav-toggle,
+    .nav.open .nav-lang {
+      display: none !important;
     }
     .nav.open .nav-close {
-      display: block;
-      position: fixed;
-      top: 1rem;
-      right: 1rem;
-      z-index: 9999;
-      padding: 0.5rem 1rem;
-      font-size: 1rem;
-      color: var(--text);
-      background: var(--glass-bg);
-      border: 1px solid var(--glass-border);
-      border-radius: var(--radius);
-      cursor: pointer;
+      display: block !important;
+      position: fixed !important;
+      top: 1rem !important;
+      right: 1rem !important;
+      left: auto !important;
+      z-index: 9999 !important;
+      padding: 0.6rem 1.2rem !important;
+      font-size: 1rem !important;
+      color: var(--text) !important;
+      background: rgba(22, 27, 34, 0.9) !important;
+      border: 1px solid var(--glass-border) !important;
+      border-radius: var(--radius) !important;
+      cursor: pointer !important;
     }
   }
 </style>
