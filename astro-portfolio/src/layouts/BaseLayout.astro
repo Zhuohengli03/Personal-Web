@@ -500,7 +500,16 @@ const base = import.meta.env.BASE_URL;
   }
   @media (max-width: 920px) {
     .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .nav-links li:not(:first-child) {
       display: none;
+    }
+    .nav-links li:first-child a {
+      padding: 0.4rem 0.5rem;
+      font-size: 0.95rem;
     }
     .nav.open .nav-links {
       display: flex;
@@ -522,13 +531,36 @@ const base = import.meta.env.BASE_URL;
       align-items: stretch;
     }
     .nav.open .nav-links li {
+      display: block;
       margin: 0;
+    }
+    .nav.open .nav-links li:first-child a {
+      padding: 0.75rem 1rem;
     }
     .nav.open .nav-links a {
       display: block;
       padding: 0.75rem 1rem;
       font-size: 1rem;
       border-radius: var(--radius);
+    }
+    .nav.open .nav-links .nav-dropdown {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+    }
+    .nav.open .nav-links .nav-dropdown-menu {
+      display: block;
+      position: static;
+      opacity: 1;
+      visibility: visible;
+      margin: 0.35rem 0 0 1rem;
+      padding: 0.35rem 0;
+      border: none;
+      box-shadow: none;
+      background: transparent;
+    }
+    .nav.open .nav-links .nav-dropdown-menu a {
+      padding: 0.5rem 0;
     }
     .nav-dropdown {
       flex-direction: column;
