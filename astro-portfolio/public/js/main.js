@@ -3,8 +3,16 @@ document.getElementById("year") && (document.getElementById("year").textContent 
 
 const nav = document.querySelector(".nav");
 const toggle = document.querySelector(".nav-toggle");
-if (toggle) toggle.addEventListener("click", () => nav?.classList.toggle("open"));
-document.querySelectorAll(".nav-links a").forEach((a) => a.addEventListener("click", () => nav?.classList.remove("open")));
+if (toggle) {
+  toggle.addEventListener("click", () => {
+    nav?.classList.toggle("open");
+    document.body.style.overflow = nav?.classList.contains("open") ? "hidden" : "";
+  });
+}
+document.querySelectorAll(".nav-links a").forEach((a) => a.addEventListener("click", () => {
+  nav?.classList.remove("open");
+  document.body.style.overflow = "";
+}));
 
 // 处理 data-back 返回上一页
 document.querySelectorAll("[data-back]").forEach((el) => {
