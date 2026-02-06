@@ -213,6 +213,7 @@ const base = import.meta.env.BASE_URL;
     </div>
     <header class="site-header">
       <nav class="nav">
+        <button type="button" class="nav-close" aria-label="关闭菜单"><span class="content-zh">关闭</span><span class="content-en">Close</span></button>
         <ul class="nav-links">
           <li><a href={base} class="nav-home" data-i18n="navHome">首页</a></li>
           <li><a href={`${base}experience/`} data-i18n="navExperience">工作</a></li>
@@ -432,6 +433,9 @@ const base = import.meta.env.BASE_URL;
     color: var(--border);
     user-select: none;
   }
+  .nav-close {
+    display: none;
+  }
   .nav-toggle {
     display: none;
     flex-direction: column;
@@ -512,47 +516,59 @@ const base = import.meta.env.BASE_URL;
       font-size: 0.95rem;
     }
     .nav.open .nav-links {
-      display: flex;
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      flex-direction: column;
-      padding: 5rem 1.5rem 2rem;
-      margin: 0;
-      background: rgba(20, 25, 34, 0.98);
+      display: flex !important;
+      position: fixed !important;
+      top: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      bottom: 0 !important;
+      width: 100vw !important;
+      min-height: 100vh !important;
+      min-height: 100dvh !important;
+      flex-direction: column !important;
+      padding: 5rem 1.5rem 2rem !important;
+      margin: 0 !important;
+      background: rgba(20, 25, 34, 0.98) !important;
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       border: none;
       gap: 0.5rem;
-      z-index: 99;
-      overflow-y: auto;
-      align-items: stretch;
+      z-index: 9998 !important;
+      overflow-y: auto !important;
+      align-items: stretch !important;
+      -webkit-overflow-scrolling: touch;
     }
     .nav.open .nav-links li {
-      display: block;
-      margin: 0;
+      display: block !important;
+      margin: 0 !important;
+      visibility: visible !important;
     }
     .nav.open .nav-links li:first-child a {
       padding: 0.75rem 1rem;
     }
     .nav.open .nav-links a {
-      display: block;
+      display: block !important;
       padding: 0.75rem 1rem;
       font-size: 1rem;
       border-radius: var(--radius);
+      color: var(--text) !important;
     }
     .nav.open .nav-links .nav-dropdown {
-      display: flex;
+      display: flex !important;
       flex-direction: column;
       align-items: stretch;
     }
-    .nav.open .nav-links .nav-dropdown-menu {
+    .nav.open .nav-links .nav-dropdown .nav-dropdown-trigger {
       display: block;
-      position: static;
-      opacity: 1;
-      visibility: visible;
+      padding: 0.75rem 1rem;
+      color: var(--text);
+      font-size: 1rem;
+    }
+    .nav.open .nav-links .nav-dropdown-menu {
+      display: block !important;
+      position: static !important;
+      opacity: 1 !important;
+      visibility: visible !important;
       margin: 0.35rem 0 0 1rem;
       padding: 0.35rem 0;
       border: none;
@@ -583,6 +599,23 @@ const base = import.meta.env.BASE_URL;
       display: flex;
       position: relative;
       z-index: 101;
+    }
+    .nav.open .nav-toggle {
+      z-index: 9999;
+    }
+    .nav.open .nav-close {
+      display: block;
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      z-index: 9999;
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+      color: var(--text);
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius);
+      cursor: pointer;
     }
   }
 </style>
