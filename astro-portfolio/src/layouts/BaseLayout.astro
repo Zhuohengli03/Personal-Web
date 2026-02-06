@@ -449,12 +449,14 @@ const base = import.meta.env.BASE_URL;
     flex: 1;
   }
   .main-with-sidebar {
-    max-width: 960px;
+    width: 100%;
+    max-width: 920px;
     margin: 0 auto;
     padding: 0 1.5rem 2rem;
-    padding-left: calc(240px + 3rem); /* sidebar width + gap */
     min-height: 60vh;
-    display: block;
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
     flex: 1;
   }
   .main-inner,
@@ -466,18 +468,18 @@ const base = import.meta.env.BASE_URL;
     margin: 0 auto;
   }
   .main-with-sidebar .main-content {
-    max-width: 680px;
-    width: 100%;
-  }
-  .main-content.xian-detail,
-  .main-content.nyu-detail {
-    max-width: 960px;
+    flex: 1;
+    width: 640px;
+    min-width: 640px;
+    max-width: 640px;
   }
   @media (max-width: 991px) {
     .main-with-sidebar {
-      padding-left: 1.5rem;
+      display: block;
     }
     .main-with-sidebar .main-content {
+      width: 100%;
+      min-width: 0;
       max-width: 100%;
     }
   }

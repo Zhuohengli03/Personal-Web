@@ -41,12 +41,12 @@ const avatarUrl = avatarSrc
 
 <style>
   .profile-sidebar {
-    position: fixed;
-    left: max(1.5rem, calc((100vw - 960px) / 2));
-    top: 50%;
-    transform: translateY(-50%);
-    width: 240px;
+    flex-shrink: 0;
+    width: 220px;
     padding: 1rem;
+    position: sticky;
+    top: 100px;
+    align-self: flex-start;
     display: flex;
     flex-direction: column;
     align-items: center;
