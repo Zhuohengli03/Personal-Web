@@ -23,18 +23,20 @@ const base = import.meta.env.BASE_URL;
   </script>
   <section id="about" class="home-about">
     <h2 class="section-title" data-i18n="sectionAbout">关于我</h2>
-    <div class="about-content">
-      <div class="content-zh">
-        <p>目前就读于<strong>纽约大学（NYU）管理与分析（Management & Analytics）</strong>硕士项目，研究方向偏向技术型数据分析与数据工程。</p>
-        <p>我的本科专业为<strong>音乐表演（古琴）</strong>，在系统学习数据分析与编程之前，我长期接受的是艺术与演奏训练。这段跨学科背景让我在面对复杂问题时，既具备结构化分析能力，也保持对细节和整体逻辑的高度敏感。</p>
-        <p>在研究生阶段，我系统学习并实践了 <strong>Python、SQL、关系型数据库与数据处理流程</strong>，熟悉从数据采集、清洗、建模分析到可视化呈现的完整数据分析工作流。我曾参与多个数据分析与数据建模项目，包括广告与用户行为分析、用户分群与 RFM 用户价值模型构建、运营指标体系设计以及多源数据整合分析，能够将业务问题转化为可落地的数据分析方案。</p>
-        <p>我目前专注于<strong>数据分析与数据工程</strong>方向，希望未来从事以数据驱动业务决策、数据建模、数据平台建设，以及支持 AI 与智能应用的数据分析与数据工程相关岗位。</p>
-      </div>
-      <div class="content-en">
-        <p>I am currently pursuing a Master's degree in <strong>Management & Analytics at New York University (NYU)</strong>, with a focus on technical data analytics and data engineering.</p>
-        <p>My undergraduate major was <strong>Music Performance (Guqin)</strong>. Before systematically studying data analytics and programming, I spent years training in art and performance. This interdisciplinary background enables me to approach complex problems with both structured analytical thinking and a keen sensitivity to details and overall logic.</p>
-        <p>During my graduate studies, I have systematically learned and practiced <strong>Python, SQL, relational databases, and data processing workflows</strong>, and I am familiar with the complete data analytics workflow from data collection, cleaning, modeling, to visualization. I have participated in multiple data analytics and modeling projects, including advertising and user behavior analysis, user segmentation and RFM value modeling, operational metrics system design, and multi-source data integration analysis, with the ability to translate business problems into actionable data analytics solutions.</p>
-        <p>I am currently focused on <strong>data analytics and data engineering</strong>, and I hope to pursue roles in data-driven business decision-making, data modeling, data platform development, and data analytics/engineering positions that support AI and intelligent applications.</p>
+    <div class="about-card">
+      <div class="about-content">
+        <div class="content-zh">
+          <p>目前就读于<strong>纽约大学（NYU）管理与分析（Management & Analytics）</strong>硕士项目，研究方向偏向技术型数据分析与数据工程。</p>
+          <p>我的本科专业为<strong>音乐表演（古琴）</strong>，在系统学习数据分析与编程之前，我长期接受的是艺术与演奏训练。这段跨学科背景让我在面对复杂问题时，既具备结构化分析能力，也保持对细节和整体逻辑的高度敏感。</p>
+          <p>在研究生阶段，我系统学习并实践了 <strong>Python、SQL、关系型数据库与数据处理流程</strong>，熟悉从数据采集、清洗、建模分析到可视化呈现的完整数据分析工作流。我曾参与多个数据分析与数据建模项目，包括广告与用户行为分析、用户分群与 RFM 用户价值模型构建、运营指标体系设计以及多源数据整合分析，能够将业务问题转化为可落地的数据分析方案。</p>
+          <p>我目前专注于<strong>数据分析与数据工程</strong>方向，希望未来从事以数据驱动业务决策、数据建模、数据平台建设，以及支持 AI 与智能应用的数据分析与数据工程相关岗位。</p>
+        </div>
+        <div class="content-en">
+          <p>I am currently pursuing a Master's degree in <strong>Management & Analytics at New York University (NYU)</strong>, with a focus on technical data analytics and data engineering.</p>
+          <p>My undergraduate major was <strong>Music Performance (Guqin)</strong>. Before systematically studying data analytics and programming, I spent years training in art and performance. This interdisciplinary background enables me to approach complex problems with both structured analytical thinking and a keen sensitivity to details and overall logic.</p>
+          <p>During my graduate studies, I have systematically learned and practiced <strong>Python, SQL, relational databases, and data processing workflows</strong>, and I am familiar with the complete data analytics workflow from data collection, cleaning, modeling, to visualization. I have participated in multiple data analytics and modeling projects, including advertising and user behavior analysis, user segmentation and RFM value modeling, operational metrics system design, and multi-source data integration analysis, with the ability to translate business problems into actionable data analytics solutions.</p>
+          <p>I am currently focused on <strong>data analytics and data engineering</strong>, and I hope to pursue roles in data-driven business decision-making, data modeling, data platform development, and data analytics/engineering positions that support AI and intelligent applications.</p>
+        </div>
       </div>
     </div>
   </section>
@@ -47,6 +49,15 @@ const base = import.meta.env.BASE_URL;
     font-size: 1.25rem;
     font-weight: 600;
     margin: 0 0 1rem;
+  }
+  .about-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius);
+    box-shadow: var(--glass-shadow);
+    padding: 1.5rem;
   }
   .home-about .about-content p {
     margin: 0 0 0.85rem;
