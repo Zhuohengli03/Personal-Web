@@ -27,22 +27,22 @@ const base = import.meta.env.BASE_URL;
     />
     <style is:global>
       :root {
-        --bg: #141922;
-        --surface: #1a2028;
-        --text: #e6edf3;
-        --muted: #8b949e;
-        --accent: #58a6ff;
-        --accent-hover: #79b8ff;
+        --bg: #0f1218;
+        --surface: #161b22;
+        --text: #f0f4f8;
+        --muted: #a8b4c0;
+        --accent: #3fb950;
+        --accent-hover: #56d364;
         --border: #30363d;
         --space: 1.5rem;
         --space-lg: 3rem;
-        --radius: 8px;
-        /* 透明立体玻璃质感（提高透明度、减轻背景暗度） */
-        --glass-bg: rgba(22, 27, 34, 0.28);
-        --glass-border: rgba(255, 255, 255, 0.06);
-        --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.05);
-        --glass-blur: 12px;
-        /* 布局尺寸 - 全站统一 */
+        --radius: 10px;
+        /* 玻璃质感 */
+        --glass-bg: rgba(22, 27, 34, 0.35);
+        --glass-border: rgba(255, 255, 255, 0.08);
+        --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+        --glass-blur: 14px;
+        /* 布局尺寸 */
         --layout-max-width: 900px;
         --sidebar-width: 220px;
         --content-width: 600px;
@@ -102,7 +102,7 @@ const base = import.meta.env.BASE_URL;
       .site-bg-overlay {
         position: absolute;
         inset: 0;
-        background: rgba(15, 17, 22, 0.45);
+        background: rgba(10, 12, 16, 0.35);
         pointer-events: none;
       }
       .site-header,
@@ -557,11 +557,12 @@ const base = import.meta.env.BASE_URL;
     }
     .nav.open .nav-links .nav-dropdown-menu {
       display: none !important;
-      margin: 0;
-      padding: 0;
+      margin: 0.25rem 0 0 0 !important;
+      padding: 0.25rem 0 !important;
       border: none;
       box-shadow: none;
-      background: transparent;
+      background: rgba(0, 0, 0, 0.25);
+      border-radius: var(--radius);
       list-style: none;
     }
     .nav.open .nav-links .nav-dropdown.dropdown-open .nav-dropdown-menu {
@@ -575,10 +576,13 @@ const base = import.meta.env.BASE_URL;
     }
     .nav.open .nav-links .nav-dropdown-menu a {
       display: block !important;
-      padding: 0.75rem 1rem !important;
-      font-size: 1rem !important;
+      padding: 0.6rem 1rem !important;
+      font-size: 0.95rem !important;
       color: var(--text) !important;
-      border-radius: var(--radius);
+      border-radius: calc(var(--radius) - 2px);
+    }
+    .nav.open .nav-links .nav-dropdown-menu a:hover {
+      background: rgba(255, 255, 255, 0.06);
     }
     .nav.open .nav-links .nav-dropdown .nav-dropdown-trigger {
       cursor: pointer;
