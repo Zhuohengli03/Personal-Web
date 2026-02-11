@@ -57,10 +57,28 @@ npm install
 
 ---
 
+## 5. Supabase 环境变量（留言板 / 埋点 / 管理后台登录）
+
+若使用留言板、埋点或管理后台，需在 **GitHub 仓库** 里配置两个 **Secrets**，构建时才会注入，线上才不会显示「Supabase 未配置」：
+
+1. 打开仓库 → **Settings** → **Secrets and variables** → **Actions**
+2. 点 **New repository secret**，添加两个 secret（名称必须一致）：
+   - **Name**: `PUBLIC_SUPABASE_URL`  
+     **Value**: 你的 Supabase 项目 URL，例如 `https://xxxx.supabase.co`
+   - **Name**: `PUBLIC_SUPABASE_ANON_KEY`  
+     **Value**: Supabase 项目 **Settings → API** 里的 **anon public** key（一长串 JWT）
+
+3. 保存后，**重新跑一次 Actions**（或推送一次代码），让新构建带上这两个变量。
+
+未配置时：留言板会提示「未配置 Supabase」，管理后台登录会显示「Supabase 未配置」，埋点不会上报。
+
+---
+
 ## 检查清单
 
 - [ ] Settings → Pages → Source = **GitHub Actions**
 - [ ] 若是项目站，已把 `site` 和 `base` 改成你的用户名和仓库名
+- [ ] **已配置** `PUBLIC_SUPABASE_URL` 与 `PUBLIC_SUPABASE_ANON_KEY`（Settings → Secrets and variables → Actions）
 - [ ] 已推送代码到 main（或对应分支）
 - [ ] Actions 里该 workflow 显示绿色成功
 
