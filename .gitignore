@@ -3,9 +3,14 @@ astro-portfolio/node_modules/
 astro-portfolio/dist/
 astro-portfolio/.astro/
 
+# Env (secrets)
+.env
+*.env.local
+
 # IDE
 .idea/
 .vscode/
+.cursor/
 *.swp
 *.swo
 .DS_Store

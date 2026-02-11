@@ -18,6 +18,7 @@ const translations = {
     navHonors: "荣誉",
     navCampus: "校园",
     navContact: "联系",
+    navGuestbook: "留言",
     navOthers: "其他",
     navResume: "简历",
     navMenuAria: "打开菜单",
@@ -76,6 +77,7 @@ const translations = {
     honorsPageTitle: "荣誉 | 李卓衡",
     campusPageTitle: "校园 | 李卓衡",
     contactPageTitle: "联系 | 李卓衡",
+    guestbookPageTitle: "留言 | 李卓衡",
     projectsPageTitle: "项目 | 李卓衡",
     othersPageTitle: "其他 | 李卓衡",
     nyuPageTitle: "纽约大学 | 李卓衡",
@@ -102,6 +104,7 @@ const translations = {
     navHonors: "Honors",
     navCampus: "Campus",
     navContact: "Contact",
+    navGuestbook: "Guestbook",
     navOthers: "Others",
     navResume: "Resume",
     navMenuAria: "Open menu",
@@ -153,6 +156,7 @@ const translations = {
     honorsPageTitle: "Honors | Zhuoheng Li",
     campusPageTitle: "Campus | Zhuoheng Li",
     contactPageTitle: "Contact | Zhuoheng Li",
+    guestbookPageTitle: "Guestbook | Zhuoheng Li",
     projectsPageTitle: "Projects | Zhuoheng Li",
     othersPageTitle: "Others | Zhuoheng Li",
     nyuPageTitle: "New York University | Zhuoheng Li",
@@ -194,7 +198,7 @@ function applyPageTitle(lang, pathname) {
     document.title = lang === "zh" ? "李卓衡 | 个人网站" : "Zhuoheng Li | Personal Website";
     return;
   }
-  const key = p.includes("about") ? "aboutPageTitle" : p.includes("skills") ? "skillsPageTitle" : p.includes("nyu") ? "nyuPageTitle" : p.includes("xian") ? "xianPageTitle" : p.includes("education") ? "educationPageTitle" : p.includes("experience") ? "experiencePageTitle" : p.includes("honors") ? "honorsPageTitle" : p.includes("campus") ? "campusPageTitle" : p.includes("contact") ? "contactPageTitle" : p.includes("projects") ? "projectsPageTitle" : p.includes("photography") ? "photographyPageTitle" : p.includes("blog") ? "blogPageTitle" : p.includes("playground") ? "playgroundPageTitle" : p.includes("others") ? "othersPageTitle" : p.includes("resume") ? "resumePageTitle" : null;
+  const key = p.includes("about") ? "aboutPageTitle" : p.includes("skills") ? "skillsPageTitle" : p.includes("nyu") ? "nyuPageTitle" : p.includes("xian") ? "xianPageTitle" : p.includes("education") ? "educationPageTitle" : p.includes("experience") ? "experiencePageTitle" : p.includes("honors") ? "honorsPageTitle" : p.includes("campus") ? "campusPageTitle" : p.includes("contact") ? "contactPageTitle" : p.includes("guestbook") ? "guestbookPageTitle" : p.includes("projects") ? "projectsPageTitle" : p.includes("photography") ? "photographyPageTitle" : p.includes("blog") ? "blogPageTitle" : p.includes("playground") ? "playgroundPageTitle" : p.includes("others") ? "othersPageTitle" : p.includes("resume") ? "resumePageTitle" : null;
   if (key && t[key]) document.title = t[key];
 }
 
