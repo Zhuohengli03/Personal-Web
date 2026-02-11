@@ -21,4 +21,5 @@ export type GuestbookRow = {
   email: string | null;
   message: string;
   created_at: string;
+  session_id?: string | null;
 };

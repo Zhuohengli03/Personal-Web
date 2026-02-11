@@ -304,9 +304,11 @@ import ManageLayout from '../../layouts/ManageLayout.astro';
             <thead>
               <tr>
                 <th class="w-[130px] text-left"><span class="content-zh">时间</span><span class="content-en">Time</span></th>
-                <th class="w-[120px] text-left"><span class="content-zh">用户</span><span class="content-en">User</span></th>
-                <th class="text-left"><span class="content-zh">留言</span><span class="content-en">Message</span></th>
-                <th class="w-[72px] text-right"><span class="content-zh">操作</span><span class="content-en">Actions</span></th>
+                <th class="w-[100px] text-left"><span class="content-zh">用户</span><span class="content-en">User</span></th>
+                <th class="w-[160px] text-left"><span class="content-zh">邮箱</span><span class="content-en">Email</span></th>
+                <th class="w-[100px] text-left"><span class="content-zh">会话</span><span class="content-en">Session</span></th>
+                <th class="min-w-[200px] text-left"><span class="content-zh">留言</span><span class="content-en">Message</span></th>
+                <th class="w-[120px] text-right"><span class="content-zh">操作</span><span class="content-en">Actions</span></th>
               </tr>
             </thead>
             <tbody id="manage-messages"></tbody>
@@ -341,6 +343,29 @@ import ManageLayout from '../../layouts/ManageLayout.astro';
           </div>
         </div>
       </main>
+      <!-- 留言详情弹窗 -->
+      <div id="manage-msg-modal" class="manage-msg-modal" hidden aria-modal="true" role="dialog" aria-labelledby="manage-msg-modal-title">
+        <div class="manage-msg-modal-backdrop"></div>
+        <div class="manage-msg-modal-content">
+          <h3 id="manage-msg-modal-title" class="manage-msg-modal-title"><span class="content-zh">留言详情</span><span class="content-en">Message detail</span></h3>
+          <dl class="manage-msg-modal-dl">
+            <dt><span class="content-zh">时间</span><span class="content-en">Time</span></dt>
+            <dd id="manage-msg-modal-time"></dd>
+            <dt><span class="content-zh">昵称</span><span class="content-en">Name</span></dt>
+            <dd id="manage-msg-modal-name"></dd>
+            <dt><span class="content-zh">邮箱</span><span class="content-en">Email</span></dt>
+            <dd id="manage-msg-modal-email"></dd>
+            <dt><span class="content-zh">留言</span><span class="content-en">Message</span></dt>
+            <dd id="manage-msg-modal-message" class="manage-msg-modal-message"></dd>
+            <dt><span class="content-zh">会话</span><span class="content-en">Session</span></dt>
+            <dd id="manage-msg-modal-session" class="manage-msg-modal-session"></dd>
+          </dl>
+          <div class="manage-msg-modal-actions">
+            <button type="button" id="manage-msg-modal-goto-session" class="manage-btn manage-btn-secondary manage-msg-modal-goto-session" hidden><span class="content-zh">查看该会话行为</span><span class="content-en">View session timeline</span></button>
+            <button type="button" class="manage-btn manage-btn-secondary manage-msg-modal-close"><span class="content-zh">关闭</span><span class="content-en">Close</span></button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
   <script is:inline src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
@@ -437,24 +462,93 @@ import ManageLayout from '../../layouts/ManageLayout.astro';
     if (rate2El) rate2El.textContent = '↓ ' + rate2 + '%';
   }
 
+  const msgModal = document.getElementById('manage-msg-modal');
+  const msgModalTime = document.getElementById('manage-msg-modal-time');
+  const msgModalName = document.getElementById('manage-msg-modal-name');
+  const msgModalEmail = document.getElementById('manage-msg-modal-email');
+  const msgModalMessage = document.getElementById('manage-msg-modal-message');
+  const msgModalSession = document.getElementById('manage-msg-modal-session');
+  const msgModalGotoSession = document.getElementById('manage-msg-modal-goto-session');
+  const sessionIdInput = document.getElementById('manage-session-id') as HTMLInputElement | null;
+  const sessionQueryBtn = document.getElementById('manage-session-query');
+
+  function openMsgDetail(row: GuestbookRow) {
+    if (!msgModal || !msgModalTime || !msgModalName || !msgModalEmail || !msgModalMessage || !msgModalSession) return;
+    const date = new Date(row.created_at).toLocaleString(undefined, { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+    msgModalTime.textContent = date;
+    msgModalName.textContent = row.name;
+    msgModalEmail.textContent = row.email || '—';
+    msgModalMessage.textContent = row.message;
+    if (row.session_id) {
+      msgModalSession.textContent = row.session_id;
+      msgModalSession.title = row.session_id;
+      if (msgModalGotoSession) {
+        msgModalGotoSession.hidden = false;
+        msgModalGotoSession.dataset.sessionId = row.session_id;
+      }
+    } else {
+      msgModalSession.textContent = '—';
+      msgModalSession.title = '';
+      if (msgModalGotoSession) {
+        msgModalGotoSession.hidden = true;
+        delete msgModalGotoSession.dataset.sessionId;
+      }
+    }
+    msgModal.removeAttribute('hidden');
+  }
+
+  msgModalGotoSession?.addEventListener('click', () => {
+    const sid = msgModalGotoSession.dataset.sessionId;
+    if (!sid || !sessionIdInput || !sessionQueryBtn) return;
+    closeMsgDetail();
+    viewDatabase?.removeAttribute('hidden');
+    viewOverview?.setAttribute('hidden', '');
+    document.querySelectorAll('.manage-nav-item').forEach((n) => n.classList.remove('is-active'));
+    const dbNav = document.querySelector('.manage-nav-item[data-view="database"]');
+    if (dbNav) dbNav.classList.add('is-active');
+    sessionIdInput.value = sid;
+    (sessionQueryBtn as HTMLButtonElement).click();
+  });
+
+  function closeMsgDetail() {
+    if (msgModal) msgModal.setAttribute('hidden', '');
+  }
+
+  msgModal?.querySelector('.manage-msg-modal-backdrop')?.addEventListener('click', closeMsgDetail);
+  msgModal?.querySelector('.manage-msg-modal-close')?.addEventListener('click', closeMsgDetail);
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && msgModal && !msgModal.hasAttribute('hidden')) closeMsgDetail();
+  });
+
   function renderMessagesList(rows: GuestbookRow[]) {
     if (!messagesEl) return;
     messagesEl.innerHTML = rows
       .map((r) => {
         const date = new Date(r.created_at).toLocaleString(undefined, { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
         const name = escapeHtml(r.name);
-        const email = r.email ? ' · ' + escapeHtml(r.email) : '';
+        const emailDisplay = r.email ? escapeHtml(r.email) : '—';
         const msg = escapeHtml(r.message);
-        return `<tr class="dashboard-table-row manage-msg" data-id="${r.id}">
+        const sessionShort = r.session_id ? escapeHtml(r.session_id.slice(0, 8)) + '…' : '—';
+        const sessionTitle = r.session_id ? escapeHtml(r.session_id) : '';
+        return `<tr class="dashboard-table-row manage-msg" data-id="${r.id}" data-session-id="${r.session_id || ''}">
           <td class="text-xs text-muted-foreground whitespace-nowrap">${date}</td>
-          <td class="font-medium truncate max-w-[160px]">${name}${email}</td>
-          <td class="text-foreground whitespace-pre-wrap break-words max-w-[300px]">${msg}</td>
-          <td class="text-right"><button type="button" class="manage-delete inline-flex h-8 items-center justify-center rounded-md border border-destructive/30 bg-transparent px-2 text-xs font-medium text-destructive hover:bg-destructive/10" data-id="${r.id}" aria-label="删除"><span class="content-zh">删除</span><span class="content-en">Delete</span></button></td>
+          <td class="font-medium">${name}</td>
+          <td class="text-muted-foreground text-sm truncate max-w-[160px]" title="${r.email ? escapeHtml(r.email) : ''}">${emailDisplay}</td>
+          <td class="text-muted-foreground text-xs font-mono truncate max-w-[100px]" title="${sessionTitle}">${sessionShort}</td>
+          <td class="text-foreground whitespace-pre-wrap break-words min-w-[200px] max-w-[480px]">${msg}</td>
+          <td class="text-right whitespace-nowrap">
+            <button type="button" class="manage-view-msg inline-flex h-8 items-center justify-center rounded-md border border-border bg-transparent px-2 text-xs font-medium hover:bg-muted/50 mr-1" data-id="${r.id}" aria-label="查看"><span class="content-zh">查看</span><span class="content-en">View</span></button>
+            <button type="button" class="manage-delete inline-flex h-8 items-center justify-center rounded-md border border-destructive/30 bg-transparent px-2 text-xs font-medium text-destructive hover:bg-destructive/10" data-id="${r.id}" aria-label="删除"><span class="content-zh">删除</span><span class="content-en">Delete</span></button>
+          </td>
         </tr>`;
       })
       .join('');
     if (emptyZh) emptyZh.hidden = rows.length > 0;
     if (emptyEn) emptyEn.hidden = rows.length > 0;
+    rows.forEach((r) => {
+      const viewBtn = messagesEl.querySelector(`.manage-view-msg[data-id="${r.id}"]`);
+      viewBtn?.addEventListener('click', () => openMsgDetail(r));
+    });
     messagesEl.querySelectorAll('.manage-delete').forEach((btn) => {
       btn.addEventListener('click', async () => {
         const id = (btn as HTMLElement).dataset.id;
@@ -474,13 +568,13 @@ import ManageLayout from '../../layouts/ManageLayout.astro';
   function filterMessages(rows: GuestbookRow[]): GuestbookRow[] {
     const q = (searchInput?.value ?? '').trim().toLowerCase();
     if (!q) return rows;
-    return rows.filter((r) => (r.name + ' ' + (r.email || '') + ' ' + r.message).toLowerCase().includes(q));
+    return rows.filter((r) => (r.name + ' ' + (r.email || '') + ' ' + r.message + ' ' + (r.session_id || '')).toLowerCase().includes(q));
   }
 
   async function loadMessages() {
     const sb = getSupabase();
     if (!sb || !messagesEl) return;
-    const { data, error } = await sb.from('guestbook_messages').select('id, name, email, message, created_at').order('created_at', { ascending: false }).limit(200);
+    const { data, error } = await sb.from('guestbook_messages').select('id, name, email, message, created_at, session_id').order('created_at', { ascending: false }).limit(200);
     if (error) {
       messagesEl.innerHTML = '<p class="manage-error">' + escapeHtml(error.message) + '</p>';
       if (emptyZh) emptyZh.hidden = true;
@@ -910,7 +1004,6 @@ import ManageLayout from '../../layouts/ManageLayout.astro';
     }
   }
 
-  const sessionIdInput = document.getElementById('manage-session-id') as HTMLInputElement | null;
   const sessionResultEl = document.getElementById('manage-session-result');
   document.getElementById('manage-session-query')?.addEventListener('click', async () => {
     const sid = sessionIdInput?.value?.trim();
@@ -1076,22 +1169,33 @@ import ManageLayout from '../../layouts/ManageLayout.astro';
     setLoginError('');
     const sb = getSupabase();
     if (!sb) {
-      setLoginError('Supabase 未配置');
+      setLoginError('Supabase 未配置，请检查 PUBLIC_SUPABASE_URL 与 PUBLIC_SUPABASE_ANON_KEY');
       return;
     }
     const fd = new FormData(loginForm);
     const email = (fd.get('email') as string)?.trim() || '';
     const password = fd.get('password') as string;
-    const { error } = await sb.auth.signInWithPassword({ email, password });
-    if (error) {
-      setLoginError(error.message);
+    if (!password) {
+      setLoginError(document.documentElement.lang?.startsWith('zh') ? '请输入密码' : 'Please enter password');
       return;
     }
-    showLogin(false);
-    const { data: { session } } = await sb.auth.getSession();
-    if (session) setUserEmail(session.user?.email ?? '');
-    loadMessages();
-    setTimeout(initCharts, 100);
+    try {
+      const { error } = await sb.auth.signInWithPassword({ email, password });
+      if (error) {
+        setLoginError(error.message);
+        return;
+      }
+      showLogin(false);
+      const { data: { session } } = await sb.auth.getSession();
+      if (session) setUserEmail(session.user?.email ?? '');
+      loadMessages();
+      setTimeout(() => {
+        initCharts();
+        loadAnalytics();
+      }, 100);
+    } catch (err) {
+      setLoginError(err instanceof Error ? err.message : (document.documentElement.lang?.startsWith('zh') ? '登录失败，请重试' : 'Login failed, please try again'));
+    }
   });
 
   logoutBtn?.addEventListener('click', async (e) => {
@@ -1873,4 +1977,73 @@ import ManageLayout from '../../layouts/ManageLayout.astro';
   html:not([lang="zh"]):not([lang^="zh-"]) .dashboard-kpi-help-panel.content-zh { display: none !important; }
   .dashboard-kpi-help:hover ~ .dashboard-kpi-help-panel,
   .dashboard-kpi-help-panel:hover { opacity: 1; visibility: visible; pointer-events: auto; }
+
+  .manage-msg-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    box-sizing: border-box;
+  }
+  .manage-msg-modal[hidden] { display: none !important; }
+  .manage-msg-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+  }
+  .manage-msg-modal-content {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 420px;
+    max-height: 85vh;
+    overflow-y: auto;
+    background: hsl(var(--card));
+    border: 1px solid hsl(var(--border));
+    border-radius: var(--radius);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    padding: 1.5rem;
+  }
+  .manage-msg-modal-title {
+    margin: 0 0 1rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
+  .manage-msg-modal-dl {
+    margin: 0 0 1rem;
+    font-size: 0.875rem;
+  }
+  .manage-msg-modal-dl dt {
+    margin-top: 0.75rem;
+    margin-bottom: 0.25rem;
+    color: hsl(var(--muted-foreground));
+    font-weight: 500;
+  }
+  .manage-msg-modal-dl dt:first-child { margin-top: 0; }
+  .manage-msg-modal-dl dd {
+    margin: 0;
+    color: hsl(var(--foreground));
+  }
+  .manage-msg-modal-message {
+    white-space: pre-wrap;
+    word-break: break-word;
+    max-height: 200px;
+    overflow-y: auto;
+    padding: 0.5rem 0;
+  }
+  .manage-msg-modal-session {
+    font-family: ui-monospace, monospace;
+    font-size: 0.8rem;
+    word-break: break-all;
+  }
+  .manage-msg-modal-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
 </style>

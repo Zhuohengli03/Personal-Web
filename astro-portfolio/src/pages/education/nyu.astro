@@ -5,6 +5,7 @@ import fs from 'fs';
 import path from 'path';
 
 const base = import.meta.env.BASE_URL;
+const educationUrl = base + 'education/';
 const img = (name: string) => `${base}education/nyu/${name}`;
 
 const imageExtensions = new Set(['.jpg', '.jpeg', '.png', '.webp', '.gif']);
@@ -21,7 +22,7 @@ try {
 ---
 <BaseLayout title="纽约大学 | 李卓衡" description="NYU - Master of Management & Analytics">
   <div class="nyu-page">
-    <p class="nyu-back"><a href="#" role="button" data-back>← <span data-i18n="navBack">返回上一页</span></a></p>
+    <p class="nyu-back"><a href={educationUrl}>← <span class="content-zh">返回</span><span class="content-en">Back</span></a></p>
 
     <header class="nyu-hero">
       <h1 class="nyu-hero-title">
@@ -44,7 +45,7 @@ try {
       </MomentsPost>
     </section>
 
-    <p class="nyu-footer"><a href="#" role="button" data-back>← <span data-i18n="navBack">返回上一页</span></a></p>
+    <p class="nyu-footer"><a href={educationUrl}>← <span class="content-zh">返回</span><span class="content-en">Back</span></a></p>
   </div>
 </BaseLayout>
 

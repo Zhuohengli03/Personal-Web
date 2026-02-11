@@ -29,21 +29,17 @@ const base = import.meta.env.BASE_URL;
         <input type="text" name="website" tabindex="-1" autocomplete="off" />
       </label>
       <button type="submit" id="guestbook-submit-btn" class="guestbook-submit">
-        <span class="content-zh">发布</span>
-        <span class="content-en">Submit</span>
+        <span class="guestbook-submit-icon" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m22 2-7 20-4-9-9-4Z" />
+            <path d="M22 2 11 13" />
+          </svg>
+        </span>
+        <span class="content-zh">私信</span>
+        <span class="content-en">Send</span>
       </button>
       <p id="guestbook-form-status" class="guestbook-status" aria-live="polite"></p>
     </form>
-  </div>
-
-  <div class="guestbook-list-wrap">
-    <h2 class="guestbook-list-title content-zh">留言列表</h2>
-    <h2 class="guestbook-list-title content-en">Messages</h2>
-    <div id="guestbook-list" class="guestbook-list"></div>
-    <p id="guestbook-loading" class="guestbook-loading content-zh">加载中…</p>
-    <p id="guestbook-loading-en" class="guestbook-loading content-en">Loading…</p>
-    <p id="guestbook-empty" class="guestbook-empty content-zh" hidden>暂无留言，来写第一条吧。</p>
-    <p id="guestbook-empty-en" class="guestbook-empty content-en" hidden>No messages yet. Be the first!</p>
   </div>
 
   <p class="page-footer"><a href={base}>← <span data-i18n="navHome">首页</span></a></p>
@@ -51,82 +47,14 @@ const base = import.meta.env.BASE_URL;
 
 <script>
   import { getSupabase } from '../lib/supabaseClient';
-  import type { GuestbookRow } from '../lib/supabaseClient';
 
   const form = document.getElementById('guestbook-form') as HTMLFormElement;
-  const listEl = document.getElementById('guestbook-list');
-  const loadingZh = document.getElementById('guestbook-loading');
-  const loadingEn = document.getElementById('guestbook-loading-en');
-  const emptyZh = document.getElementById('guestbook-empty');
-  const emptyEn = document.getElementById('guestbook-empty-en');
   const statusEl = document.getElementById('guestbook-form-status');
 
   function setStatus(msg: string, isError: boolean) {
     if (!statusEl) return;
     statusEl.textContent = msg;
     statusEl.dataset.error = isError ? '1' : '';
-  }
-
-  function hideLoadings() {
-    loadingZh?.setAttribute('hidden', '');
-    loadingEn?.setAttribute('hidden', '');
-  }
-
-  function renderMessages(rows: GuestbookRow[]) {
-    if (!listEl) return;
-    hideLoadings();
-    if (emptyZh) emptyZh.hidden = rows.length > 0;
-    if (emptyEn) emptyEn.hidden = rows.length > 0;
-    listEl.innerHTML = rows
-      .map((r, i) => {
-        const date = new Date(r.created_at).toLocaleDateString(undefined, {
-          year: 'numeric',
-          month: 'short',
-          day: 'numeric',
-          hour: '2-digit',
-          minute: '2-digit',
-        });
-        const name = escapeHtml(r.name);
-        const msg = escapeHtml(r.message);
-        const initial = (r.name.trim().charAt(0) || '?').toUpperCase();
-        return `<article class="guestbook-card guestbook-item" style="--i:${i}" data-id="${escapeHtml(r.id)}">
-          <div class="guestbook-item-avatar" aria-hidden="true">${initial}</div>
-          <div class="guestbook-item-body">
-            <header class="guestbook-item-header">
-              <span class="guestbook-item-name">${name}</span>
-              <time class="guestbook-item-time" datetime="${r.created_at}">${date}</time>
-            </header>
-            <p class="guestbook-item-message">${msg}</p>
-          </div>
-        </article>`;
-      })
-      .join('');
-  }
-
-  function escapeHtml(s: string): string {
-    const div = document.createElement('div');
-    div.textContent = s;
-    return div.innerHTML;
-  }
-
-  async function loadMessages() {
-    const sb = getSupabase();
-    if (!sb) {
-      renderMessages([]);
-      if (listEl) listEl.innerHTML = '<p class="guestbook-empty content-zh">未配置 Supabase，请设置 PUBLIC_SUPABASE_URL 与 PUBLIC_SUPABASE_ANON_KEY。</p><p class="guestbook-empty content-en">Supabase not configured. Set PUBLIC_SUPABASE_URL and PUBLIC_SUPABASE_ANON_KEY.</p>';
-      return;
-    }
-    const { data, error } = await sb
-      .from('guestbook_messages')
-      .select('id, name, email, message, created_at')
-      .order('created_at', { ascending: false })
-      .limit(100);
-    if (error) {
-      renderMessages([]);
-      if (listEl) listEl.innerHTML = '<p class="guestbook-empty">加载失败。</p>';
-      return;
-    }
-    renderMessages((data || []) as GuestbookRow[]);
   }
 
   const COOLDOWN_SEC = 60;
@@ -140,8 +68,8 @@ const base = import.meta.env.BASE_URL;
     if (label) {
       const zh = btn.querySelector('.content-zh') as HTMLElement | null;
       const en = btn.querySelector('.content-en') as HTMLElement | null;
-      if (zh) zh.textContent = label === 'submit' ? '发布' : '提交中…';
-      if (en) en.textContent = label === 'submit' ? 'Submit' : 'Submitting…';
+      if (zh) zh.textContent = label === 'submit' ? '私信' : '发送中…';
+      if (en) en.textContent = label === 'submit' ? 'Send' : 'Sending…';
     }
   }
 
@@ -157,8 +85,8 @@ const base = import.meta.env.BASE_URL;
       if (left <= 0) {
         clearInterval(interval);
         (btn as HTMLButtonElement).disabled = false;
-        if (zh) zh.textContent = '发布';
-        if (en) en.textContent = 'Submit';
+        if (zh) zh.textContent = '私信';
+        if (en) en.textContent = 'Send';
         return;
       }
       if (zh) zh.textContent = left + ' 秒后再试';
@@ -201,13 +129,10 @@ const base = import.meta.env.BASE_URL;
     if (sessionId) {
       sb.from('analytics_events').insert([{ session_id: sessionId, event_type: 'guestbook_submit', page_path: (location.pathname.replace(/\/$/, '') || '/'), metadata: {} }]).then(() => {}).catch(() => {});
     }
-    setStatus(document.documentElement.lang === 'en' ? 'Submitted!' : '已发布', false);
+    setStatus(document.documentElement.lang === 'en' ? "I've received your message and will get in touch soon." : '我已收到私信，将尽快联系您。', false);
     form.reset();
     startCooldown();
-    await loadMessages();
   });
-
-  loadMessages();
 </script>
 
 <style>
@@ -273,6 +198,9 @@ const base = import.meta.env.BASE_URL;
   }
   .guestbook-submit {
     align-self: flex-start;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
     padding: 0.5rem 1.25rem;
     font-size: 0.95rem;
     font-weight: 600;
@@ -281,13 +209,36 @@ const base = import.meta.env.BASE_URL;
     border: none;
     border-radius: var(--radius);
     cursor: pointer;
+    transition: background 0.2s;
   }
   .guestbook-submit:hover {
     background: var(--accent-hover);
   }
+  .guestbook-submit:hover .guestbook-submit-icon {
+    animation: guestbook-plane-fly 0.6s ease-in-out;
+  }
   .guestbook-submit:disabled {
     opacity: 0.7;
     cursor: not-allowed;
+  }
+  .guestbook-submit:disabled .guestbook-submit-icon {
+    animation: none;
+  }
+  .guestbook-submit-icon {
+    display: inline-flex;
+    animation: guestbook-plane-idle 2.5s ease-in-out infinite;
+  }
+  .guestbook-submit-icon svg {
+    display: block;
+  }
+  @keyframes guestbook-plane-idle {
+    0%, 100% { transform: translateY(0) rotate(-8deg); }
+    50% { transform: translateY(-2px) rotate(-4deg); }
+  }
+  @keyframes guestbook-plane-fly {
+    0% { transform: translateX(0) translateY(0) rotate(-8deg); }
+    40% { transform: translateX(4px) translateY(-3px) rotate(0deg); }
+    100% { transform: translateX(8px) translateY(-2px) rotate(5deg); }
   }
   .guestbook-status {
     font-size: 0.9rem;
@@ -295,87 +246,6 @@ const base = import.meta.env.BASE_URL;
   }
   .guestbook-status[data-error="1"] {
     color: #f87171;
-  }
-  .guestbook-list-title {
-    font-family: var(--font-serif);
-    font-size: 1.15rem;
-    font-weight: 600;
-    margin: 0 0 1rem;
-  }
-  .guestbook-list {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-  .guestbook-loading,
-  .guestbook-empty {
-    color: var(--muted);
-    font-size: 0.9rem;
-    margin: 0 0 1rem;
-  }
-
-  /* 留言卡片：头像 + 内容，错峰入场动画 */
-  .guestbook-item {
-    display: flex;
-    gap: 1rem;
-    align-items: flex-start;
-    padding: 1.25rem 1.5rem;
-    border-left: 3px solid rgba(63, 185, 80, 0.4);
-    opacity: 0;
-    transform: translateY(12px);
-    animation: guestbook-item-in 0.4s ease-out forwards;
-    animation-delay: calc(0.06s * var(--i, 0));
-  }
-  @keyframes guestbook-item-in {
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  .guestbook-item-avatar {
-    flex-shrink: 0;
-    width: 2.75rem;
-    height: 2.75rem;
-    border-radius: 50%;
-    background: linear-gradient(135deg, var(--accent), var(--accent-hover));
-    color: #fff;
-    font-size: 1.1rem;
-    font-weight: 700;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    line-height: 1;
-  }
-  .guestbook-item-body {
-    flex: 1;
-    min-width: 0;
-  }
-  .guestbook-item-header {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    gap: 0.5rem;
-    margin-bottom: 0.5rem;
-  }
-  .guestbook-item-name {
-    font-weight: 600;
-    font-size: 1rem;
-    color: var(--text);
-  }
-  .guestbook-item-time {
-    font-size: 0.8rem;
-    color: var(--muted);
-  }
-  .guestbook-item-message {
-    margin: 0;
-    font-size: 0.95rem;
-    line-height: 1.65;
-    color: var(--text);
-    white-space: pre-wrap;
-    word-break: break-word;
-  }
-  .guestbook-item:hover {
-    border-left-color: var(--accent);
   }
   .page-footer {
     margin-top: 2rem;

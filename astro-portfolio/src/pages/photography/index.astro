@@ -27,10 +27,6 @@ try {
     <span class="content-zh" data-i18n="sectionPhotography">摄影</span>
     <span class="content-en" data-i18n="sectionPhotography">Photography</span>
   </h1>
-  <p class="page-intro">
-    <span class="content-zh" data-i18n="photographyIntroZh">响应式图片网格，后续可接入灯箱等。</span>
-    <span class="content-en" data-i18n="photographyIntroEn">A responsive grid; add lightbox later if needed.</span>
-  </p>
 
   <div class="photo-grid" aria-label="Photo gallery">
     {photographyImages.map((filename) => (
@@ -58,11 +54,6 @@ try {
     font-family: var(--font-serif);
     font-size: 1.5rem;
     font-weight: 600;
-    margin: 0 0 0.5rem;
-  }
-  .page-intro {
-    color: var(--muted);
-    font-size: 0.95rem;
     margin: 0 0 1.5rem;
   }
   .photo-grid {
