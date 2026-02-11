@@ -90,6 +90,7 @@ const isHardcoded = hardcoded != null;
 const projectImages = getProjectImages(slug);
 const projectVideos = getProjectVideos(slug);
 const base = import.meta.env.BASE_URL;
+const projectsUrl = base + 'projects/';
 const imgUrl = (filename: string) => `${base}projects/${slug}/${filename}`;
 const videoUrl = (filename: string) => `${base}projects/${slug}/${filename}`;
 
@@ -139,6 +140,7 @@ if (isHardcoded && hardcoded?.codeSnippets) {
 ---
 <BaseLayout title={title} description={description}>
   <article class="project-detail">
+    <p class="back-link back-link--top"><a href={projectsUrl}>← <span class="content-zh">返回</span><span class="content-en">Back</span></a></p>
     <header>
       {isMarkdown ? (
         <h1>{title}</h1>
@@ -218,7 +220,7 @@ if (isHardcoded && hardcoded?.codeSnippets) {
         </section>
       </>
     )}
-    <p class="back-link"><a href="#" role="button" data-back>← <span data-i18n="navBack">返回上一页</span></a></p>
+    <p class="back-link"><a href={projectsUrl}>← <span class="content-zh">返回</span><span class="content-en">Back</span></a></p>
   </article>
 </BaseLayout>
 
@@ -357,5 +359,9 @@ if (isHardcoded && hardcoded?.codeSnippets) {
     margin-top: 1.5rem;
     font-size: 0.9rem;
     color: var(--muted);
+  }
+  .back-link--top {
+    margin-top: 0;
+    margin-bottom: 1rem;
   }
 </style>

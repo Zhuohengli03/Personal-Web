@@ -5,6 +5,7 @@ import fs from 'fs';
 import path from 'path';
 
 const base = import.meta.env.BASE_URL;
+const educationUrl = base + 'education/';
 const imgIntro = (name: string) => `${base}education/xian/${name}`;
 const imgMoment = (name: string) => `${base}education/xian/moments/${name}`;
 
@@ -39,7 +40,7 @@ try {
 ---
 <BaseLayout title="西安音乐学院 | 李卓衡" description="Xi'an Conservatory of Music - Music Performance">
   <div class="xian-page">
-    <p class="xian-back"><a href={base}>← <span data-i18n="navHome">首页</span></a></p>
+    <p class="xian-back"><a href={educationUrl}>← <span class="content-zh">返回</span><span class="content-en">Back</span></a></p>
 
     <!-- 页面大标题：西安音乐学院 + 学士·时间，艺术字 -->
     <header class="xian-hero">
@@ -95,7 +96,7 @@ try {
       </aside>
     </div>
 
-    <p class="xian-footer"><a href={base}>← <span data-i18n="navHome">首页</span></a></p>
+    <p class="xian-footer"><a href={educationUrl}>← <span class="content-zh">返回</span><span class="content-en">Back</span></a></p>
   </div>
 </BaseLayout>
 
