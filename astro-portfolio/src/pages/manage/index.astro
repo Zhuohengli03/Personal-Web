@@ -1,0 +1,1876 @@
+---
+import ManageLayout from '../../layouts/ManageLayout.astro';
+---
+<ManageLayout title="管理后台 | 李卓衡" description="Manage guestbook">
+  <!-- 登录界面 -->
+  <div id="manage-login-wrap" class="login-container">
+    <div class="login-card">
+      <div class="login-header">
+        <div class="login-icon">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+        </div>
+        <h1 class="login-title">
+          <span class="content-zh">管理后台</span>
+          <span class="content-en">Admin Panel</span>
+        </h1>
+        <p class="login-subtitle">
+          <span class="content-zh">请输入账号和密码登录</span>
+          <span class="content-en">Sign in with your credentials</span>
+        </p>
+      </div>
+      <form id="manage-login-form" class="login-form">
+        <div class="login-field">
+          <label class="login-field-label">
+            <span class="content-zh">邮箱</span>
+            <span class="content-en">Email</span>
+          </label>
+          <div class="login-input-wrap">
+            <svg class="login-input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            <input type="email" name="email" required autocomplete="email" placeholder="you@example.com" />
+          </div>
+        </div>
+        <div class="login-field">
+          <label class="login-field-label">
+            <span class="content-zh">密码</span>
+            <span class="content-en">Password</span>
+          </label>
+          <div class="login-input-wrap">
+            <svg class="login-input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            <input type="password" name="password" required autocomplete="current-password" placeholder="••••••••" />
+          </div>
+        </div>
+        <p id="manage-login-error" class="login-error" aria-live="polite"></p>
+        <button type="submit" class="login-submit">
+          <span class="content-zh">登 录</span>
+          <span class="content-en">Sign in</span>
+          <svg class="login-submit-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </button>
+        <p class="login-tip content-zh">
+          请使用<strong>本 Supabase 项目</strong>中 <strong>Authentication → Users</strong> 里创建或添加的账号，不是 supabase.com 网站登录账号。在 Dashboard → 你的项目 → Authentication → Users → “Add user” 创建用户后在此登录。
+        </p>
+        <p class="login-tip content-en">
+          Use an account from this project’s <strong>Authentication → Users</strong>, not your Supabase website login. In Dashboard → your project → Authentication → Users → “Add user” to create one, then sign in here.
+        </p>
+      </form>
+    </div>
+  </div>
+
+  <!-- 分析台工作台：左侧伸缩导航 + 主内容 -->
+  <div id="manage-panel" class="manage-panel-wrap" style="background: hsl(var(--background))" hidden>
+    <header class="manage-header">
+      <div class="manage-header-left">
+        <button type="button" id="manage-sidebar-toggle" class="manage-sidebar-toggle" aria-label="Toggle sidebar">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+        </button>
+        <input type="search" id="dashboard-search" class="manage-search" placeholder="输入关键词搜索留言、姓名、电话..." />
+        <button type="button" id="dashboard-refresh" class="manage-btn manage-btn-secondary"><span class="content-zh">刷新</span><span class="content-en">Refresh</span></button>
+        <button type="button" id="dashboard-clear-analytics" class="manage-btn manage-btn-outline-destructive"><span class="content-zh">清空分析</span><span class="content-en">Clear analytics</span></button>
+      </div>
+      <div class="manage-header-right">
+        <span class="content-zh flex items-center gap-2 text-sm">
+          <span class="manage-badge">超级管理员</span>
+          <span id="dashboard-user" class="max-w-[180px] truncate text-muted-foreground"></span>
+        </span>
+        <span class="content-en flex items-center gap-2 text-sm">
+          <span class="manage-badge">Admin</span>
+          <span id="dashboard-user-en" class="max-w-[180px] truncate text-muted-foreground"></span>
+        </span>
+        <button type="button" id="manage-logout" class="manage-logout-btn"><span class="content-zh">退出</span><span class="content-en">Log out</span></button>
+      </div>
+    </header>
+    <div class="manage-body">
+      <aside id="manage-sidebar" class="manage-sidebar" aria-hidden="false">
+        <nav class="manage-nav">
+          <a href="#" class="manage-nav-item is-active" data-view="overview">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+            <span class="content-zh">概览</span>
+            <span class="content-en">Overview</span>
+          </a>
+          <a href="#" class="manage-nav-item" data-view="database">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+            <span class="content-zh">数据库</span>
+            <span class="content-en">Database</span>
+          </a>
+        </nav>
+      </aside>
+      <main id="manage-main" class="manage-main">
+        <div id="manage-view-overview" class="manage-view">
+    <div class="mx-auto max-w-6xl space-y-8 p-6 pb-12">
+      <!-- 概览 KPI：每个卡片右上角单独问号 + 详细提示 -->
+      <section class="dashboard-overview-section">
+        <div class="dashboard-section-head">
+          <h2 class="dashboard-section-title content-zh">概览</h2>
+          <h2 class="dashboard-section-title content-en">Overview</h2>
+        </div>
+        <div class="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-5">
+          <div class="dashboard-kpi-card">
+            <button type="button" class="dashboard-kpi-help" aria-label="总浏览量说明" title="总浏览量"><span aria-hidden="true">?</span></button>
+            <div class="dashboard-kpi-help-panel content-zh" role="tooltip">
+              <strong>总浏览量</strong><br/>
+              统计 analytics_events 表中 event_type 为 page_view 的事件总数。访客每次打开或刷新一个页面会记录一条 page_view；同一会话内多次浏览不同页面会累加。用于衡量全站各页被访问的总次数，与「页面指标」中的按路径 PV 对应。
+            </div>
+            <div class="dashboard-kpi-help-panel content-en" role="tooltip">
+              <strong>Page views</strong><br/>
+              Total count of events with event_type = 'page_view' in analytics_events. Each page load or refresh records one page_view; multiple pages in the same session are summed. Measures total page loads site-wide; corresponds to per-path PV in Page metrics.
+            </div>
+            <div class="dashboard-kpi-icon dashboard-kpi-icon-blue" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </div>
+            <p id="kpi-views" class="dashboard-kpi-value tabular-nums">0</p>
+            <span class="dashboard-kpi-label content-zh">总浏览量</span>
+            <span class="dashboard-kpi-label content-en">Page views</span>
+          </div>
+          <div class="dashboard-kpi-card">
+            <button type="button" class="dashboard-kpi-help" aria-label="总点击说明" title="总点击"><span aria-hidden="true">?</span></button>
+            <div class="dashboard-kpi-help-panel content-zh" role="tooltip">
+              <strong>总点击</strong><br/>
+              统计 analytics_events 表中 event_type 为 click 的事件总数。访客在页面上的每次点击（链接、按钮等）会记录一条 click；metadata 中可包含 target（元素 id/class/标签）及 link_to_guestbook 等。用于衡量用户交互热度，与「页面指标」中的按路径点击对应。
+            </div>
+            <div class="dashboard-kpi-help-panel content-en" role="tooltip">
+              <strong>Clicks</strong><br/>
+              Total count of events with event_type = 'click'. Each click (links, buttons, etc.) is recorded; metadata may include target and link_to_guestbook. Measures interaction intensity; corresponds to per-path clicks in Page metrics.
+            </div>
+            <div class="dashboard-kpi-icon dashboard-kpi-icon-green" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+            </div>
+            <p id="kpi-clicks" class="dashboard-kpi-value tabular-nums">0</p>
+            <span class="dashboard-kpi-label content-zh">总点击</span>
+            <span class="dashboard-kpi-label content-en">Clicks</span>
+          </div>
+          <div class="dashboard-kpi-card">
+            <button type="button" class="dashboard-kpi-help" aria-label="会话数说明" title="会话数"><span aria-hidden="true">?</span></button>
+            <div class="dashboard-kpi-help-panel content-zh" role="tooltip">
+              <strong>会话数</strong><br/>
+              analytics_sessions 表的记录数。每个访客从进入网站起在 sessionStorage 中持有一个 session_id，对应一条会话；关闭标签或离开后再次访问会生成新会话。同一设备多次访问会生成多条会话。用于衡量「来了多少人（按次）」；与漏斗第一步一致。
+            </div>
+            <div class="dashboard-kpi-help-panel content-en" role="tooltip">
+              <strong>Sessions</strong><br/>
+              Row count of analytics_sessions. One session per visit (one session_id in sessionStorage until tab close or leave). Same device returning later creates a new session. Measures "how many visits"; matches the first step of the funnel.
+            </div>
+            <div class="dashboard-kpi-icon dashboard-kpi-icon-amber" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+            <p id="kpi-sessions" class="dashboard-kpi-value tabular-nums">0</p>
+            <span class="dashboard-kpi-label content-zh">会话数</span>
+            <span class="dashboard-kpi-label content-en">Sessions</span>
+          </div>
+          <div class="dashboard-kpi-card">
+            <button type="button" class="dashboard-kpi-help" aria-label="设备数说明" title="设备数"><span aria-hidden="true">?</span></button>
+            <div class="dashboard-kpi-help-panel content-zh" role="tooltip">
+              <strong>设备数</strong><br/>
+              当前与「会话数」相同。因未做设备指纹或登录识别，无法对同一设备多次访问去重，故用会话数近似表示「访问来源数量」。若后续接入设备 ID 或用户 ID 可改为去重后的独立设备/用户数。
+            </div>
+            <div class="dashboard-kpi-help-panel content-en" role="tooltip">
+              <strong>Devices</strong><br/>
+              Currently equals session count. Without device fingerprint or login we cannot deduplicate multiple visits from the same device, so session count is used as a proxy for "unique visitors". Can be replaced with deduplicated device/user count if needed later.
+            </div>
+            <div class="dashboard-kpi-icon dashboard-kpi-icon-violet" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+            </div>
+            <p id="kpi-devices" class="dashboard-kpi-value tabular-nums">0</p>
+            <span class="dashboard-kpi-label content-zh">设备数</span>
+            <span class="dashboard-kpi-label content-en">Devices</span>
+          </div>
+          <div class="dashboard-kpi-card">
+            <button type="button" class="dashboard-kpi-help" aria-label="留言转化率说明" title="留言转化率"><span aria-hidden="true">?</span></button>
+            <div class="dashboard-kpi-help-panel content-zh" role="tooltip">
+              <strong>留言转化率</strong><br/>
+              (在 guestbook_messages 中有对应 session_id 的会话数 / 总会话数) × 100%。即「来了的会话里有多少比例最终提交了留言」。用于衡量留言板转化效果；可与漏斗中「访问过留言页的会话数」对比，看从访问留言页到提交的流失。
+            </div>
+            <div class="dashboard-kpi-help-panel content-en" role="tooltip">
+              <strong>Conversion</strong><br/>
+              (Sessions with at least one guestbook_messages row with that session_id / total sessions) × 100%. Measures what share of visits resulted in a message. Compare with "sessions that viewed guestbook page" in the funnel to see drop-off from view to submit.
+            </div>
+            <div class="dashboard-kpi-icon dashboard-kpi-icon-primary" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+            </div>
+            <p id="kpi-conversion" class="dashboard-kpi-value tabular-nums">0%</p>
+            <span class="dashboard-kpi-label content-zh">留言转化率</span>
+            <span class="dashboard-kpi-label content-en">Conversion</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 趋势与流量 -->
+      <section class="grid gap-6 md:grid-cols-[1fr_300px]">
+        <div class="dashboard-widget">
+          <div class="dashboard-widget-head">
+            <h2 class="dashboard-widget-title content-zh">浏览量趋势</h2>
+            <h2 class="dashboard-widget-title content-en">Traffic trend</h2>
+            <p class="dashboard-widget-desc content-zh">近 7/30 天 PV、会话、点击</p>
+            <p class="dashboard-widget-desc content-en">PV, sessions, clicks</p>
+            <div class="flex gap-1">
+              <button type="button" class="chart-tab is-active rounded-md px-3 py-1.5 text-xs font-medium" data-range="7"><span class="content-zh">7 天</span><span class="content-en">7d</span></button>
+              <button type="button" class="chart-tab rounded-md px-3 py-1.5 text-xs font-medium hover:opacity-90" data-range="30"><span class="content-zh">30 天</span><span class="content-en">30d</span></button>
+            </div>
+          </div>
+          <div class="dashboard-chart-wrap">
+            <canvas id="chart-trend" width="400" height="220"></canvas>
+            <p id="chart-trend-empty" class="dashboard-chart-empty content-zh">暂无数据，访问站点后会自动记录</p>
+            <p id="chart-trend-empty-en" class="dashboard-chart-empty content-en">No data yet. Visit your site to record.</p>
+          </div>
+        </div>
+        <div class="dashboard-widget">
+          <div class="dashboard-widget-head dashboard-widget-head--no-actions">
+            <h2 class="dashboard-widget-title content-zh">流量来源</h2>
+            <h2 class="dashboard-widget-title content-en">Traffic source</h2>
+            <p class="dashboard-widget-desc content-zh">按 referrer 统计会话</p>
+            <p class="dashboard-widget-desc content-en">Sessions by referrer</p>
+          </div>
+          <div class="dashboard-donut-wrap">
+            <canvas id="chart-traffic" width="200" height="200"></canvas>
+            <p id="chart-traffic-total" class="dashboard-donut-total">0 <span class="content-zh">总会话</span><span class="content-en">sessions</span></p>
+          </div>
+          <div id="chart-traffic-legend" class="dashboard-donut-legend"></div>
+        </div>
+      </section>
+
+      <!-- 漏斗与页面指标 -->
+      <section class="grid gap-6 md:grid-cols-2">
+        <!-- 留言转化漏斗：卡片式 -->
+        <div class="dashboard-widget">
+          <div class="dashboard-widget-head dashboard-widget-head--no-actions">
+            <h2 class="dashboard-widget-title content-zh">留言转化漏斗</h2>
+            <h2 class="dashboard-widget-title content-en">Message funnel</h2>
+          </div>
+          <div class="funnel-cards">
+            <div class="funnel-card funnel-card--blue">
+              <div class="funnel-card-inner">
+                <span class="funnel-card-step">STEP 1</span>
+                <span class="funnel-card-label content-zh">全部会话</span>
+                <span class="funnel-card-label content-en">All sessions</span>
+              </div>
+              <span class="funnel-card-value" id="funnel-s1">0</span>
+            </div>
+            <div class="funnel-arrow">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 2v10M3 8l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <span id="funnel-rate1" class="funnel-arrow-pct">0%</span>
+            </div>
+            <div class="funnel-card funnel-card--amber">
+              <div class="funnel-card-inner">
+                <span class="funnel-card-step">STEP 2</span>
+                <span class="funnel-card-label content-zh">访问留言页</span>
+                <span class="funnel-card-label content-en">Visit guestbook</span>
+              </div>
+              <span class="funnel-card-value" id="funnel-s2">0</span>
+            </div>
+            <div class="funnel-arrow">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 2v10M3 8l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <span id="funnel-rate2" class="funnel-arrow-pct">0%</span>
+            </div>
+            <div class="funnel-card funnel-card--red">
+              <div class="funnel-card-inner">
+                <span class="funnel-card-step">STEP 3</span>
+                <span class="funnel-card-label content-zh">提交留言</span>
+                <span class="funnel-card-label content-en">Submit message</span>
+              </div>
+              <span class="funnel-card-value" id="funnel-s3">0</span>
+            </div>
+          </div>
+        </div>
+        <!-- 页面指标：标签切换 + 水平条形图 -->
+        <div class="dashboard-widget">
+          <div class="dashboard-widget-head dashboard-widget-head--no-actions">
+            <h2 class="dashboard-widget-title content-zh">页面指标</h2>
+            <h2 class="dashboard-widget-title content-en">Page metrics</h2>
+          </div>
+          <div class="pm-tabs">
+            <button type="button" class="pm-tab is-active" data-metric="views"><span class="content-zh">浏览量</span><span class="content-en">Views</span></button>
+            <button type="button" class="pm-tab" data-metric="clicks"><span class="content-zh">点击</span><span class="content-en">Clicks</span></button>
+            <button type="button" class="pm-tab" data-metric="avg"><span class="content-zh">平均时长</span><span class="content-en">Avg dur.</span></button>
+            <button type="button" class="pm-tab" data-metric="max"><span class="content-zh">最高时长</span><span class="content-en">Max dur.</span></button>
+            <button type="button" class="pm-tab" data-metric="min"><span class="content-zh">最低时长</span><span class="content-en">Min dur.</span></button>
+          </div>
+          <div id="pm-bar-list" class="pm-bar-list">
+            <p class="pm-empty"><span class="content-zh">暂无数据</span><span class="content-en">No data</span></p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 留言列表 -->
+      <section class="dashboard-widget">
+        <div class="dashboard-widget-head">
+          <h2 class="dashboard-widget-title content-zh">留言列表</h2>
+          <h2 class="dashboard-widget-title content-en">Message list</h2>
+          <p class="dashboard-widget-desc content-zh">最近 200 条，支持搜索与清空</p>
+          <p class="dashboard-widget-desc content-en">Latest 200, search & clear</p>
+          <button type="button" id="dashboard-clear-all" class="dashboard-btn-danger">
+            <span class="content-zh">一键清空</span>
+            <span class="content-en">Clear all</span>
+          </button>
+        </div>
+        <div class="dashboard-table-wrap">
+          <table class="dashboard-table">
+            <thead>
+              <tr>
+                <th class="w-[130px] text-left"><span class="content-zh">时间</span><span class="content-en">Time</span></th>
+                <th class="w-[120px] text-left"><span class="content-zh">用户</span><span class="content-en">User</span></th>
+                <th class="text-left"><span class="content-zh">留言</span><span class="content-en">Message</span></th>
+                <th class="w-[72px] text-right"><span class="content-zh">操作</span><span class="content-en">Actions</span></th>
+              </tr>
+            </thead>
+            <tbody id="manage-messages"></tbody>
+          </table>
+        </div>
+        <p id="manage-empty" class="dashboard-empty content-zh" hidden>暂无留言</p>
+        <p id="manage-empty-en" class="dashboard-empty content-en" hidden>No messages</p>
+      </section>
+    </div>
+        </div>
+        <div id="manage-view-database" class="manage-view" hidden>
+          <div class="manage-db-header">
+            <h2 class="dashboard-section-title content-zh">数据库表</h2>
+            <h2 class="dashboard-section-title content-en">Database tables</h2>
+            <button type="button" id="manage-db-refresh" class="manage-btn manage-btn-secondary">
+              <span class="content-zh">刷新</span><span class="content-en">Refresh</span>
+            </button>
+          </div>
+          <div id="manage-db-session-wrap" class="manage-db-session-wrap">
+            <h3 class="dashboard-section-title content-zh">单用户行为时间线</h3>
+            <h3 class="dashboard-section-title content-en">Single session behavior</h3>
+            <div class="manage-db-session-row">
+              <input type="text" id="manage-session-id" class="manage-db-session-input" placeholder="Session UUID" />
+              <button type="button" id="manage-session-query" class="manage-btn manage-btn-primary">
+                <span class="content-zh">查询</span><span class="content-en">Query</span>
+              </button>
+            </div>
+            <div id="manage-session-result" class="manage-session-result" hidden></div>
+          </div>
+          <div id="manage-db-content" class="manage-db-content">
+            <p class="pm-empty"><span class="content-zh">加载中…</span><span class="content-en">Loading…</span></p>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+  <script is:inline src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script define:vars={{ supabaseUrl: typeof import.meta.env !== 'undefined' ? (import.meta.env.PUBLIC_SUPABASE_URL || '') : '', supabaseKey: typeof import.meta.env !== 'undefined' ? (import.meta.env.PUBLIC_SUPABASE_ANON_KEY || '') : '' }}>
+    if (supabaseUrl && supabaseKey) {
+      window.__SUPABASE_API__ = { base: supabaseUrl.replace(/\/$/, '') + '/rest/v1', anonKey: supabaseKey };
+    }
+  </script>
+</ManageLayout>
+
+<script>
+  import { getSupabase } from '../../lib/supabaseClient';
+  import type { GuestbookRow } from '../../lib/supabaseClient';
+
+  const loginWrap = document.getElementById('manage-login-wrap');
+  const panel = document.getElementById('manage-panel');
+  const loginForm = document.getElementById('manage-login-form') as HTMLFormElement;
+  const loginError = document.getElementById('manage-login-error');
+  const logoutBtn = document.getElementById('manage-logout');
+  const messagesEl = document.getElementById('manage-messages');
+  const emptyZh = document.getElementById('manage-empty');
+  const emptyEn = document.getElementById('manage-empty-en');
+  const searchInput = document.getElementById('dashboard-search') as HTMLInputElement | null;
+  const refreshBtn = document.getElementById('dashboard-refresh');
+  const clearAllBtn = document.getElementById('dashboard-clear-all');
+  const userEl = document.getElementById('dashboard-user');
+  const userElEn = document.getElementById('dashboard-user-en');
+  const sidebar = document.getElementById('manage-sidebar');
+  const sidebarToggle = document.getElementById('manage-sidebar-toggle');
+  const viewOverview = document.getElementById('manage-view-overview');
+  const viewDatabase = document.getElementById('manage-view-database');
+  const dbContent = document.getElementById('manage-db-content');
+  const dbRefreshBtn = document.getElementById('manage-db-refresh');
+
+  let allRows: GuestbookRow[] = [];
+  let chartTrend: import('chart.js').Chart | null = null;
+  let chartTraffic: import('chart.js').Chart | null = null;
+
+  function showLogin(show: boolean) {
+    if (loginWrap) loginWrap.hidden = !show;
+    if (panel) panel.hidden = show;
+  }
+
+  function setLoginError(msg: string) {
+    if (loginError) {
+      loginError.textContent = msg;
+      loginError.hidden = !msg;
+    }
+  }
+
+  function escapeHtml(s: string): string {
+    const div = document.createElement('div');
+    div.textContent = s;
+    return div.innerHTML;
+  }
+
+  type KpiStats = { views?: number; clicks?: number; sessions?: number; devices?: number; conversion?: number; messageCount?: number };
+  let lastKpis: KpiStats = {};
+
+  function setKpis(stats: number | KpiStats) {
+    const s: KpiStats = typeof stats === 'number' ? { messageCount: stats } : stats;
+    if (typeof stats === 'number') lastKpis = { ...lastKpis, messageCount: stats };
+    else lastKpis = { ...lastKpis, ...s };
+    const views = lastKpis.views ?? 0;
+    const clicks = lastKpis.clicks ?? 0;
+    const sessions = lastKpis.sessions ?? 0;
+    const devices = lastKpis.devices ?? sessions;
+    const messageCount = lastKpis.messageCount ?? 0;
+    const conversionPct = lastKpis.conversion !== undefined ? lastKpis.conversion : (sessions ? Math.min(100, Math.round((messageCount / sessions) * 100)) : 0);
+    const viewsEl = document.getElementById('kpi-views');
+    const clicksEl = document.getElementById('kpi-clicks');
+    const sessionsEl = document.getElementById('kpi-sessions');
+    const devicesEl = document.getElementById('kpi-devices');
+    const conversionEl = document.getElementById('kpi-conversion');
+    if (viewsEl) viewsEl.textContent = String(views);
+    if (clicksEl) clicksEl.textContent = String(clicks);
+    if (sessionsEl) sessionsEl.textContent = String(sessions);
+    if (devicesEl) devicesEl.textContent = String(devices);
+    if (conversionEl) conversionEl.textContent = conversionPct + '%';
+  }
+
+  function updateFunnel(s1: number, s2: number, s3: number) {
+    const el1 = document.getElementById('funnel-s1');
+    const el2 = document.getElementById('funnel-s2');
+    const el3 = document.getElementById('funnel-s3');
+    const rate1El = document.getElementById('funnel-rate1');
+    const rate2El = document.getElementById('funnel-rate2');
+    if (el1) el1.textContent = String(s1);
+    if (el2) el2.textContent = String(s2);
+    if (el3) el3.textContent = String(s3);
+    const rate1 = s1 ? (s2 / s1 * 100).toFixed(1) : '0.0';
+    const rate2 = s2 ? (s3 / s2 * 100).toFixed(1) : '0.0';
+    if (rate1El) rate1El.textContent = '↓ ' + rate1 + '%';
+    if (rate2El) rate2El.textContent = '↓ ' + rate2 + '%';
+  }
+
+  function renderMessagesList(rows: GuestbookRow[]) {
+    if (!messagesEl) return;
+    messagesEl.innerHTML = rows
+      .map((r) => {
+        const date = new Date(r.created_at).toLocaleString(undefined, { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+        const name = escapeHtml(r.name);
+        const email = r.email ? ' · ' + escapeHtml(r.email) : '';
+        const msg = escapeHtml(r.message);
+        return `<tr class="dashboard-table-row manage-msg" data-id="${r.id}">
+          <td class="text-xs text-muted-foreground whitespace-nowrap">${date}</td>
+          <td class="font-medium truncate max-w-[160px]">${name}${email}</td>
+          <td class="text-foreground whitespace-pre-wrap break-words max-w-[300px]">${msg}</td>
+          <td class="text-right"><button type="button" class="manage-delete inline-flex h-8 items-center justify-center rounded-md border border-destructive/30 bg-transparent px-2 text-xs font-medium text-destructive hover:bg-destructive/10" data-id="${r.id}" aria-label="删除"><span class="content-zh">删除</span><span class="content-en">Delete</span></button></td>
+        </tr>`;
+      })
+      .join('');
+    if (emptyZh) emptyZh.hidden = rows.length > 0;
+    if (emptyEn) emptyEn.hidden = rows.length > 0;
+    messagesEl.querySelectorAll('.manage-delete').forEach((btn) => {
+      btn.addEventListener('click', async () => {
+        const id = (btn as HTMLElement).dataset.id;
+        if (!id) return;
+        const sb = getSupabase();
+        if (!sb) return;
+        const { error } = await sb.from('guestbook_messages').delete().eq('id', id);
+        if (!error) {
+          allRows = allRows.filter((r) => r.id !== id);
+          renderMessagesList(filterMessages(allRows));
+          setKpis({ messageCount: allRows.length });
+        }
+      });
+    });
+  }
+
+  function filterMessages(rows: GuestbookRow[]): GuestbookRow[] {
+    const q = (searchInput?.value ?? '').trim().toLowerCase();
+    if (!q) return rows;
+    return rows.filter((r) => (r.name + ' ' + (r.email || '') + ' ' + r.message).toLowerCase().includes(q));
+  }
+
+  async function loadMessages() {
+    const sb = getSupabase();
+    if (!sb || !messagesEl) return;
+    const { data, error } = await sb.from('guestbook_messages').select('id, name, email, message, created_at').order('created_at', { ascending: false }).limit(200);
+    if (error) {
+      messagesEl.innerHTML = '<p class="manage-error">' + escapeHtml(error.message) + '</p>';
+      if (emptyZh) emptyZh.hidden = true;
+      if (emptyEn) emptyEn.hidden = true;
+      return;
+    }
+    allRows = (data || []) as GuestbookRow[];
+    setKpis({ messageCount: allRows.length });
+    renderMessagesList(filterMessages(allRows));
+  }
+
+  async function loadAnalytics() {
+    const sb = getSupabase();
+    if (!sb) return;
+    try {
+      const [viewsRes, clicksRes, sessionsRes, msgSessionsRes, guestbookViewRes] = await Promise.all([
+        sb.from('analytics_events').select('*', { count: 'exact', head: true }).eq('event_type', 'page_view'),
+        sb.from('analytics_events').select('*', { count: 'exact', head: true }).eq('event_type', 'click'),
+        sb.from('analytics_sessions').select('*', { count: 'exact', head: true }),
+        sb.from('guestbook_messages').select('session_id').not('session_id', 'is', null).limit(10000),
+        sb.from('analytics_events').select('session_id').eq('event_type', 'page_view').ilike('page_path', '%guestbook%').limit(10000),
+      ]);
+      const views = viewsRes.error ? 0 : (viewsRes.count ?? 0);
+      const clicks = clicksRes.error ? 0 : (clicksRes.count ?? 0);
+      const sessions = sessionsRes.error ? 0 : (sessionsRes.count ?? 0);
+      const msgRows = msgSessionsRes.error ? [] : (msgSessionsRes.data || []) as { session_id: string }[];
+      const messageSessions = new Set(msgRows.map((r) => r.session_id)).size;
+      const gbRows = guestbookViewRes.error ? [] : (guestbookViewRes.data || []) as { session_id: string }[];
+      const guestbookVisitSessions = new Set(gbRows.map((r) => r.session_id)).size;
+      const conversion = sessions ? Math.min(100, Math.round((messageSessions / sessions) * 100)) : 0;
+      setKpis({ views, clicks, sessions, devices: sessions, conversion, messageCount: allRows.length });
+      updateFunnel(sessions, guestbookVisitSessions, messageSessions);
+      updateTrafficChart(sb);
+      const rangeDays = Math.max(7, parseInt(document.querySelector('.chart-tab.is-active')?.getAttribute('data-range') || '7', 10));
+      updateTrendChart(sb, rangeDays);
+      updatePageMetrics(sb);
+    } catch (_) {}
+  }
+
+  function updateTrafficChart(sb: ReturnType<typeof getSupabase>) {
+    if (!sb) return;
+    sb.from('analytics_sessions').select('referrer').limit(10000).then(({ data }) => {
+      const rows = (data || []) as { referrer: string | null }[];
+      const bySource: Record<string, number> = {};
+      const siteHost = typeof window !== 'undefined' && window.location ? window.location.hostname.replace(/^www\./, '') : '';
+      rows.forEach((r) => {
+        const key = !r.referrer || r.referrer === '' ? '直接访问' : (() => {
+          try {
+            const u = new URL(r.referrer);
+            const h = u.hostname.replace(/^www\./, '');
+            if (siteHost && h === siteHost) return '直接访问';
+            if (/linkedin|weixin|weibo|twitter|facebook|github/.test(h)) return h;
+            return '外部链接';
+          } catch { return '外部链接'; }
+        })();
+        bySource[key] = (bySource[key] || 0) + 1;
+      });
+      let labels = Object.keys(bySource);
+      let values = labels.map((l) => bySource[l]);
+      if (labels.length === 0) {
+        labels = [document.documentElement.lang === 'zh' ? '暂无' : 'None'];
+        values = [0];
+      }
+      const totalEl = document.getElementById('chart-traffic-total');
+      const legendEl = document.getElementById('chart-traffic-legend');
+      if (totalEl) totalEl.innerHTML = String(rows.length) + ' <span class="content-zh">总会话</span><span class="content-en">sessions</span>';
+      if (legendEl) legendEl.innerHTML = rows.length
+        ? labels.map((l, i) => l + ' ' + values[i] + ' (' + (rows.length ? Math.round((values[i] / rows.length) * 1000) / 10 : 0) + '%)').map((s) => '<span>' + s + '</span>').join('')
+        : '<span class="content-zh">暂无数据</span><span class="content-en">No data</span>';
+      if (chartTraffic && chartTraffic.data.datasets[0]) {
+        chartTraffic.data.labels = labels;
+        chartTraffic.data.datasets[0].data = values;
+        chartTraffic.data.datasets[0].backgroundColor = labels.length <= 1 && values[0] === 0
+          ? ['hsl(var(--muted))']
+          : ['#8b5cf6', '#475569', '#22c55e', '#f97316', '#06b6d4'].slice(0, Math.max(labels.length, 1));
+        chartTraffic.update();
+      }
+    });
+  }
+
+  function updateTrendChart(sb: ReturnType<typeof getSupabase>, days: number = 7) {
+    if (!sb) return;
+    const since = new Date();
+    since.setDate(since.getDate() - days);
+    since.setHours(0, 0, 0, 0);
+    sb.from('analytics_events').select('event_type, created_at, session_id').gte('created_at', since.toISOString()).limit(10000).then(({ data }) => {
+      const rows = (data || []) as { event_type: string; created_at: string; session_id: string }[];
+      const dayMap: Record<string, { views: number; clicks: number; sessions: Set<string> }> = {};
+      /* 用本地日期做 key，避免 UTC 与本地时区跨日错位 */
+      function toLocalDateKey(isoStr: string): string {
+        const d = new Date(isoStr);
+        return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+      }
+      for (let i = days - 1; i >= 0; i--) {
+        const d = new Date();
+        d.setDate(d.getDate() - i);
+        const key = toLocalDateKey(d.toISOString());
+        dayMap[key] = { views: 0, clicks: 0, sessions: new Set() };
+      }
+      const keys = Object.keys(dayMap).sort();
+      rows.forEach((r) => {
+        const key = toLocalDateKey(r.created_at);
+        if (!dayMap[key]) return;
+        if (r.event_type === 'page_view') { dayMap[key].views++; dayMap[key].sessions.add(r.session_id); }
+        if (r.event_type === 'click') dayMap[key].clicks++;
+      });
+      const labels = keys.map((k) => k.slice(5).replace('-', '/'));
+      const viewData = keys.map((k) => dayMap[k]?.views ?? 0);
+      const sessionData = keys.map((k) => dayMap[k]?.sessions?.size ?? 0);
+      const clickData = keys.map((k) => dayMap[k]?.clicks ?? 0);
+      const hasAny = viewData.some((v) => v > 0) || sessionData.some((v) => v > 0) || clickData.some((v) => v > 0);
+      const emptyZhEl = document.getElementById('chart-trend-empty');
+      const emptyEnEl = document.getElementById('chart-trend-empty-en');
+      if (emptyZhEl) emptyZhEl.hidden = hasAny;
+      if (emptyEnEl) emptyEnEl.hidden = hasAny;
+      if (chartTrend && chartTrend.data.datasets) {
+        chartTrend.data.labels = labels;
+        chartTrend.data.datasets[0].data = viewData;
+        chartTrend.data.datasets[1].data = sessionData;
+        chartTrend.data.datasets[2].data = clickData;
+        chartTrend.update();
+      }
+    });
+  }
+
+  function formatDuration(ms: number): string {
+    const isZh = document.documentElement.lang.startsWith('zh');
+    if (ms >= 60000) return (ms / 60000).toFixed(1) + (isZh ? ' 分钟' : ' min');
+    return (ms / 1000).toFixed(1) + (isZh ? ' 秒' : ' s');
+  }
+
+  function normalizePath(p: string): string {
+    const s = (p || '/').replace(/\/$/, '') || '/';
+    return s;
+  }
+
+  type PageData = { path: string; views: number; clicks: number; avgMs: number; maxMs: number; minMs: number };
+  let pageMetricsData: PageData[] = [];
+
+  function renderPageMetricBars(metric: string) {
+    const container = document.getElementById('pm-bar-list');
+    if (!container) return;
+    if (!pageMetricsData.length) {
+      container.innerHTML = '<p class="pm-empty"><span class="content-zh">暂无数据</span><span class="content-en">No data</span></p>';
+      return;
+    }
+    const sorted = [...pageMetricsData].sort((a, b) => {
+      const va = metric === 'views' ? a.views : metric === 'clicks' ? a.clicks : metric === 'avg' ? a.avgMs : metric === 'max' ? a.maxMs : a.minMs;
+      const vb = metric === 'views' ? b.views : metric === 'clicks' ? b.clicks : metric === 'avg' ? b.avgMs : metric === 'max' ? b.maxMs : b.minMs;
+      return vb - va;
+    });
+    const maxVal = Math.max(1, ...sorted.map((d) => {
+      return metric === 'views' ? d.views : metric === 'clicks' ? d.clicks : metric === 'avg' ? d.avgMs : metric === 'max' ? d.maxMs : d.minMs;
+    }));
+    const isDuration = metric === 'avg' || metric === 'max' || metric === 'min';
+    /* 路径 → 中文名映射（与前端导航一致） */
+    const pathNameZh: Record<string, string> = {
+      '/': '首页', '/experience': '工作', '/projects': '项目', '/education': '教育',
+      '/contact': '联系', '/guestbook': '留言', '/photography': '摄影',
+      '/blog': '博客', '/playground': '游乐场', '/resume': '简历',
+      '/skills': '技能', '/honors': '荣誉', '/others': '其他',
+    };
+    const pathNameEn: Record<string, string> = {
+      '/': 'Home', '/experience': 'Experience', '/projects': 'Projects', '/education': 'Education',
+      '/contact': 'Contact', '/guestbook': 'Guestbook', '/photography': 'Photography',
+      '/blog': 'Blog', '/playground': 'Playground', '/resume': 'Resume',
+      '/skills': 'Skills', '/honors': 'Honors', '/others': 'Others',
+    };
+    const isZh = document.documentElement.lang === 'zh-CN';
+    function pageName(p: string): string {
+      if (isZh && pathNameZh[p]) return pathNameZh[p];
+      if (!isZh && pathNameEn[p]) return pathNameEn[p];
+      /* 子路径：如 /projects/xxx → 项目/xxx */
+      for (const prefix of Object.keys(pathNameZh)) {
+        if (prefix !== '/' && p.startsWith(prefix + '/')) {
+          const sub = p.slice(prefix.length + 1);
+          return (isZh ? pathNameZh[prefix] : pathNameEn[prefix]) + '/' + sub;
+        }
+      }
+      return p.replace(/^\//, '') || '/';
+    }
+    container.innerHTML = sorted.map((d, i) => {
+      const raw = metric === 'views' ? d.views : metric === 'clicks' ? d.clicks : metric === 'avg' ? d.avgMs : metric === 'max' ? d.maxMs : d.minMs;
+      const pct = maxVal > 0 ? Math.max(3, Math.round((raw / maxVal) * 100)) : 3;
+      const label = isDuration ? (raw > 0 ? formatDuration(raw) : '—') : String(raw);
+      const name = pageName(d.path);
+      return `<div class="pm-row">
+        <span class="pm-rank">${i + 1}</span>
+        <span class="pm-name" title="${escapeHtml(d.path)}">${escapeHtml(name)}</span>
+        <div class="pm-bar-track"><div class="pm-bar-fill" style="width:${pct}%"></div></div>
+        <span class="pm-value">${label}</span>
+      </div>`;
+    }).join('');
+  }
+
+  function updatePageMetrics(sb: ReturnType<typeof getSupabase>) {
+    if (!sb) return;
+    sb.from('analytics_events').select('event_type, page_path, metadata').limit(10000).then(({ data }) => {
+      const rows = (data || []) as { event_type: string; page_path: string; metadata?: { duration_ms?: number } }[];
+      const byPath: Record<string, { views: number; clicks: number; durations: number[] }> = {};
+      rows.forEach((r) => {
+        const p = normalizePath(r.page_path);
+        if (!byPath[p]) byPath[p] = { views: 0, clicks: 0, durations: [] };
+        if (r.event_type === 'page_view') byPath[p].views++;
+        if (r.event_type === 'click') byPath[p].clicks++;
+        if (r.event_type === 'page_leave' && r.metadata?.duration_ms) byPath[p].durations.push(r.metadata.duration_ms);
+      });
+      pageMetricsData = Object.keys(byPath).map((path) => {
+        const m = byPath[path];
+        const d = m.durations;
+        return {
+          path,
+          views: m.views,
+          clicks: m.clicks,
+          avgMs: d.length ? d.reduce((s, x) => s + x, 0) / d.length : 0,
+          maxMs: d.length ? Math.max(...d) : 0,
+          minMs: d.length ? Math.min(...d) : 0,
+        };
+      });
+      const active = document.querySelector('.pm-tab.is-active') as HTMLElement | null;
+      renderPageMetricBars(active?.dataset.metric || 'views');
+    });
+  }
+
+  function initCharts() {
+    const Chart = (window as unknown as { Chart: import('chart.js').Chart }).Chart;
+    if (!Chart) return;
+    /* 浅色主题：坐标轴与图例用深色 */
+    const gridColor = 'rgba(0,0,0,0.08)';
+    const tickColor = 'rgba(0,0,0,0.6)';
+    const legendColor = 'rgba(0,0,0,0.7)';
+    const trendCtx = document.getElementById('chart-trend') as HTMLCanvasElement | null;
+    const trafficCtx = document.getElementById('chart-traffic') as HTMLCanvasElement | null;
+    if (trendCtx) {
+      chartTrend = new Chart(trendCtx, {
+        type: 'line',
+        data: {
+          labels: [],
+          datasets: [
+            { label: '浏览量', data: [], borderColor: '#3b82f6', backgroundColor: 'rgba(59,130,246,0.08)', fill: true, tension: 0.3, borderWidth: 2, pointRadius: 3 },
+            { label: '会话', data: [], borderColor: '#f97316', backgroundColor: 'transparent', tension: 0.3, borderWidth: 2, pointRadius: 3 },
+            { label: '点击', data: [], borderColor: '#22c55e', backgroundColor: 'transparent', tension: 0.3, borderWidth: 2, pointRadius: 3 },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: { beginAtZero: true, grid: { color: gridColor }, ticks: { color: tickColor } },
+            x: { grid: { color: gridColor }, ticks: { color: tickColor } },
+          },
+          plugins: { legend: { position: 'bottom', labels: { color: legendColor, padding: 16 } } },
+        },
+      });
+    }
+    if (trafficCtx) {
+      chartTraffic = new Chart(trafficCtx, {
+        type: 'doughnut',
+        data: {
+          labels: ['直接访问', 'External'],
+          datasets: [{ data: [1, 1], backgroundColor: ['#8b5cf6', '#475569'], borderWidth: 0 }],
+        },
+        options: { responsive: true, maintainAspectRatio: false, cutout: '65%', plugins: { legend: { display: false } } },
+      });
+      const totalEl = document.getElementById('chart-traffic-total');
+      const legendEl = document.getElementById('chart-traffic-legend');
+      if (totalEl) totalEl.innerHTML = '0 <span class="content-zh">总会话</span><span class="content-en">sessions</span>';
+      if (legendEl) legendEl.innerHTML = '<span class="content-zh">暂无数据</span><span class="content-en">No data</span>';
+    }
+  }
+
+  function setUserEmail(email: string) {
+    const short = email.length > 24 ? email.slice(0, 21) + '...' : email;
+    if (userEl) userEl.textContent = short;
+    if (userElEn) userElEn.textContent = short;
+  }
+
+  function applySession(session: { user?: { email?: string } } | null) {
+    if (session?.user) {
+      showLogin(false);
+      setUserEmail(session.user.email ?? '');
+      loadMessages();
+      setTimeout(() => {
+        initCharts();
+        loadAnalytics();
+      }, 100);
+    } else {
+      showLogin(true);
+    }
+  }
+
+  getSupabase()
+    ?.auth.getSession()
+    .then(({ data: { session } }) => applySession(session))
+    .catch(() => showLogin(true));
+
+  getSupabase()?.auth.onAuthStateChange((event, session) => {
+    if (event === 'SIGNED_OUT' || !session) {
+      showLogin(true);
+    }
+  });
+
+  searchInput?.addEventListener('input', () => renderMessagesList(filterMessages(allRows)));
+  refreshBtn?.addEventListener('click', () => {
+    loadMessages();
+    loadAnalytics();
+  });
+
+  clearAllBtn?.addEventListener('click', async () => {
+    const ok = window.confirm('确定要清空全部留言吗？此操作不可恢复。\nClear all guestbook messages? This cannot be undone.');
+    if (!ok) return;
+    const sb = getSupabase();
+    if (!sb) return;
+    const { error } = await sb.from('guestbook_messages').delete().neq('id', '00000000-0000-0000-0000-000000000000');
+    if (!error) {
+      allRows = [];
+      await loadMessages();
+      loadAnalytics();
+    }
+  });
+
+  document.getElementById('dashboard-clear-analytics')?.addEventListener('click', async () => {
+    const ok = window.confirm('确定要清空所有分析数据（会话、事件）吗？留言表不受影响，需在留言列表中用「一键清空」单独清空。此操作不可恢复。\nClear all analytics (sessions & events)? Guestbook is cleared separately via 「一键清空」 in the messages list. Cannot be undone.');
+    if (!ok) return;
+    const sb = getSupabase();
+    if (!sb) return;
+    await sb.from('analytics_events').delete().neq('id', '00000000-0000-0000-0000-000000000000');
+    await sb.from('analytics_sessions').delete().neq('id', '00000000-0000-0000-0000-000000000000');
+    loadAnalytics();
+  });
+
+  sidebarToggle?.addEventListener('click', () => {
+    sidebar?.classList.toggle('is-collapsed');
+  });
+  document.querySelectorAll('.manage-nav-item').forEach((el) => {
+    el.addEventListener('click', (e) => {
+      e.preventDefault();
+      const view = (el as HTMLElement).dataset.view;
+      document.querySelectorAll('.manage-nav-item').forEach((n) => n.classList.remove('is-active'));
+      el.classList.add('is-active');
+      if (view === 'overview') {
+        viewOverview?.removeAttribute('hidden');
+        viewDatabase?.setAttribute('hidden', '');
+      } else {
+        viewOverview?.setAttribute('hidden', '');
+        viewDatabase?.removeAttribute('hidden');
+        loadDatabaseSchema();
+      }
+    });
+  });
+  dbRefreshBtn?.addEventListener('click', () => loadDatabaseSchema());
+
+  async function loadTableDataIntoCard(tableName: string) {
+    if (!dbContent) return;
+    const sb = getSupabase();
+    if (!sb) return;
+    const card = dbContent.querySelector(`.manage-db-table[data-table-name="${tableName}"]`);
+    const dataEl = card?.querySelector('.manage-db-table-data') as HTMLElement;
+    const viewBtn = card?.querySelector('.manage-db-view-data') as HTMLElement;
+    const collapseBtn = card?.querySelector('.manage-db-collapse-data') as HTMLElement;
+    if (!dataEl) return;
+    dataEl.innerHTML = '<p class="manage-db-data-loading"><span class="content-zh">加载中…</span><span class="content-en">Loading…</span></p>';
+    if (viewBtn) viewBtn.style.display = 'none';
+    if (collapseBtn) collapseBtn.style.display = '';
+    try {
+      let q = sb.from(tableName).select('*').limit(200);
+      if (['analytics_events', 'guestbook_messages', 'analytics_sessions', 'analytics_sessions_with_stats', 'analytics_sessions_one_row'].includes(tableName)) {
+        q = q.order('created_at', { ascending: false });
+      }
+      const { data, error } = await q;
+      if (error) throw error;
+      const rows = (data || []) as Record<string, unknown>[];
+      const columns = rows.length ? Object.keys(rows[0]) : [];
+      const cell = (v: unknown): string => {
+        if (v == null) return '—';
+        if (typeof v === 'object') return escapeHtml(JSON.stringify(v).slice(0, 200));
+        return escapeHtml(String(v));
+      };
+      const isUuidCol = (col: string) => col === 'id' || col === 'session_id';
+      const renderCell = (col: string, v: unknown): string => {
+        const raw = v == null ? '' : String(v);
+        const display = raw || '—';
+        if (isUuidCol(col) && raw) {
+          const short = raw.length > 20 ? raw.slice(0, 20) + '…' : raw;
+          return `<span class="manage-db-uuid-cell" title="${escapeHtml(raw)}"><code class="manage-db-uuid-code">${escapeHtml(short)}</code><button type="button" class="manage-db-copy-btn" data-copy="${escapeHtml(raw)}" aria-label="复制"><span class="content-zh">复制</span><span class="content-en">Copy</span></button></span>`;
+        }
+        if (col === 'events' && v != null && typeof v === 'object') {
+          const jsonStr = JSON.stringify(v);
+          const short = jsonStr.length > 60 ? jsonStr.slice(0, 60) + '…' : jsonStr;
+          return `<span class="manage-db-uuid-cell"><code class="manage-db-uuid-code">${escapeHtml(short)}</code><button type="button" class="manage-db-copy-btn" data-copy="${escapeHtml(jsonStr)}" aria-label="复制"><span class="content-zh">复制</span><span class="content-en">Copy</span></button></span>`;
+        }
+        const text = cell(v);
+        return `<span class="manage-db-cell-text" title="${text}">${text}</span>`;
+      };
+      dataEl.innerHTML = `
+        <div class="manage-db-inline-data">
+          <p class="manage-db-data-meta"><span class="content-zh">共 </span><span class="content-en">Total </span><strong>${rows.length}</strong> <span class="content-zh">条（最近 200）</span><span class="content-en">rows (max 200)</span>
+            <button type="button" class="manage-btn manage-btn-secondary manage-db-refresh-data" data-table="${escapeHtml(tableName)}"><span class="content-zh">刷新</span><span class="content-en">Refresh</span></button>
+          </p>
+          <div class="manage-db-data-scroll">
+            <table class="dashboard-table">
+              <thead><tr>${columns.map((c) => `<th>${escapeHtml(c)}</th>`).join('')}</tr></thead>
+              <tbody>${rows.map((r) => `<tr>${columns.map((c) => `<td class="manage-db-td text-xs">${renderCell(c, r[c])}</td>`).join('')}</tr>`).join('')}</tbody>
+            </table>
+          </div>
+        </div>`;
+      dataEl.querySelectorAll('.manage-db-copy-btn').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const value = (btn as HTMLElement).dataset.copy;
+          if (value) {
+            navigator.clipboard.writeText(value).then(() => {
+              const label = btn.querySelector('.content-zh');
+              const en = btn.querySelector('.content-en');
+              const origZh = label?.textContent; const origEn = en?.textContent;
+              if (label) label.textContent = '已复制';
+              if (en) en.textContent = 'Copied';
+              setTimeout(() => { if (label) label.textContent = origZh || '复制'; if (en) en.textContent = origEn || 'Copy'; }, 800);
+            }).catch(() => {});
+          }
+        });
+      });
+      dataEl.querySelector('.manage-db-refresh-data')?.addEventListener('click', () => loadTableDataIntoCard(tableName));
+    } catch (e) {
+      dataEl.innerHTML = '<p class="pm-empty manage-error"><span class="content-zh">加载失败：</span><span class="content-en">Failed: </span>' + escapeHtml(String(e)) + '</p>';
+      if (viewBtn) viewBtn.style.display = '';
+      if (collapseBtn) collapseBtn.style.display = 'none';
+    }
+  }
+
+  const sessionIdInput = document.getElementById('manage-session-id') as HTMLInputElement | null;
+  const sessionResultEl = document.getElementById('manage-session-result');
+  document.getElementById('manage-session-query')?.addEventListener('click', async () => {
+    const sid = sessionIdInput?.value?.trim();
+    if (!sid || !sessionResultEl) return;
+    const sb = getSupabase();
+    if (!sb) return;
+    sessionResultEl.hidden = true;
+    sessionResultEl.innerHTML = '<p class="pm-empty"><span class="content-zh">查询中…</span><span class="content-en">Loading…</span></p>';
+    sessionResultEl.hidden = false;
+    try {
+      const [sessionRes, eventsRes, msgRes] = await Promise.all([
+        sb.from('analytics_sessions').select('*').eq('id', sid).maybeSingle(),
+        sb.from('analytics_events').select('*').eq('session_id', sid).order('created_at', { ascending: true }),
+        sb.from('guestbook_messages').select('id, name, message, created_at').eq('session_id', sid).order('created_at', { ascending: false }).limit(5),
+      ]);
+      const session = sessionRes.data as { id: string; created_at: string; referrer: string | null; landing_page: string | null; user_agent: string | null } | null;
+      const events = (eventsRes.data || []) as { event_type: string; page_path: string; created_at: string; metadata: Record<string, unknown> }[];
+      const messages = (msgRes.data || []) as { id: string; name: string; message: string; created_at: string }[];
+      if (!session) {
+        sessionResultEl.innerHTML = '<p class="pm-empty"><span class="content-zh">未找到该会话</span><span class="content-en">Session not found</span></p>';
+        return;
+      }
+      const fmt = (s: string) => new Date(s).toLocaleString(undefined, { dateStyle: 'short', timeStyle: 'medium' });
+      const eventLabels: Record<string, string> = { page_view: '浏览', click: '点击', page_leave: '离开(时长)', guestbook_submit: '提交留言' };
+      const eventLabelsEn: Record<string, string> = { page_view: 'View', click: 'Click', page_leave: 'Leave(dur)', guestbook_submit: 'Guestbook' };
+      const isZh = document.documentElement.lang.startsWith('zh');
+      const rows = events.map((e) => {
+        const label = isZh ? (eventLabels[e.event_type] ?? e.event_type) : (eventLabelsEn[e.event_type] ?? e.event_type);
+        const extra = e.event_type === 'page_leave' && e.metadata?.duration_ms ? ` ${(e.metadata.duration_ms / 1000).toFixed(1)}s` : (e.event_type === 'click' && e.metadata?.target ? ` ${String(e.metadata.target).slice(0, 30)}` : '');
+        return `<tr><td class="text-xs text-muted-foreground whitespace-nowrap">${escapeHtml(fmt(e.created_at))}</td><td class="font-medium">${escapeHtml(label)}</td><td>${escapeHtml(e.page_path)}${escapeHtml(extra)}</td></tr>`;
+      });
+      const msgBlock = messages.length
+        ? `<p class="manage-session-has-msg"><span class="content-zh">留言</span><span class="content-en">Messages</span> (${messages.length}): ${messages.map((m) => escapeHtml(m.name) + ': ' + escapeHtml(m.message.slice(0, 50)) + (m.message.length > 50 ? '…' : '')).join(' · ')}</p>`
+        : '';
+      sessionResultEl.innerHTML = `
+        <div class="manage-session-info">
+          <p><strong><span class="content-zh">会话</span><span class="content-en">Session</span>:</strong> ${escapeHtml(session.id)}</p>
+          <p><span class="content-zh">进入时间</span><span class="content-en">Started</span>: ${escapeHtml(fmt(session.created_at))} · <span class="content-zh">落地页</span><span class="content-en">Landing</span>: ${escapeHtml(session.landing_page || '—')}</p>
+          <p><span class="content-zh">来源</span><span class="content-en">Referrer</span>: ${escapeHtml(session.referrer || '—')}</p>
+          ${msgBlock}
+        </div>
+        <div class="manage-session-timeline-wrap">
+          <h4 class="dashboard-section-title"><span class="content-zh">行为时间线</span><span class="content-en">Behavior timeline</span> (${events.length})</h4>
+          <div class="manage-db-data-scroll">
+            <table class="dashboard-table">
+              <thead><tr><th><span class="content-zh">时间</span><span class="content-en">Time</span></th><th><span class="content-zh">类型</span><span class="content-en">Type</span></th><th><span class="content-zh">页面/详情</span><span class="content-en">Page / Detail</span></th></tr></thead>
+              <tbody>${rows.join('')}</tbody>
+            </table>
+          </div>
+        </div>`;
+    } catch (e) {
+      sessionResultEl.innerHTML = '<p class="pm-empty manage-error">' + escapeHtml(String(e)) + '</p>';
+    }
+  });
+
+  function loadDatabaseSchema() {
+    const api = (window as unknown as { __SUPABASE_API__?: { base: string; anonKey: string } }).__SUPABASE_API__;
+    if (!dbContent || !api?.base || !api.anonKey) {
+      if (dbContent) dbContent.innerHTML = '<p class="pm-empty"><span class="content-zh">未配置 API</span><span class="content-en">API not configured</span></p>';
+      return;
+    }
+    dbContent.innerHTML = '<p class="pm-empty"><span class="content-zh">加载中…</span><span class="content-en">Loading…</span></p>';
+    fetch(api.base + '/', { headers: { apikey: api.anonKey, Authorization: 'Bearer ' + api.anonKey } })
+      .then((r) => r.json())
+      .then((schema: { paths?: Record<string, unknown>; definitions?: Record<string, { properties?: Record<string, { type?: string; format?: string; description?: string }>; description?: string }> }) => {
+        const paths = schema?.paths || {};
+        const defs = schema?.definitions || {};
+        const tablePaths = Object.keys(paths).filter((p) => p.startsWith('/') && p.length > 1 && !p.includes('?'));
+        const tables: { name: string; description?: string; columns: { name: string; type: string; description?: string }[] }[] = [];
+        for (const path of tablePaths) {
+          const tableName = path.replace(/^\//, '');
+          const def = defs[tableName] as { properties?: Record<string, { type?: string; format?: string; description?: string }>; description?: string } | undefined;
+          if (!def?.properties) continue;
+          const columns = Object.entries(def.properties).map(([name, p]) => ({
+            name,
+            type: [p.format, p.type].filter(Boolean).join(' ') || 'unknown',
+            description: p.description,
+          }));
+          tables.push({ name: tableName, description: def.description, columns });
+        }
+        // 后端只展示「一行一用户」视图，不展示原始 sessions / events 表
+        const filtered = tables.filter((t) => t.name !== 'analytics_sessions' && t.name !== 'analytics_events');
+        const tablesToShow = filtered.length ? filtered : tables;
+        if (!tablesToShow.length) {
+          dbContent.innerHTML = '<p class="pm-empty"><span class="content-zh">未获取到表信息</span><span class="content-en">No tables found</span></p>';
+          return;
+        }
+        function descLabel(desc: string | undefined): string {
+          if (!desc || !desc.trim()) return '—';
+          const d = desc.trim();
+          if (d.includes('Primary Key') || d.includes('<pk/>')) return document.documentElement.lang.startsWith('zh') ? '主键' : 'Primary Key';
+          if (d.includes('Foreign Key') || d.includes('<fk')) return document.documentElement.lang.startsWith('zh') ? '外键' : 'Foreign Key';
+          return d.length > 60 ? d.slice(0, 57) + '…' : d;
+        }
+        dbContent.innerHTML = tablesToShow
+          .map(
+            (t) =>
+              `<div class="manage-db-table" data-table-name="${escapeHtml(t.name)}">
+                <div class="manage-db-table-head">
+                  <h3 class="manage-db-table-name">${escapeHtml(t.name)}</h3>
+                  <div class="manage-db-table-actions">
+                    <button type="button" class="manage-btn manage-btn-secondary manage-db-view-data" data-table="${escapeHtml(t.name)}" title="加载并展示该表最近 200 条数据">
+                      <span class="content-zh">加载数据</span><span class="content-en">Load data</span>
+                    </button>
+                    <button type="button" class="manage-btn manage-btn-secondary manage-db-collapse-data" data-table="${escapeHtml(t.name)}" style="display:none">
+                      <span class="content-zh">收起</span><span class="content-en">Collapse</span>
+                    </button>
+                  </div>
+                </div>
+                ${t.description ? `<p class="manage-db-table-desc">${escapeHtml(t.description)}</p>` : ''}
+                <table class="dashboard-table manage-db-schema-table">
+                  <thead><tr><th><span class="content-zh">列名</span><span class="content-en">Column</span></th><th><span class="content-zh">类型</span><span class="content-en">Type</span></th><th><span class="content-zh">说明</span><span class="content-en">Description</span></th></tr></thead>
+                  <tbody>${t.columns.map((c) => `<tr><td class="font-medium">${escapeHtml(c.name)}</td><td class="text-muted-foreground font-mono text-xs">${escapeHtml(c.type)}</td><td class="text-muted-foreground text-sm">${escapeHtml(descLabel(c.description))}</td></tr>`).join('')}</tbody>
+                </table>
+                <div class="manage-db-table-data" data-table-data="${escapeHtml(t.name)}" aria-live="polite"></div>
+              </div>`
+          )
+          .join('');
+        dbContent.querySelectorAll('.manage-db-view-data').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            const tableName = (btn as HTMLElement).dataset.table;
+            if (tableName) loadTableDataIntoCard(tableName);
+          });
+        });
+        dbContent.querySelectorAll('.manage-db-collapse-data').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            const tableName = (btn as HTMLElement).dataset.table;
+            if (!tableName) return;
+            const card = dbContent?.querySelector(`.manage-db-table[data-table-name="${tableName}"]`);
+            const dataEl = card?.querySelector('.manage-db-table-data');
+            const viewBtn = card?.querySelector('.manage-db-view-data') as HTMLElement;
+            const collapseBtn = card?.querySelector('.manage-db-collapse-data') as HTMLElement;
+            if (dataEl) dataEl.innerHTML = '';
+            if (viewBtn) viewBtn.style.display = '';
+            if (collapseBtn) collapseBtn.style.display = 'none';
+          });
+        });
+      })
+      .catch(() => {
+        if (dbContent) dbContent.innerHTML = '<p class="pm-empty"><span class="content-zh">加载失败</span><span class="content-en">Failed to load</span></p>';
+      });
+  }
+
+  document.querySelectorAll('.chart-tab').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.chart-tab').forEach((b) => b.classList.remove('is-active'));
+      btn.classList.add('is-active');
+      const sb = getSupabase();
+      const range = parseInt((btn as HTMLElement).getAttribute('data-range') || '7', 10);
+      if (sb) updateTrendChart(sb, range);
+    });
+  });
+  document.querySelectorAll('.pm-tab').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.pm-tab').forEach((b) => b.classList.remove('is-active'));
+      btn.classList.add('is-active');
+      renderPageMetricBars((btn as HTMLElement).dataset.metric || 'views');
+    });
+  });
+
+  loginForm?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    setLoginError('');
+    const sb = getSupabase();
+    if (!sb) {
+      setLoginError('Supabase 未配置');
+      return;
+    }
+    const fd = new FormData(loginForm);
+    const email = (fd.get('email') as string)?.trim() || '';
+    const password = fd.get('password') as string;
+    const { error } = await sb.auth.signInWithPassword({ email, password });
+    if (error) {
+      setLoginError(error.message);
+      return;
+    }
+    showLogin(false);
+    const { data: { session } } = await sb.auth.getSession();
+    if (session) setUserEmail(session.user?.email ?? '');
+    loadMessages();
+    setTimeout(initCharts, 100);
+  });
+
+  logoutBtn?.addEventListener('click', async (e) => {
+    e.preventDefault();
+    await getSupabase()?.auth.signOut();
+    showLogin(true);
+    setLoginError('');
+  });
+</script>
+
+<style>
+  /* ========== 后台布局：伸缩侧栏 + 主内容 ========== */
+  .manage-panel-wrap {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    color: hsl(var(--foreground));
+    overflow: hidden;
+  }
+  .manage-header {
+    flex-shrink: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem 1rem;
+    padding: 0.75rem 1.5rem;
+    border-bottom: 1px solid hsl(var(--border));
+    background: hsl(var(--card));
+  }
+  .manage-header-left {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-width: 0;
+    flex: 1;
+  }
+  .manage-sidebar-toggle {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid hsl(var(--border));
+    border-radius: 8px;
+    background: hsl(var(--muted) / 0.5);
+    color: hsl(var(--foreground));
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .manage-sidebar-toggle:hover { background: hsl(var(--muted)); }
+  .manage-search {
+    flex: 1;
+    min-width: 120px;
+    max-width: 280px;
+    height: 36px;
+    padding: 0 0.75rem;
+    font-size: 0.875rem;
+    border: 1px solid hsl(var(--input));
+    border-radius: 8px;
+    background: hsl(var(--muted) / 0.5);
+    color: hsl(var(--foreground));
+  }
+  .manage-search::placeholder { color: hsl(var(--muted-foreground)); }
+  .manage-btn,
+  :global(.manage-btn) {
+    height: 36px;
+    padding: 0 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  .manage-btn-secondary,
+  :global(.manage-btn-secondary) {
+    border: 1px solid hsl(var(--border));
+    background: hsl(var(--secondary));
+    color: hsl(var(--secondary-foreground));
+  }
+  .manage-btn-secondary:hover,
+  :global(.manage-btn-secondary):hover { opacity: 0.9; }
+  .manage-btn-outline-destructive {
+    border: 1px solid hsl(var(--destructive) / 0.4);
+    background: transparent;
+    color: hsl(var(--destructive));
+  }
+  .manage-btn-outline-destructive:hover { background: hsl(var(--destructive) / 0.1); }
+  .manage-header-right { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+  .manage-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.2rem 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border: 1px solid hsl(var(--primary) / 0.3);
+    border-radius: 6px;
+    background: hsl(var(--primary) / 0.1);
+    color: hsl(var(--primary));
+  }
+  .manage-logout-btn {
+    padding: 0;
+    border: none;
+    background: none;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: hsl(var(--primary));
+    cursor: pointer;
+  }
+  .manage-logout-btn:hover { text-decoration: underline; }
+  .manage-body {
+    flex: 1;
+    display: flex;
+    min-height: 0;
+  }
+  .manage-sidebar {
+    flex-shrink: 0;
+    width: 220px;
+    border-right: 1px solid hsl(var(--border));
+    background: hsl(var(--card));
+    transition: width 0.2s ease, min-width 0.2s ease;
+    overflow: hidden;
+  }
+  .manage-sidebar.is-collapsed {
+    width: 0;
+    min-width: 0;
+    border-right-width: 0;
+  }
+  .manage-nav {
+    display: flex;
+    flex-direction: column;
+    padding: 0.75rem 0;
+    gap: 0.25rem;
+  }
+  .manage-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.6rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: hsl(var(--muted-foreground));
+    text-decoration: none;
+    border-radius: 0 8px 8px 0;
+    border-left: 3px solid transparent;
+    transition: background 0.2s, color 0.2s;
+  }
+  .manage-nav-item:hover { background: hsl(var(--muted) / 0.5); color: hsl(var(--foreground)); }
+  .manage-nav-item.is-active { background: hsl(var(--primary) / 0.1); color: hsl(var(--primary)); border-left-color: hsl(var(--primary)); }
+  .manage-main {
+    flex: 1;
+    min-width: 0;
+    overflow: auto;
+  }
+  .manage-view { padding: 0; min-height: 100%; }
+  .manage-db-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    padding: 1.25rem 1.5rem 0;
+    margin-bottom: 0.5rem;
+  }
+  .manage-db-session-wrap {
+    padding: 0 1.5rem 1rem;
+    margin-bottom: 0.5rem;
+    border-bottom: 1px solid hsl(var(--border));
+  }
+  .manage-db-session-wrap h3 { margin-bottom: 0.5rem; }
+  .manage-db-session-row {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    margin-bottom: 0.5rem;
+  }
+  .manage-db-session-input {
+    flex: 1;
+    max-width: 320px;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+    font-family: ui-monospace, monospace;
+    border: 1px solid hsl(var(--border));
+    border-radius: 8px;
+    background: hsl(var(--card));
+    color: hsl(var(--foreground));
+  }
+  .manage-session-result {
+    margin-top: 0.75rem;
+    padding: 1rem;
+    border-radius: 8px;
+    background: hsl(var(--muted) / 0.2);
+    border: 1px solid hsl(var(--border));
+  }
+  .manage-session-info p { margin: 0.25rem 0; font-size: 0.875rem; }
+  .manage-session-has-msg { color: var(--accent, #22c55e); }
+  .manage-session-timeline-wrap { margin-top: 1rem; }
+  .manage-session-timeline-wrap h4 { margin-bottom: 0.5rem; }
+  .manage-db-data-wrap { display: flex; flex-direction: column; gap: 0.75rem; }
+  .manage-db-data-meta { font-size: 0.875rem; color: hsl(var(--muted-foreground)); margin: 0; }
+  .manage-db-data-scroll { overflow-x: auto; max-height: 400px; overflow-y: auto; }
+  .manage-db-content {
+    padding: 0 1.5rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+  /* 数据库表卡片与按钮由 innerHTML 注入，无 Astro 作用域，需 :global 才能渲染样式 */
+  :global(.manage-db-table) {
+    border: 1px solid hsl(var(--border));
+    border-radius: 12px;
+    overflow: hidden;
+    background: hsl(var(--card));
+  }
+  :global(.manage-db-table-head) {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    background: hsl(var(--muted) / 0.3);
+    border-bottom: 1px solid hsl(var(--border));
+  }
+  :global(.manage-db-table-name) {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 600;
+    color: hsl(var(--foreground));
+  }
+  :global(.manage-db-table-actions) {
+    display: flex;
+    gap: 0.5rem;
+  }
+  :global(.manage-db-table-desc) {
+    margin: 0;
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+    color: hsl(var(--muted-foreground));
+    border-bottom: 1px solid hsl(var(--border));
+  }
+  :global(.manage-db-table .dashboard-table) {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.875rem;
+    border: none;
+    border-radius: 0;
+  }
+  :global(.manage-db-table .dashboard-table th) {
+    padding: 0.6rem 1rem;
+    text-align: left;
+    font-weight: 600;
+    color: hsl(var(--foreground));
+    border-bottom: 1px solid hsl(var(--border));
+  }
+  :global(.manage-db-table .dashboard-table td) {
+    padding: 0.6rem 1rem;
+    border-bottom: 1px solid hsl(var(--border));
+    vertical-align: middle;
+  }
+  :global(.manage-db-table .dashboard-table tr:last-child td) { border-bottom: none; }
+  :global(.manage-db-schema-table) { margin-bottom: 0; }
+  :global(.manage-db-table-data) {
+    border-top: 1px solid hsl(var(--border));
+    padding: 0.75rem 1rem;
+    background: hsl(var(--muted) / 0.15);
+    min-height: 0;
+  }
+  :global(.manage-db-table-data:empty) { display: none; }
+  :global(.manage-db-data-loading) { margin: 0; font-size: 0.875rem; color: hsl(var(--muted-foreground)); }
+  :global(.manage-db-inline-data) { display: flex; flex-direction: column; gap: 0.5rem; }
+  :global(.manage-db-inline-data .manage-db-data-meta) {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+  :global(.manage-db-inline-data .manage-db-data-scroll) {
+    max-height: 320px;
+    overflow: auto;
+  }
+  :global(.manage-db-td) { max-width: 220px; }
+  :global(.manage-db-uuid-cell) {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  :global(.manage-db-uuid-code) {
+    font-family: ui-monospace, monospace;
+    font-size: 0.75rem;
+    word-break: break-all;
+  }
+  :global(.manage-db-copy-btn) {
+    flex-shrink: 0;
+    padding: 2px 6px;
+    font-size: 0.7rem;
+    border-radius: 4px;
+    border: 1px solid hsl(var(--border));
+    background: hsl(var(--muted) / 0.5);
+    color: hsl(var(--foreground));
+    cursor: pointer;
+  }
+  :global(.manage-db-copy-btn:hover) { background: hsl(var(--muted)); }
+  :global(.manage-db-cell-text) { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 200px; }
+
+  /* ========== 后台小组件与可视化 ========== */
+  .dashboard-section-title {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: hsl(var(--muted-foreground));
+    margin: 0;
+  }
+  .dashboard-kpi-card {
+    position: relative;
+    border-radius: 12px;
+    border: 1px solid hsl(var(--border));
+    background: hsl(var(--card));
+    padding: 1rem 1.25rem;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+    transition: box-shadow 0.2s, border-color 0.2s;
+  }
+  .dashboard-kpi-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    border-color: hsl(var(--border));
+  }
+  .dashboard-kpi-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    margin-bottom: 0.75rem;
+  }
+  .dashboard-kpi-icon-blue { background: rgba(59, 130, 246, 0.12); color: #3b82f6; }
+  .dashboard-kpi-icon-green { background: rgba(34, 197, 94, 0.12); color: #22c55e; }
+  .dashboard-kpi-icon-amber { background: rgba(245, 158, 11, 0.12); color: #f59e0b; }
+  .dashboard-kpi-icon-violet { background: rgba(139, 92, 246, 0.12); color: #8b5cf6; }
+  .dashboard-kpi-icon-primary { background: hsl(var(--primary) / 0.12); color: hsl(var(--primary)); }
+  .dashboard-kpi-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: hsl(var(--foreground));
+    margin: 0 0 0.15rem;
+    line-height: 1.2;
+  }
+  .dashboard-kpi-label {
+    font-size: 0.75rem;
+    color: hsl(var(--muted-foreground));
+  }
+  .dashboard-widget {
+    border-radius: 12px;
+    border: 1px solid hsl(var(--border));
+    background: hsl(var(--card));
+    padding: 1.25rem 1.5rem;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  }
+  .dashboard-widget-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem 1rem;
+    margin-bottom: 1rem;
+  }
+  .dashboard-widget-head--no-actions { justify-content: flex-start; }
+  .dashboard-widget-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: hsl(var(--foreground));
+    margin: 0;
+  }
+  .dashboard-widget-desc {
+    font-size: 0.75rem;
+    color: hsl(var(--muted-foreground));
+    margin: 0;
+    width: 100%;
+  }
+  .dashboard-chart-wrap {
+    position: relative;
+    min-height: 220px;
+  }
+  .dashboard-chart-wrap canvas { display: block; max-height: 220px; }
+  .dashboard-chart-empty {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 0.8rem;
+    color: hsl(var(--muted-foreground));
+    margin: 0;
+    text-align: center;
+    pointer-events: none;
+  }
+  .dashboard-donut-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 200px;
+  }
+  .dashboard-donut-total {
+    position: absolute;
+    margin: 0;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: hsl(var(--foreground));
+  }
+  .dashboard-donut-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 1.25rem;
+    font-size: 0.75rem;
+    color: hsl(var(--muted-foreground));
+    margin-top: 0.75rem;
+  }
+  .dashboard-donut-legend span { display: inline-block; }
+  /* ===== 漏斗：卡片式 ===== */
+  .funnel-cards { display: flex; flex-direction: column; align-items: center; gap: 0; }
+  .funnel-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 2px solid;
+    border-radius: 12px;
+    padding: 0.85rem 1.25rem;
+    background: hsl(var(--card));
+    transition: box-shadow 0.2s;
+    width: 100%;
+  }
+  .funnel-card--blue  { border-color: #3b82f6; background: rgba(59,130,246,0.04); }
+  .funnel-card--amber { border-color: #f59e0b; background: rgba(245,158,11,0.04); width: 82%; }
+  .funnel-card--red   { border-color: #ef4444; background: rgba(239,68,68,0.04);  width: 64%; }
+  .funnel-card-inner { display: flex; flex-direction: column; gap: 0.1rem; }
+  .funnel-card-step { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: hsl(var(--muted-foreground)); }
+  .funnel-card-label { font-size: 0.95rem; font-weight: 600; color: hsl(var(--foreground)); line-height: 1.2; }
+  .funnel-card-value { font-size: 1.75rem; font-weight: 800; line-height: 1; }
+  .funnel-card--blue  .funnel-card-value { color: #3b82f6; }
+  .funnel-card--amber .funnel-card-value { color: #f59e0b; }
+  .funnel-card--red   .funnel-card-value { color: #ef4444; }
+  .funnel-arrow {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.4rem 0;
+    color: hsl(var(--muted-foreground));
+    font-size: 0.8rem;
+  }
+  .funnel-arrow svg { opacity: 0.4; }
+  .funnel-arrow-pct { font-weight: 600; color: hsl(var(--muted-foreground)); }
+
+  /* ===== 页面指标：标签 + 条形图 ===== */
+  .pm-tabs { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-bottom: 1rem; }
+  .pm-tab {
+    padding: 0.35rem 0.75rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border: 1px solid hsl(var(--border));
+    background: transparent;
+    color: hsl(var(--muted-foreground));
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .pm-tab:hover { background: hsl(var(--muted)); }
+  .pm-tab.is-active { background: hsl(var(--primary)); color: hsl(var(--primary-foreground)); border-color: hsl(var(--primary)); }
+  /* 页面指标条形图：动态生成的 HTML 需要 :global */
+  .pm-bar-list { display: flex; flex-direction: column; gap: 0.65rem; }
+  :global(.pm-row) { display: flex; align-items: center; gap: 0.6rem; }
+  :global(.pm-rank) {
+    flex-shrink: 0;
+    width: 22px;
+    height: 22px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #fff;
+    background: #a78bfa;
+    border-radius: 50%;
+  }
+  :global(.pm-row:nth-child(1) .pm-rank) { background: #8b5cf6; }
+  :global(.pm-row:nth-child(2) .pm-rank) { background: #a78bfa; }
+  :global(.pm-row:nth-child(3) .pm-rank) { background: #c4b5fd; color: #5b21b6; }
+  :global(.pm-row:nth-child(n+4) .pm-rank) { background: hsl(var(--muted)); color: hsl(var(--muted-foreground)); }
+  :global(.pm-name) {
+    flex-shrink: 0;
+    width: 80px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: hsl(var(--foreground));
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  :global(.pm-bar-track) {
+    flex: 1;
+    height: 22px;
+    border-radius: 6px;
+    background: hsl(var(--muted));
+    overflow: hidden;
+  }
+  :global(.pm-bar-fill) {
+    height: 100%;
+    border-radius: 6px;
+    background: linear-gradient(90deg, #c4b5fd, #a78bfa);
+    transition: width 0.4s ease;
+    min-width: 4px;
+  }
+  :global(.pm-value) {
+    flex-shrink: 0;
+    min-width: 56px;
+    text-align: right;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: hsl(var(--primary));
+    font-variant-numeric: tabular-nums;
+  }
+  :global(.pm-empty) { text-align: center; font-size: 0.8rem; color: hsl(var(--muted-foreground)); margin: 1rem 0; }
+  .dashboard-table-wrap { overflow: auto; border-radius: 8px; border: 1px solid hsl(var(--border)); }
+  .dashboard-table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
+  .dashboard-table th {
+    padding: 0.6rem 1rem;
+    text-align: left;
+    font-weight: 600;
+    color: hsl(var(--muted-foreground));
+    background: hsl(var(--muted) / 0.4);
+    border-bottom: 1px solid hsl(var(--border));
+  }
+  .dashboard-table th.text-right { text-align: right; }
+  .dashboard-table td { padding: 0.6rem 1rem; border-bottom: 1px solid hsl(var(--border)); vertical-align: middle; }
+  .dashboard-table td.text-right { text-align: right; }
+  :global(.dashboard-table-row):hover { background: hsl(var(--muted) / 0.25); }
+  .dashboard-empty-cell { text-align: center; color: hsl(var(--muted-foreground)); padding: 1.5rem !important; }
+  .dashboard-empty {
+    padding: 1.5rem;
+    text-align: center;
+    font-size: 0.875rem;
+    color: hsl(var(--muted-foreground));
+    margin: 0;
+  }
+  .dashboard-btn-danger {
+    padding: 0.4rem 0.9rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: hsl(var(--destructive-foreground));
+    background: hsl(var(--destructive));
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: opacity 0.2s, background 0.2s;
+  }
+  .dashboard-btn-danger:hover { opacity: 0.9; background: hsl(var(--destructive) / 0.9); }
+
+  /* ========== 登录卡片 ========== */
+  /* 登录后彻底隐藏登录区，避免与后台同时出现 */
+  #manage-login-wrap[hidden] {
+    display: none !important;
+  }
+  .login-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 70vh;
+    padding: 2rem 1rem;
+  }
+  .login-card {
+    width: min(92%, 560px);
+    background: rgba(22, 27, 34, 0.55);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1.5px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 2.5rem 2rem;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  }
+  .login-header {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  .login-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 64px;
+    height: 64px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+    color: #fff;
+    margin-bottom: 1rem;
+    box-shadow: 0 8px 24px rgba(63, 185, 80, 0.3);
+  }
+  .login-title {
+    font-family: var(--font-serif);
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: hsl(var(--foreground));
+    margin: 0 0 0.5rem;
+    letter-spacing: 0.01em;
+  }
+  .login-subtitle {
+    font-size: 0.95rem;
+    color: hsl(var(--muted-foreground));
+    margin: 0;
+  }
+  .login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+  .login-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .login-field-label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.7);
+    letter-spacing: 0.02em;
+  }
+  .login-input-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  .login-input-icon {
+    position: absolute;
+    left: 14px;
+    color: hsl(var(--muted-foreground));
+    pointer-events: none;
+    flex-shrink: 0;
+  }
+  .login-input-wrap input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 14px 16px 14px 44px;
+    font-size: 1rem;
+    font-family: inherit;
+    color: hsl(var(--foreground));
+    background: rgba(0, 0, 0, 0.25);
+    border: 1.5px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    transition: border-color 0.25s, box-shadow 0.25s;
+  }
+  .login-input-wrap input::placeholder {
+    color: rgba(255, 255, 255, 0.25);
+  }
+  .login-input-wrap input:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(63, 185, 80, 0.15);
+  }
+  .login-error {
+    font-size: 0.9rem;
+    color: #f87171;
+    margin: -0.25rem 0 0;
+    min-height: 1.2em;
+  }
+  .login-tip {
+    font-size: 0.8rem;
+    color: var(--text-muted, #64748b);
+    margin: 1rem 0 0;
+    line-height: 1.5;
+  }
+  .login-tip a {
+    color: var(--accent, #0ea5e9);
+    text-decoration: none;
+  }
+  .login-tip a:hover { text-decoration: underline; }
+  .login-submit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 14px 1.5rem;
+    font-size: 1.05rem;
+    font-weight: 600;
+    font-family: inherit;
+    color: #fff;
+    background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: 0 6px 20px rgba(63, 185, 80, 0.3);
+    transition: transform 0.15s, box-shadow 0.15s;
+    margin-top: 0.5rem;
+  }
+  .login-submit:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 28px rgba(63, 185, 80, 0.4);
+  }
+  .login-submit:active {
+    transform: translateY(0);
+  }
+  .login-submit-arrow {
+    transition: transform 0.2s;
+  }
+  .login-submit:hover .login-submit-arrow {
+    transform: translateX(3px);
+  }
+
+  #manage-login-wrap[hidden] { display: none !important; }
+  #manage-panel[hidden] { display: none !important; }
+  .chart-tab.is-active { background: hsl(var(--primary)); color: hsl(var(--primary-foreground)); }
+  .chart-tab:not(.is-active) { background: hsl(var(--muted)); color: hsl(var(--muted-foreground)); }
+  :global(.manage-error) { font-size: 0.875rem; color: hsl(var(--destructive)); margin: 0; }
+
+  /* 概览区：每个 KPI 卡片右上角单独问号 + 详细提示 */
+  .dashboard-overview-section { position: relative; }
+  .dashboard-section-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin-bottom: 0;
+  }
+  .dashboard-section-head .dashboard-section-title { margin: 0; }
+
+  .dashboard-kpi-card {
+    position: relative;
+  }
+  .dashboard-kpi-help {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 20px;
+    height: 20px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 600;
+    color: hsl(var(--muted-foreground));
+    background: hsl(var(--muted));
+    border: 1px solid hsl(var(--border));
+    border-radius: 50%;
+    cursor: help;
+    transition: color 0.2s, background 0.2s, border-color 0.2s;
+    z-index: 2;
+  }
+  .dashboard-kpi-help:hover {
+    color: hsl(var(--foreground));
+    background: hsl(var(--muted) / 0.9);
+    border-color: hsl(var(--border));
+  }
+  .dashboard-kpi-help-panel {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 4px;
+    min-width: 260px;
+    max-width: 320px;
+    padding: 10px 12px;
+    font-size: 11px;
+    line-height: 1.5;
+    color: hsl(var(--foreground));
+    background: hsl(var(--card));
+    border: 1px solid hsl(var(--border));
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    z-index: 100;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.15s, visibility 0.15s;
+  }
+  html[lang="zh"] .dashboard-kpi-help-panel.content-en,
+  html[lang^="zh-"] .dashboard-kpi-help-panel.content-en { display: none !important; }
+  html:not([lang="zh"]):not([lang^="zh-"]) .dashboard-kpi-help-panel.content-zh { display: none !important; }
+  .dashboard-kpi-help:hover ~ .dashboard-kpi-help-panel,
+  .dashboard-kpi-help-panel:hover { opacity: 1; visibility: visible; pointer-events: auto; }
+</style>

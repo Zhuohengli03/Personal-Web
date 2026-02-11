@@ -1,0 +1,224 @@
+---
+/**
+ * 前端埋点：一用户进站 = 一会话(session)，全程行为一条时间线。
+ * - 行为类型：page_view(浏览页)、click(点击元素)、page_leave(离开页，metadata.duration_ms=可见停留毫秒)、guestbook_submit(提交留言，由留言页上报)。
+ * - 路径统一无尾斜杠(根为 /)。点击时 page_path 为当前页路径；时长仅统计可见时间，离开/关闭/刷新时上报。
+ * - 所有埋点均排除后台路径（/manage 及其子路径），不创建会话、不记 PV/点击/时长。
+ * - 会话 id 存 sessionStorage + cookie，避免进站首屏与「首次点击跳转页」被拆成两次会话。
+ */
+interface Props {
+  supabaseUrl?: string;
+  supabaseKey?: string;
+}
+const { supabaseUrl = '', supabaseKey = '' } = Astro.props;
+---
+<script define:vars={{ supabaseUrl, supabaseKey }}>
+  (function () {
+    if (!supabaseUrl || !supabaseKey || supabaseKey.length < 20) {
+      if (typeof console !== 'undefined' && console.warn) {
+        console.warn('[Analytics] 未配置 Supabase（请设置 .env 中 PUBLIC_SUPABASE_URL 与 PUBLIC_SUPABASE_ANON_KEY 并重启），埋点已跳过');
+      }
+      return;
+    }
+    var pathname = typeof location !== 'undefined' ? (location.pathname || '/') : '/';
+    var path = pathname.replace(/\/$/, '') || '/';
+    function isBackendPath(p) {
+      if (!p) return false;
+      return p === '/manage' || /^\/manage(\/|$)/.test(p);
+    }
+    if (isBackendPath(path)) return;
+
+    var STORAGE_KEY = 'ah_sid';
+    var COOKIE_OPTS = '; path=/; max-age=86400; SameSite=Lax';
+    function getSessionIdFromCookie() {
+      try {
+        var c = document.cookie.split(';');
+        for (var i = 0; i < c.length; i++) { var t = c[i].trim(); if (t.indexOf(STORAGE_KEY + '=') === 0) return t.slice(STORAGE_KEY.length + 1); }
+      } catch (e) {}
+      return null;
+    }
+    function setSessionIdEverywhere(id) {
+      try { sessionStorage.setItem(STORAGE_KEY, id); } catch (e) {}
+      try { document.cookie = STORAGE_KEY + '=' + id + COOKIE_OPTS; } catch (e) {}
+    }
+    var API = supabaseUrl.replace(/\/$/, '') + '/rest/v1';
+    var headers = {
+      apikey: supabaseKey,
+      Authorization: 'Bearer ' + supabaseKey,
+      'Content-Type': 'application/json',
+    };
+
+    var sessionId = null;
+    try {
+      sessionId = sessionStorage.getItem(STORAGE_KEY) || getSessionIdFromCookie();
+      if (sessionId) setSessionIdEverywhere(sessionId);
+    } catch (e) {}
+
+    var durationSent = false;
+    var visibleSince = Date.now();
+    var visibleMs = 0;
+
+    function post(table, body, prefer) {
+      var h = Object.assign({}, headers);
+      if (prefer) h['Prefer'] = prefer;
+      return fetch(API + '/' + table, { method: 'POST', headers: h, body: JSON.stringify(body) });
+    }
+
+    /* 客户端生成 UUID，无需服务端返回 body，彻底绕开 return=representation 的 SELECT 权限问题 */
+    function generateUUID() {
+      if (typeof crypto !== 'undefined' && crypto.randomUUID) return crypto.randomUUID();
+      return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+        var r = Math.random() * 16 | 0;
+        return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+      });
+    }
+
+    /*
+     * 用 ignore-duplicates 保证会话一定存在：
+     *   - 新会话 → INSERT 写入 referrer / landing_page / user_agent
+     *   - 已有会话 → 忽略（不覆盖首次落地页和来源）
+     */
+    function upsertSession(id, done) {
+      try { if (typeof window !== 'undefined') window.__analyticsSessionId__ = id; } catch (e) {}
+      var ref = typeof document !== 'undefined' ? (document.referrer || null) : null;
+      var ua = typeof navigator !== 'undefined' ? navigator.userAgent : null;
+      var upsertHeaders = Object.assign({}, headers, {
+        Prefer: 'return=minimal,resolution=ignore-duplicates',
+      });
+      fetch(API + '/analytics_sessions', {
+        method: 'POST',
+        headers: upsertHeaders,
+        body: JSON.stringify({
+          id: id,
+          referrer: ref,
+          landing_page: path,
+          user_agent: ua,
+        }),
+      })
+        .then(function (r) {
+          if (!r.ok && r.status !== 201 && r.status !== 409) {
+            /* upsert 失败且非冲突 → 放弃本次埋点 */
+            sessionId = null;
+            try { sessionStorage.removeItem(STORAGE_KEY); document.cookie = STORAGE_KEY + '=; path=/; max-age=0'; } catch (e) {}
+          }
+          if (typeof done === 'function') done();
+        })
+        .catch(function () {
+          sessionId = null;
+          try { sessionStorage.removeItem(STORAGE_KEY); document.cookie = STORAGE_KEY + '=; path=/; max-age=0'; } catch (e) {}
+          if (typeof done === 'function') done();
+        });
+    }
+
+    function ensureSession(cb) {
+      if (!sessionId) {
+        try { sessionId = sessionStorage.getItem(STORAGE_KEY) || getSessionIdFromCookie(); } catch (e) {}
+      }
+      if (!sessionId) {
+        sessionId = generateUUID();
+      }
+      setSessionIdEverywhere(sessionId);
+      upsertSession(sessionId, cb);
+    }
+
+    function sendEvent(eventType, pagePath, metadata) {
+      if (!sessionId) return;
+      var body = {
+        session_id: sessionId,
+        event_type: eventType,
+        page_path: pagePath,
+        metadata: metadata || {},
+      };
+      post('analytics_events', body, 'return=minimal').then(function (r) {
+        if (r.status === 409) {
+          setTimeout(function () {
+            post('analytics_events', body, 'return=minimal').catch(function () {});
+          }, 200);
+        }
+      }).catch(function () {});
+    }
+
+    function sendDuration() {
+      if (durationSent || !sessionId) return;
+      if (typeof document !== 'undefined' && document.visibilityState === 'visible') {
+        visibleMs += Date.now() - visibleSince;
+      }
+      var duration = Math.round(visibleMs);
+      if (duration < 500) return;
+      durationSent = true;
+      var payload = {
+        session_id: sessionId,
+        event_type: 'page_leave',
+        page_path: path,
+        metadata: { duration_ms: duration },
+      };
+      fetch(API + '/analytics_events', {
+        method: 'POST',
+        headers: Object.assign({}, headers, { Prefer: 'return=minimal' }),
+        body: JSON.stringify(payload),
+        keepalive: true,
+      }).catch(function () {});
+    }
+
+    ensureSession(function () {
+      sendEvent('page_view', path, {});
+    });
+
+    if (typeof window !== 'undefined' && typeof document !== 'undefined') {
+      document.addEventListener('visibilitychange', function () {
+        if (document.visibilityState === 'hidden') {
+          visibleMs += Date.now() - visibleSince;
+        } else {
+          visibleSince = Date.now();
+        }
+      });
+      window.addEventListener('pagehide', sendDuration);
+      window.addEventListener('beforeunload', function () {
+        if (document.visibilityState === 'visible') visibleMs += Date.now() - visibleSince;
+        sendDuration();
+      });
+
+      var clickDebounce = null;
+      var clickableSelector = 'a, button, [role="button"], input[type="submit"], input[type="button"], input[type="reset"], [type="button"], select, [tabindex="0"]';
+      function getClickLabel(el) {
+        if (!el || !el.nodeName) return '';
+        var data = el.getAttribute && (el.getAttribute('data-analytics-label') || el.getAttribute('data-track') || el.getAttribute('aria-label'));
+        if (data) return String(data).trim().slice(0, 120);
+        if (el.value && (el.type === 'submit' || el.type === 'button' || el.type === 'reset')) return String(el.value).trim().slice(0, 120);
+        var text = (el.textContent || '').trim().replace(/\s+/g, ' ').slice(0, 80);
+        if (text) return text;
+        if (el.id) return el.id;
+        if (el.className && typeof el.className === 'string') return el.className.split(' ').filter(Boolean).slice(0, 2).join('.');
+        return el.tagName ? el.tagName.toLowerCase() : '';
+      }
+      function getElementType(el) {
+        if (!el) return 'other';
+        var tag = (el.tagName || '').toLowerCase();
+        var role = el.getAttribute && el.getAttribute('role');
+        if (tag === 'a') return 'link';
+        if (tag === 'button' || role === 'button') return 'button';
+        if (tag === 'input' && /^(submit|button|reset)$/.test(el.type)) return 'button';
+        if (tag === 'select') return 'select';
+        if (el.getAttribute && el.getAttribute('tabindex') === '0') return 'interactive';
+        return 'other';
+      }
+      document.addEventListener('click', function (e) {
+        if (clickDebounce) clearTimeout(clickDebounce);
+        clickDebounce = setTimeout(function () {
+          clickDebounce = null;
+          if (!sessionId) return;
+          var t = e.target;
+          var clickable = t && t.closest ? t.closest(clickableSelector) : null;
+          var el = clickable || t;
+          var anchor = el && el.closest ? el.closest('a') : null;
+          var href = anchor ? (anchor.getAttribute('href') || '') : '';
+          var linkToGuestbook = href.indexOf('guestbook') !== -1;
+          var label = getClickLabel(el);
+          var meta = { target: label ? String(label).slice(0, 120) : '', element_type: getElementType(el) };
+          if (linkToGuestbook) meta.link_to_guestbook = true;
+          sendEvent('click', path, meta);
+        }, 300);
+      }, true);
+    }
+  })();
+</script>
