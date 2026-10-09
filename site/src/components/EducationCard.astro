@@ -12,6 +12,9 @@ const tr = t(locale);
   {item.coursework.length > 0 && (
     <p class="courses"><span class="eyebrow">{tr('labels.coursework')}</span> {item.coursework.join(' · ')}</p>
   )}
+  {item.courseworkInProgress.length > 0 && (
+    <p class="courses"><span class="eyebrow">{tr('labels.courseworkInProgress')}</span> {item.courseworkInProgress.join(' · ')}</p>
+  )}
   {item.honors.length > 0 && (
     <details>
       <summary>{tr('sections.honors')} · {tr('labels.honorCount').replace('{n}', String(item.honors.length))}</summary>

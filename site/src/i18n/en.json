@@ -37,7 +37,8 @@
     "output": "Output",
     "gpa": "GPA",
     "honorCount": "{n}",
-    "coursework": "Coursework"
+    "coursework": "Coursework",
+    "courseworkInProgress": "In progress · Fall 2026"
   },
   "category": {
     "product": "Product",
