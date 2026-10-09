@@ -10,7 +10,8 @@ test('terminal types the command, then prints the profile with real commit data'
   await expect(term.locator('[data-cmd]')).toHaveText('felix');
   await expect(term.locator('.row')).toHaveCount(6);
   await expect(term.locator('.row').last()).toHaveCSS('opacity', '1');
-  await expect(term).toContainText('1,246'); // Guqin-AI commits from github.json
+  await expect(term).toContainText('1,200+'); // Guqin-AI commits, rounded, from github.json
+  await expect(term).not.toContainText('2026-10'); // no volatile dates in the hero panel
   await expect(term).toContainText('lingxian.app');
 });
 

@@ -2,7 +2,7 @@
   "hero": {
     "eyebrow": "Zhuoheng (Felix) Li · Product & Analytics · NYU ’27",
     "title": "I shipped a product, then measured every step of it.",
-    "subtitle": "Grad student in Management and Analytics at NYU, trained first as a guqin performer. I founded Lingxian, a notation editor for guqin players now in private beta with 94 users, and I run it the way I want to work: user research, funnel analysis, small experiments, honest numbers. Open to product, analytics and game-design roles starting 2027.",
+    "subtitle": "Grad student in Management and Analytics at NYU, trained first as a guqin performer. I founded Lingxian, a notation editor for guqin players now in private beta, and I run it the way I want to work: user research, funnel analysis, small experiments, honest numbers. Open to product, analytics and game-design roles starting 2027.",
     "terminal": {
       "title": "felix@lizhuoheng.com — zsh",
       "user": "felix@nyu",
@@ -18,11 +18,11 @@
         },
         {
           "k": "Shipping",
-          "v": "lingxian.app · 94 beta users"
+          "v": "lingxian.app · private beta"
         },
         {
           "k": "Commits",
-          "v": "{commits} on Guqin-AI · last {lastCommit}"
+          "v": "{commits} on Guqin-AI"
         },
         {
           "k": "Looking for",
@@ -42,14 +42,14 @@
     },
     {
       "label": "Commits on Lingxian",
-      "value": "",
-      "source": "github",
-      "repo": "Guqin-AI"
+      "value": "{commits}",
+      "source": "tokens"
     },
     {
       "label": "Lingxian beta users",
-      "value": "94",
-      "hint": "160 scores · 144 PDF exports · 20.7% week-2 retention (2026-09)"
+      "value": "{lingxian.users}",
+      "source": "tokens",
+      "hint": "{lingxian.scores} scores · {lingxian.pdfExports} PDF exports · {lingxian.week2Retention} week-2 retention · as of {lingxian.asOf}"
     },
     {
       "label": "Sites shipped",

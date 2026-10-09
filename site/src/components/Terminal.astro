@@ -1,17 +1,17 @@
 ---
 // Terminal.astro — a quiet, paper-toned terminal: the prompt types `felix`, then the profile prints line by line
 // (portrait on the left, facts on the right). Without JS or under prefers-reduced-motion everything is visible at
-// once. Values may use {commits} and {lastCommit}, filled from github.json.
+// once. Values may use tokens such as {commits} (rounded, from github.json) or {lingxian.users} (metrics.json).
 import { Image } from 'astro:assets';
 import photo from '../assets/photo.jpg';
-import { requireRepo, type GithubData } from '../lib/github';
+import type { GithubData } from '../lib/github';
 import github from '../data/github.json';
+import { fill, siteTokens } from '../lib/tokens';
 
 interface Props { title: string; user: string; command: string; lines: { k: string; v: string }[]; repo: string }
 const { title, user, command, lines, repo } = Astro.props;
-const r = requireRepo(github as GithubData, repo);
-const fill = (v: string) => v.replace('{commits}', r.commits.toLocaleString('en-US')).replace('{lastCommit}', r.lastCommit);
-const rows = lines.map((l) => ({ k: l.k, v: fill(l.v) }));
+const tokens = siteTokens(github as GithubData, repo);
+const rows = lines.map((l) => ({ k: l.k, v: fill(l.v, tokens) }));
 ---
 <div class="term" data-terminal role="figure" aria-label={title}>
   <div class="bar" aria-hidden="true"><span class="title">{title}</span></div>

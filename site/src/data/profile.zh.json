@@ -2,7 +2,7 @@
   "hero": {
     "eyebrow": "李卓衡 · 产品 / 数据分析 · 纽约大学 2027 届",
     "title": "做过一个从 0 到 1 的产品，也数过它的每一步。",
-    "subtitle": "纽约大学 Management and Analytics 硕士在读，本科学的是古琴演奏。独立做了古琴打谱 SaaS「灵弦」，邀请制内测中、94 位注册用户：用户调研、漏斗拆解、小步实验、AI 助手评测，都是自己一手做的。2027 届，求职方向：产品经理 / 产品助理、数据与商业分析、游戏策划。",
+    "subtitle": "纽约大学 Management and Analytics 硕士在读，本科学的是古琴演奏。独立做了古琴打谱 SaaS「灵弦」，目前邀请制内测中：用户调研、漏斗拆解、小步实验、AI 助手评测，都是自己一手做的。2027 届，求职方向：产品经理 / 产品助理、数据与商业分析、游戏策划。",
     "terminal": {
       "title": "felix@lizhuoheng.com — zsh",
       "user": "felix@nyu",
@@ -18,11 +18,11 @@
         },
         {
           "k": "在做",
-          "v": "lingxian.app · 94 位内测用户"
+          "v": "lingxian.app · 邀请制内测"
         },
         {
           "k": "提交",
-          "v": "{commits} 次（Guqin-AI）· 最近 {lastCommit}"
+          "v": "{commits}（Guqin-AI）"
         },
         {
           "k": "求职",
@@ -42,14 +42,14 @@
     },
     {
       "label": "灵弦提交数",
-      "value": "",
-      "source": "github",
-      "repo": "Guqin-AI"
+      "value": "{commits}",
+      "source": "tokens"
     },
     {
       "label": "灵弦内测用户",
-      "value": "94",
-      "hint": "160 首曲谱 · 144 次 PDF 导出 · 次周留存 20.7%（2026-09）"
+      "value": "{lingxian.users}",
+      "source": "tokens",
+      "hint": "{lingxian.scores} 首曲谱 · {lingxian.pdfExports} 次 PDF 导出 · 次周留存 {lingxian.week2Retention} · 截至 {lingxian.asOf}"
     },
     {
       "label": "已上线站点",

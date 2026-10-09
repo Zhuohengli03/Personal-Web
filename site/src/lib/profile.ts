@@ -7,8 +7,8 @@ const stat = z.object({
   label: z.string(),
   value: z.string(),
   hint: z.string().optional(),
-  source: z.enum(['static', 'github']).default('static'),
-  repo: z.string().optional(),
+  // 'tokens': value/hint contain {commits} / {lingxian.*} placeholders filled from github.json and metrics.json
+  source: z.enum(['static', 'tokens']).default('static'),
 });
 const analytics = z.object({
   title: z.string(),

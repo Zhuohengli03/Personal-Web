@@ -13,7 +13,8 @@ import Lightbox from '../components/Lightbox.astro';
 import { t, type Locale } from '../i18n';
 import { loadProfile } from '../lib/profile';
 import { getProjects } from '../lib/projects';
-import { requireRepo, formatCount, type GithubData } from '../lib/github';
+import type { GithubData } from '../lib/github';
+import { fill, siteTokens } from '../lib/tokens';
 import github from '../data/github.json';
 
 interface Props { locale: Locale }
@@ -21,11 +22,10 @@ const { locale } = Astro.props;
 const tr = t(locale);
 const p = loadProfile(locale);
 const projects = (await getProjects(locale)).filter((e) => e.data.featured);
-const stats = p.stats.map((s) => ({
-  label: s.label,
-  hint: s.hint,
-  value: s.source === 'github' && s.repo ? formatCount(requireRepo(github as GithubData, s.repo).commits) : s.value,
-}));
+const tokens = siteTokens(github as GithubData, 'Guqin-AI');
+const stats = p.stats.map((s) =>
+  s.source === 'tokens' ? { label: s.label, value: fill(s.value, tokens), hint: s.hint && fill(s.hint, tokens) } : { label: s.label, value: s.value, hint: s.hint },
+);
 ---
 <BaseLayout title={tr('site.title')} description={tr('site.description')} locale={locale} path="/">
   <Hero locale={locale} eyebrow={p.hero.eyebrow} title={p.hero.title} subtitle={p.hero.subtitle} email={p.contact.email} terminal={p.hero.terminal} />
