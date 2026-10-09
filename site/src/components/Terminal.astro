@@ -1,7 +1,7 @@
 ---
-// Terminal.astro — a neofetch-style terminal window: the prompt types `felix`, then the profile prints line by
-// line (photo on the left, key/value facts on the right). Without JS or under prefers-reduced-motion everything is
-// visible immediately. Values may use {commits} and {lastCommit}, filled from github.json.
+// Terminal.astro — a quiet, paper-toned terminal: the prompt types `felix`, then the profile prints line by line
+// (portrait on the left, facts on the right). Without JS or under prefers-reduced-motion everything is visible at
+// once. Values may use {commits} and {lastCommit}, filled from github.json.
 import { Image } from 'astro:assets';
 import photo from '../assets/photo.jpg';
 import { requireRepo, type GithubData } from '../lib/github';
@@ -12,21 +12,24 @@ const { title, user, command, lines, repo } = Astro.props;
 const r = requireRepo(github as GithubData, repo);
 const fill = (v: string) => v.replace('{commits}', r.commits.toLocaleString('en-US')).replace('{lastCommit}', r.lastCommit);
 const rows = lines.map((l) => ({ k: l.k, v: fill(l.v) }));
-const swatches = ['#282828', '#cc241d', '#98971a', '#d79921', '#458588', '#b16286', '#689d6a', '#a89984'];
 ---
 <div class="term" data-terminal role="figure" aria-label={title}>
-  <div class="bar" aria-hidden="true">
-    <span class="dot" style="background:#ff5f57"></span><span class="dot" style="background:#febc2e"></span><span class="dot" style="background:#28c840"></span>
-    <span class="title">{title}</span>
-  </div>
+  <div class="bar" aria-hidden="true"><span class="title">{title}</span></div>
   <div class="body">
     <p class="line prompt"><span class="dollar">$</span> <span class="cmd" data-cmd data-text={command}>{command}</span><span class="caret" data-caret aria-hidden="true"></span></p>
     <div class="fetch" data-output>
-      <div class="art"><Image src={photo} alt="" width={240} height={240} fit="cover" format="webp" quality={82} loading="eager" /></div>
+      <figure class="art">
+        <Image src={photo} alt="" width={320} height={400} fit="cover" format="webp" quality={84} loading="eager" />
+        <figcaption>photo.jpg</figcaption>
+      </figure>
       <dl class="facts">
-        <div class="head"><span class="user">{user}</span><span class="rule">{'─'.repeat(user.length)}</span></div>
-        {rows.map((row) => (<div class="row"><dt>{row.k}</dt><dd>{row.v}</dd></div>))}
-        <div class="swatches" aria-hidden="true">{swatches.map((c) => <span style={`background:${c}`}></span>)}</div>
+        <div class="head"><span class="user">{user}</span></div>
+        {rows.map((row) => (
+          <div class="row">
+            <dt>{row.k}</dt>
+            <dd>{row.v.includes('@') ? <>{row.v.split('@')[0]}<wbr />@{row.v.split('@').slice(1).join('@')}</> : row.v}</dd>
+          </div>
+        ))}
       </dl>
     </div>
     <p class="line prompt end" data-end><span class="dollar">$</span> <span class="caret blink" aria-hidden="true"></span></p>
@@ -34,48 +37,56 @@ const swatches = ['#282828', '#cc241d', '#98971a', '#d79921', '#458588', '#b1628
 </div>
 <style>
   .term {
-    --t-bg: #161616; --t-fg: #e8e6e3; --t-dim: #8c8a87; --t-key: #7fb2ff; --t-bar: #242424;
-    font-family: var(--font-mono); font-size: 0.78rem; line-height: 1.55; color: var(--t-fg);
-    background: var(--t-bg); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; overflow: hidden;
-    box-shadow: 0 30px 60px -24px rgba(0, 0, 0, 0.55), 0 2px 8px rgba(0, 0, 0, 0.2);
+    --t-bg: color-mix(in srgb, var(--fg) 4%, var(--bg));
+    --t-bar: color-mix(in srgb, var(--fg) 7%, var(--bg));
+    --t-line: color-mix(in srgb, var(--fg) 12%, var(--bg));
+    color: var(--fg); background: var(--t-bg);
+    border: 1px solid var(--t-line); border-radius: 14px; overflow: hidden;
+    box-shadow: 0 24px 48px -28px color-mix(in srgb, var(--fg) 35%, transparent);
   }
-  .bar { display: flex; align-items: center; gap: 7px; padding: 10px 12px; background: var(--t-bar); border-bottom: 1px solid rgba(255, 255, 255, 0.06); }
-  .dot { width: 11px; height: 11px; border-radius: 50%; display: inline-block; }
-  .title { margin-left: auto; margin-right: auto; color: var(--t-dim); font-size: 0.72rem; letter-spacing: 0.02em; }
-  .body { padding: 1rem 1.1rem 0.9rem; }
-  .line { margin: 0; white-space: nowrap; }
-  .dollar { color: var(--t-dim); }
-  .cmd { color: var(--t-fg); }
-  .caret { display: inline-block; width: 0.55em; height: 1.05em; background: var(--t-fg); vertical-align: -0.18em; margin-left: 2px; }
+  .bar { padding: 0.55rem 1.1rem; background: var(--t-bar); border-bottom: 1px solid var(--t-line); }
+  .title { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.06em; color: var(--fg-muted); }
+  .body { padding: 1.1rem 1.25rem 1rem; }
+  .line { margin: 0; font-family: var(--font-mono); font-size: 0.8rem; line-height: 1.6; white-space: nowrap; }
+  .dollar { color: var(--fg-muted); }
+  .cmd { color: var(--fg); }
+  .caret { display: inline-block; width: 0.55em; height: 1.05em; background: var(--fg); vertical-align: -0.18em; margin-left: 2px; }
   .caret.blink { animation: blink 1s steps(2, start) infinite; }
   @keyframes blink { to { visibility: hidden; } }
 
-  .fetch { display: grid; grid-template-columns: 112px 1fr; gap: 1rem; margin: 0.8rem 0 0.9rem; align-items: start; }
-  .art :global(img) { width: 112px; height: 112px; border-radius: 6px; display: block; border: 1px solid rgba(255, 255, 255, 0.12); }
+  .fetch { display: grid; grid-template-columns: 128px 1fr; gap: 1.4rem; margin: 1rem 0 1.1rem; align-items: start; }
+  .art { margin: 0; }
+  .art :global(img) {
+    display: block; width: 128px; height: 160px; object-fit: cover; object-position: top; border-radius: 8px;
+    box-shadow: 0 10px 24px -14px color-mix(in srgb, var(--fg) 55%, transparent), 0 0 0 1px var(--t-line);
+  }
+  .art figcaption { font-family: var(--font-mono); font-size: 0.66rem; color: var(--fg-muted); margin-top: 0.5rem; letter-spacing: 0.04em; }
   .facts { margin: 0; min-width: 0; }
-  .head { display: flex; flex-direction: column; margin-bottom: 0.35rem; }
-  .user { color: var(--t-key); font-weight: 600; }
-  .rule { color: var(--t-dim); }
-  .row { display: grid; grid-template-columns: 7.5em 1fr; gap: 0.6em; }
-  :root[lang='zh'] .row { grid-template-columns: 4.5em 1fr; }
-  dt { color: var(--t-key); margin: 0; }
-  dd { margin: 0; color: var(--t-fg); overflow-wrap: anywhere; }
-  .swatches { display: flex; gap: 2px; margin-top: 0.7rem; }
-  .swatches span { width: 1.1em; height: 0.75em; display: inline-block; }
+  .head { font-family: var(--font-mono); font-size: 0.8rem; color: var(--fg); padding-bottom: 0.45rem; margin-bottom: 0.6rem; border-bottom: 1px solid var(--t-line); }
+  .row { display: grid; grid-template-columns: 5.6rem 1fr; gap: 0.7rem; padding: 0.22rem 0; }
+  :root[lang='zh'] .row { grid-template-columns: 3.2rem 1fr; }
+  dt { margin: 0; font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--fg-muted); padding-top: 0.2em; }
+  :root[lang='zh'] dt { text-transform: none; letter-spacing: 0.12em; font-size: 0.74rem; }
+  dd { margin: 0; font-family: var(--font-sans); font-size: 0.88rem; line-height: 1.45; color: var(--fg); overflow-wrap: break-word; }
   .end { margin-top: 0.2rem; }
 
   /* typing: hide until the script reveals; no JS or reduced motion → shown at once */
   html.js .term[data-animate] .cmd { visibility: hidden; }
-  html.js .term[data-animate] .row, html.js .term[data-animate] .head, html.js .term[data-animate] .swatches, html.js .term[data-animate] .art, html.js .term[data-animate] .end { opacity: 0; }
-  html.js .term[data-animate] [data-shown] { opacity: 1; transition: opacity 0.12s ease; }
+  html.js .term[data-animate] .row, html.js .term[data-animate] .head, html.js .term[data-animate] .art, html.js .term[data-animate] .end { opacity: 0; }
+  html.js .term[data-animate] [data-shown] { opacity: 1; transition: opacity 0.14s ease; }
   html.js .term[data-animate] .caret[data-caret] { display: inline-block; }
   .caret[data-caret] { display: none; }
 
-  @media (max-width: 480px) {
-    .term { font-size: 0.72rem; }
-    .fetch { grid-template-columns: 84px 1fr; gap: 0.75rem; }
-    .art :global(img) { width: 84px; height: 84px; }
-    .row { grid-template-columns: 6.5em 1fr; }
+  /* Narrow: portrait above the facts so the value column keeps a readable width */
+  @media (max-width: 560px) {
+    .body { padding: 1rem 1rem 0.9rem; }
+    .fetch { grid-template-columns: 1fr; gap: 0.9rem; }
+    .art { display: flex; align-items: flex-end; gap: 0.6rem; }
+    .art :global(img) { width: 88px; height: 110px; }
+    .art figcaption { margin: 0 0 0.2rem; }
+    .row { grid-template-columns: 5.4rem 1fr; gap: 0.6rem; }
+    :root[lang='zh'] .row { grid-template-columns: 3rem 1fr; }
+    dd { font-size: 0.85rem; }
   }
 </style>
 <script>
@@ -88,7 +99,7 @@ const swatches = ['#282828', '#cc241d', '#98971a', '#d79921', '#458588', '#b1628
     const parts = [
       ...Array.from(term.querySelectorAll<HTMLElement>('.art, .head')),
       ...Array.from(term.querySelectorAll<HTMLElement>('.row')),
-      ...Array.from(term.querySelectorAll<HTMLElement>('.swatches, [data-end]')),
+      ...Array.from(term.querySelectorAll<HTMLElement>('[data-end]')),
     ];
     const text = cmd?.dataset.text ?? '';
     const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
