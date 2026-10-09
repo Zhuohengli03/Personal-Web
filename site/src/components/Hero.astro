@@ -1,13 +1,13 @@
 ---
 import { t, type Locale } from '../i18n';
-import Badge from './Badge.astro';
-interface Props { locale: Locale; eyebrow: string; title: string; subtitle: string; email: string; badge: { name: string; line1: string; line2: string } }
-const { locale, eyebrow, title, subtitle, email, badge } = Astro.props;
+import Terminal from './Terminal.astro';
+import type { Profile } from '../lib/profile';
+interface Props { locale: Locale; eyebrow: string; title: string; subtitle: string; email: string; terminal: Profile['hero']['terminal'] }
+const { locale, eyebrow, title, subtitle, email, terminal } = Astro.props;
 const tr = t(locale);
 ---
 <section class="hero">
   <div class="wrap grid">
-    <div class="badge-slot"><Badge {...badge} /></div>
     <div class="copy">
       <p class="eyebrow fade-up" data-delay="1">{eyebrow}</p>
       <h1 class="fade-up" data-delay="2">{title}</h1>
@@ -17,23 +17,23 @@ const tr = t(locale);
         <a class="btn" href={`mailto:${email}`}>{tr('hero.email')}</a>
       </div>
     </div>
+    <div class="panel fade-up" data-delay="3"><Terminal {...terminal} repo="Guqin-AI" /></div>
   </div>
 </section>
 <style>
-  .hero { min-height: calc(100vh - var(--header-h)); display: grid; }
-  /* Narrow: the badge hangs from the header edge, centred, above the centred copy */
-  .grid { display: grid; grid-template-columns: 1fr; align-content: start; padding-bottom: 4rem; }
-  .badge-slot { display: flex; justify-content: center; margin-bottom: 1.25rem; }
+  .hero { min-height: calc(100vh - var(--header-h)); display: grid; align-content: center; padding-block: 3rem 4rem; }
+  .grid { display: grid; grid-template-columns: 1fr; row-gap: 2.5rem; }
   .copy { text-align: center; }
   h1 { max-width: 20ch; margin: 1.25rem auto; }
   .cta { display: flex; justify-content: center; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.75rem; }
-  /* Wide: two columns — copy on the left, the badge hanging from the header on the right */
+  .panel { max-width: 560px; width: 100%; margin: 0 auto; }
+  /* Wide: copy on the left, the terminal on the right */
   @media (min-width: 1100px) {
-    .grid { grid-template-columns: minmax(0, 1fr) 300px; column-gap: 3rem; align-content: stretch; padding-bottom: 0; min-height: calc(100vh - var(--header-h)); }
-    .badge-slot { order: 2; align-self: start; justify-content: flex-end; margin: 0; }
-    .copy { order: 1; align-self: center; text-align: left; padding-block: 5rem; }
+    .grid { grid-template-columns: minmax(0, 1fr) 470px; column-gap: 3.5rem; align-items: center; }
+    .copy { text-align: left; }
     .copy .prose { margin-inline: 0; }
     h1 { margin: 1.25rem 0; }
     .cta { justify-content: flex-start; }
+    .panel { margin: 0; }
   }
 </style>

@@ -28,7 +28,7 @@ const stats = p.stats.map((s) => ({
 }));
 ---
 <BaseLayout title={tr('site.title')} description={tr('site.description')} locale={locale} path="/">
-  <Hero locale={locale} {...p.hero} email={p.contact.email} />
+  <Hero locale={locale} eyebrow={p.hero.eyebrow} title={p.hero.title} subtitle={p.hero.subtitle} email={p.contact.email} terminal={p.hero.terminal} />
 
   <section class="wrap section reveal" aria-label={tr('a11y.keyNumbers')}><SpecRow id="stats" items={stats} /></section>
 
