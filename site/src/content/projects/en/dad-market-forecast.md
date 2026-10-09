@@ -10,12 +10,8 @@ links: { github: "https://github.com/Zhuohengli03/DaD-Market-Forecast" }
 featured: true
 order: 2
 gallery:
-  - { src: "../../../assets/work/dad-market-forecast/01.png", alt: "Bilingual terminal menu of the analysis system listing available items and starting a data fetch", caption: "Smart mode: pick an item (ore items plus one auto-discovered), fetch fresh data, then analyze." }
   - { src: "../../../assets/work/dad-market-forecast/02.png", alt: "Collector log showing pages of 50 rows, zero duplicates, and an automatic stop after three empty pages", caption: "Collector run: 6,164 new rows across 124 pages; stops by itself after three consecutive pages with nothing new." }
-  - { src: "../../../assets/work/dad-market-forecast/03.png", alt: "Preprocessing and model-training log with outlier removal, feature selection and per-model metrics", caption: "Outliers removed (139 rows), 15 features kept from 32, then ten models trained with MAE / RMSE / R² and cross-validation." }
   - { src: "../../../assets/work/dad-market-forecast/04.png", alt: "Stability test and fused 7-day forecast combining ML, ARIMA and a statistical baseline", caption: "Three-run stability test, then ML, ARIMA and a statistical baseline fused into one 7-day range." }
-  - { src: "../../../assets/work/dad-market-forecast/05.png", alt: "Three charts: price time series, price distribution histogram, and model R² scores", caption: "Price history for Gold Ore (Jan 20–29, 2026), its distribution, and R² per model — the ensemble reaches 0.995." }
-  - { src: "../../../assets/work/dad-market-forecast/06.png", alt: "Line chart of historical prices with the 7-day prediction and its 95% confidence interval, plus a trend panel", caption: "7-day forecast with a 95% confidence band and the fitted trend; the widening band on the last day is the signal to wait." }
 ---
 
 ## Problem
