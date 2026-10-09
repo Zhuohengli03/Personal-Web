@@ -6,34 +6,26 @@ const { locale, eyebrow, title, subtitle, email, badge } = Astro.props;
 const tr = t(locale);
 ---
 <section class="hero">
-  <div class="wrap">
-    <div class="badge-slot"><Badge {...badge} /></div>
-    <div class="center copy">
-      <p class="eyebrow fade-up" data-delay="1">{eyebrow}</p>
-      <h1 class="fade-up" data-delay="2">{title}</h1>
-      <p class="prose fade-up" data-delay="3">{subtitle}</p>
-      <div class="cta fade-up" data-delay="4">
-        <a class="btn btn-primary" href={locale === 'zh' ? '/resume-zh.pdf' : '/resume-en.pdf'}>{tr('hero.resume')}</a>
-        <a class="btn" href={`mailto:${email}`}>{tr('hero.email')}</a>
-      </div>
+  <div class="badge-slot"><Badge {...badge} /></div>
+  <div class="wrap center copy">
+    <p class="eyebrow fade-up" data-delay="1">{eyebrow}</p>
+    <h1 class="fade-up" data-delay="2">{title}</h1>
+    <p class="prose fade-up" data-delay="3">{subtitle}</p>
+    <div class="cta fade-up" data-delay="4">
+      <a class="btn btn-primary" href={locale === 'zh' ? '/resume-zh.pdf' : '/resume-en.pdf'}>{tr('hero.resume')}</a>
+      <a class="btn" href={`mailto:${email}`}>{tr('hero.email')}</a>
     </div>
   </div>
 </section>
 <style>
-  .hero { min-height: calc(100vh - var(--header-h)); display: grid; align-items: center; padding-block: 0 4rem; }
-  .hero .wrap { position: relative; }
-  /* Narrow: the badge hangs from the top, centred, above the copy */
-  .badge-slot { display: flex; justify-content: center; margin-bottom: 1rem; }
-  .copy { position: relative; }
+  .hero { position: relative; min-height: calc(100vh - var(--header-h)); display: grid; align-content: center; padding-block: 0 4rem; }
+  /* Narrow: the badge hangs from the header edge, centred, above the copy */
+  .badge-slot { display: flex; justify-content: center; margin-bottom: 1.25rem; }
   h1 { max-width: 20ch; margin: 1.25rem auto; }
   .cta { display: flex; justify-content: center; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.75rem; }
-  /* Wide: the badge hangs from the header edge in the viewport's right margin, clear of the centred copy */
+  /* Wide: the strap hangs from the header edge in the viewport's right margin, clear of the centred copy */
   @media (min-width: 1100px) {
     .hero { padding-block: 4rem; }
-    .badge-slot {
-      position: absolute; margin: 0;
-      top: calc(-1 * var(--header-h) - 4rem);
-      right: min(0px, calc((var(--wrap) - 100vw) / 2 + 2.5rem));
-    }
+    .badge-slot { position: absolute; top: 0; right: clamp(0.5rem, calc((100vw - var(--wrap)) / 2 - 110px), 6rem); margin: 0; }
   }
 </style>
