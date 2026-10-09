@@ -32,6 +32,7 @@ const education = z.object({
   period: z.string(),
   gpa: z.string().optional(),
   honors: z.array(z.string()).default([]),
+  coursework: z.array(z.string()).default([]),
 });
 
 export const profileSchema = z.object({

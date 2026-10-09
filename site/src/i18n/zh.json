@@ -1,40 +1,43 @@
 {
   "site": {
     "title": "李卓衡",
-    "description": "李卓衡——纽约大学商业分析方向硕士在读，做数据产品。古琴演奏者出身的产品构建者。"
+    "description": "李卓衡，纽约大学管理与分析硕士在读。从古琴演奏到产品开发，用数据理解用户，独立构建并运营产品。"
   },
   "nav": {
     "work": "作品",
     "experience": "经历",
     "contact": "联系",
     "switch": "EN",
-    "theme": "切换配色",
+    "theme": "切换明暗主题",
     "life": "生活"
   },
   "hero": {
-    "resume": "简历",
-    "email": "邮件"
+    "resume": "查看简历",
+    "email": "邮件联系"
   },
   "sections": {
     "work": "精选作品",
-    "workSub": "最能说明我怎么工作的两个项目：一个是自己做、现在还在运营的产品，一个是为了用数据而不是直觉做决策而搭的数据管道。",
+    "workSub": "两个项目，呈现我的工作方式：一个是独立开发并持续运营的产品，一个是帮助我用数据做决策的采集与分析系统。",
     "analytics": "分析项目",
-    "analyticsSub": "问题 → 方法 → 产出。靠指标体系、cohort 和用户分群得出的结论，而不只是代码。",
+    "analyticsSub": "从问题出发，选择方法，形成结论。通过指标体系、同期群分析和用户分群，为业务决策提供依据。",
     "more": "更多项目",
     "experience": "经历",
     "education": "教育与荣誉",
     "honors": "荣誉与奖项",
-    "life": "生活之外"
+    "life": "工作之外"
   },
   "labels": {
     "role": "角色",
     "period": "时间",
-    "stack": "技术",
-    "scale": "规模",
+    "stack": "技术栈",
+    "scale": "项目规模",
     "links": "链接",
     "question": "问题",
     "method": "方法",
-    "output": "产出"
+    "output": "成果",
+    "gpa": "平均绩点",
+    "honorCount": "{n} 项",
+    "coursework": "核心课程"
   },
   "category": {
     "product": "产品",
@@ -48,12 +51,12 @@
     "clientWork": "客户项目"
   },
   "case": {
-    "gallery": "画廊",
+    "gallery": "项目截图",
     "close": "关闭"
   },
   "footer": {
     "contact": "联系",
-    "elsewhere": "链接",
+    "elsewhere": "其他平台",
     "language": "语言",
     "linkedinTodo": "LinkedIn（链接待补）"
   },
@@ -61,12 +64,13 @@
     "primaryNav": "主导航",
     "keyNumbers": "关键数字",
     "imagePreview": "图片预览",
-    "openImage": "打开图片",
-    "activity": "{from} 至 {to} 共 {n} 次提交，每格一周"
+    "openImage": "查看第 {n} 张图片：{alt}",
+    "activity": "{from} 至 {to} 共 {n} 次提交，每格一周",
+    "switchLanguage": "切换到英语"
   },
   "notFound": {
     "title": "页面不存在",
-    "body": "这里没有这个页面。",
+    "body": "你访问的页面不存在，可能已被移动或删除。",
     "home": "回到首页"
   }
 }

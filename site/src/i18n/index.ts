@@ -5,6 +5,14 @@ export type Locale = 'en' | 'zh';
 export const locales: Locale[] = ['en', 'zh'];
 const dict: Record<Locale, unknown> = { en, zh };
 
+/** Localize date-only content without timezone conversion or adding unknown days. */
+export function formatDate(value: string, locale: Locale): string {
+  if (locale === 'en') return value;
+  const date = /^(\d{4})-(\d{2})(?:-(\d{2}))?$/.exec(value);
+  if (!date) return value;
+  return `${date[1]} 年 ${Number(date[2])} 月${date[3] ? ` ${Number(date[3])} 日` : ''}`;
+}
+
 function lookup(obj: unknown, path: string): unknown {
   return path
     .split('.')

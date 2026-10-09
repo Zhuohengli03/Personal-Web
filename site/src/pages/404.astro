@@ -4,12 +4,12 @@ import { t } from '../i18n';
 const en = t('en');
 const zh = t('zh');
 ---
-<BaseLayout title={en('notFound.title')} description={en('notFound.body')} locale="en" path="/" noAlternates>
+<BaseLayout title={`${en('notFound.title')} / ${zh('notFound.title')}`} description={en('notFound.body')} locale="en" path="/" noAlternates>
   <section class="wrap section center">
     <p class="eyebrow">404</p>
-    <h1>{en('notFound.title')} / {zh('notFound.title')}</h1>
-    <p class="prose">{en('notFound.body')} {zh('notFound.body')}</p>
-    <p class="actions"><a class="btn btn-primary" href="/">{en('notFound.home')}</a> <a class="btn" href="/zh/">{zh('notFound.home')}</a></p>
+    <h1>{en('notFound.title')} / <span lang="zh-CN">{zh('notFound.title')}</span></h1>
+    <p class="prose">{en('notFound.body')} <span lang="zh-CN">{zh('notFound.body')}</span></p>
+    <p class="actions"><a class="btn btn-primary" href="/">{en('notFound.home')}</a> <a class="btn" href="/zh/" lang="zh-CN">{zh('notFound.home')}</a></p>
   </section>
 </BaseLayout>
 <style>

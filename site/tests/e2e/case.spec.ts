@@ -2,9 +2,9 @@ import { test, expect } from '@playwright/test';
 
 const cases = [
   ['/work/guqin-ai/', 'en', 'Problem'],
-  ['/zh/work/guqin-ai/', 'zh', '问题'],
+  ['/zh/work/guqin-ai/', 'zh-CN', '问题'],
   ['/work/dad-market-forecast/', 'en', 'Problem'],
-  ['/zh/work/dad-market-forecast/', 'zh', '问题'],
+  ['/zh/work/dad-market-forecast/', 'zh-CN', '问题'],
 ] as const;
 
 for (const [path, lang, problem] of cases) {

@@ -1,4 +1,5 @@
 import metrics from '../data/metrics.json';
+import { formatDate, type Locale } from '../i18n';
 import { formatCount, requireRepo, type GithubData } from './github';
 
 export type TokenValues = Record<string, string | number>;
@@ -21,12 +22,13 @@ export function flatten(obj: Record<string, unknown>, prefix = ''): TokenValues 
 }
 
 /** All tokens the site may use: volatile product metrics (metrics.json) plus GitHub activity for one repo. */
-export function siteTokens(github: GithubData, repo: string): TokenValues {
+export function siteTokens(github: GithubData, repo: string, locale: Locale = 'en'): TokenValues {
   const r = requireRepo(github, repo);
   return {
     ...flatten(metrics as Record<string, unknown>),
+    'lingxian.asOf': formatDate(metrics.lingxian.asOf, locale),
     commits: formatCount(r.commits), // rounded: "1,200+" — the exact number changes with every push
     commitsExact: r.commits.toLocaleString('en-US'),
-    lastCommit: r.lastCommit,
+    lastCommit: formatDate(r.lastCommit, locale),
   };
 }
