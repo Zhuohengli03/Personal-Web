@@ -1,0 +1,24 @@
+---
+// Exhibit 3 — the pipeline as a row of nodes, each carrying its number; wraps on narrow screens.
+interface Props { nodes: { name: string; num: string }[] }
+const { nodes } = Astro.props;
+---
+<ol class="flow">
+  {nodes.map((n, i) => (
+    <li class:list={{ last: i === nodes.length - 1 }}>
+      <span class="name">{n.name}</span>
+      <span class="num">{n.num}</span>
+    </li>
+  ))}
+</ol>
+<style>
+  .flow { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.9rem 1.6rem; counter-reset: step; }
+  li { position: relative; flex: 1 1 150px; min-width: 150px; padding: 0.75rem 0.85rem 0.7rem; border: 1px solid var(--rule); border-radius: 8px; background: var(--bg); counter-increment: step; }
+  li::before { content: counter(step, decimal-leading-zero); position: absolute; top: -0.55rem; left: 0.7rem; padding: 0 0.3rem; background: var(--bg); font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.08em; color: var(--fg-muted); }
+  li:not(:last-child)::after { content: ''; position: absolute; top: 50%; right: -1.35rem; width: 1.1rem; height: 1px; background: var(--fg-faint); }
+  li.last { border-color: var(--accent); }
+  .name { display: block; font-size: 0.85rem; color: var(--fg); line-height: 1.3; }
+  .num { display: block; margin-top: 0.3rem; font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.03em; color: var(--fg-muted); }
+  li.last .num { color: var(--accent); }
+  @media (max-width: 560px) { li:not(:last-child)::after { display: none; } }
+</style>

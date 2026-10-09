@@ -1,0 +1,48 @@
+---
+// The exhibit set for the DaD Market Forecast case: stat strip, forecast chart, model comparison, pipeline.
+import type { Locale } from '../../i18n';
+import text from '../../data/figures/dad-text.json';
+import SpecRow from '../SpecRow.astro';
+import DadForecastChart from './DadForecastChart.astro';
+import DadModelsChart from './DadModelsChart.astro';
+import DadPipeline from './DadPipeline.astro';
+
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const t = text[locale];
+---
+<section class="exhibits" data-exhibits>
+  <p class="eyebrow center">{t.exhibits}</p>
+  <div class="strip reveal"><SpecRow items={t.stats} columns={4} /></div>
+
+  <figure class="exhibit reveal">
+    <div class="head"><h3>{t.fig1.title}</h3><p class="sub">{t.fig1.sub}</p></div>
+    <DadForecastChart t={t.fig1} />
+    <figcaption>{t.fig1.caption}</figcaption>
+  </figure>
+
+  <figure class="exhibit reveal">
+    <div class="head"><h3>{t.fig2.title}</h3><p class="sub">{t.fig2.sub}</p></div>
+    <DadModelsChart />
+    <figcaption>{t.fig2.caption}</figcaption>
+  </figure>
+
+  <figure class="exhibit reveal">
+    <div class="head"><h3>{t.fig3.title}</h3></div>
+    <DadPipeline nodes={t.fig3.nodes} />
+    <figcaption>{t.fig3.caption}</figcaption>
+  </figure>
+</section>
+<style>
+  .exhibits { margin-top: 3rem; }
+  .exhibits .eyebrow { margin-bottom: 1.5rem; }
+  .strip { margin-bottom: 3rem; }
+  .strip :global(.specrow) { grid-template-columns: repeat(2, 1fr); }
+  @media (min-width: 720px) { .strip :global(.specrow) { grid-template-columns: repeat(5, 1fr); } }
+  .exhibit { margin: 0 0 3.5rem; padding: 1.5rem 1.5rem 1.25rem; border: 1px solid var(--rule); border-radius: var(--radius); background: var(--bg); }
+  .head { margin-bottom: 1.1rem; }
+  h3 { font-family: var(--font-sans); font-size: 1rem; font-weight: 600; letter-spacing: -0.01em; }
+  .sub { margin-top: 0.3rem; font-family: var(--font-mono); font-size: 0.72rem; line-height: 1.5; color: var(--fg-muted); }
+  figcaption { margin-top: 1.1rem; font-size: 0.9rem; line-height: 1.55; color: color-mix(in srgb, var(--fg) 80%, var(--bg)); }
+  @media (max-width: 560px) { .exhibit { padding: 1rem 0.9rem; } }
+</style>

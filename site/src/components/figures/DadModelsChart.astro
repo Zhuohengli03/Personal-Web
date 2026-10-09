@@ -1,0 +1,36 @@
+---
+// Exhibit 2 — R² per model on the held-out split (bar) with the cross-validation mean ± σ (dot + whisker).
+import data from '../../data/figures/dad.json';
+const rows = [...data.models].sort((a, b) => b.r2 - a.r2);
+const W = 960, ROW = 30, L = 170, R = 96, T = 8;
+const H = T + rows.length * ROW + 8;
+const x = (v: number) => L + Math.max(0, Math.min(1, v)) * (W - L - R);
+const f = (n: number) => n.toFixed(1);
+---
+<svg viewBox={`0 0 ${W} ${H}`} class="models" role="img" aria-label="R squared per model with cross-validation range">
+  {[0, 0.25, 0.5, 0.75, 1].map((v) => (<g class="grid"><line x1={f(x(v))} x2={f(x(v))} y1={T} y2={H - 8} /><text x={f(x(v))} y={H} text-anchor="middle">{v}</text></g>))}
+  {rows.map((m, i) => {
+    const cy = T + i * ROW + ROW / 2;
+    return (
+      <g class:list={['row', { hi: 'highlight' in m && m.highlight }]}>
+        <text class="name" x={L - 12} y={cy} text-anchor="end" dominant-baseline="middle">{m.name}</text>
+        <rect class="bar" x={L} y={cy - 7} width={f(x(m.r2) - L)} height="14" rx="3" />
+        <line class="whisker" x1={f(x(m.cv - m.sd))} x2={f(x(m.cv + m.sd))} y1={cy} y2={cy} />
+        <circle class="cv" cx={f(x(m.cv))} cy={cy} r="4" />
+        <text class="val" x={f(x(1) + 26)} y={cy} dominant-baseline="middle">{m.r2.toFixed(3)}</text>
+      </g>
+    );
+  })}
+</svg>
+<style>
+  .models { width: 100%; height: auto; display: block; font-family: var(--font-mono); font-size: 11px; }
+  .grid line { stroke: var(--rule); }
+  .grid text { fill: var(--fg-muted); }
+  .name { fill: var(--fg); font-family: var(--font-sans); font-size: 12px; }
+  .bar { fill: color-mix(in srgb, var(--fg) 18%, var(--bg)); }
+  .row.hi .bar { fill: var(--accent); }
+  .row.hi .name { font-weight: 600; }
+  .whisker { stroke: var(--fg); stroke-width: 1.2; opacity: 0.6; }
+  .cv { fill: var(--bg); stroke: var(--fg); stroke-width: 1.6; }
+  .val { fill: var(--fg-muted); }
+</style>

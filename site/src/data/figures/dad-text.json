@@ -1,0 +1,76 @@
+{
+  "en": {
+    "exhibits": "Exhibits",
+    "stats": [
+      { "label": "Listings collected", "value": "6,164" },
+      { "label": "Pages, until no new rows", "value": "124" },
+      { "label": "Features kept", "value": "15 / 32" },
+      { "label": "Ensemble R²", "value": "0.995" },
+      { "label": "95% CI half-width", "value": "±4.63" }
+    ],
+    "fig1": {
+      "title": "Gold Ore — hourly median price and the 7-day forecast",
+      "sub": "Jan 20 – Feb 5, 2026 · price per unit · 6,164 listings aggregated by hour · band = daily 25–75% · shaded = 95% CI",
+      "caption": "Exhibit 1. The market fell from ~95 to ~20 over the collection window. The ensemble calls a short rebound and then a drop on day 7, where its confidence band widens to ±8 — the signal to wait rather than trade.",
+      "hourly": "hourly median", "band": "daily 25–75%", "forecast": "7-day forecast", "ci": "95% CI", "split": "train · test (80 / 20)", "listings": "listings"
+    },
+    "fig2": {
+      "title": "Model comparison on the held-out 20%",
+      "sub": "bar = R² on the test split · dot = 5-fold cross-validation mean ± σ",
+      "caption": "Exhibit 2. Four linear models fit the test split best, but the voting ensemble is the one that is both accurate and stable (CV 0.995 ± 0.001). SVR and Extra Trees were dropped from the final vote."
+    },
+    "fig3": {
+      "title": "The pipeline, with its numbers",
+      "caption": "Exhibit 3. Every stage reports a number; the decision at the end carries the risk level with it.",
+      "nodes": [
+        { "name": "API collector", "num": "124 pages" },
+        { "name": "Deduplicate", "num": "0 duplicates" },
+        { "name": "PostgreSQL", "num": "6,164 rows" },
+        { "name": "Clean", "num": "−139 outliers" },
+        { "name": "Features, no leakage", "num": "32 → 15" },
+        { "name": "10 models", "num": "80 / 20 split" },
+        { "name": "Voting ensemble", "num": "R² 0.995" },
+        { "name": "7-day forecast", "num": "±4.63 CI" },
+        { "name": "Call", "num": "falling · high risk" }
+      ]
+    },
+    "rawOutput": "Raw output"
+  },
+  "zh": {
+    "exhibits": "图表",
+    "stats": [
+      { "label": "采集挂单", "value": "6,164" },
+      { "label": "翻页直到无新数据", "value": "124 页" },
+      { "label": "保留特征", "value": "15 / 32" },
+      { "label": "集成 R²", "value": "0.995" },
+      { "label": "95% 置信区间半宽", "value": "±4.63" }
+    ],
+    "fig1": {
+      "title": "黄金矿石——小时中位价与 7 日预测",
+      "sub": "2026-01-20 至 02-05 · 单位价格 · 6,164 条挂单按小时聚合 · 浅带 = 当日 25–75% 分位 · 着色 = 95% 置信区间",
+      "caption": "图 1. 采集窗口内价格从约 95 跌到约 20。集成模型预测短暂回升后在第 7 天回落，此时置信区间扩大到 ±8——这是该观望而不是交易的信号。",
+      "hourly": "小时中位数", "band": "当日 25–75%", "forecast": "7 日预测", "ci": "95% 置信区间", "split": "训练 · 测试（80 / 20）", "listings": "条挂单"
+    },
+    "fig2": {
+      "title": "各模型在留出 20% 上的表现",
+      "sub": "条 = 测试集 R² · 点 = 5 折交叉验证均值 ± σ",
+      "caption": "图 2. 四个线性模型在测试集上拟合最好，但只有投票集成既准又稳（交叉验证 0.995 ± 0.001）。SVR 与极端随机树未进入最终投票。"
+    },
+    "fig3": {
+      "title": "管道各环节及其数字",
+      "caption": "图 3. 每个环节都有可核对的数字；最后的结论连同风险等级一起给出。",
+      "nodes": [
+        { "name": "API 采集", "num": "124 页" },
+        { "name": "去重", "num": "0 条重复" },
+        { "name": "PostgreSQL", "num": "6,164 行" },
+        { "name": "清洗", "num": "剔除 139 条" },
+        { "name": "特征（防泄露）", "num": "32 → 15" },
+        { "name": "10 个模型", "num": "80 / 20 划分" },
+        { "name": "投票集成", "num": "R² 0.995" },
+        { "name": "7 日预测", "num": "±4.63 区间" },
+        { "name": "结论", "num": "下行 · 高风险" }
+      ]
+    },
+    "rawOutput": "原始输出"
+  }
+}
