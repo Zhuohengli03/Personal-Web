@@ -1,0 +1,47 @@
+{
+  "hero": {
+    "eyebrow": "李卓衡 · 纽约大学 管理与分析硕士",
+    "title": "从古琴的七根弦，到一个产品背后的指标。",
+    "subtitle": "我学的是古琴演奏，后来转向商业分析。中间做出了「灵弦」——一个现在有琴人每天在用的打谱编辑器。我喜欢把一个混乱的领域理成清楚的产品，和一组清楚的数字。"
+  },
+  "stats": [
+    { "label": "GPA · 纽约大学", "value": "3.83 / 4.00" },
+    { "label": "灵弦提交数", "value": "", "source": "github", "repo": "Guqin-AI" },
+    { "label": "分析记录数（实习）", "value": "10 万+" },
+    { "label": "已上线站点", "value": "4", "hint": "lingxian.app · lzhpw.com · web-designer-lac.vercel.app · qinghua-deep-evol.vercel.app" }
+  ],
+  "analytics": [
+    { "title": "电商用户与营销分析", "question": "哪些用户值得追加营销投入，哪些即将流失？", "method": "搭建 KPI 体系（UV/PV、漏斗转化、留存、复购）与口径统一的 cohort 数据集；用 RFM + K-means 做用户分群。", "output": "高价值与流失风险分群，以及按分群给出的营销与广告优化建议。", "tags": ["KPI", "Cohort", "RFM", "K-means"], "imagesDir": "ecommerce" },
+    { "title": "运营与选品分析", "question": "哪些商品和品类值得位置，异常出在哪里？", "method": "整合多业务系统数据，构建选品指标框架：销量、销售额、增长率、转化率、退款率。", "output": "支撑快速决策的每日运营简报，以及一份供业务跟进的品类级异常清单。", "tags": ["指标框架", "日报", "异常识别"], "imagesDir": "operations" },
+    { "title": "社交网络与起薪分析", "question": "社交网络使用与毕业生起薪有没有关系？", "method": "清洗、重编码问卷数据并处理缺失值；描述统计、分组比较与相关分析。", "output": "用于团队报告与课堂展示的图表与结论。", "tags": ["问卷数据", "统计分析"] }
+  ],
+  "miniProjects": [
+    { "title": "动态网页爬虫", "body": "Streamlit + Selenium 工具：抓取无限滚动页面，用 XPath/CSS/正则提取字段，落到 MySQL 或 Excel。", "period": "2025.08", "github": "https://github.com/Zhuohengli03/Crawler", "imagesDir": "crawler" },
+    { "title": "Meteor Madness — NASA Space Apps 2025", "body": "基于 NASA 开放数据的小行星撞击模拟器。我负责 Prediction 模块：API 接入，以及为稳定性用二维地图替换三维地球。", "period": "2025.10", "github": "https://github.com/Zhuohengli03/Hackthon-Meteror", "imagesDir": "meteor" },
+    { "title": "客户官网：WebDesigner、DeepEvol", "body": "为两个客户——一家网站设计工作室和一家科研工具创业公司——从需求到 Vercel 上线交付的营销站。", "period": "2026.08–09", "live": "https://web-designer-lac.vercel.app", "clientWork": true, "imagesDir": "webdesigner" }
+  ],
+  "experience": [
+    { "company": "洛阳尚贤科技有限公司", "role": "数据分析实习生", "period": "2025.06 – 2025.08", "bullets": [
+      "使用 Python（Pandas/NumPy）与 SQL 清洗、汇总并分析业务日志与运营数据，处理 10 万+ 条结构化记录。",
+      "搭建并维护核心 KPI 体系（活跃、转化、留存），统一指标口径。",
+      "使用 Tableau 与 Excel 产出周报/月报，监控趋势与异常，支持产品与运营决策。",
+      "优化关键 SQL 查询（索引与查询结构），运行时间缩短约 20%。",
+      "与产品、运营协作，将结论转化为可落地的数据建议。"
+    ] }
+  ],
+  "education": [
+    { "school": "纽约大学", "degree": "管理与管理分析硕士（商业分析）", "period": "2025.09 – 2026.12（预计）", "gpa": "3.83 / 4.00" },
+    { "school": "西安音乐学院", "degree": "音乐表演学士（古琴）", "period": "2021.09 – 2025.07", "honors": [
+      "优秀毕业生（2025 届）",
+      "国家励志奖学金（2023–2024）",
+      "校荣誉奖学金（2023–2024）",
+      "校奖学金（2023–2024）",
+      "优秀学生（2023–2024）",
+      "优秀学生干部（2022–2023）",
+      "校助学金（2022–2023）",
+      "「幽兰·阳春」比赛专业组表演奖（2024）",
+      "陕西省民族器乐展演专业组优秀奖（2024）"
+    ] }
+  ],
+  "contact": { "email": "zhuohengli03@gmail.com", "github": "Zhuohengli03" }
+}

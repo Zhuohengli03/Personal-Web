@@ -9,7 +9,10 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "test": "vitest run",
+    "e2e": "playwright test",
+    "check": "astro check"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",

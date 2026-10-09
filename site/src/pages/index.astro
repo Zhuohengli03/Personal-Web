@@ -1,16 +1,10 @@
 ---
+import BaseLayout from '../layouts/BaseLayout.astro';
 ---
-
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout title="Zhuoheng Li" description="Smoke page" locale="en" path="/">
+  <section class="wrap section center">
+    <p class="eyebrow fade-up" data-delay="1">Smoke test</p>
+    <h1 class="fade-up" data-delay="2">Tokens and layout</h1>
+    <p class="prose fade-up" data-delay="3">Serif display, sans body, mono eyebrow.</p>
+  </section>
+</BaseLayout>

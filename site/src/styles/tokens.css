@@ -1,0 +1,53 @@
+:root {
+  --bg: #ffffff;
+  --fg: #282828;
+  --fg-muted: #6b6866;
+  --fg-faint: #969696;
+  --accent: #0155bf;
+  --card: color-mix(in srgb, var(--fg) 3%, var(--bg));
+  --card-hover: color-mix(in srgb, var(--fg) 4.5%, var(--bg));
+  --rule: color-mix(in srgb, var(--fg) 12%, var(--bg));
+
+  --font-serif: 'Newsreader Variable', 'Noto Serif SC Variable', Georgia, serif;
+  --font-sans: 'Inter Variable', 'Noto Sans SC Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono Variable', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --wrap: 1000px;
+  --measure: 44ch;
+  --gutter: 1.25rem;
+  --section-gap: 8rem;
+  --radius: 14px;
+  --header-h: 54px;
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  color-scheme: light;
+}
+
+:root[data-theme='dark'] {
+  --bg: #141414;
+  --fg: #ededed;
+  --fg-muted: #9a9896;
+  --fg-faint: #6f6d6b;
+  --accent: #5b9bff;
+  color-scheme: dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --bg: #141414;
+    --fg: #ededed;
+    --fg-muted: #9a9896;
+    --fg-faint: #6f6d6b;
+    --accent: #5b9bff;
+    color-scheme: dark;
+  }
+}
+
+@media (max-width: 640px) {
+  :root { --section-gap: 6rem; }
+}
+
+:root[lang='zh'] {
+  --font-serif: 'Noto Serif SC Variable', 'Newsreader Variable', serif;
+  --font-sans: 'Noto Sans SC Variable', 'Inter Variable', sans-serif;
+}

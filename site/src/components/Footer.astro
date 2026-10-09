@@ -1,0 +1,36 @@
+---
+import { t, altPath, type Locale } from '../i18n';
+interface Props { locale: Locale; path: string }
+const { locale, path } = Astro.props;
+const tr = t(locale);
+const alt = altPath(path, locale);
+const year = new Date().getFullYear();
+---
+<footer id="contact" class="site-footer">
+  <div class="wrap">
+    <hr class="divider" />
+    <div class="cols">
+      <div>
+        <p class="eyebrow">{tr('footer.contact')}</p>
+        <a href="mailto:zhuohengli03@gmail.com">zhuohengli03@gmail.com</a>
+      </div>
+      <div>
+        <p class="eyebrow">{tr('footer.elsewhere')}</p>
+        <a href="https://github.com/Zhuohengli03" rel="me noopener">GitHub</a><br />
+        <span class="muted">{tr('footer.linkedinTodo')}</span>
+      </div>
+      <div>
+        <p class="eyebrow">{tr('footer.language')}</p>
+        <a href={alt}>{locale === 'zh' ? 'English' : '中文'}</a>
+      </div>
+    </div>
+    <p class="muted small">© {year} Zhuoheng Li</p>
+  </div>
+</footer>
+<style>
+  .site-footer { margin-top: var(--section-gap); padding-bottom: 3rem; }
+  .cols { display: grid; gap: 2rem; grid-template-columns: 1fr; margin-top: 3rem; font-size: 0.95rem; }
+  @media (min-width: 640px) { .cols { grid-template-columns: repeat(3, 1fr); } }
+  .eyebrow { margin-bottom: 0.5rem; }
+  .small { font-size: 0.8rem; margin-top: 3rem; }
+</style>

@@ -1,0 +1,63 @@
+---
+import '@fontsource-variable/inter';
+import '@fontsource-variable/newsreader';
+import '@fontsource-variable/jetbrains-mono';
+import '@fontsource-variable/noto-sans-sc';
+import '@fontsource-variable/noto-serif-sc';
+import '../styles/tokens.css';
+import '../styles/base.css';
+import SiteHeader from '../components/SiteHeader.astro';
+import Footer from '../components/Footer.astro';
+import type { Locale } from '../i18n';
+
+interface Props { title: string; description: string; locale: Locale; path: string; noAlternates?: boolean }
+const { title, description, locale, path, noAlternates = false } = Astro.props;
+const site = Astro.site ?? new URL('https://lizhuoheng.com');
+const enUrl = new URL(path, site).href;
+const zhUrl = new URL(`/zh${path}`, site).href;
+const canonical = locale === 'en' ? enUrl : zhUrl;
+---
+<!doctype html>
+<html lang={locale === 'zh' ? 'zh' : 'en'}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {!noAlternates && <link rel="canonical" href={canonical} />}
+    {!noAlternates && <link rel="alternate" hreflang="en" href={enUrl} />}
+    {!noAlternates && <link rel="alternate" hreflang="zh-CN" href={zhUrl} />}
+    {!noAlternates && <link rel="alternate" hreflang="x-default" href={enUrl} />}
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <script is:inline>
+      document.documentElement.classList.add('js');
+      try {
+        var t = localStorage.getItem('theme');
+        if (t === 'dark' || t === 'light') document.documentElement.setAttribute('data-theme', t);
+      } catch (e) { /* storage unavailable: follow system */ }
+    </script>
+  </head>
+  <body>
+    <SiteHeader locale={locale} path={path} />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer locale={locale} path={path} />
+    <script>
+      // Scroll reveal — IntersectionObserver, no dependencies
+      const els = document.querySelectorAll<HTMLElement>('.reveal');
+      if ('IntersectionObserver' in window) {
+        const io = new IntersectionObserver((entries) => {
+          for (const e of entries) if (e.isIntersecting) { e.target.classList.add('is-visible'); io.unobserve(e.target); }
+        }, { rootMargin: '0px 0px -10% 0px' });
+        els.forEach((el) => io.observe(el));
+      } else {
+        els.forEach((el) => el.classList.add('is-visible'));
+      }
+    </script>
+  </body>
+</html>

@@ -63,7 +63,7 @@ site/
   src/content/projects/en/guqin-ai.md   dad-market-forecast.md
   src/content/projects/zh/guqin-ai.md   dad-market-forecast.md
   src/assets/work/guqin-ai/01..06.png   src/assets/work/dad-market-forecast/01..10.png
-  src/assets/projects/{crawler,meteor,webdesigner,deepevol,xingyuan}/*.png
+  src/assets/projects/{crawler,meteor,webdesigner,deepevol}/*.png
   src/assets/analytics/{ecommerce,operations}/*.png
   src/layouts/BaseLayout.astro  CaseLayout.astro
   src/components/SiteHeader.astro Footer.astro Hero.astro SpecRow.astro Waffle.astro
@@ -868,7 +868,7 @@ export function altPath(path: string, locale: Locale): string {
 - [ ] **Step 7: Run tests, expect pass**
 
 Run: `cd site && npm test`
-Expected: 6 tests PASS.
+Expected: 5 tests PASS.
 
 - [ ] **Step 8: Wire header and footer to `t()`**
 
@@ -1114,9 +1114,21 @@ export function loadProfile(locale: Locale): Profile {
 ```ts
 import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
+import { findUnpaired } from './lib/pairing';
+
+const base = glob({ pattern: '**/*.md', base: './src/content/projects' });
 
 const projects = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/content/projects' }),
+  // Wrap the glob loader so an EN project without its ZH twin (or vice versa) fails the build here,
+  // before any page renders — spec §7. (pairing.ts is written in Step 7 of this task; write it first.)
+  loader: {
+    name: 'projects-paired',
+    load: async (ctx) => {
+      await base.load(ctx);
+      const orphans = findUnpaired([...ctx.store.keys()]);
+      if (orphans.length) throw new Error(`projects: missing locale twin for ${orphans.join(', ')} — every en/*.md needs a zh/*.md with the same name`);
+    },
+  },
   schema: ({ image }) =>
     z.object({
       title: z.string(),
@@ -1369,7 +1381,7 @@ The file is not yet tracked by git, so restore with the inverse `sed`, not `git 
 cd site && sed -i '' 's#dad-market-forecast/01.png#dad-market-forecast/99.png#' src/content/projects/en/dad-market-forecast.md && (npm run build; echo "exit=$?"); sed -i '' 's#dad-market-forecast/99.png#dad-market-forecast/01.png#' src/content/projects/en/dad-market-forecast.md && grep -c '01.png' src/content/projects/en/dad-market-forecast.md
 ```
 
-Expected: build error mentioning `99.png`, `exit=1`, then `1` from grep (restored). (Review Focus 5.)
+Expected: build error mentioning `99.png`, `exit=1`, then `1` from grep (restored). (Review Focus 5.) **Note:** Astro validates `image()` paths when an entry is rendered, so until Task 8's case pages exist this build still exits 0 — repeat this exact check as Task 8 Step 6b, where it must fail.
 
 - [ ] **Step 10b: Deliberately orphan a locale twin and confirm the build fails, then restore**
 
@@ -2472,7 +2484,15 @@ for (const [w, h] of [[390, 844], [768, 1024], [1280, 900]]) {
 await browser.close();
 ```
 
-Run: `cd site && npm run build && npm run preview -- --port 4321 & PID=$!; sleep 4; (cd site && node scripts/snap.mjs); kill $PID`
+Run (build first, synchronously; then start the server and wait until it answers; keep it alive for Step 2's Lighthouse runs):
+
+```bash
+cd site && npm run build
+npm run preview -- --port 4321 & PID=$!
+until curl -sf http://localhost:4321/ >/dev/null; do sleep 1; done
+node scripts/snap.mjs
+# leave the server running; `kill $PID` at the end of Step 2
+```
 Open every PNG in `site/test-results/` with the Read tool. Fix any overflow, overlapping header items at 390px, or clipped waffle; re-run until no `HORIZONTAL OVERFLOW` lines print.
 
 - [ ] **Step 2: Lighthouse**
