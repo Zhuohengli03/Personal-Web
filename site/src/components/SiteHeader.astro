@@ -33,9 +33,11 @@ const nav = [
   nav a:hover { color: var(--fg); text-decoration: none; }
   #theme-toggle { background: none; border: 0; color: var(--fg-muted); cursor: pointer; padding: 4px; display: inline-flex; border-radius: 6px; }
   #theme-toggle:hover { color: var(--fg); background: var(--card); }
-  @media (max-width: 480px) {
-    .wordmark { font-size: 1rem; }
-    nav { gap: 0.75rem; font-size: 0.85rem; }
+  @media (max-width: 560px) {
+    /* five links + switch + toggle do not fit beside the wordmark; the name leads the hero anyway */
+    .wordmark { display: none; }
+    .bar { justify-content: center; }
+    nav { gap: 0.8rem; font-size: 0.85rem; }
   }
 </style>
 <script>

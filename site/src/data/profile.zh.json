@@ -3,10 +3,36 @@
     "eyebrow": "李卓衡 · 产品 / 数据分析 · 纽约大学 2027 届",
     "title": "做过一个从 0 到 1 的产品，也数过它的每一步。",
     "subtitle": "纽约大学 Management and Analytics 硕士在读，本科学的是古琴演奏。独立做了古琴打谱 SaaS「灵弦」，邀请制内测中、94 位注册用户：用户调研、漏斗拆解、小步实验、AI 助手评测，都是自己一手做的。2027 届，求职方向：产品经理 / 产品助理、数据与商业分析、游戏策划。",
-    "badge": {
-      "name": "李卓衡",
-      "line1": "Management & Analytics 硕士",
-      "line2": "纽约大学 · 2027 届"
+    "terminal": {
+      "title": "felix@lizhuoheng.com — zsh",
+      "user": "felix@nyu",
+      "command": "felix",
+      "lines": [
+        {
+          "k": "在读",
+          "v": "纽约大学 Management & Analytics 硕士 · 2027 届"
+        },
+        {
+          "k": "之前",
+          "v": "西安音乐学院古琴演奏（艺术学学士）"
+        },
+        {
+          "k": "在做",
+          "v": "lingxian.app · 94 位内测用户"
+        },
+        {
+          "k": "提交",
+          "v": "{commits} 次（Guqin-AI）· 最近 {lastCommit}"
+        },
+        {
+          "k": "求职",
+          "v": "产品 · 数据分析 · 游戏策划"
+        },
+        {
+          "k": "联系",
+          "v": "zhuohengli03@gmail.com"
+        }
+      ]
     }
   },
   "stats": [

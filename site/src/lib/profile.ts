@@ -39,7 +39,12 @@ export const profileSchema = z.object({
     eyebrow: z.string(),
     title: z.string(),
     subtitle: z.string(),
-    badge: z.object({ name: z.string(), line1: z.string(), line2: z.string() }),
+    terminal: z.object({
+      title: z.string(),
+      user: z.string(),
+      command: z.string(),
+      lines: z.array(z.object({ k: z.string(), v: z.string() })).min(3).max(8),
+    }),
   }),
   stats: z.array(stat).length(4),
   analytics: z.array(analytics).length(3),

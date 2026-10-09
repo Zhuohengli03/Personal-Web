@@ -3,10 +3,36 @@
     "eyebrow": "Zhuoheng (Felix) Li · Product & Analytics · NYU ’27",
     "title": "I shipped a product, then measured every step of it.",
     "subtitle": "Grad student in Management and Analytics at NYU, trained first as a guqin performer. I founded Lingxian, a notation editor for guqin players now in private beta with 94 users, and I run it the way I want to work: user research, funnel analysis, small experiments, honest numbers. Open to product, analytics and game-design roles starting 2027.",
-    "badge": {
-      "name": "Zhuoheng (Felix) Li",
-      "line1": "M.S. Management & Analytics",
-      "line2": "NYU · Class of 2027"
+    "terminal": {
+      "title": "felix@lizhuoheng.com — zsh",
+      "user": "felix@nyu",
+      "command": "felix",
+      "lines": [
+        {
+          "k": "Program",
+          "v": "M.S. Management & Analytics, NYU · 2027"
+        },
+        {
+          "k": "Before",
+          "v": "Guqin performance (B.A.), Xi'an Conservatory"
+        },
+        {
+          "k": "Shipping",
+          "v": "lingxian.app · 94 beta users"
+        },
+        {
+          "k": "Commits",
+          "v": "{commits} on Guqin-AI · last {lastCommit}"
+        },
+        {
+          "k": "Looking for",
+          "v": "Product · Analytics · Game design"
+        },
+        {
+          "k": "Contact",
+          "v": "zhuohengli03@gmail.com"
+        }
+      ]
     }
   },
   "stats": [
