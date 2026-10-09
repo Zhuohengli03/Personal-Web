@@ -7,7 +7,7 @@ Repo: `Zhuohengli03/Personal-Web` (this working copy). Live at https://lizhuohen
 
 A bilingual (EN default, ZH switch) personal site for job hunting in BA / DA / PM / Product roles. Readers are recruiters and hiring managers; the site must read like a well-set analyst report, not a developer playground.
 
-The story the site tells: Xi'an Conservatory guqin performance → NYU M.S. Management & Analytics (GPA 3.83) → built a 1,200+ commit guqin notation SaaS (Guqin-AI). Domain depth + product judgement + data fluency.
+The story the site tells: Xi'an Conservatory guqin performance (B.A.) → NYU M.S. Management and Analytics (GPA 3.92) → built a 1,200+ commit guqin notation SaaS (Guqin-AI). Domain depth + product judgement + data fluency.
 
 Nothing on the site is invented. Facts come from the old site's content (experience, education, honors, contact) and the GitHub API. Anything not yet available is marked `[TODO: …]` and listed in `CONTENT-TODO.md`.
 
@@ -46,7 +46,7 @@ Language switch links to the same path under the other locale. `<html lang>` and
 ### 3.1 Home sections (in order)
 
 1. **Hero** — eyebrow (mono): `Zhuoheng Li · M.S. Management & Analytics, NYU`; serif title, one sentence positioning; 44ch subtitle; CTA row: `Résumé` (primary, → `/resume.pdf`), `Email` (secondary, → `mailto:zhuohengli03@gmail.com`).
-2. **Stats row** — four label/value pairs: `GPA 3.83 / 4.00`, `1,200+ commits · Lingxian`, `100k+ records analyzed`, `4 live sites shipped` (lingxian.app, lzhpw.com, web-designer-lac.vercel.app, qinghua-deep-evol.vercel.app). Values that come from GitHub are read from `src/data/github.json`.
+2. **Stats row** — four label/value pairs: `GPA 3.92 / 4.00`, `1,200+ commits · Lingxian`, `94 Lingxian beta users`, `4 live sites shipped` (lingxian.app, lzhpw.com, web-designer-lac.vercel.app, qinghua-deep-evol.vercel.app). Values that come from GitHub are read from `src/data/github.json`.
 3. **Selected work** — two large `WorkCard`s (Lingxian / Guqin-AI, DaD-Market-Forecast): serif title + badge (`Product` / `Data`), 2–3 line body, spec grid (Role · Period · Stack · Scale), a `Waffle` visual, link row (`Case study →`, `GitHub` when public, `Live site ↗` → https://lingxian.app for Guqin-AI). The product is publicly named **Lingxian (灵弦)**; the repo name Guqin-AI appears only as the slug.
    - Guqin-AI waffle: one cell per week since 2026-02-12, filled by commits that week (bucketed from `github.json`).
    - DaD: no waffle. The grid is only drawn from real commit data (`github.json`); DaD's 17 commits over three weeks would not make a meaningful grid, and a decorative pattern would read as data.

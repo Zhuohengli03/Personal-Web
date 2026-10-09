@@ -1,13 +1,13 @@
 {
   "hero": {
-    "eyebrow": "李卓衡 · 纽约大学 管理与分析硕士",
+    "eyebrow": "李卓衡 · 纽约大学 Management and Analytics 硕士",
     "title": "从古琴的七根弦，到一个产品背后的指标。",
-    "subtitle": "我学的是古琴演奏，后来转向商业分析。中间做出了「灵弦」——一个现在有琴人每天在用的打谱编辑器。我喜欢把一个混乱的领域理成清楚的产品，和一组清楚的数字。"
+    "subtitle": "我学的是古琴演奏，后来转向商业分析。中间做出了「灵弦」——一个邀请制内测中、已有 94 位注册用户的打谱编辑器。我喜欢把一个混乱的领域理成清楚的产品，和一组清楚的数字。"
   },
   "stats": [
     {
       "label": "GPA · 纽约大学",
-      "value": "3.83 / 4.00"
+      "value": "3.92 / 4.00"
     },
     {
       "label": "灵弦提交数",
@@ -16,8 +16,9 @@
       "repo": "Guqin-AI"
     },
     {
-      "label": "分析记录数（实习）",
-      "value": "10 万+"
+      "label": "灵弦内测用户",
+      "value": "94",
+      "hint": "160 首曲谱 · 144 次 PDF 导出 · 次周留存 20.7%（2026-09）"
     },
     {
       "label": "已上线站点",
@@ -69,7 +70,7 @@
     },
     {
       "title": "Meteor Madness — NASA Space Apps 2025",
-      "body": "基于 NASA 开放数据的小行星撞击模拟器。我负责 Prediction 模块：API 接入，以及为稳定性用二维地图替换三维地球。",
+      "body": "基于 NASA NEO / Fireball / EONET 数据的小行星撞击模拟器：陨石坑、海啸、冲击波范围与人口暴露，Three.js 地球与 Java REST 后端。两人团队，我端到端负责一半功能——前端、后端与 API。",
       "period": "2025.10",
       "github": "https://github.com/Zhuohengli03/Hackthon-Meteror"
     },
@@ -98,13 +99,13 @@
   "education": [
     {
       "school": "纽约大学",
-      "degree": "管理与管理分析硕士（商业分析）",
-      "period": "2025.09 – 2026.12（预计）",
-      "gpa": "3.83 / 4.00"
+      "degree": "Management and Analytics 硕士（STEM）",
+      "period": "2025.09 – 2027.01（预计）",
+      "gpa": "3.92 / 4.00"
     },
     {
       "school": "西安音乐学院",
-      "degree": "音乐表演学士（古琴）",
+      "degree": "音乐表演（古琴）本科 · 艺术学学士",
       "period": "2021.09 – 2025.07",
       "honors": [
         "优秀毕业生（2025 届）",
@@ -121,6 +122,7 @@
   ],
   "contact": {
     "email": "zhuohengli03@gmail.com",
-    "github": "Zhuohengli03"
+    "github": "Zhuohengli03",
+    "linkedin": "https://www.linkedin.com/in/zhuoheng-li-3365b5351/"
   }
 }
