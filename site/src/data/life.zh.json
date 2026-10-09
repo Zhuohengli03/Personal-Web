@@ -1,0 +1,112 @@
+{
+  "intro": "工作以外的时间。点一张卡片可以筛选照片。",
+  "hobbies": [
+    {
+      "id": "guqin",
+      "title": "古琴",
+      "blurb": "西安音乐学院四年演奏专业，两个比赛奖项；也是「灵弦」存在的原因。"
+    },
+    {
+      "id": "photo",
+      "title": "摄影与旅行",
+      "blurb": "拍得最多的是天际线、山和天黑前的那一小时：纽约、旧金山、费城、日本，还有几处等着补地名的地方。"
+    },
+    {
+      "id": "cooking",
+      "title": "做饭",
+      "blurb": "在家做饭。照片待补。"
+    },
+    {
+      "id": "games",
+      "title": "游戏",
+      "blurb": "包括那个被我把市场价格建了模的《Dark and Darker》——见上面的价格预测项目。"
+    },
+    {
+      "id": "swimming",
+      "title": "游泳",
+      "blurb": "游的是来回，不是泳池边的圈。"
+    }
+  ],
+  "photos": [
+    {
+      "file": "photo/p05.jpg",
+      "hobby": "photo",
+      "caption": "黄昏的曼哈顿下城，从泽西城岸边望去 · [TODO: 年份]"
+    },
+    {
+      "file": "photo/p15.jpg",
+      "hobby": "photo",
+      "caption": "日落后的自由女神像 · [TODO: 年份]"
+    },
+    {
+      "file": "photo/p03.jpg",
+      "hobby": "photo",
+      "caption": "哈德逊河对岸的世贸中心一号楼，栏杆上停着一只海鸥 · [TODO: 年份]"
+    },
+    {
+      "file": "photo/p10.jpg",
+      "hobby": "photo",
+      "caption": "旧金山金门大桥 · [TODO: 年份]"
+    },
+    {
+      "file": "photo/p11.jpg",
+      "hobby": "photo",
+      "caption": "费城市政厅 · [TODO: 年份]"
+    },
+    {
+      "file": "photo/p16.jpg",
+      "hobby": "photo",
+      "caption": "日本奈良，鹿与鹿仙贝摊 · [TODO: 年份]"
+    },
+    {
+      "file": "photo/p08.jpg",
+      "hobby": "photo",
+      "caption": "樱花下的骑行道 · [TODO: 地点、年份]"
+    },
+    {
+      "file": "photo/p12.jpg",
+      "hobby": "photo",
+      "caption": "盘山路下的冰川湖 · [TODO: 地点、年份]"
+    },
+    {
+      "file": "photo/p13.jpg",
+      "hobby": "photo",
+      "caption": "冷杉林上的雪峰 · [TODO: 地点、年份]"
+    },
+    {
+      "file": "photo/p06.jpg",
+      "hobby": "photo",
+      "caption": "湖面上破云而出的太阳 · [TODO: 地点、年份]"
+    },
+    {
+      "file": "photo/p01.jpg",
+      "hobby": "photo",
+      "caption": "盛夏的草原 · [TODO: 地点、年份]"
+    },
+    {
+      "file": "photo/p04.jpg",
+      "hobby": "photo",
+      "caption": "浅滩与盐碱地 · [TODO: 地点、年份]"
+    },
+    {
+      "file": "photo/p14.jpg",
+      "hobby": "photo",
+      "caption": "湖边的长亭 · [TODO: 地点、年份]"
+    },
+    {
+      "file": "photo/p09.jpg",
+      "hobby": "photo",
+      "caption": "日落时山脊上的鹿 · [TODO: 地点、年份]"
+    },
+    {
+      "file": "photo/p02.jpg",
+      "hobby": "photo",
+      "caption": "停车场上空的火烧云 · [TODO: 地点、年份]"
+    },
+    {
+      "file": "photo/p07.jpg",
+      "hobby": "photo",
+      "caption": "费城宾夕法尼亚大学 College Hall 前的富兰克林像 · [TODO: 年份]"
+    }
+  ]
+}

@@ -5,9 +5,12 @@ Items that only the site owner can supply. Everything else on the site is source
 | Item | Where | How to replace |
 |---|---|---|
 | Résumé PDFs | `site/public/resume-en.pdf` (EN page) and `site/public/resume-zh.pdf` (ZH page) — both placeholders | Overwrite with the real PDFs, **without phone numbers** (the site is public and gets scraped); keep the names. |
-| Profile photo for the hanging badge | `site/src/assets/photo.jpg` | Drop a front-facing photo there; the badge component crops it. |
+| Guqin photos (performances, the Youlan·Yangchun competition, practice) | `site/src/assets/life/guqin/` | Drop JPG/PNG files there, then add one entry per photo to `photos` in `site/src/data/life.en.json` and `life.zh.json` (`"file": "guqin/<name>.jpg", "hobby": "guqin", "caption": "…"`). The Guqin card becomes a filter automatically. |
+| Cooking / games photos (optional) | `site/src/assets/life/cooking/`, `site/src/assets/life/games/` | Same as above with `"hobby": "cooking"` / `"games"`. |
+| Photo captions | `site/src/data/life.*.json` → `photos[].caption` | 16 travel photos carry draft captions; replace every `[TODO: …]` with the place and year. Both locales list the same files in the same order (a unit test enforces it). |
+| Hobby blurbs | `site/src/data/life.*.json` → `hobbies[].blurb` | Cooking, games and swimming have neutral one-liners; rewrite freely. |
 
-Done: LinkedIn URL is in `profile.*.json` → `contact.linkedin` and renders in the footer.
+Done: LinkedIn URL is in `profile.*.json` → `contact.linkedin` and renders in the footer. Profile photo is in `site/src/assets/photo.jpg`. Résumés without phone numbers are in `site/public/resume-{en,zh}.pdf`.
 
 Refresh commands: `node scripts/fetch-github.mjs` (activity data), `cd site && node scripts/shoot.mjs` (live-site screenshots), `cd site && node scripts/audit.mjs` (responsive snapshots + Lighthouse into `site/audit-results/`).
 
