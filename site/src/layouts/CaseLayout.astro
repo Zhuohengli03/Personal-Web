@@ -1,0 +1,80 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { render } from 'astro:content';
+import BaseLayout from './BaseLayout.astro';
+import Gallery from '../components/Gallery.astro';
+import Lightbox from '../components/Lightbox.astro';
+import Waffle from '../components/Waffle.astro';
+import { t, localePath, type Locale } from '../i18n';
+import { slugOf } from '../lib/pairing';
+import { repoActivity } from '../lib/activity';
+import type { GithubData } from '../lib/github';
+import github from '../data/github.json';
+
+interface Props { entry: CollectionEntry<'projects'>; locale: Locale }
+const { entry, locale } = Astro.props;
+const tr = t(locale);
+const d = entry.data;
+const { Content } = await render(entry);
+const path = `/work/${slugOf(entry)}/`;
+const activity = d.waffle?.source === 'github' ? repoActivity(github as GithubData, d.waffle.repo, locale) : null;
+---
+<BaseLayout title={`${d.title} — ${tr('site.title')}`} description={d.summary} locale={locale} path={path}>
+  <article class="case">
+    <header class="wrap center">
+      <p class="eyebrow fade-up" data-delay="1">{d.category} · {d.period}</p>
+      <h1 class="fade-up" data-delay="2">{d.title}</h1>
+      <p class="prose fade-up" data-delay="3">{d.summary}</p>
+      <dl class="spec-grid specs fade-up" data-delay="4">
+        <dt>{tr('labels.role')}</dt><dd>{d.role}</dd>
+        <dt>{tr('labels.period')}</dt><dd>{d.period}</dd>
+        <dt>{tr('labels.stack')}</dt><dd>{d.stack.join(' · ')}</dd>
+        <dt>{tr('labels.scale')}</dt><dd>{d.scale.join(' · ')}</dd>
+        <dt>{tr('labels.links')}</dt>
+        <dd class="links">
+          {d.links.live && <a href={d.links.live} target="_blank" rel="noopener">{tr('actions.live')} ↗</a>}
+          {d.links.github && <a href={d.links.github} target="_blank" rel="noopener">{tr('actions.github')} ↗</a>}
+        </dd>
+      </dl>
+    </header>
+
+    <div class="wrap body">
+      <div class="prose md"><Content /></div>
+      {activity && (
+        <aside class="activity reveal">
+          <p class="eyebrow">{activity.label}</p>
+          <Waffle cells={activity.cells} cols={activity.cols} label={activity.label} />
+        </aside>
+      )}
+      {d.gallery.length > 0 && (
+        <section class="gallery-section">
+          <p class="eyebrow center">04 · {tr('case.gallery')}</p>
+          <Gallery items={d.gallery} locale={locale} />
+        </section>
+      )}
+      <p class="center back"><a class="btn" href={localePath('/', locale)}>← {tr('actions.back')}</a></p>
+    </div>
+  </article>
+  <Lightbox closeLabel={tr('case.close')} label={tr('a11y.imagePreview')} />
+</BaseLayout>
+<style>
+  header { padding-block: 5rem 3rem; }
+  header h1 { max-width: 22ch; margin: 1.25rem auto; }
+  .specs { max-width: 680px; margin: 2.5rem auto 0; text-align: left; }
+  .links { display: flex; gap: 1rem; }
+  .body { margin-top: 3rem; }
+  .md { counter-reset: sec; text-wrap: pretty; }
+  .md :global(h2) { font-size: 1.65rem; margin-top: 4rem; margin-bottom: 1rem; }
+  .md :global(h2)::before { content: counter(sec, decimal-leading-zero) ' · '; counter-increment: sec; font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.08em; color: var(--fg-muted); display: block; margin-bottom: 0.5rem; }
+  .md :global(p), .md :global(li) { color: color-mix(in srgb, var(--fg) 82%, var(--bg)); }
+  .md :global(p + p) { margin-top: 1em; }
+  .md :global(ol), .md :global(ul) { padding-left: 1.2rem; margin: 1em 0; }
+  .md :global(li + li) { margin-top: 0.5rem; }
+  .md :global(strong) { color: var(--fg); font-weight: 600; }
+  .md :global(code) { font-family: var(--font-mono); font-size: 0.85em; background: var(--card); padding: 0.1em 0.35em; border-radius: 4px; }
+  .activity { max-width: 680px; margin: 3rem auto 0; }
+  .activity .eyebrow { margin-bottom: 0.75rem; }
+  .gallery-section { margin-top: 4rem; }
+  .gallery-section .eyebrow { margin-bottom: 1.5rem; }
+  .back { margin-top: 5rem; }
+</style>

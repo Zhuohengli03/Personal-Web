@@ -1,0 +1,30 @@
+---
+// Lightbox.astro — one per page; opened by any [data-lightbox-src]
+interface Props { closeLabel: string; label: string }
+const { closeLabel, label } = Astro.props;
+---
+<dialog id="lightbox" aria-label={label}>
+  <button type="button" class="close" aria-label={closeLabel}>×</button>
+  <img alt="" />
+</dialog>
+<style>
+  dialog { border: 0; padding: 0; background: transparent; max-width: min(96vw, 1400px); max-height: 94vh; }
+  dialog::backdrop { background: rgba(0, 0, 0, 0.78); }
+  img { max-width: 96vw; max-height: 90vh; width: auto; height: auto; border-radius: 8px; }
+  .close { position: fixed; top: 1rem; right: 1rem; width: 40px; height: 40px; border-radius: 50%; border: 0; background: rgba(255, 255, 255, 0.9); color: #282828; font-size: 1.4rem; cursor: pointer; }
+</style>
+<script>
+  const dlg = document.getElementById('lightbox') as HTMLDialogElement | null;
+  const img = dlg?.querySelector('img');
+  if (dlg && img) {
+    document.querySelectorAll<HTMLElement>('[data-lightbox-src]').forEach((b) =>
+      b.addEventListener('click', () => {
+        img.src = b.dataset.lightboxSrc ?? '';
+        img.alt = b.dataset.lightboxAlt ?? '';
+        dlg.showModal();
+      }),
+    );
+    dlg.querySelector('.close')?.addEventListener('click', () => dlg.close());
+    dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); });
+  }
+</script>

@@ -1,0 +1,11 @@
+---
+import CaseLayout from '../../../layouts/CaseLayout.astro';
+import { getProjects, slugOf } from '../../../lib/projects';
+
+export async function getStaticPaths() {
+  const entries = await getProjects('zh');
+  return entries.map((entry) => ({ params: { slug: slugOf(entry) }, props: { entry } }));
+}
+const { entry } = Astro.props;
+---
+<CaseLayout entry={entry} locale="zh" />
