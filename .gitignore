@@ -1,16 +1,17 @@
-# Astro
-astro-portfolio/node_modules/
-astro-portfolio/dist/
-astro-portfolio/.astro/
+# Astro site
+site/node_modules/
+site/dist/
+site/.astro/
+site/test-results/
+site/playwright-report/
 
-# Env (secrets)
+# Env
 .env
 *.env.local
 
-# IDE
+# IDE / OS
 .idea/
 .vscode/
 .cursor/
 *.swp
-*.swo
 .DS_Store
