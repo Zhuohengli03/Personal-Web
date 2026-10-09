@@ -18,9 +18,9 @@ const year = new Date().getFullYear();
       </div>
       <div>
         <p class="eyebrow">{tr('footer.elsewhere')}</p>
-        <a href={`https://github.com/${contact.github}`} rel="me noopener">GitHub</a><br />
+        <a href={`https://github.com/${contact.github}`} target="_blank" rel="me noopener">GitHub</a><br />
         {contact.linkedin
-          ? <a href={contact.linkedin} rel="me noopener">LinkedIn</a>
+          ? <a href={contact.linkedin} target="_blank" rel="me noopener">LinkedIn</a>
           : <span class="muted">{tr('footer.linkedinTodo')}</span>}
       </div>
       <div>
