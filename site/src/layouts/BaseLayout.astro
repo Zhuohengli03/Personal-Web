@@ -30,6 +30,7 @@ const canonical = locale === 'en' ? enUrl : zhUrl;
     {!noAlternates && <link rel="alternate" hreflang="zh-CN" href={zhUrl} />}
     {!noAlternates && <link rel="alternate" hreflang="x-default" href={enUrl} />}
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     {locale === 'zh' && <link rel="stylesheet" href={notoSansScCss} />}
     {locale === 'zh' && <link rel="stylesheet" href={notoSerifScCss} />}
     <meta property="og:title" content={title} />
