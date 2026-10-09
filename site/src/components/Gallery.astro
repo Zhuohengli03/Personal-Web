@@ -1,0 +1,31 @@
+---
+import { Image, getImage } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import { t, type Locale } from '../i18n';
+interface Props { items: { src: ImageMetadata; alt: string; caption: string }[]; locale: Locale }
+const { items, locale } = Astro.props;
+const tr = t(locale);
+// A large WebP for the lightbox so the multi-MB 2x PNG is never shipped (spec §9)
+const large = await Promise.all(items.map((it) => getImage({ src: it.src, width: 1600, format: 'webp', quality: 80 })));
+---
+<ul class="gallery">
+  {items.map((it, i) => (
+    <li class="reveal">
+      <figure>
+        <button type="button" data-lightbox-src={large[i].src} data-lightbox-alt={it.alt} aria-label={`${tr('a11y.openImage')} ${i + 1}: ${it.alt}`}>
+          <Image src={it.src} alt={it.alt} width={960} format="webp" quality={82} loading={i < 2 ? 'eager' : 'lazy'} />
+        </button>
+        <figcaption>{it.caption}</figcaption>
+      </figure>
+    </li>
+  ))}
+</ul>
+<style>
+  .gallery { list-style: none; margin: 0; padding: 0; display: grid; gap: 1.5rem; grid-template-columns: 1fr; }
+  @media (min-width: 720px) { .gallery { grid-template-columns: 1fr 1fr; } }
+  figure { margin: 0; }
+  button { all: unset; display: block; cursor: zoom-in; border-radius: 10px; overflow: hidden; border: 1px solid var(--rule); }
+  button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  img { width: 100%; height: auto; }
+  figcaption { font-size: 0.85rem; color: var(--fg-muted); margin-top: 0.5rem; line-height: 1.45; }
+</style>
