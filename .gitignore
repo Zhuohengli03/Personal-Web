@@ -15,3 +15,6 @@ site/playwright-report/
 .cursor/
 *.swp
 .DS_Store
+
+# review audit output (site/scripts/audit.mjs)
+site/audit-results/
