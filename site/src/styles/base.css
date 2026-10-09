@@ -1,0 +1,95 @@
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+img, svg, video { display: block; max-width: 100%; height: auto; }
+a { color: var(--accent); text-decoration: none; text-underline-offset: 2px; }
+a:hover { text-decoration: underline; }
+:focus-visible { outline: 2px solid color-mix(in srgb, var(--fg) 42%, transparent); outline-offset: 3px; }
+h1, h2, h3 { font-family: var(--font-serif); font-weight: 500; letter-spacing: -0.01em; margin: 0; color: var(--fg); }
+h1 { font-size: clamp(2rem, 1.2rem + 4vw, 2.943rem); line-height: 1.2; font-weight: 400; }
+h2 { font-size: 1.65rem; line-height: 1.25; }
+h3 { font-size: 1.4rem; line-height: 1.2; }
+p { margin: 0; }
+
+.wrap { width: 100%; max-width: var(--wrap); margin-inline: auto; padding-inline: var(--gutter); }
+.prose { max-width: var(--measure); margin-inline: auto; color: color-mix(in srgb, var(--fg) 80%, var(--bg)); text-wrap: balance; }
+.prose p + p { margin-top: 1em; }
+.center { text-align: center; }
+.muted { color: var(--fg-muted); }
+.section { margin-top: var(--section-gap); }
+.section-head { text-align: center; margin-bottom: 2.5rem; }
+.section-head h2 { margin-bottom: 1rem; }
+.section-head .sub { font-size: 1rem; line-height: 1.6; max-width: var(--measure); margin: 0 auto; color: color-mix(in srgb, var(--fg) 80%, var(--bg)); text-wrap: balance; }
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+}
+:root[lang='zh'] .eyebrow { text-transform: none; letter-spacing: 0.12em; }
+
+.divider { width: 80px; height: 1px; border: 0; background: var(--fg-faint); opacity: 0.35; margin: 6rem auto 0; }
+
+.card {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 2rem;
+  transition: background-color 0.16s ease;
+}
+@media (hover: hover) { .card:hover { background: var(--card-hover); } }
+
+.btn {
+  display: inline-flex; align-items: center; gap: 0.4em;
+  font-family: var(--font-sans); font-size: 0.95rem; font-weight: 500;
+  padding: 0.6em 1.1em; border-radius: 100px; border: 1px solid var(--rule);
+  color: var(--fg); background: transparent; cursor: pointer; text-decoration: none;
+}
+.btn:hover { text-decoration: none; background: var(--card); }
+.btn-primary { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+.btn-primary:hover { background: color-mix(in srgb, var(--fg) 85%, var(--bg)); }
+.btn[aria-disabled='true'] { opacity: 0.5; pointer-events: none; }
+
+.grid-2 { display: grid; gap: 1.5rem; grid-template-columns: 1fr; }
+.grid-3 { display: grid; gap: 2.6rem 2.94rem; grid-template-columns: 1fr; }
+@media (min-width: 720px) { .grid-2 { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 520px) { .grid-3 { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 860px) { .grid-3 { grid-template-columns: repeat(3, 1fr); } }
+
+.spec-grid { display: grid; grid-template-columns: max-content 1fr; column-gap: 1.5rem; row-gap: 0.65rem; align-items: baseline; font-size: 0.9rem; }
+.spec-grid dt { color: var(--fg-muted); margin: 0; }
+.spec-grid dd { color: var(--fg); margin: 0; line-height: 1.4; }
+
+.badge {
+  display: inline-flex; align-items: center; height: 20px; padding: 0 7px; border-radius: 100px;
+  font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--fg); background: color-mix(in srgb, var(--fg) 10%, var(--bg));
+}
+
+/* Motion: only when JS is present; off under reduced motion */
+.fade-up { opacity: 1; }
+/* The shorthand resets animation-delay, so the delay is read from a custom property set by the data-delay rules below. */
+html.js .fade-up { opacity: 0; animation: fade-up 0.7s var(--ease-out) forwards; animation-delay: var(--d, 0s); }
+.fade-up[data-delay='1'] { --d: 0.1s; }
+.fade-up[data-delay='2'] { --d: 0.18s; }
+.fade-up[data-delay='3'] { --d: 0.26s; }
+.fade-up[data-delay='4'] { --d: 0.34s; }
+@keyframes fade-up { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+
+.reveal { opacity: 1; }
+html.js .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.5s var(--ease-out), transform 0.5s var(--ease-out); }
+html.js .reveal.is-visible { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  html.js .fade-up, html.js .reveal { animation: none; opacity: 1; transform: none; transition: none; }
+}

@@ -1,0 +1,47 @@
+{
+  "hero": {
+    "eyebrow": "Zhuoheng Li · M.S. Management & Analytics, NYU",
+    "title": "From the seven strings of the guqin to the metrics behind a product.",
+    "subtitle": "I trained as a guqin performer, then moved into business analytics. Along the way I built Lingxian, a notation editor that musicians use today. I like turning a messy domain into a clear product and a clear set of numbers."
+  },
+  "stats": [
+    { "label": "GPA, NYU", "value": "3.83 / 4.00" },
+    { "label": "Commits on Lingxian", "value": "", "source": "github", "repo": "Guqin-AI" },
+    { "label": "Records analyzed (internship)", "value": "100k+" },
+    { "label": "Live sites shipped", "value": "4", "hint": "lingxian.app · lzhpw.com · web-designer-lac.vercel.app · qinghua-deep-evol.vercel.app" }
+  ],
+  "analytics": [
+    { "title": "E-commerce user & marketing analytics", "question": "Which users are worth more marketing spend, and which are about to churn?", "method": "Built a KPI system (UV/PV, funnel conversion, retention, repurchase) and cohort datasets with consistent metric definitions; segmented users with RFM + K-means.", "output": "High-value and churn-risk segments with per-segment marketing and ad recommendations.", "tags": ["KPI", "Cohort", "RFM", "K-means"], "imagesDir": "ecommerce" },
+    { "title": "Operations & product-selection analytics", "question": "Which products and categories deserve shelf space, and where are the anomalies?", "method": "Integrated data from several business systems into a product-selection metric framework: sales volume, revenue, growth, conversion, refund rate.", "output": "A daily operations brief for fast decisions and a list of category-level anomalies for the business to act on.", "tags": ["Metric framework", "Daily brief", "Anomaly"], "imagesDir": "operations" },
+    { "title": "Social networks & starting salary", "question": "Does social-network use relate to graduates' starting salaries?", "method": "Cleaned and recoded survey data, handled missing values; descriptive statistics, group comparison and correlation analysis.", "output": "Charts and a written conclusion for a team report and class presentation.", "tags": ["Survey data", "Statistics"] }
+  ],
+  "miniProjects": [
+    { "title": "Dynamic web crawler", "body": "Streamlit + Selenium tool that scrapes infinite-scroll pages, extracts fields by XPath/CSS/regex and lands them in MySQL or Excel.", "period": "2025.08", "github": "https://github.com/Zhuohengli03/Crawler", "imagesDir": "crawler" },
+    { "title": "Meteor Madness — NASA Space Apps 2025", "body": "Asteroid-impact simulator on NASA open data. I led the Prediction module: API integration and the 2D map that replaced the 3D globe for stability.", "period": "2025.10", "github": "https://github.com/Zhuohengli03/Hackthon-Meteror", "imagesDir": "meteor" },
+    { "title": "Client sites: WebDesigner, DeepEvol", "body": "Two marketing sites delivered for clients — a web-design studio and a research-tools startup — from brief to deployed Vercel site.", "period": "2026.08–09", "live": "https://web-designer-lac.vercel.app", "clientWork": true, "imagesDir": "webdesigner" }
+  ],
+  "experience": [
+    { "company": "Luoyang Shangxian Technology Co., Ltd.", "role": "Data Analyst Intern", "period": "2025.06 – 2025.08", "bullets": [
+      "Cleaned, aggregated and analyzed business logs and operations data with Python (Pandas/NumPy) and SQL, processing 100,000+ structured records.",
+      "Built and maintained the core KPI system (activity, conversion, retention) and standardized metric definitions.",
+      "Produced weekly and monthly reports in Tableau and Excel, monitoring trends and anomalies for product and operations decisions.",
+      "Optimized key SQL queries (indexing and query structure), cutting runtime by about 20%.",
+      "Worked with product and operations teams to turn findings into actionable recommendations."
+    ] }
+  ],
+  "education": [
+    { "school": "New York University", "degree": "M.S. in Management & Analytics (Business Analytics)", "period": "2025.09 – 2026.12 (expected)", "gpa": "3.83 / 4.00" },
+    { "school": "Xi'an Conservatory of Music", "degree": "B.M. in Music Performance (Guqin)", "period": "2021.09 – 2025.07", "honors": [
+      "Outstanding Graduate, Class of 2025",
+      "National Inspirational Scholarship (2023–2024)",
+      "University Honor Scholarship (2023–2024)",
+      "University Scholarship (2023–2024)",
+      "Outstanding Student (2023–2024)",
+      "Outstanding Student Leader (2022–2023)",
+      "University Financial Aid Scholarship (2022–2023)",
+      "Performance Award (Professional Division), “Youlan · Yangchun” Competition (2024)",
+      "Excellence Award (Professional Division), Shaanxi Provincial Traditional Instrument Exhibition (2024)"
+    ] }
+  ],
+  "contact": { "email": "zhuohengli03@gmail.com", "github": "Zhuohengli03" }
+}

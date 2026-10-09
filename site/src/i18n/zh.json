@@ -1,0 +1,19 @@
+{
+  "site": { "title": "李卓衡", "description": "李卓衡——纽约大学商业分析方向硕士在读，做数据产品。古琴演奏者出身的产品构建者。" },
+  "nav": { "work": "作品", "experience": "经历", "contact": "联系", "switch": "EN", "theme": "切换配色" },
+  "hero": { "resume": "简历", "email": "邮件" },
+  "sections": {
+    "work": "精选作品", "workSub": "两个我愿意逐页讲给面试官听的项目：一个我做出来并在运营的产品，一个为了做决策而搭的数据管道。",
+    "analytics": "分析项目", "analyticsSub": "问题 → 方法 → 产出。用 KPI 体系、cohort 和分群得出的结论，而不只是代码。",
+    "more": "更多项目",
+    "experience": "经历",
+    "education": "教育与荣誉",
+    "honors": "荣誉与奖项"
+  },
+  "labels": { "role": "角色", "period": "时间", "stack": "技术", "scale": "规模", "links": "链接", "present": "至今", "question": "问题", "method": "方法", "output": "产出" },
+  "actions": { "caseStudy": "查看案例", "github": "GitHub", "live": "访问站点", "back": "返回首页", "clientWork": "客户项目" },
+  "case": { "problem": "问题", "decisions": "决策", "result": "结果", "gallery": "画廊", "close": "关闭" },
+  "footer": { "contact": "联系", "elsewhere": "链接", "language": "语言", "linkedinTodo": "LinkedIn（链接待补）" },
+  "a11y": { "home": "首页", "primaryNav": "主导航", "keyNumbers": "关键数字", "imagePreview": "图片预览", "openImage": "打开图片" },
+  "notFound": { "title": "页面不存在", "body": "这里没有这个页面。", "home": "回到首页" }
+}
