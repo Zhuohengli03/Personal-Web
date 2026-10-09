@@ -13,6 +13,7 @@ const t = text[locale];
 ---
 <section class="exhibits" data-exhibits>
   <p class="eyebrow center">{t.exhibits}</p>
+  <p class="note center">{t.note}</p>
   <div class="strip reveal"><SpecRow items={t.stats} columns={4} /></div>
 
   <figure class="exhibit reveal">
@@ -35,7 +36,8 @@ const t = text[locale];
 </section>
 <style>
   .exhibits { margin-top: 3rem; }
-  .exhibits .eyebrow { margin-bottom: 1.5rem; }
+  .exhibits .eyebrow { margin-bottom: 0.6rem; }
+  .note { max-width: var(--measure); margin: 0 auto 2.2rem; font-size: 0.85rem; line-height: 1.5; color: var(--fg-muted); text-wrap: balance; }
   .strip { margin-bottom: 3rem; }
   .strip :global(.specrow) { grid-template-columns: repeat(2, 1fr); }
   @media (min-width: 720px) { .strip :global(.specrow) { grid-template-columns: repeat(5, 1fr); } }
