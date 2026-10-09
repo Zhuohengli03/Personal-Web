@@ -134,9 +134,20 @@
       "period": "2025.09 – 2027.01 (expected)",
       "gpa": "3.92 / 4.00",
       "coursework": [
-        "Tech Project Management",
-        "Data-Driven Decision Making",
-        "Databases"
+        "Quantitative Methods for Business Analysis",
+        "Database Management",
+        "Managing Technical Projects",
+        "Organizational Risk Management and Information Security",
+        "Management Skills for Technology Professionals",
+        "Data-Driven Decision-Making",
+        "Managing Change and Innovation",
+        "Foundations of Business Analytics"
+      ],
+      "courseworkInProgress": [
+        "Emerging Technologies",
+        "Advanced Business Analytics",
+        "Advanced Data Warehousing Applications",
+        "Applied Technical Project"
       ]
     },
     {

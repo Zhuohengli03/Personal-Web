@@ -37,7 +37,8 @@
     "output": "成果",
     "gpa": "平均绩点",
     "honorCount": "{n} 项",
-    "coursework": "核心课程"
+    "coursework": "已修课程",
+    "courseworkInProgress": "在修 · 2026 年秋"
   },
   "category": {
     "product": "产品",
