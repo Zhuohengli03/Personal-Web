@@ -4,8 +4,10 @@ Items that only the site owner can supply. Everything else on the site is source
 
 | Item | Where | How to replace |
 |---|---|---|
-| Résumé PDF | `site/public/resume.pdf` (placeholder one-pager) | Overwrite the file with the real PDF; keep the name. |
-| LinkedIn URL | `site/src/data/profile.en.json` and `profile.zh.json` → `contact.linkedin` | Add `"linkedin": "https://www.linkedin.com/in/…"` to `contact` in both files; the footer renders the link automatically. |
+| Résumé PDFs | `site/public/resume-en.pdf` (EN page) and `site/public/resume-zh.pdf` (ZH page) — both placeholders | Overwrite with the real PDFs, **without phone numbers** (the site is public and gets scraped); keep the names. |
+| Profile photo for the hanging badge | `site/src/assets/photo.jpg` | Drop a front-facing photo there; the badge component crops it. |
+
+Done: LinkedIn URL is in `profile.*.json` → `contact.linkedin` and renders in the footer.
 
 Refresh commands: `node scripts/fetch-github.mjs` (activity data), `cd site && node scripts/shoot.mjs` (live-site screenshots), `cd site && node scripts/audit.mjs` (responsive snapshots + Lighthouse into `site/audit-results/`).
 

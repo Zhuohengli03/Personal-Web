@@ -1,13 +1,13 @@
 {
   "hero": {
-    "eyebrow": "Zhuoheng Li · M.S. Management & Analytics, NYU",
+    "eyebrow": "Zhuoheng (Felix) Li · M.S. Management and Analytics, NYU",
     "title": "From the seven strings of the guqin to the metrics behind a product.",
-    "subtitle": "I trained as a guqin performer, then moved into business analytics. Along the way I built Lingxian, a notation editor that musicians use today. I like turning a messy domain into a clear product and a clear set of numbers."
+    "subtitle": "I trained as a guqin performer, then moved into business analytics. Along the way I built Lingxian, a notation editor now in invite-only beta with 94 registered users. I like turning a messy domain into a clear product and a clear set of numbers."
   },
   "stats": [
     {
       "label": "GPA, NYU",
-      "value": "3.83 / 4.00"
+      "value": "3.92 / 4.00"
     },
     {
       "label": "Commits on Lingxian",
@@ -16,8 +16,9 @@
       "repo": "Guqin-AI"
     },
     {
-      "label": "Records analyzed (internship)",
-      "value": "100k+"
+      "label": "Lingxian beta users",
+      "value": "94",
+      "hint": "160 scores · 144 PDF exports · 20.7% week-2 retention (2026-09)"
     },
     {
       "label": "Live sites shipped",
@@ -69,7 +70,7 @@
     },
     {
       "title": "Meteor Madness — NASA Space Apps 2025",
-      "body": "Asteroid-impact simulator on NASA open data. I led the Prediction module: API integration and the 2D map that replaced the 3D globe for stability.",
+      "body": "Asteroid-impact simulator on NASA NEO / Fireball / EONET data: crater, tsunami and blast-radius effects plus population exposure, with a Three.js globe and a Java REST backend. Two-person team; I built half of the features end to end — front end, backend and API.",
       "period": "2025.10",
       "github": "https://github.com/Zhuohengli03/Hackthon-Meteror"
     },
@@ -98,13 +99,13 @@
   "education": [
     {
       "school": "New York University",
-      "degree": "M.S. in Management & Analytics (Business Analytics)",
-      "period": "2025.09 – 2026.12 (expected)",
-      "gpa": "3.83 / 4.00"
+      "degree": "M.S. in Management and Analytics (STEM)",
+      "period": "2025.09 – 2027.01 (expected)",
+      "gpa": "3.92 / 4.00"
     },
     {
       "school": "Xi'an Conservatory of Music",
-      "degree": "B.M. in Music Performance (Guqin)",
+      "degree": "B.A. in Music Performance (Guqin)",
       "period": "2021.09 – 2025.07",
       "honors": [
         "Outstanding Graduate, Class of 2025",
@@ -121,6 +122,7 @@
   ],
   "contact": {
     "email": "zhuohengli03@gmail.com",
-    "github": "Zhuohengli03"
+    "github": "Zhuohengli03",
+    "linkedin": "https://www.linkedin.com/in/zhuoheng-li-3365b5351/"
   }
 }

@@ -10,7 +10,7 @@ const tr = t(locale);
     <h1 class="fade-up" data-delay="2">{title}</h1>
     <p class="prose fade-up" data-delay="3">{subtitle}</p>
     <div class="cta fade-up" data-delay="4">
-      <a class="btn btn-primary" href="/resume.pdf">{tr('hero.resume')}</a>
+      <a class="btn btn-primary" href={locale === 'zh' ? '/resume-zh.pdf' : '/resume-en.pdf'}>{tr('hero.resume')}</a>
       <a class="btn" href={`mailto:${email}`}>{tr('hero.email')}</a>
     </div>
   </div>
