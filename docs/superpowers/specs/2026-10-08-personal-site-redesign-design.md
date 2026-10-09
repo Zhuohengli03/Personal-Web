@@ -46,8 +46,8 @@ Language switch links to the same path under the other locale. `<html lang>` and
 ### 3.1 Home sections (in order)
 
 1. **Hero** — eyebrow (mono): `Zhuoheng Li · M.S. Management & Analytics, NYU`; serif title, one sentence positioning; 44ch subtitle; CTA row: `Résumé` (primary, → `/resume.pdf`), `Email` (secondary, → `mailto:zhuohengli03@gmail.com`).
-2. **Stats row** — four label/value pairs: `GPA 3.83 / 4.00`, `1,200+ commits · Guqin-AI`, `100k+ records analyzed`, `2 live sites shipped`. Values that come from GitHub are read from `src/data/github.json`.
-3. **Selected work** — two large `WorkCard`s (Guqin-AI, DaD-Market-Forecast): serif title + badge (`Product` / `Data`), 2–3 line body, spec grid (Role · Period · Stack · Scale), a `Waffle` visual, link row (`Case study →`, `GitHub` when public, `Demo` placeholder for Guqin-AI).
+2. **Stats row** — four label/value pairs: `GPA 3.83 / 4.00`, `1,200+ commits · Lingxian`, `100k+ records analyzed`, `4 live sites shipped` (lingxian.app, lzhpw.com, web-designer-lac.vercel.app, qinghua-deep-evol.vercel.app). Values that come from GitHub are read from `src/data/github.json`.
+3. **Selected work** — two large `WorkCard`s (Lingxian / Guqin-AI, DaD-Market-Forecast): serif title + badge (`Product` / `Data`), 2–3 line body, spec grid (Role · Period · Stack · Scale), a `Waffle` visual, link row (`Case study →`, `GitHub` when public, `Live site ↗` → https://lingxian.app for Guqin-AI). The product is publicly named **Lingxian (灵弦)**; the repo name Guqin-AI appears only as the slug.
    - Guqin-AI waffle: one cell per week since 2026-02-12, filled by commits that week (bucketed from `github.json`).
    - DaD waffle: one cell per item category / data table tracked; a simpler fixed layout from frontmatter.
 4. **Analytics** — three-column `FeatureGrid` using the old site's three non-GitHub analyses, rewritten as *Question → Method → Output*: E-commerce user & marketing analytics (KPI system, cohort, RFM + K-means); Operations & product-selection analytics (metric framework, daily briefs); Social networks & starting salary (survey cleaning, group comparison). Each may link to screenshots carried over from the old repo.
@@ -63,8 +63,8 @@ Header: eyebrow (category · period) → serif title → one-sentence summary �
 - **Problem** — the user problem in plain language (Guqin-AI: the three pains of notating guqin music; DaD: deciding when to buy/sell on a volatile in-game market).
 - **Decisions** — 3–4 product/engineering decisions, each with *why*.
 - **Result** — feature list + engineering data (Guqin-AI: commits, active months, monorepo packages, stack; DaD: data volume, models, forecast horizon). Uses `Waffle` and `SpecRow`.
-- **Gallery** — responsive grid of images from `public/work/<slug>/`; Guqin-AI uses `[TODO]` placeholder tiles until screenshots arrive; DaD uses the ten `game-market` screenshots carried over (renamed `01.png`…). Images lazy-load; click opens native `<dialog>` lightbox (small inline script).
-- **Links** — GitHub (if public), Demo (`[TODO]` disabled button with tooltip for Guqin-AI), back to home.
+- **Gallery** — responsive grid of images from `src/assets/work/<slug>/` (so `astro:assets` can resize and convert to WebP); Lingxian uses screenshots taken from the live site https://lingxian.app; DaD uses the `game-market` screenshots carried over (renamed `01.png`…). Images lazy-load; click opens native `<dialog>` lightbox (small inline script).
+- **Links** — GitHub (if public), Live site (Lingxian → https://lingxian.app), back to home.
 
 ## 4. Content model
 
@@ -122,11 +122,12 @@ The owner has asked that project materials be produced by running the repos, not
 
 | Project | Source of images | Plan |
 |---|---|---|
-| Guqin-AI | run locally | `git clone` into the scratchpad, `pnpm install`, bring up Postgres via its `infra/` compose or a local Postgres, `prisma migrate`, `pnpm dev`; Playwright screenshots at 1440×900 (light) of: landing hero, editor with jianzipu + staff, vertical layout, print/PDF view, settings panel. Target 5–8 images. |
+| Lingxian (Guqin-AI) | live site https://lingxian.app | Playwright screenshots at 1440×900 of: `/en` landing hero, `/editor` with a few notes entered, `/zhifa` fingering reference, `/pricing`, `/blog`. Target 5–7 images. No local setup needed. If the live site is down, fall back to running the repo locally (Postgres 15 is installed; minimum env: `AUTH_SECRET`, `DATABASE_URL`, `NEXTAUTH_URL`, `AUTH_TRUST_HOST=true`). |
 | DaD-Market-Forecast | old repo screenshots (`game-market/`, 10 files) | copy, rename `01.png`…, write captions from what each shows. Optionally re-run `main.py` for a fresh forecast chart if deps install cleanly. |
 | Crawler | old repo screenshots (6) | copy, rename, caption. |
 | Meteor Madness | old repo screenshots (`nasa-space-apps/`) | copy, rename; if fewer than 3 usable, run the JS front end and screenshot the globe/map. |
-| WebDesigner, DeepEvol | run locally | static/Vite sites; `npm i && npm run dev`, screenshot hero + one section each. |
+| WebDesigner, DeepEvol | live sites https://web-designer-lac.vercel.app, https://qinghua-deep-evol.vercel.app | screenshot hero + one section each. Fallback: run locally (`npm i && npm run dev`). |
+| Xingyuanguzheng | live site https://www.lzhpw.com | one hero screenshot, used in the "4 live sites" stat tooltip/list only. |
 | E-commerce / Operations analytics | old repo screenshots | copy, rename, caption; crop anything that exposes personal data. |
 
 Screenshot rules: 1440×900 viewport, device scale 2, PNG → converted to WebP (≤ 300 KB each) at build via `astro:assets`. No personal data, tokens or local paths visible; crop or blur if needed. Each image gets an `alt` and a caption in both locales. A `scripts/shoot.mjs` (Playwright) records the URL list per project so the set can be regenerated.
