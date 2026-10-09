@@ -1,0 +1,131 @@
+---
+// Badge.astro — a lanyard badge that drops from the top of the hero on an elastic rope and swings to rest.
+// Physics: one point mass on a damped spring under gravity (semi-implicit Euler). Draggable. Static under
+// prefers-reduced-motion and without JS.
+import { Image } from 'astro:assets';
+import photo from '../assets/photo.jpg';
+interface Props { name: string; line1: string; line2: string }
+const { name, line1, line2 } = Astro.props;
+---
+<div class="rig" data-badge>
+  <svg class="rope" aria-hidden="true">
+    <line class="rope-line" x1="50%" y1="0" x2="50%" y2="0" />
+  </svg>
+  <div class="card" data-card>
+    <span class="clip" aria-hidden="true"></span>
+    <Image src={photo} alt={name} width={360} height={360} fit="cover" format="webp" quality={82} loading="eager" />
+    <p class="name">{name}</p>
+    <p class="line">{line1}</p>
+    <p class="line muted">{line2}</p>
+  </div>
+</div>
+<style>
+  .rig {
+    --w: 132px; --h: 222px; --rest: 64px;
+    position: relative; width: 220px; height: calc(var(--rest) + var(--h) + 28px); margin: 0 auto;
+    pointer-events: none;
+  }
+  @media (min-width: 1100px) { .rig { --w: 150px; --h: 214px; --rest: 120px; height: calc(var(--rest) + var(--h) + 40px); } }
+  .rope { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+  .rope-line { stroke: var(--fg-muted); stroke-width: 2; stroke-linecap: round; opacity: 0.6; }
+  .card {
+    position: absolute; left: 0; top: 0; width: var(--w);
+    transform-origin: 50% 0;
+    /* rest pose (no JS / reduced motion): hanging straight down; --sag mirrors the spring's G/K stretch in the script */
+    --sag: 13px;
+    transform: translate(110px, calc(var(--rest) + var(--sag))) translateX(-50%);
+    background: var(--bg); border: 1px solid var(--rule); border-radius: 12px; padding: 0 0 0.9rem;
+    box-shadow: 0 12px 30px -16px color-mix(in srgb, var(--fg) 45%, transparent);
+    pointer-events: auto; cursor: grab; user-select: none; touch-action: none; overflow: hidden;
+  }
+  .card:active { cursor: grabbing; }
+  .clip { position: absolute; top: 6px; left: 50%; width: 26px; height: 8px; transform: translateX(-50%); border-radius: 4px; background: var(--fg-muted); opacity: 0.6; }
+  .card :global(img) { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; margin-top: 20px; }
+  .name { font-family: var(--font-serif); font-size: 0.92rem; line-height: 1.2; margin: 0.6rem 0.7rem 0.2rem; color: var(--fg); text-wrap: balance; }
+  .line { font-family: var(--font-mono); font-size: 0.55rem; letter-spacing: 0.05em; line-height: 1.4; margin: 0 0.7rem; color: var(--fg); text-transform: uppercase; }
+  @media (min-width: 1100px) { .line { font-size: 0.6rem; margin: 0 0.8rem; } }
+  .line.muted { color: var(--fg-muted); }
+  html.js .rig[data-live] .card { transform: none; } /* JS drives the transform from here on */
+  @media (prefers-reduced-motion: reduce) { html.js .rig[data-live] .card { transform: translate(110px, calc(var(--rest) + var(--sag))) translateX(-50%); } }
+</style>
+<script>
+  // ---------- physics ----------
+  interface S { x: number; y: number; vx: number; vy: number }
+  const G = 1800;        // px/s²
+  const K = 140;         // spring stiffness (per unit mass)
+  const C_ROPE = 9;      // damping along the rope
+  const DRAG = 1.1;      // air drag on velocity (a few swings, then rest)
+  const MAX_DT = 1 / 30;
+
+  const stepState = (s: S, dt: number, rest: number): S => {
+    const len = Math.hypot(s.x, s.y) || 1e-6;
+    const ux = s.x / len, uy = s.y / len;
+    const ext = len - rest;
+    const vAlong = s.vx * ux + s.vy * uy;
+    const fx = -K * ext * ux - C_ROPE * vAlong * ux - DRAG * s.vx;
+    const fy = G - K * ext * uy - C_ROPE * vAlong * uy - DRAG * s.vy;
+    const vx = s.vx + fx * dt, vy = s.vy + fy * dt;
+    return { x: s.x + vx * dt, y: s.y + vy * dt, vx, vy };
+  };
+
+  // ---------- wiring ----------
+  const rig = document.querySelector<HTMLElement>('[data-badge]');
+  const card = rig?.querySelector<HTMLElement>('[data-card]');
+  const rope = rig?.querySelector<SVGLineElement>('.rope-line');
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (rig && card && rope && !reduced) {
+    const rest = parseFloat(getComputedStyle(rig).getPropertyValue('--rest')) || 120;
+    const yEq = rest + G / K; // the rope stretches by G/K under the badge's weight (matches --sag in the CSS)
+    const anchorX = rig.clientWidth / 2;
+    rope.setAttribute('x1', String(anchorX));
+    rig.setAttribute('data-live', '');
+
+    let s: S = { x: 18, y: -(rest + 240), vx: -70, vy: 0 }; // starts above the frame with a small sideways nudge
+    let last = performance.now();
+    let calm = 0;
+    let raf = 0;
+    let grab: { dx: number; dy: number; px: number; py: number; t: number } | null = null;
+
+    const render = () => {
+      const phi = Math.atan2(-s.x, s.y); // hang the card along the rope
+      card.style.transform = `translate(${anchorX + s.x}px, ${s.y}px) translateX(-50%) rotate(${phi}rad)`;
+      rope.setAttribute('x2', String(anchorX + s.x));
+      rope.setAttribute('y2', String(s.y));
+    };
+
+    const frame = (now: number) => {
+      const dt = Math.min(MAX_DT, (now - last) / 1000);
+      last = now;
+      if (!grab) {
+        s = stepState(s, dt, rest);
+        const settled = Math.hypot(s.vx, s.vy) < 3 && Math.abs(s.x) < 0.4 && Math.abs(s.y - yEq) < 0.4;
+        calm = settled ? calm + 1 : 0;
+      }
+      render();
+      if (calm > 40) { s = { x: 0, y: yEq, vx: 0, vy: 0 }; render(); raf = 0; return; }
+      raf = requestAnimationFrame(frame);
+    };
+    const wake = () => { if (!raf) { last = performance.now(); calm = 0; raf = requestAnimationFrame(frame); } };
+
+    card.addEventListener('pointerdown', (e) => {
+      const r = rig.getBoundingClientRect();
+      grab = { dx: e.clientX - r.left - anchorX - s.x, dy: e.clientY - r.top - s.y, px: e.clientX, py: e.clientY, t: performance.now() };
+      card.setPointerCapture(e.pointerId);
+      wake();
+    });
+    card.addEventListener('pointermove', (e) => {
+      if (!grab) return;
+      const r = rig.getBoundingClientRect();
+      const nx = e.clientX - r.left - anchorX - grab.dx, ny = e.clientY - r.top - grab.dy;
+      const dt = Math.max(1, performance.now() - grab.t) / 1000;
+      s = { x: nx, y: ny, vx: (e.clientX - grab.px) / dt, vy: (e.clientY - grab.py) / dt };
+      grab = { ...grab, px: e.clientX, py: e.clientY, t: performance.now() };
+    });
+    const release = () => { grab = null; wake(); };
+    card.addEventListener('pointerup', release);
+    card.addEventListener('pointercancel', release);
+
+    wake();
+  }
+</script>

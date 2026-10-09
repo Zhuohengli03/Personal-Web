@@ -35,7 +35,12 @@ const education = z.object({
 });
 
 export const profileSchema = z.object({
-  hero: z.object({ eyebrow: z.string(), title: z.string(), subtitle: z.string() }),
+  hero: z.object({
+    eyebrow: z.string(),
+    title: z.string(),
+    subtitle: z.string(),
+    badge: z.object({ name: z.string(), line1: z.string(), line2: z.string() }),
+  }),
   stats: z.array(stat).length(4),
   analytics: z.array(analytics).length(3),
   miniProjects: z.array(mini).length(3),

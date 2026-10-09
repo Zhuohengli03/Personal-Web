@@ -2,7 +2,12 @@
   "hero": {
     "eyebrow": "Zhuoheng (Felix) Li · M.S. Management and Analytics, NYU",
     "title": "From the seven strings of the guqin to the metrics behind a product.",
-    "subtitle": "I trained as a guqin performer, then moved into business analytics. Along the way I built Lingxian, a notation editor now in invite-only beta with 94 registered users. I like turning a messy domain into a clear product and a clear set of numbers."
+    "subtitle": "I trained as a guqin performer, then moved into business analytics. Along the way I built Lingxian, a notation editor now in invite-only beta with 94 registered users. I like turning a messy domain into a clear product and a clear set of numbers.",
+    "badge": {
+      "name": "Zhuoheng (Felix) Li",
+      "line1": "M.S. Management & Analytics",
+      "line2": "NYU · Class of 2027"
+    }
   },
   "stats": [
     {

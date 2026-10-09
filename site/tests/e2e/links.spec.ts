@@ -45,10 +45,11 @@ test('CJK font stylesheets are linked on zh pages only', () => {
   for (const file of htmlFiles(dist)) {
     if (file.endsWith('404.html')) continue;
     const html = readFileSync(file, 'utf8');
-    const links = (html.match(/<link rel="stylesheet" href="[^"]+"/g) ?? []).length;
+    const hrefs = [...html.matchAll(/<link rel="stylesheet" href="([^"]+)"/g)].map((m) => m[1]);
+    // an @font-face rule for the CJK family, not merely the family name in a fallback list
+    const cjkSheets = hrefs.filter((h) => /@font-face\{[^}]*Noto (Sans|Serif) SC/.test(readFileSync(join(dist, h), 'utf8'))).length;
     const isZh = file.replace(dist, '').startsWith('/zh/');
-    // zh: base css + noto sans sc + noto serif sc; en: base css only
-    expect(links, file).toBe(isZh ? 3 : 1);
+    expect(cjkSheets, file).toBe(isZh ? 2 : 0);
   }
 });
 
