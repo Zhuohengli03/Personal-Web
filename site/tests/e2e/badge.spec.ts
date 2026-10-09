@@ -6,9 +6,11 @@ async function pose(card: Locator): Promise<{ x: number; y: number; r: number } 
   const m = /translate\(([-\d.e]+)px, ([-\d.e]+)px\) translateX\(-50%\) rotate\(([-\d.e]+)rad\)/.exec(t);
   return m ? { x: +m[1], y: +m[2], r: +m[3] } : null;
 }
-// rest = --rest (inextensible rope) + 4px clip offset: desktop 120 → 124, narrow 64 → 68
+// at rest the card hangs straight below the rig's centre at --rest (inextensible rope) + 4px clip offset:
+// wide 140 → 144 (rig 300px wide → x 150), narrow 64 → 68 (rig 240px → x 120)
 const atRest = (p: { x: number; y: number; r: number } | null) =>
-  !!p && Math.abs(p.x - 110) < 0.5 && Math.abs(p.r) < 0.01 && (Math.abs(p.y - 124) < 1.5 || Math.abs(p.y - 68) < 1.5);
+  !!p && Math.abs(p.r) < 0.01 &&
+  ((Math.abs(p.x - 150) < 0.5 && Math.abs(p.y - 144) < 1.5) || (Math.abs(p.x - 120) < 0.5 && Math.abs(p.y - 68) < 1.5));
 
 test('badge drops and comes to rest below its anchor', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'no-preference' });

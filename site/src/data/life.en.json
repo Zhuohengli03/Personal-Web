@@ -1,0 +1,112 @@
+{
+  "intro": "What the rest of the time looks like. Click a card to filter the photos.",
+  "hobbies": [
+    {
+      "id": "guqin",
+      "title": "Guqin",
+      "blurb": "Four years as a performance major at Xi'an Conservatory and two competition awards. Also the reason Lingxian exists."
+    },
+    {
+      "id": "photo",
+      "title": "Photography & travel",
+      "blurb": "Mostly skylines, mountains and the hour before dark: New York, San Francisco, Philadelphia, Japan — and a few places still to be labelled."
+    },
+    {
+      "id": "cooking",
+      "title": "Cooking",
+      "blurb": "Home cooking. Photos to come."
+    },
+    {
+      "id": "games",
+      "title": "Games",
+      "blurb": "Including the one whose market I modelled — see the Dark and Darker price forecast above."
+    },
+    {
+      "id": "swimming",
+      "title": "Swimming",
+      "blurb": "Lengths, not laps around the pool deck."
+    }
+  ],
+  "photos": [
+    {
+      "file": "photo/p05.jpg",
+      "hobby": "photo",
+      "caption": "Lower Manhattan at dusk, from the Jersey City waterfront · [TODO: year]"
+    },
+    {
+      "file": "photo/p15.jpg",
+      "hobby": "photo",
+      "caption": "Statue of Liberty after sunset · [TODO: year]"
+    },
+    {
+      "file": "photo/p03.jpg",
+      "hobby": "photo",
+      "caption": "One World Trade Center across the Hudson, with a gull on the rail · [TODO: year]"
+    },
+    {
+      "file": "photo/p10.jpg",
+      "hobby": "photo",
+      "caption": "Golden Gate Bridge, San Francisco · [TODO: year]"
+    },
+    {
+      "file": "photo/p11.jpg",
+      "hobby": "photo",
+      "caption": "City Hall, Philadelphia · [TODO: year]"
+    },
+    {
+      "file": "photo/p16.jpg",
+      "hobby": "photo",
+      "caption": "Deer and a cracker stand, Nara, Japan · [TODO: year]"
+    },
+    {
+      "file": "photo/p08.jpg",
+      "hobby": "photo",
+      "caption": "Cherry blossoms over a cycle path · [TODO: place, year]"
+    },
+    {
+      "file": "photo/p12.jpg",
+      "hobby": "photo",
+      "caption": "Switchbacks down to a glacial lake · [TODO: place, year]"
+    },
+    {
+      "file": "photo/p13.jpg",
+      "hobby": "photo",
+      "caption": "Snow peaks above the firs · [TODO: place, year]"
+    },
+    {
+      "file": "photo/p06.jpg",
+      "hobby": "photo",
+      "caption": "Sun breaking over a lake · [TODO: place, year]"
+    },
+    {
+      "file": "photo/p01.jpg",
+      "hobby": "photo",
+      "caption": "Grassland in high summer · [TODO: place, year]"
+    },
+    {
+      "file": "photo/p04.jpg",
+      "hobby": "photo",
+      "caption": "Shallows and salt flats · [TODO: place, year]"
+    },
+    {
+      "file": "photo/p14.jpg",
+      "hobby": "photo",
+      "caption": "A pavilion by the lake · [TODO: place, year]"
+    },
+    {
+      "file": "photo/p09.jpg",
+      "hobby": "photo",
+      "caption": "A deer on the ridge at sunset · [TODO: place, year]"
+    },
+    {
+      "file": "photo/p02.jpg",
+      "hobby": "photo",
+      "caption": "Red sky over the car park · [TODO: place, year]"
+    },
+    {
+      "file": "photo/p07.jpg",
+      "hobby": "photo",
+      "caption": "Benjamin Franklin in front of College Hall, University of Pennsylvania, Philadelphia · [TODO: year]"
+    }
+  ]
+}

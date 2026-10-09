@@ -1,8 +1,8 @@
 {
   "hero": {
-    "eyebrow": "Zhuoheng (Felix) Li · M.S. Management and Analytics, NYU",
-    "title": "From the seven strings of the guqin to the metrics behind a product.",
-    "subtitle": "I trained as a guqin performer, then moved into business analytics. Along the way I built Lingxian, a notation editor now in invite-only beta with 94 registered users. I like turning a messy domain into a clear product and a clear set of numbers.",
+    "eyebrow": "Zhuoheng (Felix) Li · Product & Analytics · NYU ’27",
+    "title": "I shipped a product, then measured every step of it.",
+    "subtitle": "Grad student in Management and Analytics at NYU, trained first as a guqin performer. I founded Lingxian, a notation editor for guqin players now in private beta with 94 users, and I run it the way I want to work: user research, funnel analysis, small experiments, honest numbers. Open to product, analytics and game-design roles starting 2027.",
     "badge": {
       "name": "Zhuoheng (Felix) Li",
       "line1": "M.S. Management & Analytics",
@@ -26,9 +26,9 @@
       "hint": "160 scores · 144 PDF exports · 20.7% week-2 retention (2026-09)"
     },
     {
-      "label": "Live sites shipped",
+      "label": "Sites shipped",
       "value": "4",
-      "hint": "lingxian.app · lzhpw.com · web-designer-lac.vercel.app · qinghua-deep-evol.vercel.app"
+      "hint": "1 product · 1 studio brand · 2 for clients"
     }
   ],
   "analytics": [
@@ -81,7 +81,7 @@
     },
     {
       "title": "Client sites: WebDesigner, DeepEvol",
-      "body": "Two marketing sites delivered for clients — a web-design studio and a research-tools startup — from brief to deployed Vercel site.",
+      "body": "Two marketing sites I took from brief to a deployed site: one for Felix, my own web-design studio brand, and one for DeepEvol, a research-tools startup.",
       "period": "2026.08–09",
       "live": "https://web-designer-lac.vercel.app",
       "clientWork": true

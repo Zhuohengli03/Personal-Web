@@ -8,6 +8,8 @@ import ProjectMini from '../components/ProjectMini.astro';
 import Timeline from '../components/Timeline.astro';
 import EducationCard from '../components/EducationCard.astro';
 import Divider from '../components/Divider.astro';
+import Life from '../components/Life.astro';
+import Lightbox from '../components/Lightbox.astro';
 import { t, type Locale } from '../i18n';
 import { loadProfile } from '../lib/profile';
 import { getProjects } from '../lib/projects';
@@ -56,6 +58,10 @@ const stats = p.stats.map((s) => ({
     <div class="section-head reveal"><h2>{tr('sections.education')}</h2></div>
     <div class="grid-2">{p.education.map((e) => <EducationCard item={e} locale={locale} />)}</div>
   </section>
+
+  <Divider />
+  <Life locale={locale} />
+  <Lightbox closeLabel={tr('case.close')} label={tr('a11y.imagePreview')} />
 </BaseLayout>
 <style>
   .tight { gap: 1.25rem; }

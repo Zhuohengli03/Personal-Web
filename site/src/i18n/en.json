@@ -1,20 +1,72 @@
 {
-  "site": { "title": "Zhuoheng Li", "description": "Zhuoheng Li — business analytics graduate student at NYU who builds data products. Guqin performer turned product builder." },
-  "nav": { "work": "Work", "experience": "Experience", "contact": "Contact", "switch": "中文", "theme": "Toggle color theme" },
-  "hero": { "resume": "Résumé", "email": "Email" },
+  "site": {
+    "title": "Zhuoheng Li",
+    "description": "Zhuoheng Li — business analytics graduate student at NYU who builds data products. Guqin performer turned product builder."
+  },
+  "nav": {
+    "work": "Work",
+    "experience": "Experience",
+    "contact": "Contact",
+    "switch": "中文",
+    "theme": "Toggle color theme",
+    "life": "Life"
+  },
+  "hero": {
+    "resume": "Résumé",
+    "email": "Email"
+  },
   "sections": {
-    "work": "Selected work", "workSub": "Two projects I would walk a hiring manager through: one product I built and run, one data pipeline I built to decide with.",
-    "analytics": "Analytics", "analyticsSub": "Question → method → output. Work done with KPI systems, cohorts and segmentation rather than code alone.",
+    "work": "Selected work",
+    "workSub": "Two projects that show how I work: a product I built and still run, and a data pipeline I built so I could decide with numbers instead of hunches.",
+    "analytics": "Analytics",
+    "analyticsSub": "Question → method → output. Conclusions reached with metric systems, cohorts and segmentation, not just code.",
     "more": "More projects",
     "experience": "Experience",
     "education": "Education & honors",
-    "honors": "Honors and awards"
+    "honors": "Honors and awards",
+    "life": "Beyond work"
   },
-  "labels": { "role": "Role", "period": "Period", "stack": "Stack", "scale": "Scale", "links": "Links", "question": "Question", "method": "Method", "output": "Output" },
-  "category": { "product": "Product", "data": "Data" },
-  "actions": { "caseStudy": "Case study", "github": "GitHub", "live": "Live site", "back": "Back to home", "clientWork": "Client work" },
-  "case": { "gallery": "Gallery", "close": "Close" },
-  "footer": { "contact": "Contact", "elsewhere": "Elsewhere", "language": "Language", "linkedinTodo": "LinkedIn (link coming)" },
-  "a11y": { "primaryNav": "Primary", "keyNumbers": "Key numbers", "imagePreview": "Image preview", "openImage": "Open image", "activity": "{n} commits, {from} to {to}, one cell per week" },
-  "notFound": { "title": "Page not found", "body": "That page does not exist here.", "home": "Go home" }
+  "labels": {
+    "role": "Role",
+    "period": "Period",
+    "stack": "Stack",
+    "scale": "Scale",
+    "links": "Links",
+    "question": "Question",
+    "method": "Method",
+    "output": "Output"
+  },
+  "category": {
+    "product": "Product",
+    "data": "Data"
+  },
+  "actions": {
+    "caseStudy": "Case study",
+    "github": "GitHub",
+    "live": "Live site",
+    "back": "Back to home",
+    "clientWork": "Client work"
+  },
+  "case": {
+    "gallery": "Gallery",
+    "close": "Close"
+  },
+  "footer": {
+    "contact": "Contact",
+    "elsewhere": "Elsewhere",
+    "language": "Language",
+    "linkedinTodo": "LinkedIn (link coming)"
+  },
+  "a11y": {
+    "primaryNav": "Primary",
+    "keyNumbers": "Key numbers",
+    "imagePreview": "Image preview",
+    "openImage": "Open image",
+    "activity": "{n} commits, {from} to {to}, one cell per week"
+  },
+  "notFound": {
+    "title": "Page not found",
+    "body": "That page does not exist here.",
+    "home": "Go home"
+  }
 }
