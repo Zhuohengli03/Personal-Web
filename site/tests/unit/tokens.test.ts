@@ -17,4 +17,13 @@ describe('tokens', () => {
     expect(t['lingxian.users']).toBe(94);
     expect(typeof t['lingxian.asOf']).toBe('string');
   });
+  it('localizes Chinese dates while preserving month precision and metric values', () => {
+    const zh = siteTokens(github, 'Guqin-AI', 'zh');
+    const en = siteTokens(github, 'Guqin-AI', 'en');
+    expect(zh['lingxian.asOf']).toBe('2026 年 9 月');
+    expect(zh.lastCommit).toBe('2026 年 10 月 5 日');
+    expect(zh['lingxian.users']).toBe(en['lingxian.users']);
+    expect(en['lingxian.asOf']).toBe('2026-09');
+    expect(en.lastCommit).toBe('2026-10-05');
+  });
 });

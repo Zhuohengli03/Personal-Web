@@ -14,10 +14,10 @@ const nav = [
 ---
 <header class="site-header">
   <div class="wrap bar">
-    <a class="wordmark" href={home}>Zhuoheng Li</a>
+    <a class="wordmark" href={home}>{tr('site.title')}</a>
     <nav aria-label={tr('a11y.primaryNav')}>
       {nav.map(([label, href]) => <a href={href}>{label}</a>)}
-      <a href={alt} hreflang={locale === 'zh' ? 'en' : 'zh-CN'} data-lang-switch>{tr('nav.switch')}</a>
+      <a href={alt} hreflang={locale === 'zh' ? 'en' : 'zh-CN'} aria-label={tr('a11y.switchLanguage')} lang={locale === 'zh' ? 'en' : 'zh-CN'} data-lang-switch>{tr('nav.switch')}</a>
       <button type="button" id="theme-toggle" aria-label={tr('nav.theme')} title={tr('nav.theme')}>
         <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6.5" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M8 1.5a6.5 6.5 0 0 0 0 13z" fill="currentColor"/></svg>
       </button>

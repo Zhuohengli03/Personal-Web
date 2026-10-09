@@ -36,7 +36,12 @@ p { margin: 0; }
   text-transform: uppercase;
   color: var(--fg-muted);
 }
-:root[lang='zh'] .eyebrow { text-transform: none; letter-spacing: 0.12em; }
+:root:lang(zh) { line-break: strict; }
+:root:lang(zh) h1 { line-height: 1.4; }
+:root:lang(zh) h2, :root:lang(zh) h3 { line-height: 1.5; }
+:root:lang(zh) .prose { line-height: 1.85; text-wrap: pretty; }
+:root:lang(zh) .eyebrow { text-transform: none; letter-spacing: 0.08em; }
+:root:lang(zh) .badge { flex-shrink: 0; font-size: 0.7rem; letter-spacing: 0.04em; }
 
 .divider { width: 80px; height: 1px; border: 0; background: var(--fg-faint); opacity: 0.35; margin: 6rem auto 0; }
 

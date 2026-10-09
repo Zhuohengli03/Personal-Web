@@ -47,7 +47,7 @@
   :root { --section-gap: 6rem; }
 }
 
-:root[lang='zh'] {
+:root:lang(zh) {
   --font-serif: 'Noto Serif SC Variable', 'Newsreader Variable', serif;
   --font-sans: 'Noto Sans SC Variable', 'Inter Variable', sans-serif;
 }

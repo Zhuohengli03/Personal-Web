@@ -12,7 +12,7 @@ const large = await Promise.all(items.map((it) => getImage({ src: it.src, width:
   {items.map((it, i) => (
     <li class="reveal">
       <figure>
-        <button type="button" data-lightbox-src={large[i].src} data-lightbox-alt={it.alt} aria-label={`${tr('a11y.openImage')} ${i + 1}: ${it.alt}`}>
+        <button type="button" data-lightbox-src={large[i].src} data-lightbox-alt={it.alt} aria-label={tr('a11y.openImage').replace('{n}', String(i + 1)).replace('{alt}', it.alt)}>
           <Image src={it.src} alt={it.alt} width={960} format="webp" quality={82} loading={i < 2 ? 'eager' : 'lazy'} />
         </button>
         <figcaption>{it.caption}</figcaption>

@@ -64,9 +64,9 @@ const rows = lines.map((l) => ({ k: l.k, v: fill(l.v, tokens) }));
   .facts { margin: 0; min-width: 0; }
   .head { font-family: var(--font-mono); font-size: 0.8rem; color: var(--fg); padding-bottom: 0.45rem; margin-bottom: 0.6rem; border-bottom: 1px solid var(--t-line); }
   .row { display: grid; grid-template-columns: 5.6rem 1fr; gap: 0.7rem; padding: 0.22rem 0; }
-  :root[lang='zh'] .row { grid-template-columns: 3.2rem 1fr; }
+  :root:lang(zh) .row { grid-template-columns: 3.2rem 1fr; }
   dt { margin: 0; font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--fg-muted); padding-top: 0.2em; }
-  :root[lang='zh'] dt { text-transform: none; letter-spacing: 0.12em; font-size: 0.74rem; }
+  :root:lang(zh) dt { text-transform: none; letter-spacing: 0.12em; font-size: 0.74rem; }
   dd { margin: 0; font-family: var(--font-sans); font-size: 0.88rem; line-height: 1.45; color: var(--fg); overflow-wrap: break-word; }
   .end { margin-top: 0.2rem; }
 
@@ -85,7 +85,7 @@ const rows = lines.map((l) => ({ k: l.k, v: fill(l.v, tokens) }));
     .art :global(img) { width: 88px; height: 110px; }
     .art figcaption { margin: 0 0 0.2rem; }
     .row { grid-template-columns: 5.4rem 1fr; gap: 0.6rem; }
-    :root[lang='zh'] .row { grid-template-columns: 3rem 1fr; }
+    :root:lang(zh) .row { grid-template-columns: 3rem 1fr; }
     dd { font-size: 0.85rem; }
   }
 </style>

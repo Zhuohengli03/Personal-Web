@@ -34,7 +34,10 @@
     "links": "Links",
     "question": "Question",
     "method": "Method",
-    "output": "Output"
+    "output": "Output",
+    "gpa": "GPA",
+    "honorCount": "{n}",
+    "coursework": "Coursework"
   },
   "category": {
     "product": "Product",
@@ -61,8 +64,9 @@
     "primaryNav": "Primary",
     "keyNumbers": "Key numbers",
     "imagePreview": "Image preview",
-    "openImage": "Open image",
-    "activity": "{n} commits, {from} to {to}, one cell per week"
+    "openImage": "Open image {n}: {alt}",
+    "activity": "{n} commits, {from} to {to}, one cell per week",
+    "switchLanguage": "Switch to Chinese"
   },
   "notFound": {
     "title": "Page not found",

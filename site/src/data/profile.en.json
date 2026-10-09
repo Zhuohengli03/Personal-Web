@@ -132,7 +132,12 @@
       "school": "New York University",
       "degree": "M.S. in Management and Analytics (STEM)",
       "period": "2025.09 – 2027.01 (expected)",
-      "gpa": "3.92 / 4.00"
+      "gpa": "3.92 / 4.00",
+      "coursework": [
+        "Tech Project Management",
+        "Data-Driven Decision Making",
+        "Databases"
+      ]
     },
     {
       "school": "Xi'an Conservatory of Music",

@@ -25,10 +25,10 @@ const year = new Date().getFullYear();
       </div>
       <div>
         <p class="eyebrow">{tr('footer.language')}</p>
-        <a href={alt}>{locale === 'zh' ? 'English' : '中文'}</a>
+        <a href={alt} lang={locale === 'zh' ? 'en' : 'zh-CN'} hreflang={locale === 'zh' ? 'en' : 'zh-CN'} aria-label={tr('a11y.switchLanguage')}>{locale === 'zh' ? 'English' : '中文'}</a>
       </div>
     </div>
-    <p class="muted small">© {year} Zhuoheng Li</p>
+    <p class="muted small">© {year} {tr('site.title')}</p>
   </div>
 </footer>
 <style>

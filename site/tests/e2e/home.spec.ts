@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-for (const [path, lang, work] of [['/', 'en', 'Selected work'], ['/zh/', 'zh', '精选作品']] as const) {
+for (const [path, lang, work] of [['/', 'en', 'Selected work'], ['/zh/', 'zh-CN', '精选作品']] as const) {
   test(`home ${path} renders all sections`, async ({ page }) => {
     const errors: string[] = [];
     page.on('console', (m) => { if (m.type() === 'error') errors.push(m.text()); });
@@ -16,7 +16,7 @@ for (const [path, lang, work] of [['/', 'en', 'Selected work'], ['/zh/', 'zh', '
     await expect(page.locator('.waffle').first()).toBeVisible();
     const stat = await page.locator('#stats dd').nth(1).textContent();
     expect(stat).toMatch(/^\d{1,3}(,\d{3})*\+$/);
-    await expect(page.locator('#stats dd').nth(2)).toContainText(/2026-\d{2}/); // dated metric, from metrics.json
+    await expect(page.locator('#stats dd').nth(2)).toContainText(lang === 'zh-CN' ? /2026 年 \d{1,2} 月/ : /2026-\d{2}/); // dated metric, from metrics.json
     expect(errors).toEqual([]);
   });
 }

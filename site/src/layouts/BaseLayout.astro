@@ -19,7 +19,7 @@ const zhUrl = new URL(`/zh${path}`, site).href;
 const canonical = locale === 'en' ? enUrl : zhUrl;
 ---
 <!doctype html>
-<html lang={locale === 'zh' ? 'zh' : 'en'}>
+<html lang={locale === 'zh' ? 'zh-CN' : 'en'}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -35,6 +35,8 @@ const canonical = locale === 'en' ? enUrl : zhUrl;
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
+    <meta property="og:locale" content={locale === 'zh' ? 'zh_CN' : 'en_US'} />
+    <meta property="og:locale:alternate" content={locale === 'zh' ? 'en_US' : 'zh_CN'} />
     <meta property="og:url" content={canonical} />
     <script is:inline>
       document.documentElement.classList.add('js');

@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-for (const [path, heading] of [['/', 'Beyond work'], ['/zh/', '生活之外']] as const) {
+for (const [path, heading] of [['/', 'Beyond work'], ['/zh/', '工作之外']] as const) {
   test(`life section on ${path}: cards filter the photo wall`, async ({ page }) => {
     await page.goto(path);
     await expect(page.getByRole('heading', { level: 2, name: heading })).toBeVisible();

@@ -22,7 +22,7 @@ const { locale } = Astro.props;
 const tr = t(locale);
 const p = loadProfile(locale);
 const projects = (await getProjects(locale)).filter((e) => e.data.featured);
-const tokens = siteTokens(github as GithubData, 'Guqin-AI');
+const tokens = siteTokens(github as GithubData, 'Guqin-AI', locale);
 const stats = p.stats.map((s) =>
   s.source === 'tokens' ? { label: s.label, value: fill(s.value, tokens), hint: s.hint && fill(s.hint, tokens) } : { label: s.label, value: s.value, hint: s.hint },
 );
