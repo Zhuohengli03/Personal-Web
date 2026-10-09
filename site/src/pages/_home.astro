@@ -1,0 +1,62 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import SpecRow from '../components/SpecRow.astro';
+import WorkCard from '../components/WorkCard.astro';
+import FeatureGrid from '../components/FeatureGrid.astro';
+import ProjectMini from '../components/ProjectMini.astro';
+import Timeline from '../components/Timeline.astro';
+import EducationCard from '../components/EducationCard.astro';
+import Divider from '../components/Divider.astro';
+import { t, type Locale } from '../i18n';
+import { loadProfile } from '../lib/profile';
+import { getProjects } from '../lib/projects';
+import { requireRepo, formatCount, type GithubData } from '../lib/github';
+import github from '../data/github.json';
+
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const tr = t(locale);
+const p = loadProfile(locale);
+const projects = (await getProjects(locale)).filter((e) => e.data.featured);
+const stats = p.stats.map((s) => ({
+  label: s.label,
+  hint: s.hint,
+  value: s.source === 'github' && s.repo ? formatCount(requireRepo(github as GithubData, s.repo).commits) : s.value,
+}));
+---
+<BaseLayout title={tr('site.title')} description={tr('site.description')} locale={locale} path="/">
+  <Hero locale={locale} {...p.hero} />
+
+  <section class="wrap section reveal" aria-label={tr('a11y.keyNumbers')}><SpecRow id="stats" items={stats} /></section>
+
+  <Divider />
+  <section id="work" class="wrap section">
+    <div class="section-head reveal"><h2>{tr('sections.work')}</h2><p class="sub">{tr('sections.workSub')}</p></div>
+    <div class="grid-2">{projects.map((e) => <WorkCard entry={e} locale={locale} />)}</div>
+  </section>
+
+  <section id="analytics" class="wrap section">
+    <div class="section-head reveal"><h2>{tr('sections.analytics')}</h2><p class="sub">{tr('sections.analyticsSub')}</p></div>
+    <FeatureGrid items={p.analytics} locale={locale} />
+  </section>
+
+  <section id="more" class="wrap section">
+    <div class="section-head reveal"><h2>{tr('sections.more')}</h2></div>
+    <div class="grid-3 tight">{p.miniProjects.map((m) => <ProjectMini item={m} locale={locale} />)}</div>
+  </section>
+
+  <Divider />
+  <section id="experience" class="wrap section">
+    <div class="section-head reveal"><h2>{tr('sections.experience')}</h2></div>
+    <Timeline items={p.experience} />
+  </section>
+
+  <section id="education" class="wrap section">
+    <div class="section-head reveal"><h2>{tr('sections.education')}</h2></div>
+    <div class="grid-2">{p.education.map((e) => <EducationCard item={e} locale={locale} />)}</div>
+  </section>
+</BaseLayout>
+<style>
+  .tight { gap: 1.25rem; }
+</style>

@@ -1,0 +1,22 @@
+---
+import { t, type Locale } from '../i18n';
+import type { Profile } from '../lib/profile';
+interface Props { item: Profile['miniProjects'][number]; locale: Locale }
+const { item, locale } = Astro.props;
+const tr = t(locale);
+---
+<article class="card mini reveal">
+  <p class="eyebrow">{item.period}{item.clientWork && ` · ${tr('actions.clientWork')}`}</p>
+  <h3>{item.title}</h3>
+  <p class="body">{item.body}</p>
+  <p class="links">
+    {item.github && <a href={item.github} target="_blank" rel="noopener">{tr('actions.github')} ↗</a>}
+    {item.live && <a href={item.live} target="_blank" rel="noopener">{tr('actions.live')} ↗</a>}
+  </p>
+</article>
+<style>
+  .mini { padding: 1.5rem; display: flex; flex-direction: column; gap: 0.6rem; }
+  h3 { font-family: var(--font-sans); font-size: 1rem; font-weight: 500; }
+  .body { font-size: 0.875rem; line-height: 1.45; color: var(--fg-muted); }
+  .links { margin-top: auto; display: flex; gap: 1rem; font-size: 0.9rem; }
+</style>

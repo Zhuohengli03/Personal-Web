@@ -1,0 +1,28 @@
+---
+import { t, type Locale } from '../i18n';
+import type { Profile } from '../lib/profile';
+interface Props { items: Profile['analytics']; locale: Locale }
+const { items, locale } = Astro.props;
+const tr = t(locale);
+---
+<ul class="grid-3 features">
+  {items.map((it) => (
+    <li class="reveal">
+      <h3 class="title">{it.title}</h3>
+      <dl>
+        <dt class="eyebrow">{tr('labels.question')}</dt><dd>{it.question}</dd>
+        <dt class="eyebrow">{tr('labels.method')}</dt><dd>{it.method}</dd>
+        <dt class="eyebrow">{tr('labels.output')}</dt><dd>{it.output}</dd>
+      </dl>
+      <p class="tags">{it.tags.map((tag) => <span class="badge">{tag}</span>)}</p>
+    </li>
+  ))}
+</ul>
+<style>
+  .features { list-style: none; margin: 0; padding: 0; }
+  .title { font-family: var(--font-sans); font-size: 1rem; font-weight: 500; letter-spacing: -0.01em; margin-bottom: 0.9rem; }
+  dl { margin: 0; }
+  dt { margin-top: 0.8rem; }
+  dd { margin: 0.2rem 0 0; font-size: 0.875rem; line-height: 1.45; color: var(--fg-muted); }
+  .tags { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 1rem; }
+</style>
