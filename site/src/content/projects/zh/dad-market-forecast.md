@@ -9,13 +9,12 @@ scale: ["单物品单次运行 6,000+ 条挂单，已去重", "物品类别：�
 links: { github: "https://github.com/Zhuohengli03/DaD-Market-Forecast" }
 featured: true
 order: 2
-waffle: { source: static, cols: 12, cells: [4,4,3,3,2,2,1,1,4,3,2,1, 3,3,3,2,2,1,1,0,3,2,1,0, 2,2,2,1,1,0,0,0,2,1,0,0] }
 gallery:
   - { src: "../../../assets/work/dad-market-forecast/01.png", alt: "分析系统的中英双语终端菜单，列出可用物品并开始拉取数据", caption: "智能模式：选物品（几种矿石加一个自动发现的新物品），拉新数据，再分析。" }
   - { src: "../../../assets/work/dad-market-forecast/02.png", alt: "采集日志：每页 50 条、零重复，连续三页无新数据后自动停止", caption: "采集运行：124 页共 6,164 条新数据；连续三页没有新内容就自动停。" }
   - { src: "../../../assets/work/dad-market-forecast/03.png", alt: "预处理与模型训练日志：异常值移除、特征选择与各模型指标", caption: "移除 139 条异常值，32 个特征选出 15 个，十个模型各报 MAE / RMSE / R² 与交叉验证。" }
   - { src: "../../../assets/work/dad-market-forecast/04.png", alt: "稳定性测试与 ML、ARIMA、统计基线融合的 7 日预测", caption: "三次运行的稳定性测试，然后把 ML、ARIMA 和统计基线融合成一个 7 日区间。" }
-  - { src: "../../../assets/work/dad-market-forecast/05.png", alt: "三张图：价格时间序列、价格分布直方图、各模型 R²", caption: "黄金矿石 1 月 20–29 日的价格历史、分布，以及各模型 R²——集成达到 0.995。" }
+  - { src: "../../../assets/work/dad-market-forecast/05.png", alt: "三张图：价格时间序列、价格分布直方图、各模型 R²", caption: "黄金矿石 2026 年 1 月 20–29 日的价格历史、分布，以及各模型 R²——集成达到 0.995。" }
   - { src: "../../../assets/work/dad-market-forecast/06.png", alt: "历史价格与 7 日预测折线图，含 95% 置信区间和趋势面板", caption: "带 95% 置信区间的 7 日预测与拟合趋势；最后一天区间变宽，就是该等的信号。" }
 ---
 

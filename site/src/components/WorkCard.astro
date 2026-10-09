@@ -3,7 +3,7 @@ import type { CollectionEntry } from 'astro:content';
 import { t, localePath, type Locale } from '../i18n';
 import { slugOf } from '../lib/pairing';
 import { repoActivity } from '../lib/activity';
-import type { GithubData, Level } from '../lib/github';
+import type { GithubData } from '../lib/github';
 import github from '../data/github.json';
 import Waffle from './Waffle.astro';
 
@@ -12,24 +12,15 @@ const { entry, locale } = Astro.props;
 const tr = t(locale);
 const d = entry.data;
 const href = localePath(`/work/${slugOf(entry)}/`, locale);
-
-let cells: Level[] = [];
-let cols = 12;
-let waffleLabel = '';
-if (d.waffle?.source === 'github') {
-  const a = repoActivity(github as GithubData, d.waffle.repo, locale);
-  cells = a.cells; cols = a.cols; waffleLabel = a.label;
-} else if (d.waffle?.source === 'static') {
-  cells = d.waffle.cells as Level[]; cols = d.waffle.cols; waffleLabel = d.title;
-}
+const activity = d.waffle?.source === 'github' ? repoActivity(github as GithubData, d.waffle.repo, locale) : null;
 ---
 <article class="card work reveal">
   <div class="head">
     <h3><a href={href}>{d.title}</a></h3>
-    <span class="badge">{d.category}</span>
+    <span class="badge">{tr(`category.${d.category}`)}</span>
   </div>
   <p class="body">{d.summary}</p>
-  {cells.length > 0 && <div class="waffle-wrap"><Waffle cells={cells} cols={cols} label={waffleLabel} /></div>}
+  {activity && <div class="waffle-wrap"><Waffle cells={activity.cells} cols={activity.cols} label={activity.label} /></div>}
   <dl class="spec-grid">
     <dt>{tr('labels.role')}</dt><dd>{d.role}</dd>
     <dt>{tr('labels.period')}</dt><dd>{d.period}</dd>

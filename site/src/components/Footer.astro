@@ -1,8 +1,10 @@
 ---
 import { t, altPath, type Locale } from '../i18n';
+import { loadProfile } from '../lib/profile';
 interface Props { locale: Locale; path: string }
 const { locale, path } = Astro.props;
 const tr = t(locale);
+const { contact } = loadProfile(locale);
 const alt = altPath(path, locale);
 const year = new Date().getFullYear();
 ---
@@ -12,12 +14,14 @@ const year = new Date().getFullYear();
     <div class="cols">
       <div>
         <p class="eyebrow">{tr('footer.contact')}</p>
-        <a href="mailto:zhuohengli03@gmail.com">zhuohengli03@gmail.com</a>
+        <a href={`mailto:${contact.email}`}>{contact.email}</a>
       </div>
       <div>
         <p class="eyebrow">{tr('footer.elsewhere')}</p>
-        <a href="https://github.com/Zhuohengli03" rel="me noopener">GitHub</a><br />
-        <span class="muted">{tr('footer.linkedinTodo')}</span>
+        <a href={`https://github.com/${contact.github}`} rel="me noopener">GitHub</a><br />
+        {contact.linkedin
+          ? <a href={contact.linkedin} rel="me noopener">LinkedIn</a>
+          : <span class="muted">{tr('footer.linkedinTodo')}</span>}
       </div>
       <div>
         <p class="eyebrow">{tr('footer.language')}</p>

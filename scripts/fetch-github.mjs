@@ -1,9 +1,11 @@
 #!/usr/bin/env node
 // Refreshes site/src/data/github.json using the gh CLI (owner token → private repos included).
+// Node ≥ 23 strips TypeScript types natively, so the site's own bucketing helper is reused here.
 import { execFileSync } from 'node:child_process';
 import { writeFileSync, mkdirSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { weeklyBuckets } from '../site/src/lib/github.ts';
 
 const OWNER = 'Zhuohengli03';
 const REPOS = ['Guqin-AI', 'DaD-Market-Forecast', 'Crawler', 'Hackthon-Meteror', 'WebDesigner', 'Qinghua-DeepEvol', 'Xingyuanguzheng'];
@@ -11,19 +13,6 @@ const out = resolve(dirname(fileURLToPath(import.meta.url)), '../site/src/data/g
 
 function gh(args) {
   return execFileSync('gh', args, { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 });
-}
-
-function weekly(dates, start, end) {
-  const WEEK = 7 * 24 * 3600 * 1000;
-  const s = Date.parse(`${start}T00:00:00Z`);
-  const e = Date.parse(`${end}T23:59:59.999Z`);
-  const n = Math.max(1, Math.ceil((e - s + 1) / WEEK));
-  const arr = new Array(n).fill(0);
-  for (const d of dates) {
-    const t = Date.parse(d);
-    if (t >= s && t <= e) arr[Math.floor((t - s) / WEEK)]++;
-  }
-  return arr;
 }
 
 const repos = {};
@@ -34,11 +23,10 @@ for (const name of REPOS) {
     .split('\n')
     .filter(Boolean);
   if (dates.length === 0) throw new Error(`${name}: no commits returned — check the repo name and gh auth`);
-  const languages = Object.keys(JSON.parse(gh(['api', `repos/${OWNER}/${name}/languages`])));
   const sorted = [...dates].sort();
   const firstCommit = sorted[0].slice(0, 10);
   const lastCommit = sorted[sorted.length - 1].slice(0, 10);
-  repos[name] = { commits: dates.length, firstCommit, lastCommit, weeklyCommits: weekly(dates, firstCommit, lastCommit), languages };
+  repos[name] = { commits: dates.length, firstCommit, lastCommit, weeklyCommits: weeklyBuckets(dates, firstCommit, lastCommit) };
   process.stderr.write(`${dates.length} commits\n`);
 }
 

@@ -23,14 +23,32 @@ test('every internal link in dist resolves to a file', () => {
   expect(broken).toEqual([]);
 });
 
-test('every page has hreflang alternates and a canonical', () => {
+test('every page has mirrored hreflang alternates and a canonical for its own locale', () => {
   const dist = join(process.cwd(), 'dist');
   for (const file of htmlFiles(dist)) {
     if (file.endsWith('404.html')) continue;
     const html = readFileSync(file, 'utf8');
-    expect(html, file).toMatch(/hreflang="en"/);
-    expect(html, file).toMatch(/hreflang="zh-CN"/);
-    expect(html, file).toMatch(/rel="canonical"/);
+    const rel = file.replace(dist, '').replace(/index\.html$/, ''); // e.g. /zh/work/guqin-ai/
+    const isZh = rel.startsWith('/zh/');
+    const bare = isZh ? rel.replace(/^\/zh/, '') : rel;
+    const en = `https://lizhuoheng.com${bare}`;
+    const zh = `https://lizhuoheng.com/zh${bare}`;
+    expect(html, file).toContain(`<link rel="alternate" hreflang="en" href="${en}">`);
+    expect(html, file).toContain(`<link rel="alternate" hreflang="zh-CN" href="${zh}">`);
+    expect(html, file).toContain(`<link rel="alternate" hreflang="x-default" href="${en}">`);
+    expect(html, file).toContain(`<link rel="canonical" href="${isZh ? zh : en}">`);
+  }
+});
+
+test('CJK font stylesheets are linked on zh pages only', () => {
+  const dist = join(process.cwd(), 'dist');
+  for (const file of htmlFiles(dist)) {
+    if (file.endsWith('404.html')) continue;
+    const html = readFileSync(file, 'utf8');
+    const links = (html.match(/<link rel="stylesheet" href="[^"]+"/g) ?? []).length;
+    const isZh = file.replace(dist, '').startsWith('/zh/');
+    // zh: base css + noto sans sc + noto serif sc; en: base css only
+    expect(links, file).toBe(isZh ? 3 : 1);
   }
 });
 

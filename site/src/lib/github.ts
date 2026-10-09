@@ -3,7 +3,6 @@ export interface RepoStats {
   firstCommit: string;
   lastCommit: string;
   weeklyCommits: number[];
-  languages: string[];
 }
 export interface GithubData {
   generatedAt: string;
