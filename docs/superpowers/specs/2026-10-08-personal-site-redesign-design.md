@@ -20,7 +20,7 @@ Reference: https://thinkingmachines.ai/inkling/ — centered editorial layout. M
 | Token | Value |
 |---|---|
 | `--bg` / `--fg` / `--fg-muted` | `#ffffff` / `#282828` / `#6b6866` (light). Dark: `#141414` / `#ededed` / `#9a9896`. Theme follows system, with a manual toggle persisted in `localStorage`. |
-| `--accent` | `#0155bf` (links, active waffle cells, focus rings). Single accent only. |
+| `--accent` | `#0155bf` (links, active waffle cells, focus rings). Single accent only; in dark mode the same hue is lightened to `#5b9bff` for contrast. |
 | Serif (display) | Newsreader (EN), Noto Serif SC (ZH) |
 | Sans (body) | Inter (EN), Noto Sans SC (ZH) |
 | Mono (eyebrows, labels) | JetBrains Mono, 0.75rem, letter-spacing 0.08em, uppercase for EN |
@@ -51,10 +51,10 @@ Language switch links to the same path under the other locale. `<html lang>` and
    - Guqin-AI waffle: one cell per week since 2026-02-12, filled by commits that week (bucketed from `github.json`).
    - DaD waffle: one cell per item category / data table tracked; a simpler fixed layout from frontmatter.
 4. **Analytics** — three-column `FeatureGrid` using the old site's three non-GitHub analyses, rewritten as *Question → Method → Output*: E-commerce user & marketing analytics (KPI system, cohort, RFM + K-means); Operations & product-selection analytics (metric framework, daily briefs); Social networks & starting salary (survey cleaning, group comparison). Each may link to screenshots carried over from the old repo.
-5. **More projects** — three `ProjectMini` cards: Dynamic Web Crawler (GitHub), Meteor Madness — NASA Space Apps 2025 (GitHub, "Led the Prediction module"), WebDesigner / DeepEvol client sites (no link; "client work").
+5. **More projects** — three `ProjectMini` cards: Dynamic Web Crawler (GitHub), Meteor Madness — NASA Space Apps 2025 (GitHub, "Led the Prediction module"), WebDesigner / DeepEvol client sites (live Vercel link, labelled "client work"; repos stay private).
 6. **Experience** — `Timeline` with one entry: Luoyang Shangxian Technology — Data Analyst Intern, 2025.06–2025.08, five bullets from the old site.
 7. **Education & honors** — two `EducationCard`s: NYU (M.S. Management & Analytics, Business Analytics, 2025.09–2026.12 expected, GPA 3.83/4.00); Xi'an Conservatory of Music (B.M. Music Performance, Guqin, 2021.09–2025.07) with the nine honors in a `<details>` list.
-8. **Contact / footer** — email, LinkedIn (`[TODO: url]`), GitHub `Zhuohengli03`, language switch, theme toggle, © year.
+8. **Contact / footer** — email, LinkedIn (`[TODO: url]`), GitHub `Zhuohengli03`, language switch, © year. (The theme toggle lives in the header only.)
 
 ### 3.2 Case study page (`CaseLayout`)
 
@@ -79,6 +79,7 @@ site/
   src/data/profile.en.json, profile.zh.json    experience, education, honors, analytics, mini projects, contact
   src/data/github.json                         generated: per-repo {commits, firstCommit, lastCommit, weeklyCommits[], languages}
 scripts/fetch-github.mjs                       refreshes github.json via `gh api` (run manually; committed output)
+site/scripts/shoot.mjs                         Playwright screenshots of the live sites into src/assets/
 CONTENT-TODO.md                                every [TODO] with where it lives
 ```
 
@@ -125,12 +126,12 @@ The owner has asked that project materials be produced by running the repos, not
 | Lingxian (Guqin-AI) | live site https://lingxian.app | Playwright screenshots at 1440×900 of: `/en` landing hero, `/editor` with a few notes entered, `/zhifa` fingering reference, `/pricing`, `/blog`. Target 5–7 images. No local setup needed. If the live site is down, fall back to running the repo locally (Postgres 15 is installed; minimum env: `AUTH_SECRET`, `DATABASE_URL`, `NEXTAUTH_URL`, `AUTH_TRUST_HOST=true`). |
 | DaD-Market-Forecast | old repo screenshots (`game-market/`, 10 files) | copy, rename `01.png`…, write captions from what each shows. Optionally re-run `main.py` for a fresh forecast chart if deps install cleanly. |
 | Crawler | old repo screenshots (6) | copy, rename, caption. |
-| Meteor Madness | old repo screenshots (`nasa-space-apps/`) | copy, rename; if fewer than 3 usable, run the JS front end and screenshot the globe/map. |
-| WebDesigner, DeepEvol | live sites https://web-designer-lac.vercel.app, https://qinghua-deep-evol.vercel.app | screenshot hero + one section each. Fallback: run locally (`npm i && npm run dev`). |
-| Xingyuanguzheng | live site https://www.lzhpw.com | one hero screenshot, used in the "4 live sites" stat tooltip/list only. |
+| Meteor Madness | old repo screenshots (`nasa-space-apps/`, 2 usable) | copy, rename. Mini cards show no images, so two is enough. |
+| WebDesigner, DeepEvol | live sites https://web-designer-lac.vercel.app, https://qinghua-deep-evol.vercel.app | one hero screenshot each. Fallback: run locally (`npm i && npm run dev`). |
+| Xingyuanguzheng | live site https://www.lzhpw.com | no screenshot; it is named in the "4 live sites" stat hint only. |
 | E-commerce / Operations analytics | old repo screenshots | copy, rename, caption; crop anything that exposes personal data. |
 
-Screenshot rules: 1440×900 viewport, device scale 2, PNG → converted to WebP (≤ 300 KB each) at build via `astro:assets`. No personal data, tokens or local paths visible; crop or blur if needed. Each image gets an `alt` and a caption in both locales. A `scripts/shoot.mjs` (Playwright) records the URL list per project so the set can be regenerated.
+Screenshot rules: 1440×900 viewport, device scale 2, PNG → converted to WebP (≤ 300 KB each) at build via `astro:assets`. No personal data, tokens or local paths visible; crop or blur if needed. Each image gets an `alt` and a caption in both locales. `site/scripts/shoot.mjs` (Playwright, run from `site/`) records the URL list per project so the set can be regenerated.
 
 The résumé PDF and LinkedIn URL are the only items that cannot be produced by running anything; both stay `[TODO]` until supplied.
 

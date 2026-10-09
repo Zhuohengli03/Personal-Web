@@ -44,9 +44,10 @@
 .gitignore                              site/node_modules, site/dist, site/.astro, site/test-results
 CONTENT-TODO.md                         every [TODO] with location
 README.md                               how to run, refresh data, reshoot screenshots
-scripts/fetch-github.mjs                writes site/src/data/github.json via gh
-scripts/shoot.mjs                       Playwright screenshots of live sites → site/src/assets/**
+scripts/fetch-github.mjs                writes site/src/data/github.json via gh (node built-ins only)
 site/
+  scripts/shoot.mjs                     Playwright screenshots of live sites → src/assets/** (lives in site/ so it resolves site/node_modules)
+  scripts/snap.mjs                      responsive review screenshots (not shipped)
   package.json  astro.config.mjs  tsconfig.json  vitest.config.ts  playwright.config.ts
   public/CNAME  public/favicon.svg  public/resume.pdf  public/robots.txt
   src/styles/tokens.css                 color/type/spacing tokens, light+dark
@@ -67,7 +68,7 @@ site/
   src/layouts/BaseLayout.astro  CaseLayout.astro
   src/components/SiteHeader.astro Footer.astro Hero.astro SpecRow.astro Waffle.astro
                  WorkCard.astro FeatureGrid.astro ProjectMini.astro Timeline.astro
-                 EducationCard.astro Gallery.astro Lightbox.astro Divider.astro Eyebrow.astro
+                 EducationCard.astro Gallery.astro Lightbox.astro Divider.astro
   src/pages/index.astro  zh/index.astro  work/[slug].astro  zh/work/[slug].astro  404.astro
   src/pages/_home.astro                 shared home body, takes locale prop
   tests/unit/i18n.test.ts github.test.ts projects.test.ts profile.test.ts
@@ -102,7 +103,7 @@ i=0; for f in astro-portfolio/public/projects/operations-product-analytics/*.png
 ls -R site/src/assets | head -40
 ```
 
-Expected: 10 DaD, 6 crawler, 2 meteor, 7 ecommerce, 9 operations files. (The `.webp` and `.mp4` in the old folders are intentionally not copied.)
+Expected: 11 DaD, 6 crawler, 2 meteor, 7 ecommerce, 8 operations files. (The `.webp` and `.mp4` in the old folders are intentionally not copied.)
 
 - [ ] **Step 2: Delete the old site and workflow**
 
@@ -118,11 +119,13 @@ Expected: only `.github`, `.gitignore`, `README.md`, `docs`, `site` remain.
 
 ```bash
 cd site
-npm create astro@latest -- . --template minimal --typescript strict --no-install --no-git --skip-houston
+npm create astro@latest -- . --template minimal --no-install --no-git --no-ai --yes --skip-houston
 npm install
 npm install @astrojs/sitemap sharp @fontsource-variable/inter @fontsource-variable/newsreader @fontsource-variable/jetbrains-mono @fontsource-variable/noto-sans-sc @fontsource-variable/noto-serif-sc
-npm install -D vitest @playwright/test zod
+npm install -D vitest @playwright/test zod @astrojs/check typescript @types/node
 ```
+
+(`@astrojs/check` + `typescript` are required by `astro check`; `@types/node` is needed because the Playwright config and the link test use `process` and `node:fs`.)
 
 If the `create astro` prompt refuses a non-empty directory, run it in `site-tmp`, then `cp -R site-tmp/. site/ && rm -rf site-tmp`. If the CLI rejects any flag (the flag set changes between versions), drop that flag and answer the prompt interactively with the same choice (minimal template, strict TypeScript, no install, no git). The result that matters is `site/package.json` with `astro ^7`, `site/tsconfig.json` extending `astro/tsconfigs/strict`, and `site/src/pages/index.astro`.
 
@@ -253,8 +256,8 @@ Personal site of Zhuoheng Li. Astro 5 static site in `site/`, deployed to GitHub
 
 ## Refresh data
 
-    node scripts/fetch-github.mjs  # rewrites site/src/data/github.json (needs gh auth)
-    node scripts/shoot.mjs         # reshoots live-site screenshots into site/src/assets
+    node scripts/fetch-github.mjs            # rewrites site/src/data/github.json (needs gh auth)
+    cd site && node scripts/shoot.mjs        # reshoots live-site screenshots into site/src/assets
 
 Open items that need the owner are listed in `CONTENT-TODO.md`.
 ```
@@ -421,11 +424,12 @@ p { margin: 0; }
 
 /* Motion: only when JS is present; off under reduced motion */
 .fade-up { opacity: 1; }
-html.js .fade-up { opacity: 0; animation: fade-up 0.7s var(--ease-out) forwards; }
-.fade-up[data-delay='1'] { animation-delay: 0.1s; }
-.fade-up[data-delay='2'] { animation-delay: 0.18s; }
-.fade-up[data-delay='3'] { animation-delay: 0.26s; }
-.fade-up[data-delay='4'] { animation-delay: 0.34s; }
+/* The shorthand resets animation-delay, so the delay is read from a custom property set by the data-delay rules below. */
+html.js .fade-up { opacity: 0; animation: fade-up 0.7s var(--ease-out) forwards; animation-delay: var(--d, 0s); }
+.fade-up[data-delay='1'] { --d: 0.1s; }
+.fade-up[data-delay='2'] { --d: 0.18s; }
+.fade-up[data-delay='3'] { --d: 0.26s; }
+.fade-up[data-delay='4'] { --d: 0.34s; }
 @keyframes fade-up { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
 
 .reveal { opacity: 1; }
@@ -438,16 +442,7 @@ html.js .reveal.is-visible { opacity: 1; transform: none; }
 }
 ```
 
-- [ ] **Step 3: Write `site/src/components/Eyebrow.astro` and `Divider.astro`**
-
-```astro
----
-// Eyebrow.astro — mono label above a title
-interface Props { as?: 'p' | 'span' | 'div'; class?: string }
-const { as: Tag = 'p', class: cls = '' } = Astro.props;
----
-<Tag class={`eyebrow ${cls}`}><slot /></Tag>
-```
+- [ ] **Step 3: Write `site/src/components/Divider.astro`** (eyebrows are plain `<p class="eyebrow">`; no component needed)
 
 ```astro
 ---
@@ -470,8 +465,8 @@ import '../styles/base.css';
 import SiteHeader from '../components/SiteHeader.astro';
 import Footer from '../components/Footer.astro';
 
-interface Props { title: string; description: string; locale: 'en' | 'zh'; path: string }
-const { title, description, locale, path } = Astro.props;
+interface Props { title: string; description: string; locale: 'en' | 'zh'; path: string; noAlternates?: boolean }
+const { title, description, locale, path, noAlternates = false } = Astro.props;
 const site = Astro.site ?? new URL('https://lizhuoheng.com');
 const enUrl = new URL(path, site).href;
 const zhUrl = new URL(`/zh${path}`, site).href;
@@ -484,10 +479,10 @@ const canonical = locale === 'en' ? enUrl : zhUrl;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <link rel="canonical" href={canonical} />
-    <link rel="alternate" hreflang="en" href={enUrl} />
-    <link rel="alternate" hreflang="zh-CN" href={zhUrl} />
-    <link rel="alternate" hreflang="x-default" href={enUrl} />
+    {!noAlternates && <link rel="canonical" href={canonical} />}
+    {!noAlternates && <link rel="alternate" hreflang="en" href={enUrl} />}
+    {!noAlternates && <link rel="alternate" hreflang="zh-CN" href={zhUrl} />}
+    {!noAlternates && <link rel="alternate" hreflang="x-default" href={enUrl} />}
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
@@ -697,6 +692,8 @@ test('page survives a throwing localStorage', async ({ page }) => {
 Run: `cd site && npm run e2e`
 Expected: all three tests PASS once Steps 1–8 are in place (if run before Step 4 they fail with "html does not have class js"). Also run `npm run check` → 0 errors.
 
+Then an early performance check, because the five Fontsource imports (the two Noto SC packages alone emit ~100 `@font-face` rules each) are the main CSS cost: `npm run preview -- --port 4321 & PID=$!; sleep 4; npx --yes lighthouse http://localhost:4321/ --quiet --chrome-flags="--headless" --only-categories=performance --output=json --output-path=./test-results/lh-smoke.json; kill $PID; node -e "console.log(Math.round(require('./test-results/lh-smoke.json').categories.performance.score*100))"`. Expected ≥ 95 (mobile preset). If lower, import only the Latin subsets of Inter/Newsreader (`@fontsource-variable/inter/wght.css` style per-subset files are listed in each package's `files/`) and keep the Noto SC packages as they are — their unicode-range split means Latin pages download no CJK font files.
+
 - [ ] **Step 11: Commit**
 
 ```bash
@@ -788,6 +785,7 @@ Expected: FAIL — cannot resolve `../../src/i18n`.
   "actions": { "caseStudy": "Case study", "github": "GitHub", "live": "Live site", "back": "Back to home", "clientWork": "Client work" },
   "case": { "problem": "Problem", "decisions": "Decisions", "result": "Result", "gallery": "Gallery", "close": "Close" },
   "footer": { "contact": "Contact", "elsewhere": "Elsewhere", "language": "Language", "linkedinTodo": "LinkedIn (link coming)" },
+  "a11y": { "home": "Home", "primaryNav": "Primary", "keyNumbers": "Key numbers", "imagePreview": "Image preview", "openImage": "Open image" },
   "notFound": { "title": "Page not found", "body": "That page does not exist here.", "home": "Go home" }
 }
 ```
@@ -811,6 +809,7 @@ Expected: FAIL — cannot resolve `../../src/i18n`.
   "actions": { "caseStudy": "查看案例", "github": "GitHub", "live": "访问站点", "back": "返回首页", "clientWork": "客户项目" },
   "case": { "problem": "问题", "decisions": "决策", "result": "结果", "gallery": "画廊", "close": "关闭" },
   "footer": { "contact": "联系", "elsewhere": "链接", "language": "语言", "linkedinTodo": "LinkedIn（链接待补）" },
+  "a11y": { "home": "首页", "primaryNav": "主导航", "keyNumbers": "关键数字", "imagePreview": "图片预览", "openImage": "打开图片" },
   "notFound": { "title": "页面不存在", "body": "这里没有这个页面。", "home": "回到首页" }
 }
 ```
@@ -891,7 +890,7 @@ const nav = [
 ---
 ```
 
-and use `{tr('nav.switch')}` for the switch label and `aria-label={tr('nav.theme')}` on the button. In `Footer.astro` import the same helpers and replace the literal strings with `tr('footer.contact')`, `tr('footer.elsewhere')`, `tr('footer.language')`, and `tr('footer.linkedinTodo')` for the LinkedIn placeholder text; language link label stays `locale === 'zh' ? 'English' : '中文'`.
+and use `{tr('nav.switch')}` for the switch label, `aria-label={tr('nav.theme')}` on the button, `aria-label={tr('a11y.home')}` on the wordmark link and `aria-label={tr('a11y.primaryNav')}` on `<nav>`. In `Footer.astro` import the same helpers and replace the literal strings with `tr('footer.contact')`, `tr('footer.elsewhere')`, `tr('footer.language')`, and `tr('footer.linkedinTodo')` for the LinkedIn placeholder text; language link label stays `locale === 'zh' ? 'English' : '中文'`.
 
 - [ ] **Step 9: Build and e2e still pass**
 
@@ -932,7 +931,7 @@ describe('profile data', () => {
     expect(() => loadProfile('zh')).not.toThrow();
   });
   it('rejects a phone number anywhere in contact', () => {
-    const bad = { ...loadProfile('en'), contact: { email: 'a@b.c', github: 'x', phone: '+1 555' } };
+    const bad = { ...loadProfile('en'), contact: { email: 'a@b.co', github: 'x', phone: '+1 555' } };
     expect(() => profileSchema.parse(bad)).toThrow();
   });
   it('en and zh have the same counts', () => {
@@ -949,7 +948,7 @@ describe('profile data', () => {
 
 ```ts
 import { describe, it, expect } from 'vitest';
-import { findUnpaired, slugOf } from '../../src/lib/projects';
+import { findUnpaired, slugOf } from '../../src/lib/pairing';
 
 describe('project pairing', () => {
   it('returns [] when every en slug has a zh twin', () => {
@@ -979,7 +978,7 @@ import en from '../data/profile.en.json';
 import zh from '../data/profile.zh.json';
 import type { Locale } from '../i18n';
 
-const stat = z.object({ label: z.string(), value: z.string(), source: z.enum(['static', 'github']).default('static'), repo: z.string().optional() });
+const stat = z.object({ label: z.string(), value: z.string(), hint: z.string().optional(), source: z.enum(['static', 'github']).default('static'), repo: z.string().optional() });
 const analytics = z.object({ title: z.string(), question: z.string(), method: z.string(), output: z.string(), tags: z.array(z.string()).max(5), imagesDir: z.string().optional() });
 const mini = z.object({ title: z.string(), body: z.string(), period: z.string(), github: z.string().url().optional(), live: z.string().url().optional(), clientWork: z.boolean().default(false), imagesDir: z.string().optional() });
 const experience = z.object({ company: z.string(), role: z.string(), period: z.string(), bullets: z.array(z.string()).min(1) });
@@ -1019,7 +1018,7 @@ export function loadProfile(locale: Locale): Profile {
     { "label": "GPA, NYU", "value": "3.83 / 4.00" },
     { "label": "Commits on Lingxian", "value": "", "source": "github", "repo": "Guqin-AI" },
     { "label": "Records analyzed (internship)", "value": "100k+" },
-    { "label": "Live sites shipped", "value": "4" }
+    { "label": "Live sites shipped", "value": "4", "hint": "lingxian.app · lzhpw.com · web-designer-lac.vercel.app · qinghua-deep-evol.vercel.app" }
   ],
   "analytics": [
     { "title": "E-commerce user & marketing analytics", "question": "Which users are worth more marketing spend, and which are about to churn?", "method": "Built a KPI system (UV/PV, funnel conversion, retention, repurchase) and cohort datasets with consistent metric definitions; segmented users with RFM + K-means.", "output": "High-value and churn-risk segments with per-segment marketing and ad recommendations.", "tags": ["KPI", "Cohort", "RFM", "K-means"], "imagesDir": "ecommerce" },
@@ -1071,7 +1070,7 @@ export function loadProfile(locale: Locale): Profile {
     { "label": "GPA · 纽约大学", "value": "3.83 / 4.00" },
     { "label": "灵弦提交数", "value": "", "source": "github", "repo": "Guqin-AI" },
     { "label": "分析记录数（实习）", "value": "10 万+" },
-    { "label": "已上线站点", "value": "4" }
+    { "label": "已上线站点", "value": "4", "hint": "lingxian.app · lzhpw.com · web-designer-lac.vercel.app · qinghua-deep-evol.vercel.app" }
   ],
   "analytics": [
     { "title": "电商用户与营销分析", "question": "哪些用户值得追加营销投入，哪些即将流失？", "method": "搭建 KPI 体系（UV/PV、漏斗转化、留存、复购）与口径统一的 cohort 数据集；用 RFM + K-means 做用户分群。", "output": "高价值与流失风险分群，以及按分群给出的营销与广告优化建议。", "tags": ["KPI", "Cohort", "RFM", "K-means"], "imagesDir": "ecommerce" },
@@ -1141,12 +1140,11 @@ const projects = defineCollection({
 export const collections = { projects };
 ```
 
-- [ ] **Step 7: Write `site/src/lib/projects.ts`**
+- [ ] **Step 7: Write `site/src/lib/pairing.ts` (pure, unit-testable) and `site/src/lib/projects.ts` (Astro-only)**
+
+`site/src/lib/pairing.ts` — no Astro imports, so Vitest can load it:
 
 ```ts
-import { getCollection, type CollectionEntry } from 'astro:content';
-import type { Locale } from '../i18n';
-
 export function slugOf(entry: { id: string }): string {
   return entry.id.replace(/^(en|zh)\//, '');
 }
@@ -1160,6 +1158,15 @@ export function findUnpaired(ids: string[]): string[] {
     return !set.has(twin);
   });
 }
+```
+
+`site/src/lib/projects.ts`:
+
+```ts
+import { getCollection, type CollectionEntry } from 'astro:content';
+import type { Locale } from '../i18n';
+import { findUnpaired } from './pairing';
+export { slugOf, findUnpaired } from './pairing';
 
 export async function getProjects(locale: Locale): Promise<CollectionEntry<'projects'>[]> {
   const all = await getCollection('projects');
@@ -1168,16 +1175,6 @@ export async function getProjects(locale: Locale): Promise<CollectionEntry<'proj
   return all.filter((e) => e.id.startsWith(`${locale}/`)).sort((a, b) => a.data.order - b.data.order);
 }
 ```
-
-`findUnpaired` and `slugOf` must not import `astro:content` at module top level for the unit test to run outside Astro — keep them in a separate file `site/src/lib/pairing.ts` and re-export from `projects.ts`:
-
-```ts
-// site/src/lib/pairing.ts
-export function slugOf(entry: { id: string }): string { return entry.id.replace(/^(en|zh)\//, ''); }
-export function findUnpaired(ids: string[]): string[] { /* body as above */ }
-```
-
-and in `projects.ts`: `export { slugOf, findUnpaired } from './pairing'; import { findUnpaired } from './pairing';`. Update the unit test import to `../../src/lib/pairing`.
 
 - [ ] **Step 8: Write the four project files**
 
@@ -1357,7 +1354,7 @@ gallery:
 一条无人值守运行的管道、一个按小时存储多类别价格的 PostgreSQL 库，以及每日的 7 日预测（趋势、风险等级、买卖建议）。仓库有 6 个 star 和双语 README；api / database / analysis / scheduler 的结构是我之后新数据项目沿用的骨架。
 ```
 
-Note on DaD `gallery`: write the six captions **after** opening `site/src/assets/work/dad-market-forecast/01..10.png` with the Read tool and confirming what each shows. Keep the six that best match the captions above (rename so 01–06 are the chosen ones; delete or renumber the rest). Captions must describe what is actually in the image; adjust the text if an image differs. Verify no screenshot shows a token, local username or API key — crop with `sharp` if it does (`node -e "require('sharp')('in.png').extract({left,top,width,height}).toFile('out.png')"`).
+Note on DaD `gallery`: write the six captions **after** opening `site/src/assets/work/dad-market-forecast/01..11.png` with the Read tool and confirming what each shows. Keep the six that best match the captions above (rename so 01–06 are the chosen ones; delete or renumber the rest). Captions must describe what is actually in the image; adjust the text if an image differs. Verify no screenshot shows a token, local username or API key — crop with `sharp` if it does (`node -e "require('sharp')('in.png').extract({left,top,width,height}).toFile('out.png')"`).
 
 - [ ] **Step 9: Run unit tests → pass; build → pass**
 
@@ -1366,11 +1363,21 @@ Expected: unit tests PASS; build succeeds (collections load; DaD images resolve)
 
 - [ ] **Step 10: Deliberately break one gallery path and confirm the build fails, then restore**
 
+The file is not yet tracked by git, so restore with the inverse `sed`, not `git checkout`:
+
 ```bash
-cd site && sed -i '' 's#dad-market-forecast/01.png#dad-market-forecast/99.png#' src/content/projects/en/dad-market-forecast.md && (npm run build; echo "exit=$?") && git checkout src/content/projects/en/dad-market-forecast.md
+cd site && sed -i '' 's#dad-market-forecast/01.png#dad-market-forecast/99.png#' src/content/projects/en/dad-market-forecast.md && (npm run build; echo "exit=$?"); sed -i '' 's#dad-market-forecast/99.png#dad-market-forecast/01.png#' src/content/projects/en/dad-market-forecast.md && grep -c '01.png' src/content/projects/en/dad-market-forecast.md
 ```
 
-Expected: build error mentioning `99.png`, `exit=1`. (Review Focus 5.)
+Expected: build error mentioning `99.png`, `exit=1`, then `1` from grep (restored). (Review Focus 5.)
+
+- [ ] **Step 10b: Deliberately orphan a locale twin and confirm the build fails, then restore**
+
+```bash
+cd site && mv src/content/projects/zh/dad-market-forecast.md /tmp/dad-zh.md && (npm run build; echo "exit=$?"); mv /tmp/dad-zh.md src/content/projects/zh/dad-market-forecast.md && ls src/content/projects/zh
+```
+
+Expected: error `projects: missing locale twin for en/dad-market-forecast`, `exit=1`, then both zh files listed. (Spec §7.)
 
 - [ ] **Step 11: Commit**
 
@@ -1515,6 +1522,7 @@ const repos = {};
 for (const name of REPOS) {
   process.stderr.write(`${name}… `);
   const dates = gh(['api', '--paginate', `repos/${OWNER}/${name}/commits?per_page=100`, '--jq', '.[].commit.author.date']).trim().split('\n').filter(Boolean);
+  if (dates.length === 0) throw new Error(`${name}: no commits returned — check the repo name and gh auth`);
   const languages = Object.keys(JSON.parse(gh(['api', `repos/${OWNER}/${name}/languages`])));
   const sorted = [...dates].sort();
   const firstCommit = sorted[0].slice(0, 10);
@@ -1547,23 +1555,23 @@ Co-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>"
 ### Task 6: Screenshots of live sites and gallery wiring
 
 **Files:**
-- Create: `scripts/shoot.mjs`, `site/src/assets/work/guqin-ai/01..06.png`, `site/src/assets/projects/webdesigner/01.png`, `site/src/assets/projects/deepevol/01.png`, `site/src/assets/projects/xingyuan/01.png`
+- Create: `site/scripts/shoot.mjs`, `site/src/assets/work/guqin-ai/01..06.png`, `site/src/assets/projects/webdesigner/01.png`, `site/src/assets/projects/deepevol/01.png`
 - Modify: `site/src/content/projects/{en,zh}/guqin-ai.md` (fill `gallery`)
 
 **Interfaces:**
-- Produces: image files referenced by the content; `scripts/shoot.mjs` is re-runnable.
+- Produces: image files referenced by the content; `site/scripts/shoot.mjs` is re-runnable from `site/` (it must live under `site/` so `@playwright/test` resolves from `site/node_modules`).
 
-- [ ] **Step 1: Write `scripts/shoot.mjs`**
+- [ ] **Step 1: Write `site/scripts/shoot.mjs`**
 
 ```js
 #!/usr/bin/env node
-// Screenshots of live sites → site/src/assets/**. Re-run to refresh. Requires: cd site && npx playwright install chromium
+// Screenshots of live sites → src/assets/**. Run from site/: node scripts/shoot.mjs. Requires: npx playwright install chromium
 import { chromium } from '@playwright/test';
 import { mkdirSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-const root = resolve(dirname(fileURLToPath(import.meta.url)), '../site/src/assets');
+const root = resolve(dirname(fileURLToPath(import.meta.url)), '../src/assets');
 const SHOTS = [
   { out: 'work/guqin-ai/01.png', url: 'https://lingxian.app/en', full: false },
   { out: 'work/guqin-ai/02.png', url: 'https://lingxian.app/en', scrollTo: 'text=The score takes shape as you type' },
@@ -1573,7 +1581,6 @@ const SHOTS = [
   { out: 'work/guqin-ai/06.png', url: 'https://lingxian.app/blog' },
   { out: 'projects/webdesigner/01.png', url: 'https://web-designer-lac.vercel.app' },
   { out: 'projects/deepevol/01.png', url: 'https://qinghua-deep-evol.vercel.app' },
-  { out: 'projects/xingyuan/01.png', url: 'https://www.lzhpw.com' },
 ];
 
 const browser = await chromium.launch();
@@ -1594,8 +1601,8 @@ await browser.close();
 
 - [ ] **Step 2: Run it and inspect every image**
 
-Run: `cd site && npx playwright install chromium && cd .. && node scripts/shoot.mjs`
-Then open each of the nine PNGs with the Read tool. For each, confirm: content loaded (no blank/loader), no cookie banner covering the page, no personal data. If the editor page (`03.png`) shows an empty canvas, add before the screenshot in `SHOTS`: `{ ..., actions: [['click', 'text=散'], ['click', 'text=勾'], ['click', 'text=三']] }` and execute `for (const [a, sel] of s.actions ?? []) await page[a](sel)` after load — the Lingxian landing says typing "散勾三" produces notation. If a banner blocks, add `await page.locator('button:has-text("接受"), button:has-text("Accept")').first().click({ timeout: 2000 }).catch(() => {})`.
+Run: `cd site && npx playwright install chromium && node scripts/shoot.mjs`
+Then open each of the eight PNGs with the Read tool. For each, confirm: content loaded (no blank/loader), no cookie banner covering the page, no personal data. If the editor page (`03.png`) shows an empty canvas, add before the screenshot in `SHOTS`: `{ ..., actions: [['click', 'text=散'], ['click', 'text=勾'], ['click', 'text=三']] }` and execute `for (const [a, sel] of s.actions ?? []) await page[a](sel)` after load — the Lingxian landing says typing "散勾三" produces notation. If a banner blocks, add `await page.locator('button:has-text("接受"), button:has-text("Accept")').first().click({ timeout: 2000 }).catch(() => {})`.
 
 - [ ] **Step 3: Fill the Lingxian gallery frontmatter (both locales)**
 
@@ -1676,11 +1683,15 @@ for (const [path, lang, work] of [['/', 'en', 'Selected work'], ['/zh/', 'zh', '
   });
 }
 
-test('no phone number or wechat on the page', async ({ page }) => {
-  await page.goto('/');
-  const html = await page.content();
-  expect(html).not.toMatch(/\+1\s?\d{3}|\+86|WeChat|微信/);
-});
+for (const path of ['/', '/zh/']) {
+  test(`no phone number or messenger handle on ${path}`, async ({ page }) => {
+    await page.goto(path);
+    const html = await page.content();
+    expect(html).not.toMatch(/\+1\s?\d{3}[\s-]?\d{3}|\+86\s?\d{3}|1[3-9]\d{9}/);        // phone numbers anywhere
+    const footer = await page.locator('footer').innerHTML();
+    expect(footer).not.toMatch(/WeChat|微信|QQ|L1679614707/);                           // messenger handles in contact
+  });
+}
 
 test('language switch from home lands on the other home', async ({ page }) => {
   await page.goto('/');
@@ -1723,17 +1734,24 @@ const tr = t(locale);
 
 ```astro
 ---
-interface Props { items: { label: string; value: string }[]; id?: string; columns?: 2 | 4 }
+interface Props { items: { label: string; value: string; hint?: string }[]; id?: string; columns?: 2 | 4 }
 const { items, id, columns = 4 } = Astro.props;
 ---
 <dl id={id} class={`specrow cols-${columns}`}>
-  {items.map((it) => (<div><dt class="eyebrow">{it.label}</dt><dd>{it.value}</dd></div>))}
+  {items.map((it) => (
+    <div>
+      <dt class="eyebrow">{it.label}</dt>
+      <dd>{it.value}</dd>
+      {it.hint && <p class="hint">{it.hint}</p>}
+    </div>
+  ))}
 </dl>
 <style>
   .specrow { display: grid; gap: 2rem 1.5rem; margin: 0; grid-template-columns: repeat(2, 1fr); }
   @media (min-width: 720px) { .cols-4 { grid-template-columns: repeat(4, 1fr); } }
   dt { margin-bottom: 0.35rem; }
   dd { margin: 0; font-family: var(--font-serif); font-size: 1.6rem; line-height: 1.1; color: var(--fg); }
+  .hint { margin-top: 0.4rem; font-size: 0.75rem; line-height: 1.4; color: var(--fg-muted); }
 </style>
 ```
 
@@ -1954,12 +1972,12 @@ const { locale } = Astro.props;
 const tr = t(locale);
 const p = loadProfile(locale);
 const projects = (await getProjects(locale)).filter((e) => e.data.featured);
-const stats = p.stats.map((s) => s.source === 'github' && s.repo ? { label: s.label, value: formatCount(requireRepo(github as GithubData, s.repo).commits) } : { label: s.label, value: s.value });
+const stats = p.stats.map((s) => ({ label: s.label, hint: s.hint, value: s.source === 'github' && s.repo ? formatCount(requireRepo(github as GithubData, s.repo).commits) : s.value }));
 ---
 <BaseLayout title={tr('site.title')} description={tr('site.description')} locale={locale} path="/">
   <Hero locale={locale} {...p.hero} />
 
-  <section class="wrap section reveal" aria-label="Key numbers"><SpecRow id="stats" items={stats} /></section>
+  <section class="wrap section reveal" aria-label={tr('a11y.keyNumbers')}><SpecRow id="stats" items={stats} /></section>
 
   <Divider />
   <section id="work" class="wrap section">
@@ -2048,12 +2066,16 @@ const cases = [
 
 for (const [path, lang, problem] of cases) {
   test(`case ${path}`, async ({ page }) => {
+    const errors: string[] = [];
+    page.on('console', (m) => { if (m.type() === 'error') errors.push(m.text()); });
+    page.on('pageerror', (e) => errors.push(e.message));
     await page.goto(path);
     await expect(page.locator('html')).toHaveAttribute('lang', lang);
     await expect(page.locator('h1')).toBeVisible();
     await expect(page.getByRole('heading', { level: 2, name: problem })).toBeVisible();
     await expect(page.locator('.gallery img')).toHaveCount(6);
     await expect(page.locator('.gallery img').first()).toHaveAttribute('alt', /.+/);
+    expect(errors).toEqual([]);
   });
 }
 
@@ -2084,24 +2106,31 @@ test('lingxian links to the live site, not a placeholder', async ({ page }) => {
 ```astro
 ---
 // Gallery.astro
-import { Image } from 'astro:assets';
+import { Image, getImage } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
-interface Props { items: { src: ImageMetadata; alt: string; caption: string }[] }
-const { items } = Astro.props;
+import { t, type Locale } from '../i18n';
+interface Props { items: { src: ImageMetadata; alt: string; caption: string }[]; locale: Locale }
+const { items, locale } = Astro.props;
+const tr = t(locale);
+// A large WebP for the lightbox so the multi-MB 2x PNG is never shipped (spec §9: ≤ 300 KB per image)
+const large = await Promise.all(items.map((it) => getImage({ src: it.src, width: 1600, format: 'webp', quality: 80 })));
 ---
 <ul class="gallery">
   {items.map((it, i) => (
     <li class="reveal">
-      <button type="button" data-lightbox-src={it.src.src} data-lightbox-alt={it.alt} aria-label={`Open image ${i + 1}: ${it.alt}`}>
-        <Image src={it.src} alt={it.alt} width={960} format="webp" quality={82} loading={i < 2 ? 'eager' : 'lazy'} />
-      </button>
-      <figcaption>{it.caption}</figcaption>
+      <figure>
+        <button type="button" data-lightbox-src={large[i].src} data-lightbox-alt={it.alt} aria-label={`${tr('a11y.openImage')} ${i + 1}: ${it.alt}`}>
+          <Image src={it.src} alt={it.alt} width={960} format="webp" quality={82} loading={i < 2 ? 'eager' : 'lazy'} />
+        </button>
+        <figcaption>{it.caption}</figcaption>
+      </figure>
     </li>
   ))}
 </ul>
 <style>
   .gallery { list-style: none; margin: 0; padding: 0; display: grid; gap: 1.5rem; grid-template-columns: 1fr; }
   @media (min-width: 720px) { .gallery { grid-template-columns: 1fr 1fr; } }
+  figure { margin: 0; }
   button { all: unset; display: block; cursor: zoom-in; border-radius: 10px; overflow: hidden; border: 1px solid var(--rule); }
   button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
   img { width: 100%; height: auto; }
@@ -2112,10 +2141,10 @@ const { items } = Astro.props;
 ```astro
 ---
 // Lightbox.astro — one per page; opened by any [data-lightbox-src]
-interface Props { closeLabel: string }
-const { closeLabel } = Astro.props;
+interface Props { closeLabel: string; label: string }
+const { closeLabel, label } = Astro.props;
 ---
-<dialog id="lightbox" aria-label="Image preview">
+<dialog id="lightbox" aria-label={label}>
   <button type="button" class="close" aria-label={closeLabel}>×</button>
   <img alt="" />
 </dialog>
@@ -2192,13 +2221,13 @@ const repo = d.waffle?.source === 'github' ? requireRepo(github as GithubData, d
       {d.gallery.length > 0 && (
         <section class="gallery-section">
           <p class="eyebrow center">04 · {tr('case.gallery')}</p>
-          <Gallery items={d.gallery} />
+          <Gallery items={d.gallery} locale={locale} />
         </section>
       )}
       <p class="center back"><a class="btn" href={localePath('/', locale)}>← {tr('actions.back')}</a></p>
     </div>
   </article>
-  <Lightbox closeLabel={tr('case.close')} />
+  <Lightbox closeLabel={tr('case.close')} label={tr('a11y.imagePreview')} />
 </BaseLayout>
 <style>
   header { padding-block: 5rem 3rem; }
@@ -2340,7 +2369,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import { t } from '../i18n';
 const tr = t('en');
 ---
-<BaseLayout title={tr('notFound.title')} description={tr('notFound.body')} locale="en" path="/404/">
+<BaseLayout title={tr('notFound.title')} description={tr('notFound.body')} locale="en" path="/" noAlternates>
   <section class="wrap section center">
     <p class="eyebrow">404</p>
     <h1>{tr('notFound.title')} / {t('zh')('notFound.title')}</h1>
@@ -2443,7 +2472,7 @@ for (const [w, h] of [[390, 844], [768, 1024], [1280, 900]]) {
 await browser.close();
 ```
 
-Run: `cd site && npm run build && (npm run preview -- --port 4321 &) && sleep 3 && node scripts/snap.mjs; kill %1`
+Run: `cd site && npm run build && npm run preview -- --port 4321 & PID=$!; sleep 4; (cd site && node scripts/snap.mjs); kill $PID`
 Open every PNG in `site/test-results/` with the Read tool. Fix any overflow, overlapping header items at 390px, or clipped waffle; re-run until no `HORIZONTAL OVERFLOW` lines print.
 
 - [ ] **Step 2: Lighthouse**
@@ -2464,7 +2493,7 @@ Items that only the site owner can supply. Everything else on the site is source
 | Résumé PDF | `site/public/resume.pdf` (placeholder one-pager) | Overwrite the file with the real PDF; keep the name. |
 | LinkedIn URL | `site/src/components/Footer.astro` (`footer.linkedinTodo` text) and `site/src/data/profile.*.json` → `contact.linkedin` | Add `"linkedin": "https://www.linkedin.com/in/…"` to both profile files, then in `Footer.astro` render `<a href={profile.contact.linkedin}>LinkedIn</a>` when present. |
 
-Refresh commands: `node scripts/fetch-github.mjs` (activity data), `node scripts/shoot.mjs` (live-site screenshots).
+Refresh commands: `node scripts/fetch-github.mjs` (activity data), `cd site && node scripts/shoot.mjs` (live-site screenshots).
 ```
 
 - [ ] **Step 4: Full verification**
