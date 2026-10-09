@@ -1,0 +1,164 @@
+{
+  "generatedAt": "2026-10-09",
+  "repos": {
+    "Guqin-AI": {
+      "commits": 1246,
+      "firstCommit": "2026-02-12",
+      "lastCommit": "2026-10-05",
+      "weeklyCommits": [
+        9,
+        53,
+        5,
+        36,
+        50,
+        265,
+        139,
+        24,
+        11,
+        32,
+        313,
+        42,
+        14,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        32,
+        39,
+        11,
+        11,
+        16,
+        0,
+        0,
+        0,
+        0,
+        5,
+        2,
+        59,
+        61,
+        16
+      ],
+      "languages": [
+        "TypeScript",
+        "CSS",
+        "JavaScript",
+        "Shell",
+        "PLpgSQL",
+        "Python",
+        "Dockerfile",
+        "HTML"
+      ]
+    },
+    "DaD-Market-Forecast": {
+      "commits": 17,
+      "firstCommit": "2025-09-21",
+      "lastCommit": "2025-10-08",
+      "weeklyCommits": [
+        16,
+        0,
+        1
+      ],
+      "languages": [
+        "Python"
+      ]
+    },
+    "Crawler": {
+      "commits": 3,
+      "firstCommit": "2025-08-24",
+      "lastCommit": "2026-02-04",
+      "weeklyCommits": [
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "languages": [
+        "Python",
+        "PowerShell",
+        "Shell",
+        "Go Template"
+      ]
+    },
+    "Hackthon-Meteror": {
+      "commits": 44,
+      "firstCommit": "2025-10-04",
+      "lastCommit": "2025-10-06",
+      "weeklyCommits": [
+        44
+      ],
+      "languages": [
+        "JavaScript",
+        "Java",
+        "HTML",
+        "CSS",
+        "Shell"
+      ]
+    },
+    "WebDesigner": {
+      "commits": 39,
+      "firstCommit": "2026-09-05",
+      "lastCommit": "2026-09-09",
+      "weeklyCommits": [
+        39
+      ],
+      "languages": [
+        "TypeScript",
+        "HTML",
+        "CSS",
+        "JavaScript"
+      ]
+    },
+    "Qinghua-DeepEvol": {
+      "commits": 9,
+      "firstCommit": "2026-08-09",
+      "lastCommit": "2026-08-18",
+      "weeklyCommits": [
+        7,
+        2
+      ],
+      "languages": [
+        "CSS",
+        "HTML",
+        "JavaScript"
+      ]
+    },
+    "Xingyuanguzheng": {
+      "commits": 54,
+      "firstCommit": "2026-02-06",
+      "lastCommit": "2026-02-11",
+      "weeklyCommits": [
+        54
+      ],
+      "languages": [
+        "TypeScript",
+        "Astro",
+        "PLpgSQL",
+        "JavaScript",
+        "CSS"
+      ]
+    }
+  }
+}

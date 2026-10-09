@@ -1,0 +1,17 @@
+---
+import type { Level } from '../lib/github';
+interface Props { cells: Level[]; cols: number; label: string }
+const { cells, cols, label } = Astro.props;
+---
+<div class="waffle" role="img" aria-label={label} style={`--cols:${cols}`}>
+  {cells.map((lvl) => <span data-level={lvl}></span>)}
+</div>
+<style>
+  .waffle { display: grid; grid-template-columns: repeat(var(--cols), 1fr); gap: 3px; }
+  .waffle span { display: block; aspect-ratio: 1; border-radius: 1.5px; background: color-mix(in srgb, var(--accent) calc(var(--p) * 1%), var(--bg)); }
+  .waffle span[data-level='0'] { --p: 0; box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--fg) 11%, var(--bg)); }
+  .waffle span[data-level='1'] { --p: 25; }
+  .waffle span[data-level='2'] { --p: 45; }
+  .waffle span[data-level='3'] { --p: 70; }
+  .waffle span[data-level='4'] { --p: 100; }
+</style>

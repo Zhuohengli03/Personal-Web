@@ -1,0 +1,21 @@
+---
+import type { Profile } from '../lib/profile';
+interface Props { items: Profile['experience'] }
+const { items } = Astro.props;
+---
+<ol class="timeline">
+  {items.map((x) => (
+    <li class="reveal">
+      <p class="eyebrow">{x.period}</p>
+      <h3>{x.role} · <span class="muted">{x.company}</span></h3>
+      <ul>{x.bullets.map((b) => <li>{b}</li>)}</ul>
+    </li>
+  ))}
+</ol>
+<style>
+  .timeline { list-style: none; margin: 0 auto; padding: 0; max-width: 680px; }
+  .timeline > li { padding-left: 1.5rem; border-left: 1px solid var(--rule); }
+  h3 { font-family: var(--font-sans); font-size: 1.05rem; font-weight: 500; margin: 0.35rem 0 0.75rem; }
+  ul { margin: 0; padding-left: 1.1rem; color: var(--fg-muted); font-size: 0.925rem; line-height: 1.6; }
+  ul li + li { margin-top: 0.3rem; }
+</style>
