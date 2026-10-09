@@ -48,7 +48,8 @@ const activity = d.waffle?.source === 'github' ? repoActivity(github as GithubDa
       )}
       {d.gallery.length > 0 && (
         <section class="gallery-section">
-          <p class="eyebrow center">04 · {tr('case.gallery')}</p>
+          <p class="eyebrow center">04</p>
+          <h2 class="center gallery-title">{tr('case.gallery')}</h2>
           <Gallery items={d.gallery} locale={locale} />
         </section>
       )}
@@ -65,7 +66,7 @@ const activity = d.waffle?.source === 'github' ? repoActivity(github as GithubDa
   .body { margin-top: 3rem; }
   .md { counter-reset: sec; text-wrap: pretty; }
   .md :global(h2) { font-size: 1.65rem; margin-top: 4rem; margin-bottom: 1rem; }
-  .md :global(h2)::before { content: counter(sec, decimal-leading-zero) ' · '; counter-increment: sec; font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.08em; color: var(--fg-muted); display: block; margin-bottom: 0.5rem; }
+  .md :global(h2)::before { content: counter(sec, decimal-leading-zero); counter-increment: sec; font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.08em; color: var(--fg-muted); display: block; margin-bottom: 0.5rem; }
   .md :global(p), .md :global(li) { color: color-mix(in srgb, var(--fg) 82%, var(--bg)); }
   .md :global(p + p) { margin-top: 1em; }
   .md :global(ol), .md :global(ul) { padding-left: 1.2rem; margin: 1em 0; }
@@ -75,6 +76,7 @@ const activity = d.waffle?.source === 'github' ? repoActivity(github as GithubDa
   .activity { max-width: 680px; margin: 3rem auto 0; }
   .activity .eyebrow { margin-bottom: 0.75rem; }
   .gallery-section { margin-top: 4rem; }
-  .gallery-section .eyebrow { margin-bottom: 1.5rem; }
+  .gallery-section .eyebrow { margin-bottom: 0.5rem; }
+  .gallery-title { margin-bottom: 2rem; }
   .back { margin-top: 5rem; }
 </style>

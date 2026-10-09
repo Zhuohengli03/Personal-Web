@@ -6,8 +6,7 @@ const { items, id, columns = 4 } = Astro.props;
   {items.map((it) => (
     <div>
       <dt class="eyebrow">{it.label}</dt>
-      <dd>{it.value}</dd>
-      {it.hint && <p class="hint">{it.hint}</p>}
+      <dd>{it.value}{it.hint && <span class="hint">{it.hint}</span>}</dd>
     </div>
   ))}
 </dl>
@@ -16,5 +15,5 @@ const { items, id, columns = 4 } = Astro.props;
   @media (min-width: 720px) { .cols-4 { grid-template-columns: repeat(4, 1fr); } }
   dt { margin-bottom: 0.35rem; }
   dd { margin: 0; font-family: var(--font-serif); font-size: 1.6rem; line-height: 1.1; color: var(--fg); }
-  .hint { margin-top: 0.4rem; font-size: 0.75rem; line-height: 1.4; color: var(--fg-muted); overflow-wrap: anywhere; }
+  .hint { display: block; margin-top: 0.4rem; font-family: var(--font-sans); font-size: 0.75rem; line-height: 1.4; color: var(--fg-muted); overflow-wrap: anywhere; }
 </style>
