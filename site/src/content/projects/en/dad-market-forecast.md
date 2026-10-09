@@ -31,3 +31,5 @@ In *Dark and Darker*, item prices on the player market swing hour to hour. Tradi
 ## Result
 
 A pipeline that ran unattended, a PostgreSQL store of listings across item categories, and daily 7-day forecasts with trend, risk level and a buy/sell suggestion. On the Gold Ore run shown in the gallery: 6,164 rows collected, ensemble R² 0.995 with no overfitting (CV gap −0.011), and a "price falling, consider selling — high risk" call. The repository has 6 stars and a bilingual README; its api / database / analysis / scheduler layout is the skeleton I reuse for new data projects.
+
+Because the game resets its market every season, this is a reference case: the numbers above come from one collection window and the forecast made at its end, not from a live market.
