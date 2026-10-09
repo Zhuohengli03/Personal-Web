@@ -16,6 +16,7 @@ for (const [path, lang, work] of [['/', 'en', 'Selected work'], ['/zh/', 'zh', '
     await expect(page.locator('.waffle').first()).toBeVisible();
     const stat = await page.locator('#stats dd').nth(1).textContent();
     expect(stat).toMatch(/^\d{1,3}(,\d{3})*\+$/);
+    await expect(page.locator('#stats dd').nth(2)).toContainText(/2026-\d{2}/); // dated metric, from metrics.json
     expect(errors).toEqual([]);
   });
 }

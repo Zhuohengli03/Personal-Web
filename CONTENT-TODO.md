@@ -12,6 +12,16 @@ Items that only the site owner can supply. Everything else on the site is source
 
 Done: LinkedIn URL is in `profile.*.json` → `contact.linkedin` and renders in the footer. Profile photo is in `site/src/assets/photo.jpg`. Résumés without phone numbers are in `site/public/resume-{en,zh}.pdf`.
 
+## Numbers that change
+
+| Number | Where it lives | Shown |
+|---|---|---|
+| Lingxian users / scores / PDF exports / week-2 retention + `asOf` | `site/src/data/metrics.json` (one place, both languages) | stats row on the home page, always with "as of {asOf}" |
+| Commit count | `site/src/data/github.json` → `node scripts/fetch-github.mjs` | rounded ("1,200+") in the terminal panel and stats row |
+| Exact figures in the Lingxian case study prose (94 / 160 / 144 / 20.7% / 53% → 35% / 96% …) | `site/src/content/projects/{en,zh}/guqin-ai.md` | with "as of September 2026" in the text — update the prose and the date together |
+
+The hero copy and the terminal panel deliberately carry no volatile numbers.
+
 Refresh commands: `node scripts/fetch-github.mjs` (activity data), `cd site && node scripts/shoot.mjs` (live-site screenshots), `cd site && node scripts/audit.mjs` (responsive snapshots + Lighthouse into `site/audit-results/`).
 
 The old site's screenshots for the crawler, NASA, e-commerce and operations projects are still in git history (commit `6fa2141`, under `site/src/assets/projects/` and `site/src/assets/analytics/`) if a later version adds galleries to those cards.
