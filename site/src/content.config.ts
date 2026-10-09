@@ -31,10 +31,8 @@ const projects = defineCollection({
       links: z.object({ github: z.string().url().optional(), live: z.string().url().optional() }).default({}),
       featured: z.boolean().default(true),
       order: z.number().int(),
-      waffle: z
-        .object({ source: z.literal('github'), repo: z.string() })
-        .or(z.object({ source: z.literal('static'), cols: z.number().int(), cells: z.array(z.number().int().min(0).max(4)) }))
-        .optional(),
+      // Commit activity grid, only when it can be drawn from real data (github.json)
+      waffle: z.object({ source: z.literal('github'), repo: z.string() }).optional(),
       gallery: z.array(z.object({ src: image(), alt: z.string(), caption: z.string() })).default([]),
     }),
 });

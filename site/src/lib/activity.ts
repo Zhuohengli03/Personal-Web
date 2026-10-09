@@ -2,7 +2,7 @@ import type { Locale } from '../i18n';
 import { t } from '../i18n';
 import { levels, requireRepo, type GithubData, type Level } from './github';
 
-export interface Activity { cells: Level[]; cols: number; label: string; commits: number; firstCommit: string; lastCommit: string }
+export interface Activity { cells: Level[]; cols: number; label: string }
 
 /** Weekly commit grid for a repo, with a localized accessible label. */
 export function repoActivity(data: GithubData, repo: string, locale: Locale): Activity {
@@ -11,5 +11,5 @@ export function repoActivity(data: GithubData, repo: string, locale: Locale): Ac
     .replace('{n}', r.commits.toLocaleString('en-US'))
     .replace('{from}', r.firstCommit)
     .replace('{to}', r.lastCommit);
-  return { cells: levels(r.weeklyCommits), cols: 17, label, commits: r.commits, firstCommit: r.firstCommit, lastCommit: r.lastCommit };
+  return { cells: levels(r.weeklyCommits), cols: 17, label };
 }

@@ -10,10 +10,11 @@
     "education": "Education & honors",
     "honors": "Honors and awards"
   },
-  "labels": { "role": "Role", "period": "Period", "stack": "Stack", "scale": "Scale", "links": "Links", "present": "present", "question": "Question", "method": "Method", "output": "Output" },
+  "labels": { "role": "Role", "period": "Period", "stack": "Stack", "scale": "Scale", "links": "Links", "question": "Question", "method": "Method", "output": "Output" },
+  "category": { "product": "Product", "data": "Data" },
   "actions": { "caseStudy": "Case study", "github": "GitHub", "live": "Live site", "back": "Back to home", "clientWork": "Client work" },
-  "case": { "problem": "Problem", "decisions": "Decisions", "result": "Result", "gallery": "Gallery", "close": "Close" },
+  "case": { "gallery": "Gallery", "close": "Close" },
   "footer": { "contact": "Contact", "elsewhere": "Elsewhere", "language": "Language", "linkedinTodo": "LinkedIn (link coming)" },
-  "a11y": { "home": "Home", "primaryNav": "Primary", "keyNumbers": "Key numbers", "imagePreview": "Image preview", "openImage": "Open image", "activity": "{n} commits, {from} to {to}, one cell per week" },
+  "a11y": { "primaryNav": "Primary", "keyNumbers": "Key numbers", "imagePreview": "Image preview", "openImage": "Open image", "activity": "{n} commits, {from} to {to}, one cell per week" },
   "notFound": { "title": "Page not found", "body": "That page does not exist here.", "home": "Go home" }
 }

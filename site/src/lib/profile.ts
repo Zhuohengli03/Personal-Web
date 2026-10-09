@@ -16,7 +16,6 @@ const analytics = z.object({
   method: z.string(),
   output: z.string(),
   tags: z.array(z.string()).max(5),
-  imagesDir: z.string().optional(),
 });
 const mini = z.object({
   title: z.string(),
@@ -25,7 +24,6 @@ const mini = z.object({
   github: z.string().url().optional(),
   live: z.string().url().optional(),
   clientWork: z.boolean().default(false),
-  imagesDir: z.string().optional(),
 });
 const experience = z.object({ company: z.string(), role: z.string(), period: z.string(), bullets: z.array(z.string()).min(1) });
 const education = z.object({

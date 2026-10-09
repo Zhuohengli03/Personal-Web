@@ -15,5 +15,6 @@ Personal site of Zhuoheng Li. Astro static site in `site/`, deployed to GitHub P
 
     node scripts/fetch-github.mjs            # rewrites site/src/data/github.json (needs gh auth)
     cd site && node scripts/shoot.mjs        # reshoots live-site screenshots into site/src/assets
+    cd site && node scripts/audit.mjs        # responsive snapshots + Lighthouse → site/audit-results/
 
 Open items that need the owner are listed in `CONTENT-TODO.md`.

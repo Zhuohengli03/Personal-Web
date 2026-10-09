@@ -1,7 +1,7 @@
 ---
 import { t, type Locale } from '../i18n';
-interface Props { locale: Locale; eyebrow: string; title: string; subtitle: string }
-const { locale, eyebrow, title, subtitle } = Astro.props;
+interface Props { locale: Locale; eyebrow: string; title: string; subtitle: string; email: string }
+const { locale, eyebrow, title, subtitle, email } = Astro.props;
 const tr = t(locale);
 ---
 <section class="hero">
@@ -11,7 +11,7 @@ const tr = t(locale);
     <p class="prose fade-up" data-delay="3">{subtitle}</p>
     <div class="cta fade-up" data-delay="4">
       <a class="btn btn-primary" href="/resume.pdf">{tr('hero.resume')}</a>
-      <a class="btn" href="mailto:zhuohengli03@gmail.com">{tr('hero.email')}</a>
+      <a class="btn" href={`mailto:${email}`}>{tr('hero.email')}</a>
     </div>
   </div>
 </section>

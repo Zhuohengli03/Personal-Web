@@ -10,10 +10,11 @@
     "education": "教育与荣誉",
     "honors": "荣誉与奖项"
   },
-  "labels": { "role": "角色", "period": "时间", "stack": "技术", "scale": "规模", "links": "链接", "present": "至今", "question": "问题", "method": "方法", "output": "产出" },
+  "labels": { "role": "角色", "period": "时间", "stack": "技术", "scale": "规模", "links": "链接", "question": "问题", "method": "方法", "output": "产出" },
+  "category": { "product": "产品", "data": "数据" },
   "actions": { "caseStudy": "查看案例", "github": "GitHub", "live": "访问站点", "back": "返回首页", "clientWork": "客户项目" },
-  "case": { "problem": "问题", "decisions": "决策", "result": "结果", "gallery": "画廊", "close": "关闭" },
+  "case": { "gallery": "画廊", "close": "关闭" },
   "footer": { "contact": "联系", "elsewhere": "链接", "language": "语言", "linkedinTodo": "LinkedIn（链接待补）" },
-  "a11y": { "home": "首页", "primaryNav": "主导航", "keyNumbers": "关键数字", "imagePreview": "图片预览", "openImage": "打开图片", "activity": "{from} 至 {to} 共 {n} 次提交，每格一周" },
+  "a11y": { "primaryNav": "主导航", "keyNumbers": "关键数字", "imagePreview": "图片预览", "openImage": "打开图片", "activity": "{from} 至 {to} 共 {n} 次提交，每格一周" },
   "notFound": { "title": "页面不存在", "body": "这里没有这个页面。", "home": "回到首页" }
 }

@@ -22,7 +22,7 @@ const activity = d.waffle?.source === 'github' ? repoActivity(github as GithubDa
 <BaseLayout title={`${d.title} — ${tr('site.title')}`} description={d.summary} locale={locale} path={path}>
   <article class="case">
     <header class="wrap center">
-      <p class="eyebrow fade-up" data-delay="1">{d.category} · {d.period}</p>
+      <p class="eyebrow fade-up" data-delay="1">{tr(`category.${d.category}`)} · {d.period}</p>
       <h1 class="fade-up" data-delay="2">{d.title}</h1>
       <p class="prose fade-up" data-delay="3">{d.summary}</p>
       <dl class="spec-grid specs fade-up" data-delay="4">

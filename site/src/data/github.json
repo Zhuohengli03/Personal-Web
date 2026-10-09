@@ -40,16 +40,6 @@
         59,
         61,
         16
-      ],
-      "languages": [
-        "TypeScript",
-        "CSS",
-        "JavaScript",
-        "Shell",
-        "PLpgSQL",
-        "Python",
-        "Dockerfile",
-        "HTML"
       ]
     },
     "DaD-Market-Forecast": {
@@ -60,9 +50,6 @@
         16,
         0,
         1
-      ],
-      "languages": [
-        "Python"
       ]
     },
     "Crawler": {
@@ -94,12 +81,6 @@
         0,
         0,
         1
-      ],
-      "languages": [
-        "Python",
-        "PowerShell",
-        "Shell",
-        "Go Template"
       ]
     },
     "Hackthon-Meteror": {
@@ -108,13 +89,6 @@
       "lastCommit": "2025-10-06",
       "weeklyCommits": [
         44
-      ],
-      "languages": [
-        "JavaScript",
-        "Java",
-        "HTML",
-        "CSS",
-        "Shell"
       ]
     },
     "WebDesigner": {
@@ -123,12 +97,6 @@
       "lastCommit": "2026-09-09",
       "weeklyCommits": [
         39
-      ],
-      "languages": [
-        "TypeScript",
-        "HTML",
-        "CSS",
-        "JavaScript"
       ]
     },
     "Qinghua-DeepEvol": {
@@ -138,11 +106,6 @@
       "weeklyCommits": [
         7,
         2
-      ],
-      "languages": [
-        "CSS",
-        "HTML",
-        "JavaScript"
       ]
     },
     "Xingyuanguzheng": {
@@ -151,13 +114,6 @@
       "lastCommit": "2026-02-11",
       "weeklyCommits": [
         54
-      ],
-      "languages": [
-        "TypeScript",
-        "Astro",
-        "PLpgSQL",
-        "JavaScript",
-        "CSS"
       ]
     }
   }
