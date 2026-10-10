@@ -17,7 +17,7 @@ Done: LinkedIn URL is in `profile.*.json` → `contact.linkedin` and renders in 
 | Number | Where it lives | Shown |
 |---|---|---|
 | Lingxian users / scores / PDF exports / week-2 retention + `asOf` | `site/src/data/metrics.json` (one place, both languages) | stats row on the home page, always with "as of {asOf}" |
-| DaD exhibit data (hourly medians, split, forecast table, model scores) | `site/src/data/figures/dad.json` → `cd site && node scripts/dad-figures.mjs ~/Cursor/Darker\ Market/gold_ore.csv` (the CSV stays local; forecast/model numbers are transcribed from the run output inside the script) | three SVG exhibits on the DaD case page |
+| DaD exhibit data (Season 10 Cobalt Ore holdout: hourly actual / forecast / naive / 90% interval, daily windows, metrics) | `site/src/data/figures/dad.json` → `cd site && node scripts/dad-figures.mjs ~/Cursor/Darker\ Market/data/runs/holdout/<run>.json` (the project's holdout run JSON stays local; the case prose quotes the same numbers — update both together) | three SVG exhibits + stat strip on the DaD case page |
 | Commit count | `site/src/data/github.json` → `node scripts/fetch-github.mjs` | rounded ("1,200+") in the terminal panel and stats row |
 | Exact figures in the Lingxian case study prose (94 / 160 / 144 / 20.7% / 53% → 35% / 96% …) | `site/src/content/projects/{en,zh}/guqin-ai.md` | with "as of September 2026" in the text — update the prose and the date together |
 
