@@ -6,7 +6,7 @@ role: "Founder — product, engineering (AI-assisted) and operations, solo"
 period: "2026.02 – present"
 stack: ["Next.js 14", "React 18", "TypeScript", "Prisma + PostgreSQL", "VexFlow", "Auth.js", "Qwen (LLM, intent only)", "WebSocket + Yjs", "pnpm monorepo"]
 scale: ["94 users · 160 scores · 144 PDF exports (beta, 2026-09)", "20.7% week-2 retention (n=82)", "1,200+ commits", "ZH + EN site, live at lingxian.app"]
-links: { live: "https://lingxian.app" }
+links: { live: "https://lingxian.app", github: "https://github.com/Zhuohengli03/lingxian" }
 featured: true
 order: 1
 waffle: { source: github, repo: Guqin-AI }
@@ -47,4 +47,4 @@ I know these pains first-hand from four years as a performance major. No existin
 
 As of September 2026, seven months in: 94 registered users, 160 scores, 144 PDF exports, 20.7% week-2 retention (n=82) and 19.7% month-2 retention (n=76), on an invite-only beta at lingxian.app. The product renders tablature, staff and jianpu together as you type, converts jianpu to jianzipu with per-note alternatives, diffs versions side by side, supports real-time co-editing with comments, assembles textbooks for print, and ships a browser tuner, a 149-entry fingering reference and a 64-article blog for SEO.
 
-Engineering footprint: 1,200+ commits since February 2026 (see the activity grid), a pnpm/turbo monorepo with web, api and mobile apps plus a shared music-theory package, Prisma migrations, Vitest, Docker images on GHCR behind nginx.
+Engineering footprint: 1,200+ commits since February 2026 (see the activity grid), a pnpm/turbo monorepo with web, api and mobile apps plus a shared music-theory package, Prisma migrations, Vitest, Docker images on GHCR behind nginx. The code is public at github.com/Zhuohengli03/lingxian, a mirror of the private development repository whose history the activity grid shows.

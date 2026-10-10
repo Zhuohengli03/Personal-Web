@@ -6,7 +6,7 @@ role: "创始人，独立负责产品、开发（AI 辅助）与运营"
 period: "2026 年 2 月至今"
 stack: ["Next.js 14", "React 18", "TypeScript", "Prisma + PostgreSQL", "VexFlow", "Auth.js", "Qwen（大语言模型，仅用于意图识别）", "WebSocket + Yjs", "pnpm 单仓库管理"]
 scale: ["注册 94 人 · 160 首曲谱 · 144 次 PDF 导出（内测，截至 2026 年 9 月）", "次周留存 20.7%（样本量 82 人）", "1,200+ 次提交", "支持中英双语，已上线 lingxian.app"]
-links: { live: "https://lingxian.app" }
+links: { live: "https://lingxian.app", github: "https://github.com/Zhuohengli03/lingxian" }
 featured: true
 order: 1
 waffle: { source: github, repo: Guqin-AI }
@@ -47,4 +47,4 @@ gallery:
 
 截至 2026 年 9 月，上线 7 个月：注册 94 人、160 首曲谱、144 次 PDF 导出，次周留存 20.7%（样本量 82 人）、次月留存 19.7%（样本量 76 人），邀请制内测运行在 lingxian.app。产品能随输入同时呈现减字谱、五线谱与简谱；简谱转减字谱并给出每个音的备选；并排版本比对；多人实时协作与评论；曲集编排与可印刷导出；还有浏览器调音器、149 条指法大全和 64 篇用于搜索引擎优化的博客文章。
 
-工程规模：2026 年 2 月至今 1,200 余次提交（见下方提交记录），使用 pnpm 与 Turbo 管理单仓库，包含网页端、接口服务、移动端三个应用及共享乐理包；通过 Prisma 管理数据库迁移，使用 Vitest 测试，将 Docker 镜像发布至 GHCR，并由 nginx 提供反向代理。
+工程规模：2026 年 2 月至今 1,200 余次提交（见下方提交记录），使用 pnpm 与 Turbo 管理单仓库，包含网页端、接口服务、移动端三个应用及共享乐理包；通过 Prisma 管理数据库迁移，使用 Vitest 测试，将 Docker 镜像发布至 GHCR，并由 nginx 提供反向代理。 代码已公开在 github.com/Zhuohengli03/lingxian，它是私有开发仓库的镜像；上方活动格展示的是开发仓库的完整提交历史。
