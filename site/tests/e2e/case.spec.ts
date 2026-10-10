@@ -3,8 +3,8 @@ import { test, expect } from '@playwright/test';
 const cases = [
   ['/work/guqin-ai/', 'en', 'Problem', 6],
   ['/zh/work/guqin-ai/', 'zh-CN', '问题', 6],
-  ['/work/dad-market-forecast/', 'en', 'Problem', 2],
-  ['/zh/work/dad-market-forecast/', 'zh-CN', '问题', 2],
+  ['/work/dad-market-forecast/', 'en', 'Problem', 0],
+  ['/zh/work/dad-market-forecast/', 'zh-CN', '问题', 0],
 ] as const;
 
 for (const [path, lang, problem, images] of cases) {
@@ -17,13 +17,13 @@ for (const [path, lang, problem, images] of cases) {
     await expect(page.locator('h1')).toBeVisible();
     await expect(page.getByRole('heading', { level: 2, name: problem })).toBeVisible();
     await expect(page.locator('.gallery img')).toHaveCount(images);
-    await expect(page.locator('.gallery img').first()).toHaveAttribute('alt', /.+/);
+    if (images > 0) await expect(page.locator('.gallery img').first()).toHaveAttribute('alt', /.+/);
     expect(errors).toEqual([]);
   });
 }
 
 test('lightbox opens and closes', async ({ page }) => {
-  await page.goto('/work/dad-market-forecast/');
+  await page.goto('/work/guqin-ai/');
   await page.locator('.gallery button').first().click();
   await expect(page.locator('dialog[open]')).toBeVisible();
   await page.keyboard.press('Escape');
@@ -53,5 +53,6 @@ test('DaD case shows the exhibits drawn from real data', async ({ page }) => {
   const box = (await svg.boundingBox())!;
   await page.mouse.move(box.x + box.width * 0.5, box.y + box.height * 0.5);
   await expect(ex.locator('[data-forecast-chart] .tip')).toBeVisible();
-  await expect(page.getByRole('heading', { level: 2, name: 'Raw output' })).toBeVisible();
+  await expect(page.getByRole('heading', { level: 2, name: 'Post-mortem' })).toBeVisible();
+  await expect(ex).toContainText('61%'); // the honest coverage number is on the page
 });

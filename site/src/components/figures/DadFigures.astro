@@ -1,10 +1,10 @@
 ---
-// The exhibit set for the DaD Market Forecast case: stat strip, forecast chart, model comparison, pipeline.
+// The exhibit set for the DaD Market Forecast case: stat strip, holdout chart, daily windows, pipeline.
 import type { Locale } from '../../i18n';
 import text from '../../data/figures/dad-text.json';
 import SpecRow from '../SpecRow.astro';
 import DadForecastChart from './DadForecastChart.astro';
-import DadModelsChart from './DadModelsChart.astro';
+import DadWindowsChart from './DadWindowsChart.astro';
 import DadPipeline from './DadPipeline.astro';
 
 interface Props { locale: Locale }
@@ -24,7 +24,7 @@ const t = text[locale];
 
   <figure class="exhibit reveal">
     <div class="head"><h3>{t.fig2.title}</h3><p class="sub">{t.fig2.sub}</p></div>
-    <DadModelsChart />
+    <DadWindowsChart t={t.fig2} />
     <figcaption>{t.fig2.caption}</figcaption>
   </figure>
 

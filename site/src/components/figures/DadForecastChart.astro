@@ -1,60 +1,53 @@
 ---
-// Exhibit 1 — hourly median price (real listings) with daily 25–75% band, 80/20 split, 7-day forecast and 95% CI.
-// Pure SVG drawn at build time; colours come from the site tokens so dark mode follows; a small script adds a
-// crosshair tooltip.
+// Exhibit 1 — Season 10 Cobalt Ore holdout: the last week of training, then every held-out hour with the actual
+// hourly median, the selected model's 24-hour-ahead forecast, the naive baseline and the 90% empirical interval.
+// Pure SVG at build time; colours come from the site tokens; a small script adds a crosshair tooltip.
 import data from '../../data/figures/dad.json';
-interface Props { t: { hourly: string; band: string; forecast: string; ci: string; split: string; listings: string } }
+interface Props { t: { train: string; actual: string; pred: string; naive: string; band: string; split: string } }
 const { t } = Astro.props;
 
 const W = 960, H = 400, L = 46, R = 28, T = 26, B = 40;
 const DAY = 86_400_000;
-const hourly = data.hourly.map((p) => ({ t: Date.parse(p.t), v: p.v, n: p.n }));
-const daily = data.daily.map((d) => ({ t: Date.parse(d.t) + DAY / 2, p25: d.p25, p75: d.p75 }));
-const fc = data.forecast.map((f) => ({ t: Date.parse(`${f.t}T12:00:00Z`), v: f.v, lo: f.lo, hi: f.hi }));
-const t0 = hourly[0].t, t1 = fc[fc.length - 1].t + DAY / 2;
-const yMax = Math.ceil(Math.max(...hourly.map((p) => p.v), ...daily.map((d) => d.p75), ...fc.map((f) => f.hi)) / 20) * 20;
-const x = (t: number) => L + ((t - t0) / (t1 - t0)) * (W - L - R);
+const tail = data.trainTail.map((p) => ({ t: Date.parse(p.t), a: p.a }));
+const pts = data.points.map((p) => ({ t: Date.parse(p.t), a: p.a, p: p.p, n: p.n, lo: p.lo, hi: p.hi }));
+const t0 = tail[0].t, t1 = pts[pts.length - 1].t;
+const yMax = Math.ceil(Math.max(...tail.map((p) => p.a ?? 0), ...pts.map((p) => Math.max(p.a ?? 0, p.hi ?? 0))) / 20) * 20;
+const x = (ms: number) => L + ((ms - t0) / (t1 - t0)) * (W - L - R);
 const y = (v: number) => T + (1 - v / yMax) * (H - T - B);
 const f = (n: number) => n.toFixed(1);
-const line = (pts: { t: number; v: number }[]) => pts.map((p, i) => `${i ? 'L' : 'M'}${f(x(p.t))} ${f(y(p.v))}`).join(' ');
-const area = (pts: { t: number; lo: number; hi: number }[]) =>
-  `${pts.map((p, i) => `${i ? 'L' : 'M'}${f(x(p.t))} ${f(y(p.hi))}`).join(' ')} ${[...pts].reverse().map((p) => `L${f(x(p.t))} ${f(y(p.lo))}`).join(' ')} Z`;
-
+/** Polyline that breaks where a value is missing. */
+const line = (rows: { t: number; v: number | null }[]) => {
+  let d = '', pen = false;
+  for (const r of rows) {
+    if (r.v === null) { pen = false; continue; }
+    d += `${pen ? 'L' : 'M'}${f(x(r.t))} ${f(y(r.v))} `; pen = true;
+  }
+  return d.trim();
+};
+const band = `${pts.map((p, i) => `${i ? 'L' : 'M'}${f(x(p.t))} ${f(y(p.hi))}`).join(' ')} ${[...pts].reverse().map((p) => `L${f(x(p.t))} ${f(y(p.lo))}`).join(' ')} Z`;
 const yTicks = Array.from({ length: yMax / 20 + 1 }, (_, i) => i * 20);
 const dayTicks: number[] = [];
 for (let d = Math.ceil(t0 / DAY) * DAY; d <= t1; d += DAY) dayTicks.push(d);
 const fmtDay = (ms: number) => new Date(ms).toLocaleDateString('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' });
-const splitX = x(Date.parse(data.splitAt));
-const last = fc[fc.length - 1];
-const lastActual = hourly[hourly.length - 1];
-const bridge = `M${f(x(lastActual.t))} ${f(y(lastActual.v))} L${f(x(fc[0].t))} ${f(y(fc[0].v))}`;
-// points the tooltip can snap to (time, value, kind, extra)
-const points = [
-  ...hourly.map((p) => ({ t: p.t, v: p.v, k: 'h', n: p.n })),
-  ...fc.map((p) => ({ t: p.t, v: p.v, k: 'f', lo: p.lo, hi: p.hi })),
-];
+const splitX = x(Date.parse(data.split));
+const hover = [...tail.map((p) => ({ t: p.t, a: p.a, p: null as number | null, n: null as number | null })), ...pts.map((p) => ({ t: p.t, a: p.a, p: p.p, n: p.n }))];
 ---
-<div class="chart" data-forecast-chart style={`--l:${L};--r:${R};--w:${W}`}>
-  <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label={`${t.hourly}, ${t.band}, ${t.forecast} with ${t.ci}`}>
+<div class="chart" data-forecast-chart>
+  <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label={`${t.actual}, ${t.pred}, ${t.naive}, ${t.band}`}>
     <g class="grid">
       {yTicks.map((v) => (<g><line x1={L} x2={W - R} y1={f(y(v))} y2={f(y(v))} /><text x={L - 8} y={f(y(v))} text-anchor="end" dominant-baseline="middle">{v}</text></g>))}
     </g>
     <g class="xaxis">
-      {dayTicks.map((d, i) => (<g><line x1={f(x(d))} x2={f(x(d))} y1={H - B} y2={H - B + 4} />{i % 2 === 0 && <text x={f(x(d))} y={H - B + 18} text-anchor="middle">{fmtDay(d)}</text>}</g>))}
+      {dayTicks.map((d, i) => (<g><line x1={f(x(d))} x2={f(x(d))} y1={H - B} y2={H - B + 4} />{i % 3 === 0 && <text x={f(x(d))} y={H - B + 18} text-anchor="middle">{fmtDay(d)}</text>}</g>))}
     </g>
-    <path class="band" d={area(daily.map((d) => ({ t: d.t, lo: d.p25, hi: d.p75 })))} />
-    <path class="hist" d={line(hourly)} />
+    <path class="band" d={band} />
+    <path class="tail" d={line(tail.map((p) => ({ t: p.t, v: p.a })))} />
+    <path class="naive" d={line(pts.map((p) => ({ t: p.t, v: p.n })))} />
+    <path class="actual" d={line(pts.map((p) => ({ t: p.t, v: p.a })))} />
+    <path class="pred" d={line(pts.map((p) => ({ t: p.t, v: p.p })))} />
     <g class="split">
       <line x1={f(splitX)} x2={f(splitX)} y1={T} y2={H - B} />
       <text x={f(splitX + 6)} y={T + 12}>{t.split}</text>
-    </g>
-    <path class="ci" d={area(fc)} />
-    <path class="bridge" d={bridge} />
-    <path class="fc" d={line(fc)} />
-    {fc.map((p) => <circle class="dot" cx={f(x(p.t))} cy={f(y(p.v))} r="3.5" />)}
-    <g class="note">
-      <text x={f(x(fc[0].t) - 4)} y={f(y(fc[3].hi) - 10)} text-anchor="start">{t.forecast} · {t.ci}</text>
-      <text x={f(x(last.t) + 8)} y={f(y(last.v) + 4)} text-anchor="start">{last.v}</text>
     </g>
     <g class="hover" display="none">
       <line class="xline" y1={T} y2={H - B} />
@@ -63,12 +56,13 @@ const points = [
   </svg>
   <div class="tip" hidden></div>
   <ul class="legend" aria-hidden="true">
-    <li><i class="sw hist"></i>{t.hourly}</li>
+    <li><i class="sw tail"></i>{t.train}</li>
+    <li><i class="sw actual"></i>{t.actual}</li>
+    <li><i class="sw pred"></i>{t.pred}</li>
+    <li><i class="sw naive"></i>{t.naive}</li>
     <li><i class="sw band"></i>{t.band}</li>
-    <li><i class="sw fc"></i>{t.forecast}</li>
-    <li><i class="sw ci"></i>{t.ci}</li>
   </ul>
-  <script type="application/json" data-points set:html={JSON.stringify({ points, t0, t1, L, R, W, yMax, T, H, B, listings: t.listings })} />
+  <script type="application/json" data-points set:html={JSON.stringify({ points: hover, t0, t1, L, R, W, yMax, T, H, B, labels: { a: t.actual, p: t.pred, n: t.naive } })} />
 </div>
 <style>
   .chart { position: relative; }
@@ -76,32 +70,32 @@ const points = [
   .grid line { stroke: var(--rule); stroke-width: 1; }
   .grid text, .xaxis text { fill: var(--fg-muted); }
   .xaxis line { stroke: var(--fg-faint); }
-  .band { fill: var(--fg); fill-opacity: 0.08; }
-  .hist { fill: none; stroke: var(--fg-muted); stroke-width: 1.6; stroke-linejoin: round; }
+  .band { fill: var(--accent); fill-opacity: 0.12; }
+  .tail { fill: none; stroke: var(--fg-muted); stroke-width: 1.3; opacity: 0.45; stroke-linejoin: round; }
+  .actual { fill: none; stroke: var(--fg-muted); stroke-width: 1.6; stroke-linejoin: round; }
+  .pred { fill: none; stroke: var(--accent); stroke-width: 2; stroke-linejoin: round; }
+  .naive { fill: none; stroke: var(--fg-faint); stroke-width: 1.2; stroke-dasharray: 3 4; }
   .split line { stroke: var(--fg-faint); stroke-dasharray: 4 4; }
   .split text { fill: var(--fg-muted); }
-  .ci { fill: var(--accent); fill-opacity: 0.12; }
-  .bridge { fill: none; stroke: var(--accent); stroke-width: 1.2; stroke-dasharray: 2 4; opacity: 0.7; }
-  .fc { fill: none; stroke: var(--accent); stroke-width: 2.2; stroke-linejoin: round; }
-  .dot { fill: var(--bg); stroke: var(--accent); stroke-width: 2; }
-  .note text { fill: var(--accent); }
   .hover .xline { stroke: var(--fg-muted); stroke-dasharray: 2 3; }
   .hover .ring { fill: var(--bg); stroke: var(--fg); stroke-width: 2; }
   .tip { position: absolute; pointer-events: none; transform: translate(-50%, calc(-100% - 10px)); background: var(--fg); color: var(--bg); font-family: var(--font-mono); font-size: 0.72rem; line-height: 1.4; padding: 0.35rem 0.55rem; border-radius: 6px; white-space: nowrap; }
   .legend { list-style: none; display: flex; flex-wrap: wrap; gap: 0.4rem 1.2rem; margin: 0.6rem 0 0; padding: 0; font-family: var(--font-mono); font-size: 0.7rem; color: var(--fg-muted); }
   .legend li { display: flex; align-items: center; gap: 0.4rem; }
   .sw { display: inline-block; width: 18px; height: 3px; border-radius: 2px; }
-  .sw.hist { background: var(--fg-muted); }
-  .sw.band { background: color-mix(in srgb, var(--fg) 14%, var(--bg)); height: 10px; }
-  .sw.fc { background: var(--accent); }
-  .sw.ci { background: color-mix(in srgb, var(--accent) 22%, var(--bg)); height: 10px; }
+  .sw.tail { background: var(--fg-muted); opacity: 0.45; }
+  .sw.actual { background: var(--fg-muted); }
+  .sw.pred { background: var(--accent); }
+  .sw.naive { background: repeating-linear-gradient(90deg, var(--fg-faint) 0 3px, transparent 3px 6px); height: 2px; }
+  .sw.band { background: color-mix(in srgb, var(--accent) 22%, var(--bg)); height: 10px; }
 </style>
 <script>
-  // Crosshair + tooltip: snap to the nearest point in time.
+  // Crosshair + tooltip: snap to the nearest hour.
   for (const root of document.querySelectorAll<HTMLElement>('[data-forecast-chart]')) {
     const cfg = JSON.parse(root.querySelector('[data-points]')?.textContent ?? '{}') as {
-      points: { t: number; v: number; k: 'h' | 'f'; n?: number; lo?: number; hi?: number }[];
-      t0: number; t1: number; L: number; R: number; W: number; yMax: number; T: number; H: number; B: number; listings: string;
+      points: { t: number; a: number | null; p: number | null; n: number | null }[];
+      t0: number; t1: number; L: number; R: number; W: number; yMax: number; T: number; H: number; B: number;
+      labels: { a: string; p: string; n: string };
     };
     const svg = root.querySelector('svg')!;
     const hover = root.querySelector<SVGGElement>('.hover')!;
@@ -109,22 +103,27 @@ const points = [
     const ring = hover.querySelector<SVGCircleElement>('.ring')!;
     const tip = root.querySelector<HTMLElement>('.tip')!;
     const fmt = (t: number) => new Date(t).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', hour12: false, timeZone: 'UTC' });
-    const show = (e: PointerEvent) => {
+    svg.addEventListener('pointermove', (e: PointerEvent) => {
       const r = svg.getBoundingClientRect();
       const px = ((e.clientX - r.left) / r.width) * cfg.W;
       const time = cfg.t0 + ((px - cfg.L) / (cfg.W - cfg.L - cfg.R)) * (cfg.t1 - cfg.t0);
       const p = cfg.points.reduce((a, b) => (Math.abs(b.t - time) < Math.abs(a.t - time) ? b : a));
+      const v = p.a ?? p.p;
+      if (v === null) return;
       const cx = cfg.L + ((p.t - cfg.t0) / (cfg.t1 - cfg.t0)) * (cfg.W - cfg.L - cfg.R);
-      const cy = cfg.T + (1 - p.v / cfg.yMax) * (cfg.H - cfg.T - cfg.B);
+      const cy = cfg.T + (1 - v / cfg.yMax) * (cfg.H - cfg.T - cfg.B);
       xline.setAttribute('x1', String(cx)); xline.setAttribute('x2', String(cx));
       ring.setAttribute('cx', String(cx)); ring.setAttribute('cy', String(cy));
       hover.setAttribute('display', 'inline');
       tip.hidden = false;
-      tip.textContent = p.k === 'h' ? `${fmt(p.t)} · ${p.v} · ${p.n} ${cfg.listings}` : `${fmt(p.t).slice(0, 6)} · ${p.v} (${p.lo}–${p.hi})`;
+      const parts = [fmt(p.t)];
+      if (p.a !== null) parts.push(`${cfg.labels.a} ${p.a}`);
+      if (p.p !== null) parts.push(`${cfg.labels.p} ${p.p}`);
+      if (p.n !== null) parts.push(`${cfg.labels.n} ${p.n}`);
+      tip.textContent = parts.join(' · ');
       tip.style.left = `${(cx / cfg.W) * r.width}px`;
       tip.style.top = `${(cy / cfg.H) * r.height}px`;
-    };
-    svg.addEventListener('pointermove', show);
+    });
     svg.addEventListener('pointerleave', () => { hover.setAttribute('display', 'none'); tip.hidden = true; });
   }
 </script>
