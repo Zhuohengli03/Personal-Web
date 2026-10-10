@@ -3,78 +3,182 @@
     "exhibits": "Exhibits",
     "note": "Reference case. Dark and Darker wipes its player market every season, so this is a holdout evaluation on Season 10 data (Jul 17 – Oct 9, 2026), not a live forecast.",
     "stats": [
-      { "label": "Listings, Season 10", "value": "97,891" },
-      { "label": "Holdout", "value": "21 days", "hint": "505 hours · model refit daily, 24 h ahead" },
-      { "label": "MAE vs naive", "value": "8.07 / 8.90", "hint": "−9.2% error" },
-      { "label": "Direction correct", "value": "64%" },
-      { "label": "90% interval covered", "value": "61%", "hint": "nominal 90% — see post-mortem" }
+      {
+        "label": "Listings, Season 10",
+        "value": "97,891"
+      },
+      {
+        "label": "Holdout",
+        "value": "21 days",
+        "hint": "505 hours · model refit daily, 24 h ahead"
+      },
+      {
+        "label": "MAE vs naive",
+        "value": "8.07 / 8.90",
+        "hint": "−9.2% error"
+      },
+      {
+        "label": "Direction correct",
+        "value": "64%"
+      },
+      {
+        "label": "90% interval covered",
+        "value": "61%",
+        "hint": "nominal 90% — see post-mortem"
+      }
     ],
     "fig1": {
       "title": "Cobalt Ore, Season 10 — 21-day holdout: actual vs. 24-hour-ahead forecast",
       "sub": "Sep 18 – Oct 9, 2026 · hourly median price · ensemble (HGB + RF + ARIMA) refit every day, forecasting the next 24 h · band = 90% empirical interval · last training week shown for context",
       "caption": "Exhibit 1. Over 505 held-out hours the ensemble beat “same as last hour” by 9.2% on MAE (8.07 vs 8.90) and called the direction of the next hour right 64% of the time. The 90% interval covered only 61% of actuals — the jump on Sep 18–20 shows why: intervals learned on calmer weeks are too narrow when the market moves.",
-      "train": "last training week", "actual": "actual", "pred": "forecast", "naive": "naive", "band": "90% interval", "split": "train · holdout (70 / 30)"
+      "train": "last training week",
+      "actual": "actual",
+      "pred": "forecast",
+      "naive": "naive",
+      "band": "90% interval",
+      "split": "train · holdout (70 / 30)"
     },
     "fig2": {
       "title": "Day by day: skill against naive, and interval coverage",
       "sub": "bar = 1 − MAE / MAE_naive for each 24-hour window (positive = beats naive) · dot = share of that day’s hours inside the 90% interval",
       "caption": "Exhibit 2. The model wins on 11 of 21 days and loses clearly on four when the price jumped (Sep 22, 26, 29, Oct 5). Coverage follows volatility: close to 90% in the calm first week of October, under 30% on jump days — the intervals need to scale with the price level.",
-      "skill": "Skill vs naive, per day", "coverage": "Interval coverage, per day", "nominal": "nominal", "achieved": "achieved"
+      "skill": "Skill vs naive, per day",
+      "coverage": "Interval coverage, per day",
+      "nominal": "nominal",
+      "achieved": "achieved"
     },
     "fig3": {
       "title": "The pipeline, with its numbers",
       "caption": "Exhibit 3. Baselines run first; a model is used only when the rolling backtest says it beats them, and the holdout checks that claim on data the selection never saw.",
       "nodes": [
-        { "name": "Collect listings", "num": "97,891" },
-        { "name": "Hourly median", "num": "1,683 h" },
-        { "name": "Train / holdout", "num": "70 / 30 · 1,178 / 505 h" },
-        { "name": "7 methods", "num": "2 baselines first" },
-        { "name": "Rolling-origin backtest", "num": "24 h ahead" },
-        { "name": "Select or fall back", "num": "ensemble · in-backtest +28%" },
-        { "name": "Empirical intervals", "num": "90% nominal" },
-        { "name": "Holdout", "num": "MAE −9.2% vs naive" },
-        { "name": "Open issue", "num": "coverage 61%" }
+        {
+          "name": "Collect listings",
+          "num": "97,891"
+        },
+        {
+          "name": "Hourly median",
+          "num": "1,683 h"
+        },
+        {
+          "name": "Train / holdout",
+          "num": "70 / 30 · 1,178 / 505 h"
+        },
+        {
+          "name": "7 methods",
+          "num": "2 baselines first"
+        },
+        {
+          "name": "Rolling-origin backtest",
+          "num": "24 h ahead"
+        },
+        {
+          "name": "Select or fall back",
+          "num": "ensemble · in-backtest +28%"
+        },
+        {
+          "name": "Empirical intervals",
+          "num": "90% nominal"
+        },
+        {
+          "name": "Holdout",
+          "num": "MAE −9.2% vs naive"
+        },
+        {
+          "name": "Open issue",
+          "num": "coverage 61%"
+        }
       ]
-    },
-    "rawOutput": "Raw output"
+    }
   },
   "zh": {
     "exhibits": "图表",
     "note": "案例参考。《Dark and Darker》每个赛季都会清空玩家市场，因此这是在第 10 赛季数据（2026-07-17 至 10-09）上做的留出评估，不是实时行情。",
     "stats": [
-      { "label": "第 10 赛季挂单", "value": "97,891" },
-      { "label": "留出评估", "value": "21 天", "hint": "505 小时 · 每日重训、预测未来 24 小时" },
-      { "label": "MAE 对比基准", "value": "8.07 / 8.90", "hint": "误差 −9.2%" },
-      { "label": "方向判断正确", "value": "64%" },
-      { "label": "90% 区间覆盖", "value": "61%", "hint": "名义 90%——见复盘" }
+      {
+        "label": "第 10 赛季挂单",
+        "value": "97,891"
+      },
+      {
+        "label": "留出评估",
+        "value": "21 天",
+        "hint": "505 小时 · 每日重训、预测未来 24 小时"
+      },
+      {
+        "label": "MAE 对比基准",
+        "value": "8.07 / 8.90",
+        "hint": "误差 −9.2%"
+      },
+      {
+        "label": "方向判断正确",
+        "value": "64%"
+      },
+      {
+        "label": "90% 区间覆盖",
+        "value": "61%",
+        "hint": "名义 90%——见复盘"
+      }
     ],
     "fig1": {
       "title": "钴矿 · 第 10 赛季——21 天留出评估：实际值与提前 24 小时的预测",
       "sub": "2026-09-18 至 10-09 · 小时中位价 · 集成模型（HGB + RF + ARIMA）每日重训、预测未来 24 小时 · 着色 = 90% 经验区间 · 左侧为训练集最后一周",
       "caption": "图 1. 在 505 个留出小时上，集成模型的 MAE 比“沿用上一小时”低 9.2%（8.07 对 8.90），下一小时涨跌方向判对 64%。90% 区间只覆盖了 61% 的实际值——9 月 18–20 日的跳涨说明了原因：在平静周学到的区间，遇到行情波动就太窄。",
-      "train": "训练集最后一周", "actual": "实际", "pred": "预测", "naive": "基准", "band": "90% 区间", "split": "训练 · 留出（70 / 30）"
+      "train": "训练集最后一周",
+      "actual": "实际",
+      "pred": "预测",
+      "naive": "基准",
+      "band": "90% 区间",
+      "split": "训练 · 留出（70 / 30）"
     },
     "fig2": {
       "title": "逐日：相对基准的 skill，以及区间覆盖率",
       "sub": "条 = 每个 24 小时窗口的 1 − MAE / MAE_naive（正值 = 胜过基准）· 点 = 当日落在 90% 区间内的小时占比",
       "caption": "图 2. 21 天里模型赢了 11 天，在价格跳变的 4 天明显输（9 月 22、26、29 日和 10 月 5 日）。覆盖率跟着波动走：10 月第一周行情平静时接近 90%，跳变日不到 30%——区间需要随价格水平缩放。",
-      "skill": "逐日 skill（相对基准）", "coverage": "逐日区间覆盖率", "nominal": "名义", "achieved": "实际"
+      "skill": "逐日 skill（相对基准）",
+      "coverage": "逐日区间覆盖率",
+      "nominal": "名义",
+      "achieved": "实际"
     },
     "fig3": {
       "title": "管道各环节及其数字",
       "caption": "图 3. 基准先跑；只有滚动回测证明模型更准才启用模型，留出集再用选择时没见过的数据核对这个结论。",
       "nodes": [
-        { "name": "采集挂单", "num": "97,891 条" },
-        { "name": "小时中位价", "num": "1,683 小时" },
-        { "name": "训练 / 留出", "num": "70 / 30 · 1,178 / 505 小时" },
-        { "name": "7 种方法", "num": "2 个基准先行" },
-        { "name": "滚动回测", "num": "提前 24 小时" },
-        { "name": "择优或回退", "num": "集成 · 回测内 +28%" },
-        { "name": "经验区间", "num": "名义 90%" },
-        { "name": "留出结果", "num": "MAE 比基准低 9.2%" },
-        { "name": "待解决", "num": "覆盖率 61%" }
+        {
+          "name": "采集挂单",
+          "num": "97,891 条"
+        },
+        {
+          "name": "小时中位价",
+          "num": "1,683 小时"
+        },
+        {
+          "name": "训练 / 留出",
+          "num": "70 / 30 · 1,178 / 505 小时"
+        },
+        {
+          "name": "7 种方法",
+          "num": "2 个基准先行"
+        },
+        {
+          "name": "滚动回测",
+          "num": "提前 24 小时"
+        },
+        {
+          "name": "择优或回退",
+          "num": "集成 · 回测内 +28%"
+        },
+        {
+          "name": "经验区间",
+          "num": "名义 90%"
+        },
+        {
+          "name": "留出结果",
+          "num": "MAE 比基准低 9.2%"
+        },
+        {
+          "name": "待解决",
+          "num": "覆盖率 61%"
+        }
       ]
-    },
-    "rawOutput": "原始输出"
+    }
   }
 }

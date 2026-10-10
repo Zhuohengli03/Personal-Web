@@ -11,7 +11,6 @@ import { repoActivity } from '../lib/activity';
 import type { GithubData } from '../lib/github';
 import github from '../data/github.json';
 import DadFigures from '../components/figures/DadFigures.astro';
-import dadText from '../data/figures/dad-text.json';
 
 interface Props { entry: CollectionEntry<'projects'>; locale: Locale }
 const { entry, locale } = Astro.props;
@@ -22,7 +21,6 @@ const path = `/work/${slugOf(entry)}/`;
 const activity = d.waffle?.source === 'github' ? repoActivity(github as GithubData, d.waffle.repo, locale) : null;
 const slug = slugOf(entry);
 const hasExhibits = slug === 'dad-market-forecast';
-const galleryTitle = hasExhibits ? dadText[locale].rawOutput : tr('case.gallery');
 ---
 <BaseLayout title={`${d.title} — ${tr('site.title')}`} description={d.summary} locale={locale} path={path}>
   <article class="case">
@@ -55,7 +53,7 @@ const galleryTitle = hasExhibits ? dadText[locale].rawOutput : tr('case.gallery'
       {d.gallery.length > 0 && (
         <section class="gallery-section">
           <p class="eyebrow center">04</p>
-          <h2 class="center gallery-title">{galleryTitle}</h2>
+          <h2 class="center gallery-title">{tr('case.gallery')}</h2>
           <Gallery items={d.gallery} locale={locale} />
         </section>
       )}
