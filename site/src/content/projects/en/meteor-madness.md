@@ -2,7 +2,7 @@
 title: "Meteor Madness — NASA Space Apps 2025"
 summary: "An asteroid-impact dashboard built in 48 hours for the NASA Space Apps Challenge: live NASA feeds (near-Earth objects, close approaches, fireballs, natural events) behind a plain Java server, and a browser that turns a diameter, a speed and a point on a Three.js globe into crater, blast, seismic, tsunami, population and cost estimates, plus a kinetic-impactor deflection simulation."
 category: product
-role: "Two-person team — half of the features end to end: front end, backend and API"
+role: "Two-person team — the 3D globe, the 2D map and the impact calculations; backend and API built together"
 period: "2025.10 (48-hour hackathon)"
 stack: ["Java 17", "com.sun HttpServer + Jackson", "Vanilla JavaScript", "Three.js", "Leaflet", "NASA NeoWs · CNEOS CAD & Fireball · EONET"]
 scale: ["48 hours · 44 commits · 2 people", "7,425 lines: 6,205 JS / HTML / CSS, 1,220 Java", "4 NASA sources · 8 endpoints · 7 tabs", "Run on Oct 11, 2026: 200 close approaches, 429 fireballs"]
@@ -28,7 +28,7 @@ The Meteor Madness challenge asked for a tool that makes NASA's near-Earth-objec
 
 **Do the physics in the browser.** Mass, energy, crater, blast radius, seismic magnitude, tsunami height, exposed population and economic loss are computed in JavaScript from the user's inputs, so the globe, the 2D map and the outcome cards update instantly. The formulas are simple power laws chosen to be readable in a hackathon, not research-grade (Exhibit 2).
 
-**Make the impact point a click.** My part of the front end was the Three.js Earth, textured with NASA Blue Marble, synchronised with a Leaflet map so a click on either sets the latitude and longitude that the prediction uses. I also reworked the calculation methods and fixed the 2D map to use real-world coordinates.
+**Make the impact point a click.** My part of the front end was the Three.js Earth, textured with NASA Blue Marble, synchronised with a Leaflet map so a click on either sets the latitude and longitude that the prediction uses. I also reworked the calculation methods and fixed the 2D map to use real-world coordinates. Part of what I built in those two days was not kept in the final submission.
 
 **Show uncertainty and the way out.** Every outcome carries a range (±20% on crater size, ±0.5 on magnitude), and the Simulation tab runs a Monte Carlo over size, speed, Δv and lead time to report how a kinetic impactor changes the hit probability.
 

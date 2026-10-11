@@ -1,5 +1,7 @@
 ---
-// Life.astro — "Beyond work": hobby cards that filter a photo wall. Photos live in src/assets/life/<hobby>/.
+// Life.astro — "Beyond work": five hobbies as rows. The label sits on the left; a hobby with photos gets a slowly
+// scrolling strip on the right (paused on hover, static and hand-scrollable under reduced motion). Photos live in
+// src/assets/life/<hobby>/ and are listed in src/data/life.*.json; a hobby without photos is just its label.
 import { Image, getImage } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 import { t, type Locale } from '../i18n';
@@ -16,10 +18,15 @@ const resolve = (file: string): ImageMetadata => {
   if (!meta) throw new Error(`life: photo "${file}" not found under src/assets/life/`);
   return meta;
 };
+const STRIP_H = 220;
 const photos = await Promise.all(
-  life.photos.map(async (p) => ({ ...p, meta: resolve(p.file), large: await getImage({ src: resolve(p.file), width: 1800, format: 'webp', quality: 80 }) })),
+  life.photos.map(async (p, i) => {
+    const meta = resolve(p.file);
+    return { ...p, i, meta, w: Math.round((meta.width * STRIP_H) / meta.height), large: await getImage({ src: meta, width: 1800, format: 'webp', quality: 80 }) };
+  }),
 );
-const counts = Object.fromEntries(life.hobbies.map((h) => [h.id, photos.filter((p) => p.hobby === h.id).length]));
+const byHobby = (id: string) => photos.filter((p) => p.hobby === id);
+const SECONDS_PER_PHOTO = 4; // one full loop of the strip takes 4 s per photo
 
 // line icons, 24px, stroke-based so they inherit the text colour
 const icons: Record<string, string> = {
@@ -36,71 +43,63 @@ const icons: Record<string, string> = {
     <p class="sub">{life.intro}</p>
   </div>
 
-  <ul class="hobbies" data-hobbies>
-    {life.hobbies.map((h) => (
-      <li class="reveal">
-        <button type="button" class="hobby" data-hobby={h.id} aria-pressed="false" disabled={counts[h.id] === 0}>
-          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={icons[h.id] ?? ''} />
-          <span class="title">{h.title}{counts[h.id] > 0 && <span class="count">{counts[h.id]}</span>}</span>
-          <span class="blurb">{h.blurb}</span>
-        </button>
-      </li>
-    ))}
-  </ul>
-
-  {photos.length > 0 && (
-    <ul class="wall" data-wall>
-      {photos.map((p, i) => (
-        <li data-hobby={p.hobby} class="reveal">
-          <figure>
-            <button type="button" data-lightbox-src={p.large.src} data-lightbox-alt={p.caption} aria-label={tr('a11y.openImage').replace('{n}', String(i + 1)).replace('{alt}', p.caption)}>
-              <Image src={p.meta} alt={p.caption} width={720} format="webp" quality={80} loading="lazy" />
-            </button>
-            <figcaption>{p.caption}</figcaption>
-          </figure>
+  <ol class="rows" data-hobbies>
+    {life.hobbies.map((h) => {
+      const own = byHobby(h.id);
+      return (
+        <li class:list={['row', 'reveal', { 'has-photos': own.length > 0 }]} data-hobby={h.id}>
+          <div class="label">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={icons[h.id] ?? ''} />
+            <h3 class="title">{h.title}{own.length > 0 && <span class="count">{own.length}</span>}</h3>
+            <p class="blurb">{h.blurb}</p>
+          </div>
+          {own.length > 0 && (
+            <div class="strip" data-strip style={`--loop: ${own.length * SECONDS_PER_PHOTO}s`}>
+              <ul class="track">
+                {[false, true].map((dup) => own.map((p) => (
+                  <li class:list={{ dup }} aria-hidden={dup ? 'true' : undefined}>
+                    <button type="button" tabindex={dup ? -1 : 0} data-lightbox-src={p.large.src} data-lightbox-alt={p.caption} aria-label={tr('a11y.openImage').replace('{n}', String(p.i + 1)).replace('{alt}', p.caption)}>
+                      <Image src={p.meta} alt={p.caption} width={p.w} height={STRIP_H} format="webp" quality={80} loading="lazy" />
+                    </button>
+                  </li>
+                )))}
+              </ul>
+            </div>
+          )}
         </li>
-      ))}
-    </ul>
-  )}
+      );
+    })}
+  </ol>
 </section>
 <style>
-  .hobbies { list-style: none; margin: 0 0 2.5rem; padding: 0; display: grid; gap: 1rem; grid-template-columns: repeat(2, 1fr); }
-  @media (min-width: 720px) { .hobbies { grid-template-columns: repeat(5, 1fr); } }
-  .hobby {
-    all: unset; box-sizing: border-box; display: flex; flex-direction: column; gap: 0.5rem; width: 100%; height: 100%;
-    padding: 1.1rem 1rem 1.2rem; border-radius: var(--radius); background: var(--card); cursor: pointer;
-    transition: background-color 0.16s ease, box-shadow 0.16s ease;
-  }
-  .hobby:hover { background: var(--card-hover); }
-  .hobby:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
-  .hobby[aria-pressed='true'] { box-shadow: inset 0 0 0 1.5px var(--fg); }
-  .hobby:disabled { cursor: default; }
-  .hobby:disabled:hover { background: var(--card); }
-  .icon { width: 24px; height: 24px; color: var(--fg-muted); }
-  .title { font-family: var(--font-sans); font-size: 0.95rem; font-weight: 500; color: var(--fg); display: flex; align-items: baseline; gap: 0.4rem; }
+  .rows { list-style: none; margin: 0; padding: 0; counter-reset: hobby; border-top: 1px solid var(--rule); }
+  .row { counter-increment: hobby; display: grid; gap: 1rem 2rem; padding: 1.4rem 0; border-bottom: 1px solid var(--rule); grid-template-columns: 1fr; }
+  @media (min-width: 720px) { .row { grid-template-columns: minmax(220px, 1fr) 2.4fr; align-items: center; } .row.has-photos { padding: 1.6rem 0; } }
+  .label { display: grid; grid-template-columns: 24px 1fr; gap: 0.25rem 0.75rem; align-items: start; }
+  .icon { width: 24px; height: 24px; color: var(--fg-muted); grid-row: span 2; margin-top: 0.1rem; }
+  .title { margin: 0; font-family: var(--font-sans); font-size: 1rem; font-weight: 500; color: var(--fg); display: flex; align-items: baseline; gap: 0.5rem; }
+  .title::before { content: counter(hobby, decimal-leading-zero); font-family: var(--font-mono); font-size: 0.65rem; font-weight: 400; letter-spacing: 0.08em; color: var(--fg-muted); }
   .count { font-family: var(--font-mono); font-size: 0.65rem; color: var(--fg-muted); }
-  .blurb { font-size: 0.8rem; line-height: 1.45; color: var(--fg-muted); }
+  .blurb { margin: 0; font-size: 0.85rem; line-height: 1.5; color: var(--fg-muted); max-width: 34ch; }
 
-  .wall { list-style: none; margin: 0; padding: 0; columns: 1; column-gap: 1.25rem; }
-  @media (min-width: 560px) { .wall { columns: 2; } }
-  @media (min-width: 900px) { .wall { columns: 3; } }
-  .wall li { break-inside: avoid; margin-bottom: 1.25rem; }
-  .wall li[hidden] { display: none; }
-  figure { margin: 0; }
-  .wall button { all: unset; display: block; width: 100%; cursor: zoom-in; border-radius: 10px; overflow: hidden; border: 1px solid var(--rule); background: var(--card); }
-  .wall button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
-  .wall img { display: block; width: 100%; height: auto; }
-  figcaption { font-size: 0.8rem; color: var(--fg-muted); margin-top: 0.45rem; line-height: 1.45; }
+  /* the strip: a track twice as long as its photos, moved left by half its width on a loop, so the join is seamless */
+  .strip { position: relative; overflow: hidden; border-radius: 10px; }
+  .strip::before, .strip::after { content: ''; position: absolute; top: 0; bottom: 0; width: 2.5rem; z-index: 1; pointer-events: none; }
+  .strip::before { left: 0; background: linear-gradient(90deg, var(--bg), transparent); }
+  .strip::after { right: 0; background: linear-gradient(270deg, var(--bg), transparent); }
+  .track { list-style: none; margin: 0; padding: 0; display: flex; gap: 0.6rem; width: max-content; animation: life-strip var(--loop, 60s) linear infinite; }
+  .strip:hover .track, .strip:focus-within .track { animation-play-state: paused; }
+  .track li { flex: none; }
+  .track button { all: unset; display: block; cursor: zoom-in; border-radius: 8px; overflow: hidden; background: var(--card); }
+  .track button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .track img { display: block; height: 220px; width: auto; }
+  @media (max-width: 560px) { .track img { height: 160px; } }
+  @keyframes life-strip { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  @media (prefers-reduced-motion: reduce) {
+    .track { animation: none; width: auto; }
+    .track li.dup { display: none; }
+    .strip { overflow-x: auto; scroll-snap-type: x mandatory; }
+    .track li { scroll-snap-align: start; }
+    .strip::before, .strip::after { display: none; }
+  }
 </style>
-<script>
-  // Hobby cards filter the wall; pressing the active card again shows everything.
-  const cards = document.querySelectorAll<HTMLButtonElement>('[data-hobbies] .hobby');
-  const items = document.querySelectorAll<HTMLElement>('[data-wall] > li');
-  const apply = (active: string | null) => {
-    cards.forEach((c) => c.setAttribute('aria-pressed', String(c.dataset.hobby === active)));
-    items.forEach((li) => { li.hidden = active !== null && li.dataset.hobby !== active; });
-  };
-  cards.forEach((c) =>
-    c.addEventListener('click', () => apply(c.getAttribute('aria-pressed') === 'true' ? null : (c.dataset.hobby ?? null))),
-  );
-</script>
