@@ -71,7 +71,7 @@
       ]
     },
     {
-      "title": "Operations & product-selection analytics — Amazon (Shanghai), 2023",
+      "title": "Operations & product-selection analytics",
       "question": "Which products and categories deserve shelf space, and where are the anomalies?",
       "method": "Joined five business tables (ads, orders, inventory, listing page, daily totals) into one metric framework: units, revenue, day-over-day change, page views, refund rate, ad CTR and ACoS, days of stock cover; plus a 30-metric product-selection system for category screening.",
       "output": "A daily operations brief with a 7-day trend, brand split and per-ASIN link-health table, so the team can see which links need stock, ad spend or price action.",
