@@ -52,7 +52,8 @@
         {
           "title": "Wardogs",
           "meta": "约 200 小时",
-          "href": "https://store.steampowered.com/app/1867240/"
+          "href": "https://store.steampowered.com/app/1867240/",
+          "image": "games/wardogs.jpg"
         },
         {
           "image": "games/naraka.jpg",
@@ -62,7 +63,8 @@
         },
         {
           "title": "王者荣耀",
-          "meta": "最强王者 · 手游"
+          "meta": "最强王者 · 手游",
+          "image": "games/honor-of-kings.jpg"
         }
       ]
     },

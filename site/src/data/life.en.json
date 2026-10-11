@@ -52,7 +52,8 @@
         {
           "title": "Wardogs",
           "meta": "~200 h",
-          "href": "https://store.steampowered.com/app/1867240/"
+          "href": "https://store.steampowered.com/app/1867240/",
+          "image": "games/wardogs.jpg"
         },
         {
           "image": "games/naraka.jpg",
@@ -62,7 +63,8 @@
         },
         {
           "title": "Honor of Kings",
-          "meta": "Glorious King · mobile"
+          "meta": "Glorious King · mobile",
+          "image": "games/honor-of-kings.jpg"
         }
       ]
     },
