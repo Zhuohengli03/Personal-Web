@@ -7,19 +7,20 @@ import type { GithubData } from '../lib/github';
 import github from '../data/github.json';
 import Waffle from './Waffle.astro';
 
-interface Props { entry: CollectionEntry<'projects'>; locale: Locale }
-const { entry, locale } = Astro.props;
+interface Props { entry: CollectionEntry<'projects'>; locale: Locale; wide?: boolean }
+const { entry, locale, wide = false } = Astro.props;
 const tr = t(locale);
 const d = entry.data;
 const href = localePath(`/work/${slugOf(entry)}/`, locale);
 const activity = d.waffle?.source === 'github' ? repoActivity(github as GithubData, d.waffle.repo, locale) : null;
 ---
-<article class="card work reveal">
+<article class:list={['card', 'work', 'reveal', { wide }]}>
   <div class="head">
     <h3><a href={href}>{d.title}</a></h3>
     <span class="badge">{tr(`category.${d.category}`)}</span>
   </div>
   <p class="body">{d.summary}</p>
+  <div class="aside">
   {activity && <div class="waffle-wrap"><Waffle cells={activity.cells} cols={activity.cols} label={activity.label} /></div>}
   <dl class="spec-grid">
     <dt>{tr('labels.role')}</dt><dd>{d.role}</dd>
@@ -27,6 +28,7 @@ const activity = d.waffle?.source === 'github' ? repoActivity(github as GithubDa
     <dt>{tr('labels.stack')}</dt><dd>{d.stack.slice(0, 5).join(' · ')}</dd>
     <dt>{tr('labels.scale')}</dt><dd>{d.scale.slice(0, 2).join(' · ')}</dd>
   </dl>
+  </div>
   <div class="links">
     <a class="btn btn-primary" href={href} data-umami-event="case-open" data-umami-event-slug={slugOf(entry)}>{tr('actions.caseStudy')} →</a>
     {d.links.live && <a class="btn" href={d.links.live} target="_blank" rel="noopener" data-umami-event="outbound-live" data-umami-event-slug={slugOf(entry)}>{tr('actions.live')} ↗</a>}
@@ -41,4 +43,15 @@ const activity = d.waffle?.source === 'github' ? repoActivity(github as GithubDa
   .waffle-wrap { margin-bottom: 1.6rem; }
   .spec-grid { margin-bottom: 1.75rem; }
   .links { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: auto; }
+  .aside { display: contents; }
+  /* alone in the grid, the card would stretch its activity grid across the page: split it into text and facts instead */
+  @media (min-width: 860px) {
+    .work.wide { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); grid-template-areas: 'head aside' 'body aside' 'links aside'; column-gap: 3rem; align-items: start; }
+    .work.wide .head { grid-area: head; }
+    .work.wide .body { grid-area: body; margin-bottom: 1.75rem; }
+    .work.wide .links { grid-area: links; margin-top: 0; }
+    .work.wide .aside { grid-area: aside; display: block; padding-left: 3rem; border-left: 1px solid var(--rule); }
+    .work.wide .waffle-wrap { margin-bottom: 1.4rem; }
+    .work.wide .spec-grid { margin-bottom: 0; }
+  }
 </style>

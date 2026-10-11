@@ -49,7 +49,7 @@ const stats = p.stats.map((s) =>
   <Divider />
   <section id="work" class="wrap section">
     <div class="section-head reveal"><h2>{tr('sections.work')}</h2><p class="sub">{tr('sections.workSub')}</p></div>
-    <div class:list={['grid-2', { 'single-project': projects.length === 1 }]}>{projects.map((e) => <WorkCard entry={e} locale={locale} />)}</div>
+    <div class:list={['grid-2', { 'single-project': projects.length === 1 }]}>{projects.map((e) => <WorkCard entry={e} locale={locale} wide={projects.length === 1} />)}</div>
   </section>
 
   <section id="analytics" class="wrap section">

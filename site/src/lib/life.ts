@@ -3,7 +3,8 @@ import en from '../data/life.en.json';
 import zh from '../data/life.zh.json';
 import type { Locale } from '../i18n';
 
-const hobby = z.object({ id: z.string().regex(/^[a-z]+$/), title: z.string(), blurb: z.string() });
+const link = z.object({ label: z.string(), href: z.string().url() });
+const hobby = z.object({ id: z.string().regex(/^[a-z]+$/), title: z.string(), blurb: z.string(), link: link.optional() });
 const photo = z.object({ file: z.string().regex(/^[a-z]+\/[\w-]+\.(jpg|jpeg|png|webp)$/), hobby: z.string(), caption: z.string() });
 
 export const lifeSchema = z

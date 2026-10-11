@@ -52,6 +52,7 @@ const icons: Record<string, string> = {
             <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={icons[h.id] ?? ''} />
             <h3 class="title">{h.title}{own.length > 0 && <span class="count">{own.length}</span>}</h3>
             <p class="blurb">{h.blurb}</p>
+            {h.link && <a class="link" href={h.link.href} target="_blank" rel="me noopener" data-umami-event="outbound-hobby" data-umami-event-slug={h.id}>{h.link.label} ↗</a>}
           </div>
           {own.length > 0 && (
             <div class="strip" data-strip style={`--loop: ${own.length * SECONDS_PER_PHOTO}s`}>
@@ -81,6 +82,7 @@ const icons: Record<string, string> = {
   .title::before { content: counter(hobby, decimal-leading-zero); font-family: var(--font-mono); font-size: 0.65rem; font-weight: 400; letter-spacing: 0.08em; color: var(--fg-muted); }
   .count { font-family: var(--font-mono); font-size: 0.65rem; color: var(--fg-muted); }
   .blurb { margin: 0; font-size: 0.85rem; line-height: 1.5; color: var(--fg-muted); max-width: 34ch; }
+  .link { grid-column: 2; justify-self: start; margin-top: 0.35rem; font-family: var(--font-mono); font-size: 0.72rem; color: var(--fg); }
 
   /* the strip: a track twice as long as its photos, moved left by half its width on a loop, so the join is seamless */
   .strip { position: relative; overflow: hidden; border-radius: 10px; }
