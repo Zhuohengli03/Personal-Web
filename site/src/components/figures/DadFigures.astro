@@ -5,7 +5,7 @@ import text from '../../data/figures/dad-text.json';
 import SpecRow from '../SpecRow.astro';
 import DadForecastChart from './DadForecastChart.astro';
 import DadWindowsChart from './DadWindowsChart.astro';
-import DadPipeline from './DadPipeline.astro';
+import Pipeline from './Pipeline.astro';
 
 interface Props { locale: Locale }
 const { locale } = Astro.props;
@@ -30,7 +30,7 @@ const t = text[locale];
 
   <figure class="exhibit reveal">
     <div class="head"><h3>{t.fig3.title}</h3></div>
-    <DadPipeline nodes={t.fig3.nodes} />
+    <Pipeline nodes={t.fig3.nodes} />
     <figcaption>{t.fig3.caption}</figcaption>
   </figure>
 </section>

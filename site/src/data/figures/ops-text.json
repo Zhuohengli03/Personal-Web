@@ -1,0 +1,172 @@
+{
+  "en": {
+    "exhibits": "Exhibits",
+    "note": "Internship project, Oct–Nov 2023. The source tables are anonymized exports (brands AA–EE, masked listing IDs) covering October 2023; every number on this page is computed from them at build time.",
+    "stats": [
+      { "label": "Listings tracked", "value": "88", "hint": "5 brands · US, CA, JP" },
+      { "label": "Period", "value": "31 days", "hint": "October 2023" },
+      { "label": "Source rows", "value": "14,753", "hint": "5 tables: ads, orders, inventory, listing page, daily totals" },
+      { "label": "Ad spend / ad sales", "value": "27.0k / 148.1k", "hint": "66 advertised listings · ACoS 18%" },
+      { "label": "Out of stock, Oct 31", "value": "20 of 82", "hint": "selling listings with zero inventory" }
+    ],
+    "fig1": {
+      "title": "The product-selection metric system",
+      "sub": "5 dimensions · 9 groups · 31 metrics — what to check before a category or product gets shelf space",
+      "caption": "Exhibit 1. Demand and competition decide whether a category is worth entering; product, ratings and price decide which listing wins inside it. The tree was the checklist behind the brief's columns.",
+      "count": "5 dimensions · 9 groups · 31 metrics",
+      "tree": [
+        { "name": "Market demand", "groups": [
+          { "name": "Market size", "items": ["Search volume", "Potential customers", "Growth trend"] },
+          { "name": "Demographics", "items": ["Age", "Geography", "Gender"] }
+        ] },
+        { "name": "Competition", "groups": [
+          { "name": "Intensity", "items": ["Number of competitors", "Market share", "Concentration"] },
+          { "name": "Difficulty of entry", "items": ["Barriers to entry", "Threat of new entrants"] }
+        ] },
+        { "name": "Product", "groups": [
+          { "name": "Best sellers", "items": ["Best-selling items", "Best-selling brands", "Best-selling attributes"] },
+          { "name": "Attributes", "items": ["Category", "Specification", "Material"] },
+          { "name": "Trends", "items": ["New launches", "Seasonality", "Consumer preferences"] }
+        ] },
+        { "name": "Ratings", "items": ["Review count", "Average rating"], "groups": [
+          { "name": "Review content", "items": ["Keywords", "Sentiment"] },
+          { "name": "UGC engagement", "items": ["Customer photos", "Questions asked", "Interactions"] }
+        ] },
+        { "name": "Price", "items": ["Selling price", "Promotions", "Cost", "Margin"], "groups": [] }
+      ]
+    },
+    "fig2": {
+      "title": "What the daily brief is made of",
+      "caption": "Exhibit 2. Five exports joined on date, marketplace and listing. The brief reads top-down: the 7-day trend says whether something changed, the brand split says where, and the per-listing table says which link and why — stock, ads or price.",
+      "nodes": [
+        { "name": "Ads export", "num": "1,523 rows" },
+        { "name": "Orders export", "num": "1,927 rows" },
+        { "name": "Inventory export", "num": "7,068 rows" },
+        { "name": "Listing-page export", "num": "3,801 rows" },
+        { "name": "Daily totals", "num": "434 rows" },
+        { "name": "Join", "num": "date · marketplace · listing" },
+        { "name": "7-day trend", "num": "units · revenue · change · views · refund rate" },
+        { "name": "Brand split", "num": "5 brands" },
+        { "name": "Per-listing health", "num": "7-day avg · days to sell-out · CTR · ACoS · rank" },
+        { "name": "Daily brief", "num": "one page, every morning" }
+      ]
+    },
+    "fig3": {
+      "title": "October, day by day: units sold and listings out of stock",
+      "sub": "bars = units sold across all brands and marketplaces · dots = selling listings with zero inventory that day, of 82",
+      "caption": "Exhibit 3. Units peaked at 1,533 on Oct 2 and held near 950 a day through Oct 21, then fell to about 160 a day. Over the same month the number of selling listings with no stock climbed from 4 to 21. The brief's days-to-sell-out column exists to catch this a week earlier.",
+      "units": "Units sold per day",
+      "oos": "Selling listings out of stock",
+      "peak": "peak",
+      "gmv": "revenue",
+      "oosShort": "out of stock"
+    },
+    "fig4": {
+      "title": "The best-selling listing: price, category rank and units",
+      "sub": "one listing (brand CC, US) · 2,951 units in October, 15% of all units sold · rank axis is inverted, higher = better",
+      "caption": "Exhibit 4. The price was raised five times, from 29.99 to 38.59. Rank improved to #74 on Oct 17, then slid to #878 by Oct 31 as daily units fell from over 100 to single digits. One month of exports cannot separate price from stock and season, but a brief that shows the three side by side raises the question the same day.",
+      "price": "Price",
+      "rank": "Category rank (inverted)",
+      "units": "Units per day",
+      "best": "best",
+      "worst": "worst"
+    },
+    "fig5": {
+      "title": "Ad efficiency per listing: spend against ACoS",
+      "sub": "66 advertised listings · x = ad spend in October, log scale · y = ACoS = ad spend ÷ ad sales · hollow = spend with no ad sales",
+      "caption": "Exhibit 5. Two CC listings took 40% of the spend and returned 48% of ad sales at 14–16% ACoS. Five small listings spent more on ads than they sold through them, and eight spent with no ad sales at all — together under 450 — which is what the brief flags first.",
+      "spend": "Ad spend",
+      "acos": "ACoS",
+      "blended": "blended 18%",
+      "parity": "spend = ad sales",
+      "none": "no ad sales",
+      "adSales": "ad sales",
+      "ctr": "CTR"
+    }
+  },
+  "zh": {
+    "exhibits": "数据与图表",
+    "note": "2023 年 10—11 月的实习项目。数据为脱敏导出表（品牌以 AA—EE 代替，链接编号已打码），覆盖 2023 年 10 月；本页所有数字都在构建时由这些表计算得出。",
+    "stats": [
+      { "label": "跟踪链接数", "value": "88", "hint": "5 个品牌 · 美国、加拿大、日本" },
+      { "label": "时间范围", "value": "31 天", "hint": "2023 年 10 月" },
+      { "label": "源数据行数", "value": "14,753", "hint": "5 张表：广告、订单、库存、页面、日汇总" },
+      { "label": "广告花费 / 广告销售额", "value": "2.70 万 / 14.81 万", "hint": "66 个投放链接 · ACoS 18%" },
+      { "label": "10 月 31 日断货", "value": "20 / 82", "hint": "有销量但库存为零的链接" }
+    ],
+    "fig1": {
+      "title": "选品指标体系",
+      "sub": "5 个维度 · 9 个指标组 · 31 项指标：一个品类或商品值不值得上架，先看这些",
+      "caption": "图 1：市场需求和市场竞争决定一个品类值不值得进入；商品、评级和价格决定进入之后哪个链接能赢。日报里的每一列都对应这棵树上的一个节点。",
+      "count": "5 个维度 · 9 个指标组 · 31 项指标",
+      "tree": [
+        { "name": "市场需求", "groups": [
+          { "name": "市场容量", "items": ["搜索量", "潜在客户数量", "增长趋势"] },
+          { "name": "人口统计", "items": ["年龄分布", "地理分布", "性别分布"] }
+        ] },
+        { "name": "市场竞争", "groups": [
+          { "name": "竞争程度", "items": ["竞争对手数量", "市场份额", "市场集中度"] },
+          { "name": "进入难度", "items": ["市场准入门槛", "新竞争者威胁"] }
+        ] },
+        { "name": "商品", "groups": [
+          { "name": "热销产品", "items": ["畅销商品", "畅销品牌", "畅销属性"] },
+          { "name": "商品特征", "items": ["类别", "规格", "材质"] },
+          { "name": "商品趋势", "items": ["新品发布", "季节性需求", "消费者偏好"] }
+        ] },
+        { "name": "评级", "items": ["评论数量", "评分平均值"], "groups": [
+          { "name": "评论内容", "items": ["关键词分析", "情感分析"] },
+          { "name": "用户内容参与度", "items": ["用户上传照片", "用户提问数量", "用户互动"] }
+        ] },
+        { "name": "价格", "items": ["售价", "促销活动", "成本", "利润率"], "groups": [] }
+      ]
+    },
+    "fig2": {
+      "title": "运营日报由什么组成",
+      "caption": "图 2：5 张导出表按日期、站点、链接三个键关联。日报自上而下读：7 日趋势回答有没有变化，品牌占比回答变化在哪，按链接的健康度表回答是哪条链接、是库存、广告还是价格的问题。",
+      "nodes": [
+        { "name": "广告表", "num": "1,523 行" },
+        { "name": "订单表", "num": "1,927 行" },
+        { "name": "库存表", "num": "7,068 行" },
+        { "name": "页面表", "num": "3,801 行" },
+        { "name": "日汇总表", "num": "434 行" },
+        { "name": "关联", "num": "日期 · 站点 · 链接" },
+        { "name": "7 日趋势", "num": "销量 · 销售额 · 环比 · 浏览量 · 退款率" },
+        { "name": "品牌占比", "num": "5 个品牌" },
+        { "name": "链接健康度", "num": "7 日均销 · 预计售罄天数 · CTR · ACoS · 排名" },
+        { "name": "运营日报", "num": "每天早上一页纸" }
+      ]
+    },
+    "fig3": {
+      "title": "10 月逐日：销量与断货链接数",
+      "sub": "柱形 = 全部品牌、全部站点的日销量 · 圆点 = 当天有销量但库存为零的链接数（共 82 条在售链接）",
+      "caption": "图 3：10 月 2 日销量冲到 1,533 件的峰值，到 10 月 21 日每天维持在 950 件左右，之后跌到每天约 160 件。同一个月里，有销量但没库存的链接从 4 条增加到 21 条。日报里的「预计售罄天数」这一列，就是为了提前一周发现这件事。",
+      "units": "日销量",
+      "oos": "断货的在售链接数",
+      "peak": "峰值",
+      "gmv": "销售额",
+      "oosShort": "断货"
+    },
+    "fig4": {
+      "title": "销量最高的链接：价格、类目排名与日销量",
+      "sub": "一条链接（品牌 CC，美国站）· 10 月售出 2,951 件，占全部销量的 15% · 排名轴已倒置，越高越好",
+      "caption": "图 4：这条链接在 10 月提价五次，从 29.99 调到 38.59。排名在 10 月 17 日升到第 74 名后一路滑到月底的第 878 名，日销量从一百多件跌到个位数。单月数据分不清是价格、库存还是季节的影响，但把三条线并排放进日报，当天就能把问题提出来。",
+      "price": "售价",
+      "rank": "类目排名（倒置）",
+      "units": "日销量",
+      "best": "最好",
+      "worst": "最差"
+    },
+    "fig5": {
+      "title": "各链接广告效率：花费与 ACoS",
+      "sub": "66 个投放链接 · 横轴 = 10 月广告花费（对数刻度）· 纵轴 = ACoS，即广告花费 ÷ 广告销售额 · 空心点 = 有花费但没有广告成交",
+      "caption": "图 5：CC 品牌的两条链接占了 40% 的花费，带来 48% 的广告销售额，ACoS 在 14%—16%。另有 5 条小链接广告花费高过广告成交，8 条有花费却没有任何广告成交，加起来不到 450——这是日报最先标出来的部分。",
+      "spend": "广告花费",
+      "acos": "ACoS",
+      "blended": "整体 18%",
+      "parity": "花费 = 广告销售额",
+      "none": "无广告成交",
+      "adSales": "广告销售额",
+      "ctr": "点击率"
+    }
+  }
+}

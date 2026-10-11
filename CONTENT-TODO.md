@@ -18,6 +18,7 @@ Done: LinkedIn URL is in `profile.*.json` → `contact.linkedin` and renders in 
 |---|---|---|
 | Lingxian users / scores / PDF exports / week-2 retention + `asOf` | `site/src/data/metrics.json` (one place, both languages) | stats row on the home page, always with "as of {asOf}" |
 | DaD exhibit data (Season 10 Cobalt Ore holdout: hourly actual / forecast / naive / 90% interval, daily windows, metrics) | `site/src/data/figures/dad.json` → `cd site && node scripts/dad-figures.mjs ~/Cursor/Darker\ Market/data/runs/holdout/<run>.json` (the project's holdout run JSON stays local; the case prose quotes the same numbers — update both together) | three SVG exhibits + stat strip on the DaD case page |
+| Product-selection exhibit data (daily units and stock-outs, best-selling listing's price / rank / units, per-listing ad spend and ACoS) | `site/src/data/figures/ops.json` → `cd site && node scripts/ops-figures.mjs "<folder with the five amazon_sales_*.csv exports>"` (the exports stay local in iCloud; only aggregates are written; captions in `ops-text.json` and the case prose quote the same numbers — update together) | five exhibits + stat strip on the product-selection case page |
 | Commit count | `site/src/data/github.json` → `node scripts/fetch-github.mjs` | rounded ("1,200+") in the terminal panel and stats row |
 | Exact figures in the Lingxian case study prose (94 / 160 / 144 / 20.7% / 53% → 35% / 96% …) | `site/src/content/projects/{en,zh}/guqin-ai.md` | with "as of September 2026" in the text — update the prose and the date together |
 

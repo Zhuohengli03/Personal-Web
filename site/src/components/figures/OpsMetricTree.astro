@@ -1,0 +1,36 @@
+---
+// Exhibit 1 — the product-selection metric system as five columns: dimension → group → metric.
+interface Group { name: string; items: string[] }
+interface Dim { name: string; items?: string[]; groups: Group[] }
+interface Props { tree: Dim[] }
+const { tree } = Astro.props;
+---
+<div class="tree">
+  <ol class="dims">
+    {tree.map((d) => (
+      <li class="dim">
+        <h4>{d.name}</h4>
+        {d.items && d.items.length > 0 && <ul class="leaves">{d.items.map((m) => <li>{m}</li>)}</ul>}
+        {d.groups.map((g) => (
+          <div class="group">
+            <p class="gname">{g.name}</p>
+            <ul class="leaves">{g.items.map((m) => <li>{m}</li>)}</ul>
+          </div>
+        ))}
+      </li>
+    ))}
+  </ol>
+</div>
+<style>
+  .dims { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(5, 1fr); gap: 1.25rem; counter-reset: dim; }
+  .dim { counter-increment: dim; padding-top: 0.75rem; border-top: 2px solid var(--accent); }
+  h4 { margin: 0 0 0.7rem; font-family: var(--font-sans); font-size: 0.9rem; font-weight: 600; letter-spacing: -0.01em; }
+  h4::before { content: counter(dim) ' · '; font-family: var(--font-mono); font-weight: 400; font-size: 0.7rem; color: var(--fg-muted); }
+  .group { margin-top: 0.75rem; }
+  .gname { margin: 0 0 0.3rem; font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--fg-muted); }
+  .leaves { list-style: none; margin: 0; padding: 0; }
+  .leaves li { position: relative; padding-left: 0.9rem; font-size: 0.85rem; line-height: 1.45; color: var(--fg); }
+  .leaves li::before { content: ''; position: absolute; left: 0; top: 0.62em; width: 0.4rem; height: 1px; background: var(--fg-faint); }
+  @media (max-width: 900px) { .dims { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 560px) { .dims { grid-template-columns: repeat(2, 1fr); gap: 1rem; } }
+</style>

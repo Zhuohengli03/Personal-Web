@@ -1,0 +1,86 @@
+---
+// Exhibit 5 — ad efficiency per advertised listing: October ad spend (log x) against ACoS (y).
+// Listings with spend but no ad sales sit on a "no ad sales" row at the top as hollow dots.
+import data from '../../data/figures/ops.json';
+import type { Locale } from '../../i18n';
+interface Props { locale: Locale; t: { spend: string; acos: string; blended: string; parity: string; none: string; adSales: string; ctr: string } }
+const { t, locale } = Astro.props;
+const dateLocale = locale === 'zh' ? 'zh-CN' : 'en-US';
+
+const W = 960, H = 380, L = 56, R = 24, T = 28, B = 44;
+const ads = data.ads;
+const f = (v: number) => v.toFixed(1);
+const xMin = 0, xMax = 4; // log10 of 1 … 10,000
+const x = (spend: number) => L + ((Math.log10(Math.max(1, spend)) - xMin) / (xMax - xMin)) * (W - L - R);
+const aMax = 1.4;
+const NONE_Y = aMax + 0.12; // the "no ad sales" row, above the scale
+const y = (a: number) => T + (1 - a / (NONE_Y + 0.05)) * (H - T - B);
+const xTicks = [1, 10, 100, 1000, 10000];
+const yTicks = [0, 0.25, 0.5, 1];
+const pts = ads.map((a) => ({ ...a, cx: x(a.spend), cy: y(a.acos === null ? NONE_Y : Math.min(a.acos, aMax)), none: a.acos === null }));
+const labelled = pts.slice(0, 2); // the two biggest spenders
+const fmtN = (v: number) => Math.round(v).toLocaleString(dateLocale);
+---
+<div class="chart" data-ad-chart>
+  <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label={`${t.spend}; ${t.acos}`}>
+    <g class="grid">
+      {yTicks.map((v) => (<g><line x1={L} x2={W - R} y1={f(y(v))} y2={f(y(v))} /><text x={L - 8} y={f(y(v))} text-anchor="end" dominant-baseline="middle">{Math.round(v * 100)}%</text></g>))}
+      {xTicks.map((v) => (<g><line x1={f(x(v))} x2={f(x(v))} y1={H - B} y2={H - B + 4} class="tick" /><text x={f(x(v))} y={H - B + 18} text-anchor="middle">{fmtN(v)}</text></g>))}
+    </g>
+    <text class="axis" x={W - R} y={H - 6} text-anchor="end">{t.spend} →</text>
+    <text class="axis" x={L} y={T - 12}>{t.acos}</text>
+    <g class="ref parity"><line x1={L} x2={W - R} y1={f(y(1))} y2={f(y(1))} /><text x={W - R} y={f(y(1) - 6)} text-anchor="end">{t.parity}</text></g>
+    <g class="ref blended"><line x1={L} x2={W - R} y1={f(y(data.adTotals.acos))} y2={f(y(data.adTotals.acos))} /><text x={L + 6} y={f(y(data.adTotals.acos) - 6)}>{t.blended}</text></g>
+    <g class="ref none"><line x1={L} x2={W - R} y1={f(y(NONE_Y))} y2={f(y(NONE_Y))} /><text x={W - R} y={f(y(NONE_Y) - 8)} text-anchor="end">{t.none}</text></g>
+    {pts.map((p) => <circle class:list={['pt', { none: p.none }]} cx={f(p.cx)} cy={f(p.cy)} r="5.5" />)}
+    {labelled.map((p, i) => <text class="val" x={f(p.cx)} y={f(i === 0 ? p.cy - 12 : p.cy + 19)} text-anchor="middle">{p.brand} · {p.country.toUpperCase()} · {fmtN(p.spend)}</text>)}
+  </svg>
+  <div class="tip" hidden></div>
+  <script type="application/json" data-points set:html={JSON.stringify({ points: pts.map((p) => ({ cx: p.cx, cy: p.cy, brand: p.brand, country: p.country, spend: p.spend, adGmv: p.adGmv, acos: p.acos, ctr: p.ctr })), W, H, dateLocale, labels: { spend: t.spend, adSales: t.adSales, acos: t.acos, ctr: t.ctr, none: t.none } })} />
+</div>
+<style>
+  .chart { position: relative; }
+  svg { width: 100%; height: auto; display: block; font-family: var(--font-mono); font-size: 11px; }
+  .grid line { stroke: var(--rule); }
+  .grid line.tick { stroke: var(--fg-faint); }
+  .grid text { fill: var(--fg-muted); }
+  .axis { fill: var(--fg); font-family: var(--font-sans); font-size: 12px; font-weight: 500; }
+  .pt { fill: var(--accent); fill-opacity: 0.8; stroke: var(--bg); stroke-width: 2; }
+  .pt.none { fill: var(--bg); fill-opacity: 1; stroke: var(--fg-muted); stroke-width: 1.4; }
+  .pt.hit { fill-opacity: 1; stroke: var(--fg); }
+  .val { fill: var(--fg-muted); }
+  .ref line { stroke-dasharray: 4 4; }
+  .ref.parity line, .ref.none line { stroke: var(--fg-faint); }
+  .ref.blended line { stroke: var(--accent); }
+  .ref text { fill: var(--fg-muted); }
+  .ref.blended text { fill: var(--accent); }
+  .tip { position: absolute; pointer-events: none; transform: translate(-50%, calc(-100% - 12px)); background: var(--fg); color: var(--bg); font-family: var(--font-mono); font-size: 0.72rem; line-height: 1.6; padding: 0.35rem 0.55rem; border-radius: 6px; white-space: pre-line; width: max-content; max-width: 100%; }
+</style>
+<script>
+  // Per-dot tooltip: the nearest dot within 16 chart units of the pointer.
+  for (const root of document.querySelectorAll<HTMLElement>('[data-ad-chart]')) {
+    const cfg = JSON.parse(root.querySelector('[data-points]')?.textContent ?? '{}') as {
+      points: { cx: number; cy: number; brand: string; country: string; spend: number; adGmv: number; acos: number | null; ctr: number | null }[];
+      W: number; H: number; dateLocale: string; labels: { spend: string; adSales: string; acos: string; ctr: string; none: string };
+    };
+    const svg = root.querySelector('svg')!;
+    const dots = [...root.querySelectorAll<SVGCircleElement>('.pt')];
+    const tip = root.querySelector<HTMLElement>('.tip')!;
+    const money = (v: number) => v.toLocaleString(cfg.dateLocale, { maximumFractionDigits: 0 });
+    svg.addEventListener('pointermove', (e: PointerEvent) => {
+      const r = svg.getBoundingClientRect();
+      const px = ((e.clientX - r.left) / r.width) * cfg.W, py = ((e.clientY - r.top) / r.height) * cfg.H;
+      let best = -1, bd = 16 * 16;
+      cfg.points.forEach((p, i) => { const d = (p.cx - px) ** 2 + (p.cy - py) ** 2; if (d < bd) { bd = d; best = i; } });
+      dots.forEach((d, i) => d.classList.toggle('hit', i === best));
+      if (best < 0) { tip.hidden = true; return; }
+      const p = cfg.points[best];
+      tip.hidden = false;
+      tip.textContent = [`${p.brand} · ${p.country.toUpperCase()}`, `${cfg.labels.spend} ${money(p.spend)}`, `${cfg.labels.adSales} ${money(p.adGmv)}`, p.acos === null ? cfg.labels.none : `${cfg.labels.acos} ${Math.round(p.acos * 100)}%`, p.ctr === null ? '' : `${cfg.labels.ctr} ${(p.ctr * 100).toFixed(2)}%`].filter(Boolean).join('\n');
+      const halfWidth = tip.getBoundingClientRect().width / 2;
+      tip.style.left = `${Math.max(halfWidth, Math.min(r.width - halfWidth, (p.cx / cfg.W) * r.width))}px`;
+      tip.style.top = `${(p.cy / cfg.H) * r.height}px`;
+    });
+    svg.addEventListener('pointerleave', () => { tip.hidden = true; dots.forEach((d) => d.classList.remove('hit')); });
+  }
+</script>

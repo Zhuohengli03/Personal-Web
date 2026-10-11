@@ -16,17 +16,16 @@ const tr = t(locale);
     <p class="courses"><span class="eyebrow">{tr('labels.courseworkInProgress')}</span> {item.courseworkInProgress.join(' · ')}</p>
   )}
   {item.honors.length > 0 && (
-    <details>
-      <summary>{tr('sections.honors')} · {tr('labels.honorCount').replace('{n}', String(item.honors.length))}</summary>
+    <div class="honors">
+      <p class="eyebrow">{tr('sections.honors')} · {tr('labels.honorCount').replace('{n}', String(item.honors.length))}</p>
       <ul>{item.honors.map((h) => <li>{h}</li>)}</ul>
-    </details>
+    </div>
   )}
 </article>
 <style>
   .edu { display: flex; flex-direction: column; gap: 0.5rem; }
   .courses { margin-top: 0.5rem; font-size: 0.9rem; line-height: 1.55; color: var(--fg-muted); }
   .courses .eyebrow { display: block; margin-bottom: 0.2rem; }
-  details { margin-top: 0.75rem; font-size: 0.9rem; }
-  summary { cursor: pointer; color: var(--accent); }
-  ul { margin: 0.6rem 0 0; padding-left: 1.1rem; color: var(--fg-muted); line-height: 1.6; }
+  .honors { margin-top: 0.75rem; font-size: 0.9rem; }
+  .honors ul { margin: 0.35rem 0 0; padding-left: 1.1rem; color: var(--fg-muted); line-height: 1.6; }
 </style>

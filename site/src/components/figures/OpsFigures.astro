@@ -1,0 +1,65 @@
+---
+// The exhibit set for the "Operations & product-selection analytics" case: stat strip, metric tree,
+// the brief's structure, then the three things the October data showed.
+import type { Locale } from '../../i18n';
+import text from '../../data/figures/ops-text.json';
+import SpecRow from '../SpecRow.astro';
+import OpsMetricTree from './OpsMetricTree.astro';
+import Pipeline from './Pipeline.astro';
+import OpsTrendChart from './OpsTrendChart.astro';
+import OpsLinkChart from './OpsLinkChart.astro';
+import OpsAdChart from './OpsAdChart.astro';
+
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const t = text[locale];
+---
+<section class="exhibits" data-exhibits>
+  <p class="eyebrow center">{t.exhibits}</p>
+  <p class="note center">{t.note}</p>
+  <div class="strip reveal"><SpecRow items={t.stats} columns={4} /></div>
+
+  <figure class="exhibit reveal">
+    <div class="head"><h3>{t.fig1.title}</h3><p class="sub">{t.fig1.sub}</p></div>
+    <OpsMetricTree tree={t.fig1.tree} />
+    <figcaption>{t.fig1.caption}</figcaption>
+  </figure>
+
+  <figure class="exhibit reveal">
+    <div class="head"><h3>{t.fig2.title}</h3></div>
+    <Pipeline nodes={t.fig2.nodes} />
+    <figcaption>{t.fig2.caption}</figcaption>
+  </figure>
+
+  <figure class="exhibit reveal">
+    <div class="head"><h3>{t.fig3.title}</h3><p class="sub">{t.fig3.sub}</p></div>
+    <OpsTrendChart t={t.fig3} locale={locale} />
+    <figcaption>{t.fig3.caption}</figcaption>
+  </figure>
+
+  <figure class="exhibit reveal">
+    <div class="head"><h3>{t.fig4.title}</h3><p class="sub">{t.fig4.sub}</p></div>
+    <OpsLinkChart t={t.fig4} locale={locale} />
+    <figcaption>{t.fig4.caption}</figcaption>
+  </figure>
+
+  <figure class="exhibit reveal">
+    <div class="head"><h3>{t.fig5.title}</h3><p class="sub">{t.fig5.sub}</p></div>
+    <OpsAdChart t={t.fig5} locale={locale} />
+    <figcaption>{t.fig5.caption}</figcaption>
+  </figure>
+</section>
+<style>
+  .exhibits { margin-top: 3rem; }
+  .exhibits .eyebrow { margin-bottom: 0.6rem; }
+  .note { max-width: var(--measure); margin: 0 auto 2.2rem; font-size: 0.85rem; line-height: 1.5; color: var(--fg-muted); text-wrap: balance; }
+  .strip { margin-bottom: 3rem; }
+  .strip :global(.specrow) { grid-template-columns: repeat(2, 1fr); }
+  @media (min-width: 720px) { .strip :global(.specrow) { grid-template-columns: repeat(5, 1fr); } }
+  .exhibit { margin: 0 0 3.5rem; padding: 1.5rem 1.5rem 1.25rem; border: 1px solid var(--rule); border-radius: var(--radius); background: var(--bg); }
+  .head { margin-bottom: 1.1rem; }
+  h3 { font-family: var(--font-sans); font-size: 1rem; font-weight: 600; letter-spacing: -0.01em; }
+  .sub { margin-top: 0.3rem; font-family: var(--font-mono); font-size: 0.72rem; line-height: 1.5; color: var(--fg-muted); }
+  figcaption { margin-top: 1.1rem; font-size: 0.9rem; line-height: 1.55; color: color-mix(in srgb, var(--fg) 80%, var(--bg)); }
+  @media (max-width: 560px) { .exhibit { padding: 1rem 0.9rem; } }
+</style>

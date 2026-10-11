@@ -5,6 +5,8 @@ const cases = [
   ['/zh/work/guqin-ai/', 'zh-CN', '问题', 6],
   ['/work/dad-market-forecast/', 'en', 'Problem', 0],
   ['/zh/work/dad-market-forecast/', 'zh-CN', '问题', 0],
+  ['/work/product-selection-analytics/', 'en', 'Problem', 0],
+  ['/zh/work/product-selection-analytics/', 'zh-CN', '问题', 0],
 ] as const;
 
 for (const [path, lang, problem, images] of cases) {
@@ -64,5 +66,27 @@ for (const [locale, path, heading] of [
     }
     await expect(page.getByRole('heading', { level: 2, name: heading })).toBeVisible();
     await expect(ex).toContainText('61%'); // the honest coverage number is on the page
+  });
+}
+
+for (const [locale, path, limits] of [
+  ['en', '/work/product-selection-analytics/', 'Limits'],
+  ['zh', '/zh/work/product-selection-analytics/', '局限'],
+] as const) {
+  test(`product-selection ${locale} case shows its five exhibits`, async ({ page }) => {
+    await page.goto(path);
+    const ex = page.locator('[data-exhibits]');
+    await expect(ex.locator('figure.exhibit')).toHaveCount(5);
+    await expect(ex.locator('.tree .leaves li')).toHaveCount(31);
+    await expect(ex.locator('.flow li')).toHaveCount(10);
+    await expect(ex.locator('svg')).toHaveCount(3);
+    // per-day tooltip on the trend chart
+    const svg = ex.locator('[data-trend-chart] svg');
+    await svg.scrollIntoViewIfNeeded();
+    const box = (await svg.boundingBox())!;
+    await page.mouse.move(box.x + box.width * 0.5, box.y + box.height * 0.3);
+    await expect(ex.locator('[data-trend-chart] .tip')).toBeVisible();
+    await expect(page.getByRole('heading', { level: 2, name: limits })).toBeVisible();
+    await expect(page.locator('html')).not.toContainText(/amazon|亚马逊/i);
   });
 }

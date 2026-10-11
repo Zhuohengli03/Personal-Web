@@ -8,11 +8,11 @@ for (const [path, lang, work] of [['/', 'en', 'Selected work'], ['/zh/', 'zh-CN'
     await expect(page.locator('html')).toHaveAttribute('lang', lang);
     await expect(page.locator('h1')).toBeVisible();
     await expect(page.getByRole('heading', { level: 2, name: work })).toBeVisible();
-    await expect(page.locator('#work article')).toHaveCount(2);
+    await expect(page.locator('#work article')).toHaveCount(3);
     await expect(page.locator('#analytics li')).toHaveCount(3);
     await expect(page.locator('#more article')).toHaveCount(3);
     await expect(page.locator('#experience li').first()).toBeVisible();
-    await expect(page.locator('#education details')).toHaveCount(1);
+    await expect(page.locator('#education .honors li')).not.toHaveCount(0); // honors are listed open, no collapse
     await expect(page.locator('.waffle').first()).toBeVisible();
     const stat = await page.locator('#stats dd').nth(1).textContent();
     expect(stat).toMatch(/^\d{1,3}(,\d{3})*\+$/);

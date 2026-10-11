@@ -1,0 +1,1121 @@
+{
+  "source": "five anonymized daily sales exports (ads, orders, inventory, listing page, daily totals), brands AA–EE, masked ASINs",
+  "month": "2023-10",
+  "rows": {
+    "ad": 1523,
+    "all": 434,
+    "detail": 1927,
+    "stock": 7068,
+    "url": 3801
+  },
+  "listings": 88,
+  "sellingListings": 82,
+  "marketplaces": [
+    "Ca",
+    "Jp",
+    "Us"
+  ],
+  "daily": [
+    {
+      "d": "2023-10-01",
+      "units": 545,
+      "gmv": 21101,
+      "reads": 8182,
+      "buyers": 5740,
+      "refunds": 6,
+      "outOfStock": 4
+    },
+    {
+      "d": "2023-10-02",
+      "units": 1533,
+      "gmv": 57653,
+      "reads": 12627,
+      "buyers": 8414,
+      "refunds": 35,
+      "outOfStock": 4
+    },
+    {
+      "d": "2023-10-03",
+      "units": 570,
+      "gmv": 22329,
+      "reads": 6738,
+      "buyers": 4595,
+      "refunds": 19,
+      "outOfStock": 6
+    },
+    {
+      "d": "2023-10-04",
+      "units": 549,
+      "gmv": 22011,
+      "reads": 6642,
+      "buyers": 4445,
+      "refunds": 26,
+      "outOfStock": 8
+    },
+    {
+      "d": "2023-10-05",
+      "units": 476,
+      "gmv": 18655,
+      "reads": 6329,
+      "buyers": 4204,
+      "refunds": 25,
+      "outOfStock": 11
+    },
+    {
+      "d": "2023-10-06",
+      "units": 617,
+      "gmv": 23135,
+      "reads": 6661,
+      "buyers": 4525,
+      "refunds": 28,
+      "outOfStock": 11
+    },
+    {
+      "d": "2023-10-07",
+      "units": 632,
+      "gmv": 23224,
+      "reads": 7085,
+      "buyers": 4932,
+      "refunds": 15,
+      "outOfStock": 11
+    },
+    {
+      "d": "2023-10-08",
+      "units": 812,
+      "gmv": 29384,
+      "reads": 7646,
+      "buyers": 5289,
+      "refunds": 9,
+      "outOfStock": 11
+    },
+    {
+      "d": "2023-10-09",
+      "units": 885,
+      "gmv": 31159,
+      "reads": 8529,
+      "buyers": 5859,
+      "refunds": 27,
+      "outOfStock": 13
+    },
+    {
+      "d": "2023-10-10",
+      "units": 825,
+      "gmv": 28917,
+      "reads": 8549,
+      "buyers": 5835,
+      "refunds": 34,
+      "outOfStock": 13
+    },
+    {
+      "d": "2023-10-11",
+      "units": 933,
+      "gmv": 33308,
+      "reads": 9030,
+      "buyers": 5996,
+      "refunds": 38,
+      "outOfStock": 15
+    },
+    {
+      "d": "2023-10-12",
+      "units": 942,
+      "gmv": 32732,
+      "reads": 8249,
+      "buyers": 5606,
+      "refunds": 31,
+      "outOfStock": 14
+    },
+    {
+      "d": "2023-10-13",
+      "units": 1141,
+      "gmv": 41368,
+      "reads": 8686,
+      "buyers": 5874,
+      "refunds": 34,
+      "outOfStock": 14
+    },
+    {
+      "d": "2023-10-14",
+      "units": 1028,
+      "gmv": 36320,
+      "reads": 8842,
+      "buyers": 5964,
+      "refunds": 22,
+      "outOfStock": 13
+    },
+    {
+      "d": "2023-10-15",
+      "units": 1139,
+      "gmv": 39679,
+      "reads": 9226,
+      "buyers": 6212,
+      "refunds": 20,
+      "outOfStock": 14
+    },
+    {
+      "d": "2023-10-16",
+      "units": 1200,
+      "gmv": 43138,
+      "reads": 9445,
+      "buyers": 6342,
+      "refunds": 34,
+      "outOfStock": 17
+    },
+    {
+      "d": "2023-10-17",
+      "units": 1003,
+      "gmv": 37635,
+      "reads": 8690,
+      "buyers": 5876,
+      "refunds": 27,
+      "outOfStock": 18
+    },
+    {
+      "d": "2023-10-18",
+      "units": 815,
+      "gmv": 31306,
+      "reads": 6591,
+      "buyers": 4449,
+      "refunds": 34,
+      "outOfStock": 18
+    },
+    {
+      "d": "2023-10-19",
+      "units": 773,
+      "gmv": 29348,
+      "reads": 6050,
+      "buyers": 4129,
+      "refunds": 34,
+      "outOfStock": 20
+    },
+    {
+      "d": "2023-10-20",
+      "units": 929,
+      "gmv": 35144,
+      "reads": 6626,
+      "buyers": 4487,
+      "refunds": 31,
+      "outOfStock": 20
+    },
+    {
+      "d": "2023-10-21",
+      "units": 701,
+      "gmv": 27685,
+      "reads": 5732,
+      "buyers": 3853,
+      "refunds": 23,
+      "outOfStock": 19
+    },
+    {
+      "d": "2023-10-22",
+      "units": 369,
+      "gmv": 15685,
+      "reads": 4603,
+      "buyers": 3151,
+      "refunds": 16,
+      "outOfStock": 17
+    },
+    {
+      "d": "2023-10-23",
+      "units": 196,
+      "gmv": 8864,
+      "reads": 3320,
+      "buyers": 2304,
+      "refunds": 53,
+      "outOfStock": 16
+    },
+    {
+      "d": "2023-10-24",
+      "units": 150,
+      "gmv": 6203,
+      "reads": 2616,
+      "buyers": 1815,
+      "refunds": 8,
+      "outOfStock": 15
+    },
+    {
+      "d": "2023-10-25",
+      "units": 214,
+      "gmv": 8430,
+      "reads": 3457,
+      "buyers": 2222,
+      "refunds": 2,
+      "outOfStock": 17
+    },
+    {
+      "d": "2023-10-26",
+      "units": 178,
+      "gmv": 6434,
+      "reads": 3485,
+      "buyers": 2260,
+      "refunds": 46,
+      "outOfStock": 19
+    },
+    {
+      "d": "2023-10-27",
+      "units": 143,
+      "gmv": 5112,
+      "reads": 2710,
+      "buyers": 1822,
+      "refunds": 49,
+      "outOfStock": 19
+    },
+    {
+      "d": "2023-10-28",
+      "units": 153,
+      "gmv": 5593,
+      "reads": 2720,
+      "buyers": 1858,
+      "refunds": 21,
+      "outOfStock": 20
+    },
+    {
+      "d": "2023-10-29",
+      "units": 162,
+      "gmv": 5737,
+      "reads": 2692,
+      "buyers": 1744,
+      "refunds": 28,
+      "outOfStock": 20
+    },
+    {
+      "d": "2023-10-30",
+      "units": 123,
+      "gmv": 3684,
+      "reads": 2763,
+      "buyers": 1722,
+      "refunds": 47,
+      "outOfStock": 21
+    },
+    {
+      "d": "2023-10-31",
+      "units": 127,
+      "gmv": 4747,
+      "reads": 1871,
+      "buyers": 1259,
+      "refunds": 29,
+      "outOfStock": 20
+    }
+  ],
+  "brands": [
+    {
+      "brand": "AA",
+      "units": 2544,
+      "gmv": 155351
+    },
+    {
+      "brand": "BB",
+      "units": 1433,
+      "gmv": 48484
+    },
+    {
+      "brand": "CC",
+      "units": 10616,
+      "gmv": 345704
+    },
+    {
+      "brand": "DD",
+      "units": 2875,
+      "gmv": 117396
+    },
+    {
+      "brand": "EE",
+      "units": 2395,
+      "gmv": 68785
+    }
+  ],
+  "ads": [
+    {
+      "brand": "CC",
+      "country": "Us",
+      "spend": 6035.99,
+      "adGmv": 42527.74,
+      "acos": 0.142,
+      "ctr": 0.0079,
+      "adUnits": 1318
+    },
+    {
+      "brand": "CC",
+      "country": "Us",
+      "spend": 4716.6,
+      "adGmv": 28842.07,
+      "acos": 0.164,
+      "ctr": 0.004,
+      "adUnits": 868
+    },
+    {
+      "brand": "CC",
+      "country": "Us",
+      "spend": 1229.4,
+      "adGmv": 7873.88,
+      "acos": 0.156,
+      "ctr": 0.009,
+      "adUnits": 238
+    },
+    {
+      "brand": "CC",
+      "country": "Us",
+      "spend": 1177.42,
+      "adGmv": 7985.84,
+      "acos": 0.147,
+      "ctr": 0.0052,
+      "adUnits": 246
+    },
+    {
+      "brand": "BB",
+      "country": "Us",
+      "spend": 1105.54,
+      "adGmv": 4987.25,
+      "acos": 0.222,
+      "ctr": 0.0074,
+      "adUnits": 75
+    },
+    {
+      "brand": "EE",
+      "country": "Us",
+      "spend": 998.47,
+      "adGmv": 5596.09,
+      "acos": 0.178,
+      "ctr": 0.0048,
+      "adUnits": 191
+    },
+    {
+      "brand": "EE",
+      "country": "Us",
+      "spend": 966.68,
+      "adGmv": 6110.22,
+      "acos": 0.158,
+      "ctr": 0.0027,
+      "adUnits": 178
+    },
+    {
+      "brand": "AA",
+      "country": "Us",
+      "spend": 916.96,
+      "adGmv": 7594.74,
+      "acos": 0.121,
+      "ctr": 0.0053,
+      "adUnits": 126
+    },
+    {
+      "brand": "EE",
+      "country": "Us",
+      "spend": 746.5,
+      "adGmv": 3420.08,
+      "acos": 0.218,
+      "ctr": 0.0023,
+      "adUnits": 92
+    },
+    {
+      "brand": "BB",
+      "country": "Us",
+      "spend": 693.55,
+      "adGmv": 889.77,
+      "acos": 0.779,
+      "ctr": 0.0022,
+      "adUnits": 23
+    },
+    {
+      "brand": "AA",
+      "country": "Ca",
+      "spend": 644.73,
+      "adGmv": 2879.68,
+      "acos": 0.224,
+      "ctr": 0.0062,
+      "adUnits": 94
+    },
+    {
+      "brand": "CC",
+      "country": "Us",
+      "spend": 632.85,
+      "adGmv": 4711.89,
+      "acos": 0.134,
+      "ctr": 0.0072,
+      "adUnits": 135
+    },
+    {
+      "brand": "BB",
+      "country": "Us",
+      "spend": 602.12,
+      "adGmv": 1580.4,
+      "acos": 0.381,
+      "ctr": 0.0027,
+      "adUnits": 60
+    },
+    {
+      "brand": "EE",
+      "country": "Us",
+      "spend": 498.85,
+      "adGmv": 2877.18,
+      "acos": 0.173,
+      "ctr": 0.0026,
+      "adUnits": 82
+    },
+    {
+      "brand": "DD",
+      "country": "Us",
+      "spend": 463.27,
+      "adGmv": 826.57,
+      "acos": 0.56,
+      "ctr": 0.0045,
+      "adUnits": 23
+    },
+    {
+      "brand": "DD",
+      "country": "Us",
+      "spend": 413.95,
+      "adGmv": 1366.68,
+      "acos": 0.303,
+      "ctr": 0.0019,
+      "adUnits": 32
+    },
+    {
+      "brand": "BB",
+      "country": "Us",
+      "spend": 405.84,
+      "adGmv": 691.99,
+      "acos": 0.586,
+      "ctr": 0.0029,
+      "adUnits": 101
+    },
+    {
+      "brand": "AA",
+      "country": "Ca",
+      "spend": 349.44,
+      "adGmv": 1083.64,
+      "acos": 0.322,
+      "ctr": 0.0056,
+      "adUnits": 31
+    },
+    {
+      "brand": "DD",
+      "country": "Ca",
+      "spend": 292.94,
+      "adGmv": 1126.72,
+      "acos": 0.26,
+      "ctr": 0.0082,
+      "adUnits": 28
+    },
+    {
+      "brand": "CC",
+      "country": "Us",
+      "spend": 285.05,
+      "adGmv": 1664.8,
+      "acos": 0.171,
+      "ctr": 0.0045,
+      "adUnits": 44
+    },
+    {
+      "brand": "AA",
+      "country": "Us",
+      "spend": 272.99,
+      "adGmv": 781.29,
+      "acos": 0.349,
+      "ctr": 0.0057,
+      "adUnits": 11
+    },
+    {
+      "brand": "DD",
+      "country": "Us",
+      "spend": 272.81,
+      "adGmv": 482.33,
+      "acos": 0.566,
+      "ctr": 0.0023,
+      "adUnits": 7
+    },
+    {
+      "brand": "EE",
+      "country": "Us",
+      "spend": 218.24,
+      "adGmv": 1348.43,
+      "acos": 0.162,
+      "ctr": 0.0041,
+      "adUnits": 57
+    },
+    {
+      "brand": "CC",
+      "country": "Ca",
+      "spend": 196.47,
+      "adGmv": 760.99,
+      "acos": 0.258,
+      "ctr": 0.0028,
+      "adUnits": 25
+    },
+    {
+      "brand": "DD",
+      "country": "Us",
+      "spend": 188.32,
+      "adGmv": 608.57,
+      "acos": 0.309,
+      "ctr": 0.0046,
+      "adUnits": 12
+    },
+    {
+      "brand": "AA",
+      "country": "Us",
+      "spend": 153.94,
+      "adGmv": 843.88,
+      "acos": 0.182,
+      "ctr": 0.004,
+      "adUnits": 12
+    },
+    {
+      "brand": "DD",
+      "country": "Us",
+      "spend": 148.19,
+      "adGmv": 739.88,
+      "acos": 0.2,
+      "ctr": 0.0039,
+      "adUnits": 12
+    },
+    {
+      "brand": "AA",
+      "country": "Jp",
+      "spend": 146.91,
+      "adGmv": 483.38,
+      "acos": 0.304,
+      "ctr": 0.0053,
+      "adUnits": 19
+    },
+    {
+      "brand": "DD",
+      "country": "Us",
+      "spend": 145.44,
+      "adGmv": 439.92,
+      "acos": 0.331,
+      "ctr": 0.0028,
+      "adUnits": 8
+    },
+    {
+      "brand": "CC",
+      "country": "Us",
+      "spend": 137.8,
+      "adGmv": 788.42,
+      "acos": 0.175,
+      "ctr": 0.0021,
+      "adUnits": 22
+    },
+    {
+      "brand": "DD",
+      "country": "Us",
+      "spend": 132.4,
+      "adGmv": 308.22,
+      "acos": 0.43,
+      "ctr": 0.0031,
+      "adUnits": 8
+    },
+    {
+      "brand": "DD",
+      "country": "Jp",
+      "spend": 107.34,
+      "adGmv": 258.32,
+      "acos": 0.416,
+      "ctr": 0.0088,
+      "adUnits": 14
+    },
+    {
+      "brand": "AA",
+      "country": "Us",
+      "spend": 105.63,
+      "adGmv": 89.99,
+      "acos": 1.174,
+      "ctr": 0.003,
+      "adUnits": 1
+    },
+    {
+      "brand": "BB",
+      "country": "Us",
+      "spend": 105.25,
+      "adGmv": 213.97,
+      "acos": 0.492,
+      "ctr": 0.001,
+      "adUnits": 23
+    },
+    {
+      "brand": "BB",
+      "country": "Jp",
+      "spend": 103.98,
+      "adGmv": 199.26,
+      "acos": 0.522,
+      "ctr": 0.0141,
+      "adUnits": 3
+    },
+    {
+      "brand": "CC",
+      "country": "Jp",
+      "spend": 102.23,
+      "adGmv": 470.98,
+      "acos": 0.217,
+      "ctr": 0.0039,
+      "adUnits": 21
+    },
+    {
+      "brand": "AA",
+      "country": "Us",
+      "spend": 88.25,
+      "adGmv": 795.78,
+      "acos": 0.111,
+      "ctr": 0.0025,
+      "adUnits": 12
+    },
+    {
+      "brand": "EE",
+      "country": "Us",
+      "spend": 86.22,
+      "adGmv": 123.92,
+      "acos": 0.696,
+      "ctr": 0.0053,
+      "adUnits": 8
+    },
+    {
+      "brand": "AA",
+      "country": "Us",
+      "spend": 83.07,
+      "adGmv": 79.98,
+      "acos": 1.039,
+      "ctr": 0.0024,
+      "adUnits": 2
+    },
+    {
+      "brand": "EE",
+      "country": "Us",
+      "spend": 78.75,
+      "adGmv": 71.92,
+      "acos": 1.095,
+      "ctr": 0.0015,
+      "adUnits": 8
+    },
+    {
+      "brand": "EE",
+      "country": "Us",
+      "spend": 78.18,
+      "adGmv": 71.92,
+      "acos": 1.087,
+      "ctr": 0.0018,
+      "adUnits": 8
+    },
+    {
+      "brand": "EE",
+      "country": "Us",
+      "spend": 69.05,
+      "adGmv": 80.91,
+      "acos": 0.853,
+      "ctr": 0.0036,
+      "adUnits": 9
+    },
+    {
+      "brand": "BB",
+      "country": "Us",
+      "spend": 68.72,
+      "adGmv": 99.93,
+      "acos": 0.688,
+      "ctr": 0.0028,
+      "adUnits": 7
+    },
+    {
+      "brand": "DD",
+      "country": "Us",
+      "spend": 65.98,
+      "adGmv": 199.95,
+      "acos": 0.33,
+      "ctr": 0.0044,
+      "adUnits": 5
+    },
+    {
+      "brand": "AA",
+      "country": "Ca",
+      "spend": 62.48,
+      "adGmv": 273.52,
+      "acos": 0.228,
+      "ctr": 0.0063,
+      "adUnits": 3
+    },
+    {
+      "brand": "AA",
+      "country": "Jp",
+      "spend": 62.2,
+      "adGmv": 81.75,
+      "acos": 0.761,
+      "ctr": 0.0033,
+      "adUnits": 3
+    },
+    {
+      "brand": "CC",
+      "country": "Us",
+      "spend": 58.94,
+      "adGmv": 779.77,
+      "acos": 0.076,
+      "ctr": 0.0079,
+      "adUnits": 24
+    },
+    {
+      "brand": "DD",
+      "country": "Us",
+      "spend": 58.92,
+      "adGmv": 135.98,
+      "acos": 0.433,
+      "ctr": 0.0034,
+      "adUnits": 2
+    },
+    {
+      "brand": "AA",
+      "country": "Us",
+      "spend": 55.85,
+      "adGmv": 284.96,
+      "acos": 0.196,
+      "ctr": 0.0019,
+      "adUnits": 4
+    },
+    {
+      "brand": "CC",
+      "country": "Us",
+      "spend": 55.38,
+      "adGmv": 657.36,
+      "acos": 0.084,
+      "ctr": 0.0024,
+      "adUnits": 17
+    },
+    {
+      "brand": "BB",
+      "country": "Jp",
+      "spend": 43.77,
+      "adGmv": 330.78,
+      "acos": 0.132,
+      "ctr": 0.0066,
+      "adUnits": 5
+    },
+    {
+      "brand": "CC",
+      "country": "Us",
+      "spend": 40.99,
+      "adGmv": 245.87,
+      "acos": 0.167,
+      "ctr": 0.013,
+      "adUnits": 7
+    },
+    {
+      "brand": "CC",
+      "country": "Us",
+      "spend": 32.97,
+      "adGmv": 82.23,
+      "acos": 0.401,
+      "ctr": 0.0026,
+      "adUnits": 2
+    },
+    {
+      "brand": "BB",
+      "country": "Ca",
+      "spend": 28.54,
+      "adGmv": 0,
+      "acos": null,
+      "ctr": 0.0036,
+      "adUnits": 0
+    },
+    {
+      "brand": "EE",
+      "country": "Us",
+      "spend": 25.32,
+      "adGmv": 27.96,
+      "acos": 0.906,
+      "ctr": 0.0034,
+      "adUnits": 4
+    },
+    {
+      "brand": "BB",
+      "country": "Ca",
+      "spend": 24.75,
+      "adGmv": 69.88,
+      "acos": 0.354,
+      "ctr": 0.0029,
+      "adUnits": 2
+    },
+    {
+      "brand": "EE",
+      "country": "Us",
+      "spend": 23.84,
+      "adGmv": 17.98,
+      "acos": 1.326,
+      "ctr": 0.0012,
+      "adUnits": 2
+    },
+    {
+      "brand": "DD",
+      "country": "Ca",
+      "spend": 17.87,
+      "adGmv": 72.94,
+      "acos": 0.245,
+      "ctr": 0.0062,
+      "adUnits": 1
+    },
+    {
+      "brand": "EE",
+      "country": "Us",
+      "spend": 17.71,
+      "adGmv": 0,
+      "acos": null,
+      "ctr": 0.0017,
+      "adUnits": 0
+    },
+    {
+      "brand": "DD",
+      "country": "Ca",
+      "spend": 12.14,
+      "adGmv": 0,
+      "acos": null,
+      "ctr": 0.0047,
+      "adUnits": 0
+    },
+    {
+      "brand": "CC",
+      "country": "Us",
+      "spend": 11.35,
+      "adGmv": 0,
+      "acos": null,
+      "ctr": 0.0043,
+      "adUnits": 0
+    },
+    {
+      "brand": "CC",
+      "country": "Us",
+      "spend": 10.81,
+      "adGmv": 95.17,
+      "acos": 0.114,
+      "ctr": 0.0026,
+      "adUnits": 3
+    },
+    {
+      "brand": "EE",
+      "country": "Us",
+      "spend": 3.56,
+      "adGmv": 0,
+      "acos": null,
+      "ctr": 0.0008,
+      "adUnits": 0
+    },
+    {
+      "brand": "EE",
+      "country": "Us",
+      "spend": 2.27,
+      "adGmv": 0,
+      "acos": null,
+      "ctr": 0.0087,
+      "adUnits": 0
+    },
+    {
+      "brand": "BB",
+      "country": "Us",
+      "spend": 1.04,
+      "adGmv": 0,
+      "acos": null,
+      "ctr": 0.0015,
+      "adUnits": 0
+    },
+    {
+      "brand": "CC",
+      "country": "Jp",
+      "spend": 0.11,
+      "adGmv": 0,
+      "acos": null,
+      "ctr": 0.0141,
+      "adUnits": 0
+    }
+  ],
+  "adTotals": {
+    "spend": 26983,
+    "adGmv": 148136,
+    "links": 66,
+    "acos": 0.182
+  },
+  "topLink": {
+    "brand": "CC",
+    "country": "Us",
+    "monthUnits": 2951,
+    "series": [
+      {
+        "d": "2023-10-01",
+        "price": 29.99,
+        "rank": 217,
+        "units": 53
+      },
+      {
+        "d": "2023-10-02",
+        "price": 31.99,
+        "rank": 253,
+        "units": 83
+      },
+      {
+        "d": "2023-10-03",
+        "price": 31.99,
+        "rank": 353,
+        "units": 42
+      },
+      {
+        "d": "2023-10-04",
+        "price": 35.99,
+        "rank": 420,
+        "units": 36
+      },
+      {
+        "d": "2023-10-05",
+        "price": 36.99,
+        "rank": 444,
+        "units": 22
+      },
+      {
+        "d": "2023-10-06",
+        "price": 36.99,
+        "rank": 532,
+        "units": 43
+      },
+      {
+        "d": "2023-10-07",
+        "price": 36.99,
+        "rank": 494,
+        "units": 66
+      },
+      {
+        "d": "2023-10-08",
+        "price": 36.99,
+        "rank": 531,
+        "units": 147
+      },
+      {
+        "d": "2023-10-09",
+        "price": 36.99,
+        "rank": 178,
+        "units": 175
+      },
+      {
+        "d": "2023-10-10",
+        "price": 36.99,
+        "rank": 155,
+        "units": 174
+      },
+      {
+        "d": "2023-10-11",
+        "price": 36.99,
+        "rank": 138,
+        "units": 198
+      },
+      {
+        "d": "2023-10-12",
+        "price": 36.99,
+        "rank": 114,
+        "units": 218
+      },
+      {
+        "d": "2023-10-13",
+        "price": 36.99,
+        "rank": 104,
+        "units": 277
+      },
+      {
+        "d": "2023-10-14",
+        "price": 36.99,
+        "rank": 95,
+        "units": 235
+      },
+      {
+        "d": "2023-10-15",
+        "price": 36.99,
+        "rank": 83,
+        "units": 252
+      },
+      {
+        "d": "2023-10-16",
+        "price": 36.99,
+        "rank": 78,
+        "units": 275
+      },
+      {
+        "d": "2023-10-17",
+        "price": 36.99,
+        "rank": 74,
+        "units": 124
+      },
+      {
+        "d": "2023-10-18",
+        "price": 37.99,
+        "rank": 95,
+        "units": 51
+      },
+      {
+        "d": "2023-10-19",
+        "price": 37.99,
+        "rank": 120,
+        "units": 86
+      },
+      {
+        "d": "2023-10-20",
+        "price": 37.99,
+        "rank": 206,
+        "units": 135
+      },
+      {
+        "d": "2023-10-21",
+        "price": 37.99,
+        "rank": 232,
+        "units": 104
+      },
+      {
+        "d": "2023-10-22",
+        "price": 37.99,
+        "rank": 189,
+        "units": 41
+      },
+      {
+        "d": "2023-10-23",
+        "price": 37.99,
+        "rank": 175,
+        "units": 9
+      },
+      {
+        "d": "2023-10-24",
+        "price": 38.59,
+        "rank": 202,
+        "units": 9
+      },
+      {
+        "d": "2023-10-25",
+        "price": 38.59,
+        "rank": 321,
+        "units": 13
+      },
+      {
+        "d": "2023-10-26",
+        "price": 38.59,
+        "rank": 448,
+        "units": 11
+      },
+      {
+        "d": "2023-10-27",
+        "price": 38.59,
+        "rank": 562,
+        "units": 10
+      },
+      {
+        "d": "2023-10-28",
+        "price": 38.59,
+        "rank": 861,
+        "units": 17
+      },
+      {
+        "d": "2023-10-29",
+        "price": 38.59,
+        "rank": 709,
+        "units": 20
+      },
+      {
+        "d": "2023-10-30",
+        "price": 38.59,
+        "rank": 538,
+        "units": 13
+      },
+      {
+        "d": "2023-10-31",
+        "price": 38.59,
+        "rank": 878,
+        "units": 12
+      }
+    ]
+  }
+}
