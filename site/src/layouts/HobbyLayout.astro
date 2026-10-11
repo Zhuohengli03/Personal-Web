@@ -1,0 +1,75 @@
+---
+// HobbyLayout.astro — a hobby's detail page (today: games). Two card grids from life.*.json: the hobby's own cards
+// (played a lot, with hours) and the page's extra cards (also played). Covers live in src/assets/life/<hobby>/.
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import BaseLayout from './BaseLayout.astro';
+import { t, localePath, type Locale } from '../i18n';
+import { loadLife } from '../lib/life';
+
+interface Props { locale: Locale; hobbyId: string }
+const { locale, hobbyId } = Astro.props;
+const tr = t(locale);
+const life = loadLife(locale);
+const hobby = life.hobbies.find((h) => h.id === hobbyId);
+if (!hobby?.page) throw new Error(`life: hobby "${hobbyId}" has no detail page`);
+const page = hobby.page;
+const files = import.meta.glob<ImageMetadata>('../assets/life/**/*.{jpg,jpeg,png,webp}', { eager: true, import: 'default' });
+const resolve = (file: string): ImageMetadata => {
+  const meta = files[`../assets/life/${file}`];
+  if (!meta) throw new Error(`life: cover "${file}" not found under src/assets/life/`);
+  return meta;
+};
+type Card = { image?: string; title: string; meta: string; href?: string };
+const groups: { heading: string; cards: Card[]; note?: string }[] = [
+  { heading: page.deep, cards: hobby.cards ?? [] },
+  { heading: page.more, cards: page.cards, note: page.moreNote },
+];
+---
+<BaseLayout title={`${page.title} — ${tr('site.title')}`} description={page.intro} locale={locale} path={`/life/${hobbyId}/`}>
+  <main class="wrap section">
+    <header class="head">
+      <p class="eyebrow center fade-up" data-delay="1">{tr('sections.life')}</p>
+      <h1 class="center fade-up" data-delay="2">{page.title}</h1>
+      <p class="prose center fade-up" data-delay="3">{page.intro}</p>
+      {hobby.link && <p class="center fade-up" data-delay="4"><a class="btn" href={hobby.link.href} target="_blank" rel="me noopener" data-umami-event="outbound-hobby" data-umami-event-slug={hobby.id}>{hobby.link.label} ↗</a></p>}
+    </header>
+    {groups.map((g) => g.cards.length > 0 && (
+      <section class="group reveal">
+        <h2 class="eyebrow">{g.heading}<span class="n">{g.cards.length}</span></h2>
+        <ul class="cards">
+          {g.cards.map((c) => {
+            const meta = c.image ? resolve(c.image) : null;
+            const body = (
+              <>
+                {meta ? <Image src={meta} alt={c.title} width={300} height={Math.round((meta.height * 300) / meta.width)} format="webp" quality={80} loading="lazy" /> : <span class="cover-text" aria-hidden="true">{c.title}</span>}
+                <span class="title">{c.title}</span>
+                <span class="meta">{c.meta}</span>
+              </>
+            );
+            return <li>{c.href ? <a href={c.href} target="_blank" rel="noopener" data-umami-event="outbound-hobby" data-umami-event-slug={c.title}>{body}</a> : <div>{body}</div>}</li>;
+          })}
+        </ul>
+        {g.note && <p class="note">{g.note}</p>}
+      </section>
+    ))}
+    <p class="center back"><a class="btn" href={localePath('/#life', locale)}>← {tr('life.back')}</a></p>
+  </main>
+</BaseLayout>
+<style>
+  .head { max-width: var(--measure); margin: 0 auto 3rem; }
+  .head h1 { margin: 0.4rem 0 1rem; }
+  .head .btn { margin-top: 0.5rem; }
+  .group { margin-bottom: 3rem; }
+  .group h2 { display: flex; align-items: baseline; gap: 0.6rem; margin-bottom: 1.2rem; padding-bottom: 0.6rem; border-bottom: 1px solid var(--rule); }
+  .n { font-weight: 400; color: var(--fg-muted); }
+  .cards { list-style: none; margin: 0; padding: 0; display: grid; gap: 1.4rem 1.2rem; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+  .cards a, .cards div { display: flex; flex-direction: column; gap: 0.3rem; color: inherit; text-decoration: none; }
+  .cards a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 8px; }
+  .cards img { display: block; width: 100%; height: auto; aspect-ratio: 2 / 3; object-fit: cover; border-radius: 8px; background: var(--card); }
+  .cover-text { display: flex; align-items: flex-end; box-sizing: border-box; aspect-ratio: 2 / 3; padding: 0.9rem; border-radius: 8px; background: var(--card); font-family: var(--font-serif); font-size: 1.2rem; line-height: 1.2; }
+  .title { margin-top: 0.25rem; font-family: var(--font-sans); font-size: 0.88rem; }
+  .meta { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.02em; color: var(--fg-muted); }
+  .note { margin-top: 1.2rem; font-size: 0.85rem; color: var(--fg-muted); }
+  .back { margin-top: 1rem; }
+</style>

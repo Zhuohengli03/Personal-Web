@@ -53,3 +53,23 @@ test('the strip drifts, pauses on hover, and stands still under reduced motion',
   await expect(t2.locator('li.dup').first()).toBeHidden();
   await still.close();
 });
+
+for (const [path, lang, deep] of [['/life/games/', 'en', 'Played a lot'], ['/zh/life/games/', 'zh-CN', '深度体验']] as const) {
+  test(`games page ${path}: the six played-a-lot games with hours, then the rest`, async ({ page }) => {
+    await page.goto(path);
+    await expect(page.locator('html')).toHaveAttribute('lang', lang);
+    await expect(page.locator('h1')).toBeVisible();
+    const groups = page.locator('main .group');
+    await expect(groups).toHaveCount(2);
+    await expect(groups.first().locator('h2')).toContainText(deep);
+    await expect(groups.first().locator('.cards li')).toHaveCount(6);
+    expect(await groups.nth(1).locator('.cards li').count()).toBeGreaterThanOrEqual(5);
+    await expect(page.locator('main .cards img').first()).toHaveAttribute('alt', /.+/);
+  });
+}
+
+test('the games row links to its page', async ({ page }) => {
+  await page.goto('/');
+  await page.locator('#life .row[data-hobby="games"] .title a').first().click();
+  await expect(page).toHaveURL(/\/life\/games\/$/);
+});

@@ -5,7 +5,8 @@ import type { Locale } from '../i18n';
 
 const link = z.object({ label: z.string(), href: z.string().url() });
 const card = z.object({ image: z.string().regex(/^[a-z]+\/[\w-]+\.(jpg|jpeg|png|webp)$/).optional(), title: z.string(), meta: z.string(), href: z.string().url().optional() });
-const hobby = z.object({ id: z.string().regex(/^[a-z]+$/), title: z.string(), blurb: z.string(), cards: z.array(card).optional(), link: link.optional() });
+const page = z.object({ title: z.string(), intro: z.string(), deep: z.string(), more: z.string(), moreNote: z.string().optional(), cards: z.array(card) });
+const hobby = z.object({ id: z.string().regex(/^[a-z]+$/), title: z.string(), blurb: z.string(), cards: z.array(card).optional(), link: link.optional(), page: page.optional() });
 const photo = z.object({ file: z.string().regex(/^[a-z]+\/[\w-]+\.(jpg|jpeg|png|webp)$/), hobby: z.string(), caption: z.string() });
 
 export const lifeSchema = z

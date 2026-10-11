@@ -61,7 +61,58 @@
           "meta": "坠日 IV",
           "href": "https://store.steampowered.com/app/1203220/"
         }
-      ]
+      ],
+      "page": {
+        "title": "游戏",
+        "intro": "Steam 上 4,000 多小时，主要是团队射击和搜打撤；也长期关注版本节奏、赛季与通行证设计和社区反馈。其中一款成了数据项目：《Dark and Darker》价格预测。",
+        "deep": "深度体验",
+        "more": "涉猎",
+        "moreNote": "手机上还有原神和火影忍者手游。",
+        "cards": [
+          {
+            "image": "games/delta-force.jpg",
+            "title": "三角洲行动",
+            "meta": "战术射击",
+            "href": "https://store.steampowered.com/app/2507950/"
+          },
+          {
+            "image": "games/call-of-duty.jpg",
+            "title": "使命召唤",
+            "meta": "射击",
+            "href": "https://store.steampowered.com/app/1938090/"
+          },
+          {
+            "image": "games/battlefield-v.jpg",
+            "title": "战地 5",
+            "meta": "射击",
+            "href": "https://store.steampowered.com/app/1238810/"
+          },
+          {
+            "image": "games/black-myth-wukong.jpg",
+            "title": "黑神话：悟空",
+            "meta": "动作角色扮演",
+            "href": "https://store.steampowered.com/app/2358720/"
+          },
+          {
+            "image": "games/destiny-2.jpg",
+            "title": "命运 2",
+            "meta": "刷宝射击",
+            "href": "https://store.steampowered.com/app/1085660/"
+          },
+          {
+            "image": "games/civilization-vi.jpg",
+            "title": "文明 6",
+            "meta": "回合策略",
+            "href": "https://store.steampowered.com/app/289070/"
+          },
+          {
+            "image": "games/the-sims-4.jpg",
+            "title": "模拟人生 4",
+            "meta": "生活模拟",
+            "href": "https://store.steampowered.com/app/1222670/"
+          }
+        ]
+      }
     },
     {
       "id": "swimming",

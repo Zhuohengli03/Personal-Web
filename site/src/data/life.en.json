@@ -61,7 +61,58 @@
           "meta": "Sunset IV",
           "href": "https://store.steampowered.com/app/1203220/"
         }
-      ]
+      ],
+      "page": {
+        "title": "Games",
+        "intro": "Over 4,000 hours on Steam, mostly team shooters and extraction games, and a habit of watching how versions, seasons and battle passes are designed and received. One of these games became a data project: the Dark and Darker price forecast.",
+        "deep": "Played a lot",
+        "more": "Also played",
+        "moreNote": "Plus Genshin Impact and Naruto Mobile on the phone.",
+        "cards": [
+          {
+            "image": "games/delta-force.jpg",
+            "title": "Delta Force",
+            "meta": "tactical shooter",
+            "href": "https://store.steampowered.com/app/2507950/"
+          },
+          {
+            "image": "games/call-of-duty.jpg",
+            "title": "Call of Duty",
+            "meta": "shooter",
+            "href": "https://store.steampowered.com/app/1938090/"
+          },
+          {
+            "image": "games/battlefield-v.jpg",
+            "title": "Battlefield V",
+            "meta": "shooter",
+            "href": "https://store.steampowered.com/app/1238810/"
+          },
+          {
+            "image": "games/black-myth-wukong.jpg",
+            "title": "Black Myth: Wukong",
+            "meta": "action RPG",
+            "href": "https://store.steampowered.com/app/2358720/"
+          },
+          {
+            "image": "games/destiny-2.jpg",
+            "title": "Destiny 2",
+            "meta": "looter shooter",
+            "href": "https://store.steampowered.com/app/1085660/"
+          },
+          {
+            "image": "games/civilization-vi.jpg",
+            "title": "Civilization VI",
+            "meta": "4X strategy",
+            "href": "https://store.steampowered.com/app/289070/"
+          },
+          {
+            "image": "games/the-sims-4.jpg",
+            "title": "The Sims 4",
+            "meta": "life sim",
+            "href": "https://store.steampowered.com/app/1222670/"
+          }
+        ]
+      }
     },
     {
       "id": "swimming",

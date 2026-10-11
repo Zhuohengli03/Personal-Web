@@ -73,5 +73,9 @@
     "title": "Page not found",
     "body": "That page does not exist here.",
     "home": "Go home"
+  },
+  "life": {
+    "more": "All games",
+    "back": "Back to home"
   }
 }
