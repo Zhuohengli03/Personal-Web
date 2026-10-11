@@ -19,7 +19,16 @@
     {
       "id": "games",
       "title": "游戏",
-      "blurb": "也玩《Dark and Darker》，还为它的市场价格做了预测模型，项目就在上方。"
+      "blurb": "Steam 上 4,000 多小时，主要是团队射击和搜打撤。其中一款成了数据项目：上面的《Dark and Darker》价格预测。",
+      "facts": [
+        "Squad · 1,500+ 小时",
+        "Dark and Darker · 1,300+ 小时 · 半神",
+        "CS2 · 800+ 小时 · 完美 A",
+        "燕云十六声 · 248 小时",
+        "Wardogs · 约 200 小时",
+        "永劫无间 · 坠日 IV",
+        "王者荣耀 · 最强王者"
+      ]
     },
     {
       "id": "swimming",

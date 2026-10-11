@@ -19,7 +19,16 @@
     {
       "id": "games",
       "title": "Games",
-      "blurb": "Including the one whose market I modelled — see the Dark and Darker price forecast above."
+      "blurb": "Over 4,000 hours on Steam, mostly team shooters and extraction games. One of them became a data project: the Dark and Darker price forecast above.",
+      "facts": [
+        "Squad · 1,500+ h",
+        "Dark and Darker · 1,300+ h · Demigod",
+        "CS2 · 800+ h · Premier A",
+        "Where Winds Meet · 248 h",
+        "Wardogs · ~200 h",
+        "Naraka: Bladepoint · Sunset IV",
+        "Honor of Kings · Glorious King"
+      ]
     },
     {
       "id": "swimming",
