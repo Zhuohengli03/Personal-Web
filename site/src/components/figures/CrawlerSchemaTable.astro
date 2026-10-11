@@ -1,0 +1,28 @@
+---
+// Exhibit 4 — the MySQL table the tool would create for this run: column → type inferred from the extracted values.
+import data from '../../data/figures/crawler.json';
+interface Props { t: { column: string; type: string; source: string; sources: Record<string, string>; fill: string } }
+const { t } = Astro.props;
+const fill = data.detail.fill as Record<string, number>;
+---
+<table class="schema">
+  <thead><tr><th>{t.column}</th><th>{t.type}</th><th>{t.source}</th><th class="num">{t.fill}</th></tr></thead>
+  <tbody>
+    {data.schema.map((c) => (
+      <tr>
+        <td><code>{c.column}</code></td>
+        <td><code>{c.type}</code></td>
+        <td>{t.sources[c.column] ?? ''}</td>
+        <td class="num">{c.column in fill ? `${Math.round(fill[c.column] * 100)}%` : c.column === 'url' || c.column === 'HTML' ? '100%' : ''}</td>
+      </tr>
+    ))}
+  </tbody>
+</table>
+<style>
+  .schema { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+  th { text-align: left; font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--fg-muted); font-weight: 400; padding: 0 0.6rem 0.5rem 0; border-bottom: 1px solid var(--rule); }
+  td { padding: 0.45rem 0.6rem 0.45rem 0; border-bottom: 1px solid var(--rule); vertical-align: top; line-height: 1.45; }
+  td code { font-family: var(--font-mono); font-size: 0.78rem; color: var(--fg); }
+  .num { text-align: right; font-variant-numeric: tabular-nums; }
+  tr:last-child td { border-bottom: 0; }
+</style>

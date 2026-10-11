@@ -68,7 +68,8 @@
         "同期群分析",
         "RFM",
         "K-means"
-      ]
+      ],
+      "caseStudy": "user-marketing-analytics"
     },
     {
       "title": "运营与选品分析",
@@ -79,7 +80,8 @@
         "指标框架",
         "日报",
         "异常识别"
-      ]
+      ],
+      "caseStudy": "product-selection-analytics"
     },
     {
       "title": "社交网络与起薪分析",
@@ -97,7 +99,8 @@
       "title": "动态网页爬虫",
       "body": "基于 Streamlit 与 Selenium 的采集工具：抓取无限滚动页面，通过 XPath、CSS 选择器或正则表达式提取字段，存入 MySQL 或导出至 Excel。",
       "period": "2025 年 8 月",
-      "github": "https://github.com/Zhuohengli03/Crawler"
+      "github": "https://github.com/Zhuohengli03/Crawler",
+      "caseStudy": "web-crawler"
     },
     {
       "title": "Meteor Madness — NASA 太空应用挑战赛 2025",
@@ -106,10 +109,9 @@
       "github": "https://github.com/Zhuohengli03/Hackthon-Meteror"
     },
     {
-      "title": "客户官网：WebDesigner、DeepEvol",
-      "body": "完成两个品牌官网从需求梳理到上线的交付：自有建站服务品牌「菲利克斯」，以及科研工具创业公司 DeepEvol。",
+      "title": "兼职网站开发：WebDesigner、DeepEvol",
+      "body": "兼职承接 WebDesigner 与 DeepEvol 的网站开发，完成两个品牌官网从需求梳理到上线的交付。",
       "period": "2026 年 8—9 月",
-      "live": "https://web-designer-lac.vercel.app",
       "clientWork": true
     }
   ],

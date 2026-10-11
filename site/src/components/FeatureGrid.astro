@@ -1,5 +1,5 @@
 ---
-import { t, type Locale } from '../i18n';
+import { t, localePath, type Locale } from '../i18n';
 import type { Profile } from '../lib/profile';
 interface Props { items: Profile['analytics']; locale: Locale }
 const { items, locale } = Astro.props;
@@ -8,18 +8,22 @@ const tr = t(locale);
 <ul class="grid-3 features">
   {items.map((it) => (
     <li class="reveal">
-      <h3 class="title">{it.title}</h3>
+      <h3 class="title">{it.caseStudy ? <a href={localePath(`/work/${it.caseStudy}/`, locale)}>{it.title}</a> : it.title}</h3>
       <dl>
         <dt class="eyebrow">{tr('labels.question')}</dt><dd>{it.question}</dd>
         <dt class="eyebrow">{tr('labels.method')}</dt><dd>{it.method}</dd>
         <dt class="eyebrow">{tr('labels.output')}</dt><dd>{it.output}</dd>
       </dl>
       <p class="tags">{it.tags.map((tag) => <span class="badge">{tag}</span>)}</p>
+      {it.caseStudy && <div class="links"><a class="btn btn-primary" href={localePath(`/work/${it.caseStudy}/`, locale)} data-umami-event="case-open" data-umami-event-slug={it.caseStudy}>{tr('actions.caseStudy')} →</a></div>}
     </li>
   ))}
 </ul>
 <style>
   .features { list-style: none; margin: 0; padding: 0; }
+  .features > li { display: flex; flex-direction: column; align-items: flex-start; }
+  .title a { color: inherit; }
+  .links { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: auto; padding-top: 1rem; }
   .title { font-family: var(--font-sans); font-size: 1rem; font-weight: 500; letter-spacing: -0.01em; margin-bottom: 0.9rem; }
   dl { margin: 0; }
   dt { margin-top: 0.8rem; }

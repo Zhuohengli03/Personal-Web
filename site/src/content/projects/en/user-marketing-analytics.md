@@ -6,7 +6,7 @@ role: "Intern — business analysis"
 period: "2023.08 – 2023.10"
 stack: ["Python", "pandas", "matplotlib", "scikit-learn", "Word"]
 scale: ["1.05M impressions · 384,559 users · 61,117 ads", "9-day anonymized display-ad sample", "52-node metric map", "5 user segments, RFM-labelled"]
-featured: true
+featured: false
 order: 4
 gallery: []
 ---

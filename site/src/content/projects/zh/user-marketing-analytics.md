@@ -6,7 +6,7 @@ role: "商业分析实习生"
 period: "2023 年 8—10 月"
 stack: ["Python", "pandas", "matplotlib", "scikit-learn", "Word"]
 scale: ["约 105 万次曝光 · 384,559 名用户 · 61,117 条已展示广告", "覆盖 9 天的脱敏展示广告样本", "包含 52 项指标与模型的分析框架", "5 类用户，沿用 RFM 分层名称"]
-featured: true
+featured: false
 order: 4
 gallery: []
 ---

@@ -12,7 +12,7 @@ import Life from '../components/Life.astro';
 import Lightbox from '../components/Lightbox.astro';
 import { t, type Locale } from '../i18n';
 import { loadProfile } from '../lib/profile';
-import { getProjects } from '../lib/projects';
+import { getProjects, slugOf } from '../lib/projects';
 import type { GithubData } from '../lib/github';
 import { fill, siteTokens } from '../lib/tokens';
 import github from '../data/github.json';
@@ -21,7 +21,21 @@ interface Props { locale: Locale }
 const { locale } = Astro.props;
 const tr = t(locale);
 const p = loadProfile(locale);
-const projects = (await getProjects(locale)).filter((e) => e.data.featured);
+const allProjects = await getProjects(locale);
+const projects = allProjects.filter((e) => e.data.featured);
+// case pages already reachable from an analytics card or a mini card are not listed twice
+const linkedSlugs = new Set([...p.analytics, ...p.miniProjects].map((item) => item.caseStudy));
+const moreProjects = [
+  ...allProjects.filter((e) => !e.data.featured && !linkedSlugs.has(slugOf(e))).map((e) => ({
+    title: e.data.title,
+    body: e.data.summary,
+    period: e.data.period,
+    caseStudy: slugOf(e),
+    ...e.data.links,
+    clientWork: false,
+  })),
+  ...p.miniProjects,
+];
 const tokens = siteTokens(github as GithubData, 'Guqin-AI', locale);
 const stats = p.stats.map((s) =>
   s.source === 'tokens' ? { label: s.label, value: fill(s.value, tokens), hint: s.hint && fill(s.hint, tokens) } : { label: s.label, value: s.value, hint: s.hint },
@@ -35,7 +49,7 @@ const stats = p.stats.map((s) =>
   <Divider />
   <section id="work" class="wrap section">
     <div class="section-head reveal"><h2>{tr('sections.work')}</h2><p class="sub">{tr('sections.workSub')}</p></div>
-    <div class="grid-2">{projects.map((e) => <WorkCard entry={e} locale={locale} />)}</div>
+    <div class:list={['grid-2', { 'single-project': projects.length === 1 }]}>{projects.map((e) => <WorkCard entry={e} locale={locale} />)}</div>
   </section>
 
   <section id="analytics" class="wrap section">
@@ -45,7 +59,7 @@ const stats = p.stats.map((s) =>
 
   <section id="more" class="wrap section">
     <div class="section-head reveal"><h2>{tr('sections.more')}</h2></div>
-    <div class="grid-3 tight">{p.miniProjects.map((m) => <ProjectMini item={m} locale={locale} />)}</div>
+    <div class="grid-2 tight">{moreProjects.map((m) => <ProjectMini item={m} locale={locale} />)}</div>
   </section>
 
   <Divider />
@@ -64,5 +78,6 @@ const stats = p.stats.map((s) =>
   <Lightbox closeLabel={tr('case.close')} label={tr('a11y.imagePreview')} />
 </BaseLayout>
 <style>
+  .single-project { grid-template-columns: 1fr; }
   .tight { gap: 1.25rem; }
 </style>

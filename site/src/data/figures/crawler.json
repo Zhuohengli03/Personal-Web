@@ -1,0 +1,99 @@
+{
+  "run": {
+    "url": "https://juejin.cn/",
+    "at": "2026-10-11T16:49+00:00",
+    "need": 60,
+    "collected": 60,
+    "pages": 60,
+    "seconds": 273.7,
+    "scrollSeconds": 10.0,
+    "stop": "enough"
+  },
+  "params": {
+    "wait": 30,
+    "sleep": 1.0,
+    "maxScroll": 20,
+    "noGrowthStop": 3,
+    "pageLoadTimeout": 30
+  },
+  "rounds": [
+    {
+      "round": 0,
+      "scrolls": 1,
+      "elements": 29,
+      "collected": 29,
+      "t": 3.6
+    },
+    {
+      "round": 1,
+      "scrolls": 2,
+      "elements": 29,
+      "collected": 29,
+      "t": 5.7
+    },
+    {
+      "round": 2,
+      "scrolls": 3,
+      "elements": 46,
+      "collected": 46,
+      "t": 7.8
+    },
+    {
+      "round": 3,
+      "scrolls": 4,
+      "elements": 63,
+      "collected": 60,
+      "t": 10.0
+    }
+  ],
+  "detail": {
+    "seconds": 262.9,
+    "fill": {
+      "title": 1.0,
+      "content": 1.0,
+      "image": 0.75,
+      "author": 0.933,
+      "published": 0.933,
+      "views": 0.933
+    },
+    "contentChars": {
+      "median": 3760,
+      "max": 22332
+    },
+    "imagesPerPage": 7.6
+  },
+  "schema": [
+    {
+      "column": "title",
+      "type": "VARCHAR(500)"
+    },
+    {
+      "column": "url",
+      "type": "VARCHAR(500)"
+    },
+    {
+      "column": "content",
+      "type": "LONGTEXT"
+    },
+    {
+      "column": "image",
+      "type": "LONGTEXT"
+    },
+    {
+      "column": "HTML",
+      "type": "LONGTEXT"
+    },
+    {
+      "column": "author",
+      "type": "VARCHAR(500)"
+    },
+    {
+      "column": "published",
+      "type": "LONGTEXT"
+    },
+    {
+      "column": "views",
+      "type": "VARCHAR(500)"
+    }
+  ]
+}

@@ -7,7 +7,7 @@ period: "2025 年 9 月—2026 年 10 月"
 stack: ["Python", "pandas", "statsmodels（ETS、ARIMA）", "scikit-learn", "FastAPI", "React + Vite", "SQLite / PostgreSQL", "DarkerDB API"]
 scale: ["第 10 赛季共采集 97,891 条挂单", "7 种方法参与滚动回测，含 2 种基准方法", "FastAPI 后端与 React 前端，预测模块配有 12 组测试", "按 AGPL-3.0 协议开源"]
 links: { github: "https://github.com/Zhuohengli03/DaD-Market-Forecast" }
-featured: true
+featured: false
 order: 2
 gallery: []
 ---

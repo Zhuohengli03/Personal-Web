@@ -68,7 +68,8 @@
         "Cohort",
         "RFM",
         "K-means"
-      ]
+      ],
+      "caseStudy": "user-marketing-analytics"
     },
     {
       "title": "Operations & product-selection analytics",
@@ -79,7 +80,8 @@
         "Metric framework",
         "Daily brief",
         "Anomaly"
-      ]
+      ],
+      "caseStudy": "product-selection-analytics"
     },
     {
       "title": "Social networks & starting salary",
@@ -97,7 +99,8 @@
       "title": "Dynamic web crawler",
       "body": "Streamlit + Selenium tool that scrapes infinite-scroll pages, extracts fields by XPath/CSS/regex and lands them in MySQL or Excel.",
       "period": "2025.08",
-      "github": "https://github.com/Zhuohengli03/Crawler"
+      "github": "https://github.com/Zhuohengli03/Crawler",
+      "caseStudy": "web-crawler"
     },
     {
       "title": "Meteor Madness — NASA Space Apps 2025",
@@ -106,10 +109,9 @@
       "github": "https://github.com/Zhuohengli03/Hackthon-Meteror"
     },
     {
-      "title": "Client sites: WebDesigner, DeepEvol",
-      "body": "Two marketing sites I took from brief to a deployed site: one for Felix, my own web-design studio brand, and one for DeepEvol, a research-tools startup.",
+      "title": "Freelance web development: WebDesigner, DeepEvol",
+      "body": "Part-time web development for WebDesigner and DeepEvol, taking two brand websites from requirements through launch.",
       "period": "2026.08–09",
-      "live": "https://web-designer-lac.vercel.app",
       "clientWork": true
     }
   ],

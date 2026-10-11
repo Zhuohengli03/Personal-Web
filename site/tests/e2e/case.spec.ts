@@ -9,6 +9,8 @@ const cases = [
   ['/zh/work/product-selection-analytics/', 'zh-CN', '问题', 0],
   ['/work/user-marketing-analytics/', 'en', 'Problem', 0],
   ['/zh/work/user-marketing-analytics/', 'zh-CN', '问题', 0],
+  ['/work/web-crawler/', 'en', 'Problem', 4],
+  ['/zh/work/web-crawler/', 'zh-CN', '问题', 4],
 ] as const;
 
 for (const [path, lang, problem, images] of cases) {
@@ -125,3 +127,29 @@ for (const [locale, path, limits] of [
     await expect(page.locator('html')).not.toContainText(/amazon|亚马逊|google|谷歌/i);
   });
 }
+
+for (const [locale, path, limits] of [
+  ['en', '/work/web-crawler/', 'Limits'],
+  ['zh', '/zh/work/web-crawler/', '局限'],
+] as const) {
+  test(`web-crawler ${locale} case shows its four exhibits and the screenshots`, async ({ page }) => {
+    await page.goto(path);
+    const ex = page.locator('[data-exhibits]');
+    await expect(ex.locator('figure.exhibit')).toHaveCount(4);
+    await expect(ex.locator('.flow li')).toHaveCount(10);
+    await expect(ex.locator('svg')).toHaveCount(1);
+    await expect(ex.locator('table.schema tbody tr')).not.toHaveCount(0);
+    const svg = ex.locator('[data-scroll-chart] svg');
+    await svg.scrollIntoViewIfNeeded();
+    const box = (await svg.boundingBox())!;
+    await page.mouse.move(box.x + box.width * 0.2, box.y + box.height * 0.5);
+    await expect(ex.locator('[data-scroll-chart] .tip')).toBeVisible();
+    await expect(page.getByRole('heading', { level: 2, name: limits })).toBeVisible();
+  });
+}
+
+test('the crawler mini card links to its case page and is not listed twice', async ({ page }) => {
+  await page.goto('/');
+  await expect(page.locator('#more article a[href="/work/web-crawler/"]')).toHaveCount(2); // title and button of one card
+  await expect(page.locator('#more article a[href="/work/web-crawler/"]').first()).toBeVisible();
+});

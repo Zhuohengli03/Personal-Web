@@ -1,5 +1,5 @@
 ---
-import { t, type Locale } from '../i18n';
+import { t, localePath, type Locale } from '../i18n';
 import type { Profile } from '../lib/profile';
 interface Props { item: Profile['miniProjects'][number]; locale: Locale }
 const { item, locale } = Astro.props;
@@ -7,16 +7,18 @@ const tr = t(locale);
 ---
 <article class="card mini reveal">
   <p class="eyebrow">{item.period}{item.clientWork && ` · ${tr('actions.clientWork')}`}</p>
-  <h3>{item.title}</h3>
+  <h3>{item.caseStudy ? <a href={localePath(`/work/${item.caseStudy}/`, locale)}>{item.title}</a> : item.title}</h3>
   <p class="body">{item.body}</p>
-  <p class="links">
-    {item.github && <a href={item.github} target="_blank" rel="noopener" data-umami-event="outbound-github" data-umami-event-slug={item.title}>{tr('actions.github')} ↗</a>}
-    {item.live && <a href={item.live} target="_blank" rel="noopener" data-umami-event="outbound-live" data-umami-event-slug={item.title}>{tr('actions.live')} ↗</a>}
-  </p>
+  {(item.caseStudy || item.github || item.live) && <p class="links">
+    {item.caseStudy && <a class="btn btn-primary" href={localePath(`/work/${item.caseStudy}/`, locale)} data-umami-event="case-open" data-umami-event-slug={item.caseStudy}>{tr('actions.caseStudy')} →</a>}
+    {item.github && <a class="btn" href={item.github} target="_blank" rel="noopener" data-umami-event="outbound-github" data-umami-event-slug={item.title}>{tr('actions.github')} ↗</a>}
+    {item.live && <a class="btn" href={item.live} target="_blank" rel="noopener" data-umami-event="outbound-live" data-umami-event-slug={item.title}>{tr('actions.live')} ↗</a>}
+  </p>}
 </article>
 <style>
   .mini { padding: 1.5rem; display: flex; flex-direction: column; gap: 0.6rem; }
   h3 { font-family: var(--font-sans); font-size: 1rem; font-weight: 500; }
+  h3 a { color: inherit; }
   .body { font-size: 0.875rem; line-height: 1.45; color: var(--fg-muted); }
-  .links { margin-top: auto; display: flex; gap: 1rem; font-size: 0.9rem; }
+  .links { margin-top: auto; display: flex; flex-wrap: wrap; gap: 0.5rem; padding-top: 1rem; }
 </style>

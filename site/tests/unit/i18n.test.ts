@@ -13,7 +13,7 @@ describe('i18n completeness', () => {
 describe('t', () => {
   it('resolves dot paths', () => {
     expect(t('en')('nav.work')).toBe('Work');
-    expect(t('zh')('nav.work')).toBe('作品');
+    expect(t('zh')('nav.work')).toBe('项目');
   });
   it('throws on a missing key', () => {
     expect(() => t('en')('nav.nope')).toThrow(/nav\.nope/);

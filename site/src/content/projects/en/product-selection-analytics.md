@@ -6,7 +6,7 @@ role: "Intern — analysis and reporting"
 period: "2023.10 – 2023.11"
 stack: ["Excel", "Word", "CSV exports: ads, orders, inventory, listing page, daily totals"]
 scale: ["88 listings · 5 brands · 3 marketplaces", "14,753 source rows, October 2023", "31-metric selection system", "Anonymized data: brands AA–EE, masked listing IDs"]
-featured: true
+featured: false
 order: 3
 gallery: []
 ---

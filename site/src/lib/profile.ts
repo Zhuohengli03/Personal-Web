@@ -12,6 +12,7 @@ const stat = z.object({
 });
 const analytics = z.object({
   title: z.string(),
+  caseStudy: z.string().optional(),
   question: z.string(),
   method: z.string(),
   output: z.string(),
@@ -19,6 +20,7 @@ const analytics = z.object({
 });
 const mini = z.object({
   title: z.string(),
+  caseStudy: z.string().optional(),
   body: z.string(),
   period: z.string(),
   github: z.string().url().optional(),

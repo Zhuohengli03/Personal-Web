@@ -8,9 +8,9 @@ for (const [path, lang, work] of [['/', 'en', 'Selected work'], ['/zh/', 'zh-CN'
     await expect(page.locator('html')).toHaveAttribute('lang', lang);
     await expect(page.locator('h1')).toBeVisible();
     await expect(page.getByRole('heading', { level: 2, name: work })).toBeVisible();
-    await expect(page.locator('#work article')).toHaveCount(4);
+    await expect(page.locator('#work article')).toHaveCount(1);
     await expect(page.locator('#analytics li')).toHaveCount(3);
-    await expect(page.locator('#more article')).toHaveCount(3);
+    await expect(page.locator('#more article')).toHaveCount(4);
     await expect(page.locator('#experience li').first()).toBeVisible();
     await expect(page.locator('#education .honors li')).not.toHaveCount(0); // honors are listed open, no collapse
     await expect(page.locator('.waffle').first()).toBeVisible();
@@ -40,7 +40,9 @@ test('the clicks worth counting carry analytics event names', async ({ page }) =
   await expect(page.locator('[data-umami-event="resume-download"][data-umami-event-lang="en"]')).toHaveCount(1);
   await expect(page.locator('[data-umami-event="email-click"]')).toHaveCount(2);           // hero and footer
   await expect(page.locator('footer [data-umami-event="outbound-linkedin"]')).toHaveCount(1);
-  await expect(page.locator('#work [data-umami-event="case-open"]')).toHaveCount(4);
+  await expect(page.locator('#work [data-umami-event="case-open"]')).toHaveCount(1);
+  await expect(page.locator('#analytics [data-umami-event="case-open"]')).toHaveCount(2);
+  await expect(page.locator('#more [data-umami-event="case-open"]')).toHaveCount(2); // DaD and the crawler
   await expect(page.locator('[data-umami-event="language-switch"][data-umami-event-to="zh"]')).toHaveCount(1);
   await expect(page.locator('#theme-toggle[data-umami-event="theme-toggle"]')).toHaveCount(1);
 });

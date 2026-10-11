@@ -7,7 +7,7 @@ period: "2025.09 – 2026.10"
 stack: ["Python", "pandas", "statsmodels (ETS, ARIMA)", "scikit-learn", "FastAPI", "React + Vite", "SQLite / PostgreSQL", "DarkerDB API"]
 scale: ["97,891 listings in Season 10", "7 methods incl. 2 baselines, rolling-origin backtest", "FastAPI backend + React app, 12 forecast test modules", "Open source, AGPL-3.0"]
 links: { github: "https://github.com/Zhuohengli03/DaD-Market-Forecast" }
-featured: true
+featured: false
 order: 2
 gallery: []
 ---

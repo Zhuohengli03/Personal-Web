@@ -17,7 +17,7 @@
   },
   "sections": {
     "work": "Selected work",
-    "workSub": "Four projects that show how I work: a product I built and still run, a data pipeline I built so I could decide with numbers instead of hunches, and two internship analyses with every chart drawn from the data.",
+    "workSub": "A product I built and continue to run: from user research and notation design to an invite-only beta for guqin players.",
     "analytics": "Analytics",
     "analyticsSub": "Question → method → output. Conclusions reached with metric systems, cohorts and segmentation, not just code.",
     "more": "More projects",
@@ -49,7 +49,7 @@
     "github": "GitHub",
     "live": "Live site",
     "back": "Back to home",
-    "clientWork": "Client work"
+    "clientWork": "Freelance"
   },
   "case": {
     "gallery": "Gallery",
