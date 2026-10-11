@@ -26,6 +26,7 @@ for (const path of ['/', '/zh/']) {
     await page.goto(path);
     const html = await page.content();
     expect(html).not.toMatch(/\+1\s?\d{3}[\s-]?\d{3}|\+86\s?\d{3}|1[3-9]\d{9}/); // phone numbers anywhere
+    expect(html).not.toMatch(/amazon|亚马逊|google|谷歌/i); // the owner keeps these names off the site
     const footer = await page.locator('footer').innerHTML();
     expect(footer).not.toMatch(/WeChat|微信|QQ/); // messenger handles in contact
   });
