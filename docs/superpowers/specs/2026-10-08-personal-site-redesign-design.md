@@ -138,3 +138,5 @@ The résumé PDF and LinkedIn URL are the only items that cannot be produced by 
 ## 10. Out of scope
 
 Public Guqin-AI demo deployment (separate task; placeholder only). Blog, guestbook, photography, admin backend from the old site. Analytics/tracking scripts (none added).
+
+*Amendment, 2026-10-11:* the owner wants to see page statistics, so a cookie-free page-view beacon (Umami Cloud) is included when the build has `PUBLIC_UMAMI_WEBSITE_ID`; see README → Analytics. No first-party backend, guestbook or admin area.

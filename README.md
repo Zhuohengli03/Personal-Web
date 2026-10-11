@@ -11,6 +11,10 @@ Personal site of Zhuoheng Li. Astro static site in `site/`, deployed to GitHub P
     cd site && npm test            # vitest unit tests
     cd site && npm run e2e         # playwright against astro preview
 
+## Analytics
+
+Page views are counted by Umami Cloud (cookie-free, no personal data) when the build has `PUBLIC_UMAMI_WEBSITE_ID`. Set it as a GitHub Actions **variable** (Settings → Secrets and variables → Actions → Variables) to the website id from the Umami dashboard; local and preview builds leave it unset and send nothing. The dashboard lives at https://cloud.umami.is/. `PUBLIC_UMAMI_SCRIPT_URL` overrides the script host for a self-hosted Umami.
+
 ## Refresh data
 
     node scripts/fetch-github.mjs            # rewrites site/src/data/github.json (needs gh auth)

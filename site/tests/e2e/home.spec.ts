@@ -27,6 +27,9 @@ for (const path of ['/', '/zh/']) {
     const html = await page.content();
     expect(html).not.toMatch(/\+1\s?\d{3}[\s-]?\d{3}|\+86\s?\d{3}|1[3-9]\d{9}/); // phone numbers anywhere
     expect(html).not.toMatch(/amazon|亚马逊|google|谷歌/i); // the owner keeps these names off the site
+    const external = [...html.matchAll(/<script[^>]*\ssrc="(https?:[^"]*)"/g)].map((m) => m[1]);
+    for (const src of external) expect(src).toMatch(/^https:\/\/cloud\.umami\.is\//); // page-view analytics is the only third-party script
+    expect(html).not.toMatch(/googletagmanager|google-analytics|gtag\(/); // no other trackers
     const footer = await page.locator('footer').innerHTML();
     expect(footer).not.toMatch(/WeChat|微信|QQ/); // messenger handles in contact
   });

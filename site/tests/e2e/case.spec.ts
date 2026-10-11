@@ -88,6 +88,14 @@ for (const [locale, path, limits] of [
     const box = (await svg.boundingBox())!;
     await page.mouse.move(box.x + box.width * 0.5, box.y + box.height * 0.3);
     await expect(ex.locator('[data-trend-chart] .tip')).toBeVisible();
+    await expect(ex.locator('[data-trend-chart] .tip')).toContainText(locale === 'zh' ? /10月\d+日/ : /Oct/);
+    await expect(ex.locator('[data-trend-chart] .tip')).toContainText(locale === 'zh' ? '日销量' : 'Units sold');
+    const adChart = ex.locator('[data-ad-chart]');
+    await adChart.scrollIntoViewIfNeeded();
+    await adChart.locator('.pt').first().hover();
+    await expect(adChart.locator('.tip')).toBeVisible();
+    await expect(adChart.locator('.tip')).toContainText(locale === 'zh' ? /(?:美国|加拿大|日本)站/ : /US|CA|JP/);
+    await expect(adChart.locator('.tip')).toContainText(locale === 'zh' ? '广告销售成本比' : 'ACoS');
     await expect(page.getByRole('heading', { level: 2, name: limits })).toBeVisible();
     await expect(page.locator('html')).not.toContainText(/amazon|亚马逊/i);
   });
@@ -112,6 +120,7 @@ for (const [locale, path, limits] of [
     await page.mouse.move(box.x + box.width * 0.5, box.y + box.height * 0.3);
     await expect(ex.locator('[data-band-chart] .tip')).toBeVisible();
     await expect(ex.locator('[data-band-chart] .tip')).toContainText('%');
+    await expect(ex.locator('[data-band-chart] .tip')).toContainText(locale === 'zh' ? '曝光次数' : 'impressions');
     await expect(page.getByRole('heading', { level: 2, name: limits })).toBeVisible();
     await expect(page.locator('html')).not.toContainText(/amazon|亚马逊|google|谷歌/i);
   });

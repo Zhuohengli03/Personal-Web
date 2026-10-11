@@ -17,6 +17,11 @@ const site = Astro.site ?? new URL('https://lizhuoheng.com');
 const enUrl = new URL(path, site).href;
 const zhUrl = new URL(`/zh${path}`, site).href;
 const canonical = locale === 'en' ? enUrl : zhUrl;
+// Page-view analytics (Umami Cloud, cookie-free). Only emitted when the build has a website id, so local and
+// preview builds send nothing; data-domains keeps any other host that serves the files from counting.
+const umamiId = import.meta.env.PUBLIC_UMAMI_WEBSITE_ID;
+const umamiSrc = import.meta.env.PUBLIC_UMAMI_SCRIPT_URL || 'https://cloud.umami.is/script.js';
+const umamiDomains = site.hostname;
 ---
 <!doctype html>
 <html lang={locale === 'zh' ? 'zh-CN' : 'en'}>
@@ -46,6 +51,7 @@ const canonical = locale === 'en' ? enUrl : zhUrl;
         if (t === 'dark' || t === 'light') document.documentElement.setAttribute('data-theme', t);
       } catch (e) { /* storage unavailable: follow system */ }
     </script>
+    {umamiId && <script defer src={umamiSrc} data-website-id={umamiId} data-domains={umamiDomains} is:inline />}
   </head>
   <body>
     <SiteHeader locale={locale} path={path} />

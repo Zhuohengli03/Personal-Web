@@ -6,6 +6,8 @@ import type { Locale } from '../../i18n';
 interface Props { locale: Locale; t: { spend: string; acos: string; blended: string; parity: string; none: string; adSales: string; ctr: string } }
 const { t, locale } = Astro.props;
 const dateLocale = locale === 'zh' ? 'zh-CN' : 'en-US';
+const markets: Record<string, string> = { US: '美国站', CA: '加拿大站', JP: '日本站' };
+const marketLabel = (country: string) => locale === 'zh' ? (markets[country.toUpperCase()] ?? country.toUpperCase()) : country.toUpperCase();
 
 const W = 960, H = 380, L = 56, R = 24, T = 28, B = 44;
 const ads = data.ads;
@@ -33,10 +35,10 @@ const fmtN = (v: number) => Math.round(v).toLocaleString(dateLocale);
     <g class="ref blended"><line x1={L} x2={W - R} y1={f(y(data.adTotals.acos))} y2={f(y(data.adTotals.acos))} /><text x={L + 6} y={f(y(data.adTotals.acos) - 6)}>{t.blended}</text></g>
     <g class="ref none"><line x1={L} x2={W - R} y1={f(y(NONE_Y))} y2={f(y(NONE_Y))} /><text x={W - R} y={f(y(NONE_Y) - 8)} text-anchor="end">{t.none}</text></g>
     {pts.map((p) => <circle class:list={['pt', { none: p.none }]} cx={f(p.cx)} cy={f(p.cy)} r="5.5" />)}
-    {labelled.map((p, i) => <text class="val" x={f(p.cx)} y={f(i === 0 ? p.cy - 12 : p.cy + 19)} text-anchor="middle">{p.brand} · {p.country.toUpperCase()} · {fmtN(p.spend)}</text>)}
+    {labelled.map((p, i) => <text class="val" x={f(p.cx)} y={f(i === 0 ? p.cy - 12 : p.cy + 19)} text-anchor="middle">{p.brand} · {marketLabel(p.country)} · {fmtN(p.spend)}</text>)}
   </svg>
   <div class="tip" hidden></div>
-  <script type="application/json" data-points set:html={JSON.stringify({ points: pts.map((p) => ({ cx: p.cx, cy: p.cy, brand: p.brand, country: p.country, spend: p.spend, adGmv: p.adGmv, acos: p.acos, ctr: p.ctr })), W, H, dateLocale, labels: { spend: t.spend, adSales: t.adSales, acos: t.acos, ctr: t.ctr, none: t.none } })} />
+  <script type="application/json" data-points set:html={JSON.stringify({ points: pts.map((p) => ({ cx: p.cx, cy: p.cy, brand: p.brand, market: marketLabel(p.country), spend: p.spend, adGmv: p.adGmv, acos: p.acos, ctr: p.ctr })), W, H, dateLocale, labels: { spend: t.spend, adSales: t.adSales, acos: t.acos, ctr: t.ctr, none: t.none } })} />
 </div>
 <style>
   .chart { position: relative; }
@@ -60,7 +62,7 @@ const fmtN = (v: number) => Math.round(v).toLocaleString(dateLocale);
   // Per-dot tooltip: the nearest dot within 16 chart units of the pointer.
   for (const root of document.querySelectorAll<HTMLElement>('[data-ad-chart]')) {
     const cfg = JSON.parse(root.querySelector('[data-points]')?.textContent ?? '{}') as {
-      points: { cx: number; cy: number; brand: string; country: string; spend: number; adGmv: number; acos: number | null; ctr: number | null }[];
+      points: { cx: number; cy: number; brand: string; market: string; spend: number; adGmv: number; acos: number | null; ctr: number | null }[];
       W: number; H: number; dateLocale: string; labels: { spend: string; adSales: string; acos: string; ctr: string; none: string };
     };
     const svg = root.querySelector('svg')!;
@@ -76,7 +78,7 @@ const fmtN = (v: number) => Math.round(v).toLocaleString(dateLocale);
       if (best < 0) { tip.hidden = true; return; }
       const p = cfg.points[best];
       tip.hidden = false;
-      tip.textContent = [`${p.brand} · ${p.country.toUpperCase()}`, `${cfg.labels.spend} ${money(p.spend)}`, `${cfg.labels.adSales} ${money(p.adGmv)}`, p.acos === null ? cfg.labels.none : `${cfg.labels.acos} ${Math.round(p.acos * 100)}%`, p.ctr === null ? '' : `${cfg.labels.ctr} ${(p.ctr * 100).toFixed(2)}%`].filter(Boolean).join('\n');
+      tip.textContent = [`${p.brand} · ${p.market}`, `${cfg.labels.spend} ${money(p.spend)}`, `${cfg.labels.adSales} ${money(p.adGmv)}`, p.acos === null ? cfg.labels.none : `${cfg.labels.acos} ${Math.round(p.acos * 100)}%`, p.ctr === null ? '' : `${cfg.labels.ctr} ${(p.ctr * 100).toFixed(2)}%`].filter(Boolean).join('\n');
       const halfWidth = tip.getBoundingClientRect().width / 2;
       tip.style.left = `${Math.max(halfWidth, Math.min(r.width - halfWidth, (p.cx / cfg.W) * r.width))}px`;
       tip.style.top = `${(p.cy / cfg.H) * r.height}px`;

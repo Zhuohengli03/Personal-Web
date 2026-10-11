@@ -28,6 +28,8 @@ jobs:
         working-directory: site
       - run: npm run build
         working-directory: site
+        env:
+          PUBLIC_UMAMI_WEBSITE_ID: ${{ vars.PUBLIC_UMAMI_WEBSITE_ID }}
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
