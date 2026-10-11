@@ -16,8 +16,8 @@ for (const [path, heading] of [['/', 'Beyond work'], ['/zh/', '工作之外']] a
     await expect(page.locator('#life .row[data-hobby="cooking"] .track')).toHaveCount(0);
     const games = page.locator('#life .row[data-hobby="games"]');
     await expect(games).toHaveClass(/has-cards/);
-    await expect(games.locator('.track > li:not(.dup)')).toHaveCount(7);
-    await expect(games.locator('.track > li:not(.dup) img')).toHaveCount(7); // every game has a cover (Steam library art, a cropped capsule, an app icon)
+    await expect(games.locator('.track > li:not(.dup)')).toHaveCount(6);
+    await expect(games.locator('.track > li:not(.dup) img')).toHaveCount(6); // every game has a cover (Steam library art, or a cropped capsule for Wardogs)
     await expect(games.locator('.track > li:not(.dup) .card-meta').first()).toContainText(/h|小时/);
     const steam = page.locator('#life .row[data-hobby="games"] a.link');
     await expect(steam).toHaveAttribute('href', /steamcommunity\.com\/profiles\/\d+/);
