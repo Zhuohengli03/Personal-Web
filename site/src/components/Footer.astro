@@ -14,13 +14,13 @@ const year = new Date().getFullYear();
     <div class="cols">
       <div>
         <p class="eyebrow">{tr('footer.contact')}</p>
-        <a href={`mailto:${contact.email}`}>{contact.email}</a>
+        <a href={`mailto:${contact.email}`} data-umami-event="email-click" data-umami-event-place="footer">{contact.email}</a>
       </div>
       <div>
         <p class="eyebrow">{tr('footer.elsewhere')}</p>
-        <a href={`https://github.com/${contact.github}`} target="_blank" rel="me noopener">GitHub</a><br />
+        <a href={`https://github.com/${contact.github}`} target="_blank" rel="me noopener" data-umami-event="outbound-github" data-umami-event-place="footer">GitHub</a><br />
         {contact.linkedin
-          ? <a href={contact.linkedin} target="_blank" rel="me noopener">LinkedIn</a>
+          ? <a href={contact.linkedin} target="_blank" rel="me noopener" data-umami-event="outbound-linkedin" data-umami-event-place="footer">LinkedIn</a>
           : <span class="muted">{tr('footer.linkedinTodo')}</span>}
       </div>
       <div>

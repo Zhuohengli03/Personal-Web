@@ -10,8 +10,8 @@ const tr = t(locale);
   <h3>{item.title}</h3>
   <p class="body">{item.body}</p>
   <p class="links">
-    {item.github && <a href={item.github} target="_blank" rel="noopener">{tr('actions.github')} ↗</a>}
-    {item.live && <a href={item.live} target="_blank" rel="noopener">{tr('actions.live')} ↗</a>}
+    {item.github && <a href={item.github} target="_blank" rel="noopener" data-umami-event="outbound-github" data-umami-event-slug={item.title}>{tr('actions.github')} ↗</a>}
+    {item.live && <a href={item.live} target="_blank" rel="noopener" data-umami-event="outbound-live" data-umami-event-slug={item.title}>{tr('actions.live')} ↗</a>}
   </p>
 </article>
 <style>

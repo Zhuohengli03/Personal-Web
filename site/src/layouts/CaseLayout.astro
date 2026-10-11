@@ -39,8 +39,8 @@ const Exhibits = exhibits[slug];
         <dt>{tr('labels.scale')}</dt><dd>{d.scale.join(' · ')}</dd>
         {(d.links.live || d.links.github) && <dt>{tr('labels.links')}</dt>}
         {(d.links.live || d.links.github) && <dd class="links">
-          {d.links.live && <a href={d.links.live} target="_blank" rel="noopener">{tr('actions.live')} ↗</a>}
-          {d.links.github && <a href={d.links.github} target="_blank" rel="noopener">{tr('actions.github')} ↗</a>}
+          {d.links.live && <a href={d.links.live} target="_blank" rel="noopener" data-umami-event="outbound-live" data-umami-event-slug={slug}>{tr('actions.live')} ↗</a>}
+          {d.links.github && <a href={d.links.github} target="_blank" rel="noopener" data-umami-event="outbound-github" data-umami-event-slug={slug}>{tr('actions.github')} ↗</a>}
         </dd>}
       </dl>
     </header>

@@ -28,9 +28,9 @@ const activity = d.waffle?.source === 'github' ? repoActivity(github as GithubDa
     <dt>{tr('labels.scale')}</dt><dd>{d.scale.slice(0, 2).join(' · ')}</dd>
   </dl>
   <div class="links">
-    <a class="btn btn-primary" href={href}>{tr('actions.caseStudy')} →</a>
-    {d.links.live && <a class="btn" href={d.links.live} target="_blank" rel="noopener">{tr('actions.live')} ↗</a>}
-    {d.links.github && <a class="btn" href={d.links.github} target="_blank" rel="noopener">{tr('actions.github')} ↗</a>}
+    <a class="btn btn-primary" href={href} data-umami-event="case-open" data-umami-event-slug={slugOf(entry)}>{tr('actions.caseStudy')} →</a>
+    {d.links.live && <a class="btn" href={d.links.live} target="_blank" rel="noopener" data-umami-event="outbound-live" data-umami-event-slug={slugOf(entry)}>{tr('actions.live')} ↗</a>}
+    {d.links.github && <a class="btn" href={d.links.github} target="_blank" rel="noopener" data-umami-event="outbound-github" data-umami-event-slug={slugOf(entry)}>{tr('actions.github')} ↗</a>}
   </div>
 </article>
 <style>

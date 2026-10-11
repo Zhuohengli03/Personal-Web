@@ -13,8 +13,8 @@ const tr = t(locale);
       <h1 class="fade-up" data-delay="2">{title}</h1>
       <p class="prose fade-up" data-delay="3">{subtitle}</p>
       <div class="cta fade-up" data-delay="4">
-        <a class="btn btn-primary" href={locale === 'zh' ? '/resume-zh.pdf' : '/resume-en.pdf'} target="_blank" rel="noopener">{tr('hero.resume')}</a>
-        <a class="btn" href={`mailto:${email}`}>{tr('hero.email')}</a>
+        <a class="btn btn-primary" href={locale === 'zh' ? '/resume-zh.pdf' : '/resume-en.pdf'} target="_blank" rel="noopener" data-umami-event="resume-download" data-umami-event-lang={locale}>{tr('hero.resume')}</a>
+        <a class="btn" href={`mailto:${email}`} data-umami-event="email-click" data-umami-event-place="hero">{tr('hero.email')}</a>
       </div>
     </div>
     <div class="panel fade-up" data-delay="3"><Terminal {...terminal} repo="Guqin-AI" /></div>
