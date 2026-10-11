@@ -42,7 +42,7 @@ test('the clicks worth counting carry analytics event names', async ({ page }) =
   await expect(page.locator('footer [data-umami-event="outbound-linkedin"]')).toHaveCount(1);
   await expect(page.locator('#work [data-umami-event="case-open"]')).toHaveCount(1);
   await expect(page.locator('#analytics [data-umami-event="case-open"]')).toHaveCount(2);
-  await expect(page.locator('#more [data-umami-event="case-open"]')).toHaveCount(2); // DaD and the crawler
+  await expect(page.locator('#more [data-umami-event="case-open"]')).toHaveCount(3); // DaD, the crawler, Meteor Madness
   await expect(page.locator('[data-umami-event="language-switch"][data-umami-event-to="zh"]')).toHaveCount(1);
   await expect(page.locator('#theme-toggle[data-umami-event="theme-toggle"]')).toHaveCount(1);
 });

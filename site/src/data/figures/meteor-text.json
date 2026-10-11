@@ -1,0 +1,214 @@
+{
+  "en": {
+    "exhibits": "Exhibits",
+    "note": "NASA Space Apps Challenge, 4–5 October 2025, two-person team. Exhibits 2–4 come from running the project on 11 October 2026: the physics sweep calls the app's own functions, the two data charts are one pull of NASA data through the project's Java backend.",
+    "stats": [
+      {
+        "label": "Hackathon",
+        "value": "48 h",
+        "hint": "44 commits · 2 people · Oct 4–5, 2025"
+      },
+      {
+        "label": "Code",
+        "value": "7,425 lines",
+        "hint": "6,205 JS / HTML / CSS · 1,220 Java"
+      },
+      {
+        "label": "Data",
+        "value": "4 → 8",
+        "hint": "4 NASA sources behind 8 endpoints"
+      },
+      {
+        "label": "Pull, Oct 11 2026",
+        "value": "200",
+        "hint": "close approaches · 12 inside the Moon's orbit"
+      }
+    ],
+    "fig1": {
+      "title": "From four NASA feeds to a dashboard",
+      "caption": "Exhibit 1. A plain Java HTTP server stands between NASA and the browser: it fetches four feeds, normalises them to flat JSON and rotates through backup keys when the demo quota runs out. Everything that looks like physics runs in the browser, so the globe, the map and the outcome cards update without a round trip.",
+      "nodes": [
+        {
+          "name": "NeoWs feed",
+          "num": "objects passing in a ±2-day window · size, hazard flag"
+        },
+        {
+          "name": "CNEOS close approaches",
+          "num": "date · distance · velocity · brightness"
+        },
+        {
+          "name": "CNEOS fireballs",
+          "num": "since 2015 · energy · position · speed"
+        },
+        {
+          "name": "EONET natural events",
+          "num": "wildfires, storms, volcanoes"
+        },
+        {
+          "name": "Java HTTP server",
+          "num": "8 endpoints · 3 backup API keys"
+        },
+        {
+          "name": "Browser dashboard",
+          "num": "vanilla JS · 7 tabs · Leaflet maps"
+        },
+        {
+          "name": "Overview",
+          "num": "counts · averages · date ranges"
+        },
+        {
+          "name": "Impact prediction",
+          "num": "mass → energy → crater · blast · seismic · tsunami · people · cost"
+        },
+        {
+          "name": "3D globe",
+          "num": "Three.js · click to set the impact point"
+        },
+        {
+          "name": "Deflection",
+          "num": "kinetic impactor Δv · Monte Carlo hit probability"
+        }
+      ]
+    },
+    "fig2": {
+      "title": "What the app's physics says, from 10 m to 2 km",
+      "sub": "stony body (3,000 kg/m³) at 20 km/s, 45° · computed by calling the app's own functions · both axes logarithmic",
+      "caption": "Exhibit 2. The app's formulas are deliberately simple power laws: crater diameter grows with energy to the ¼ and blast radius with energy to the ⅓, so both are straight lines here. The simplicity shows at the small end: a 10 m body is still given a 340 m crater, and the seismic magnitude only clears zero above 200 m. The 2 km body is capped by the app at a 659 km blast radius.",
+      "crater": "Crater diameter (km)",
+      "blast": "Blast radius (km)",
+      "diameter": "Asteroid diameter (m)",
+      "energy": "energy",
+      "depth": "depth",
+      "seismic": "seismic magnitude",
+      "tsunami": "tsunami height (ocean)",
+      "mt": "Mt TNT"
+    },
+    "fig3": {
+      "title": "Close approaches the dashboard pulled: how near, when",
+      "sub": "200 objects within 0.05 AU, Sep 11 – Oct 14, 2026 · y = distance in lunar distances, logarithmic · filled = already passed on the pull date, hollow = upcoming",
+      "caption": "Exhibit 3. The dashboard's close-approach tab shows exactly this slice of CNEOS data. Twelve of the 200 passed inside the Moon's orbit; the closest, 2026 RT34, came within 0.05 lunar distances — about 19,000 km — on Sep 13. The median pass was 6 lunar distances out at 1.9–28 km/s.",
+      "ld": "lunar distances",
+      "moon": "Moon's orbit",
+      "dist": "distance",
+      "vel": "velocity",
+      "past": "passed",
+      "upcoming": "upcoming"
+    },
+    "fig4": {
+      "title": "Fireballs recorded by CNEOS since 2015, by year",
+      "sub": "429 events · bars = events per year · lower panel = summed impact energy in kilotons · 2026 is a partial year",
+      "caption": "Exhibit 4. Thirty to fifty fireballs a year reach the catalogue, but the energy is dominated by single events: the 49 kt airburst over the Bering Sea on 18 December 2018 alone outweighs most whole years. The dashboard's fireball tab maps the latest of these.",
+      "count": "Fireballs per year",
+      "energy": "Impact energy per year (kt)",
+      "biggest": "Bering Sea 2018 · 49 kt",
+      "events": "events",
+      "kt": "kt"
+    }
+  },
+  "zh": {
+    "exhibits": "图表",
+    "note": "NASA 太空应用挑战赛，2025 年 10 月 4—5 日，两人团队。图 2—4 来自 2026 年 10 月 11 日把项目跑起来的结果：物理扫描直接调用应用自己的函数，两张数据图是通过项目的 Java 后端拉取的一次 NASA 数据。",
+    "stats": [
+      {
+        "label": "黑客松",
+        "value": "48 小时",
+        "hint": "44 个提交 · 2 人 · 2025 年 10 月 4—5 日"
+      },
+      {
+        "label": "代码",
+        "value": "7,425 行",
+        "hint": "6,205 行 JS / HTML / CSS · 1,220 行 Java"
+      },
+      {
+        "label": "数据",
+        "value": "4 → 8",
+        "hint": "4 个 NASA 数据源，8 个接口"
+      },
+      {
+        "label": "2026-10-11 拉取",
+        "value": "200",
+        "hint": "次近地接近 · 12 次在月球轨道以内"
+      }
+    ],
+    "fig1": {
+      "title": "从四个 NASA 数据源到一个仪表盘",
+      "caption": "图 1。一个不带框架的 Java HTTP 服务夹在 NASA 和浏览器之间：拉取四个数据源，整理成扁平 JSON，演示额度用完时轮换备用密钥。所有物理计算都在浏览器里跑，所以地球、地图和结果卡片的更新不需要再请求服务器。",
+      "nodes": [
+        {
+          "name": "NeoWs 近地天体",
+          "num": "±2 天内经过的天体 · 尺寸、危险标记"
+        },
+        {
+          "name": "CNEOS 近地接近",
+          "num": "日期 · 距离 · 速度 · 亮度"
+        },
+        {
+          "name": "CNEOS 火流星",
+          "num": "2015 年起 · 能量 · 位置 · 速度"
+        },
+        {
+          "name": "EONET 自然事件",
+          "num": "野火、风暴、火山"
+        },
+        {
+          "name": "Java HTTP 服务",
+          "num": "8 个接口 · 3 个备用密钥"
+        },
+        {
+          "name": "浏览器仪表盘",
+          "num": "原生 JS · 7 个标签页 · Leaflet 地图"
+        },
+        {
+          "name": "总览",
+          "num": "计数 · 均值 · 数据时间范围"
+        },
+        {
+          "name": "撞击预测",
+          "num": "质量 → 能量 → 陨石坑 · 冲击波 · 地震 · 海啸 · 人口 · 损失"
+        },
+        {
+          "name": "3D 地球",
+          "num": "Three.js · 点击选定撞击点"
+        },
+        {
+          "name": "偏转模拟",
+          "num": "动能撞击器 Δv · 蒙特卡洛命中概率"
+        }
+      ]
+    },
+    "fig2": {
+      "title": "应用的物理公式怎么说：从 10 米到 2 公里",
+      "sub": "石质小行星（3,000 kg/m³），20 km/s，45° · 直接调用应用自己的函数算出 · 两轴均为对数",
+      "caption": "图 2。应用的公式刻意简化成幂律：陨石坑直径随能量的 ¼ 次方增长，冲击波半径随 ⅓ 次方，所以在这里都是直线。简化在小端露出来：10 米的天体也被算出 340 米的坑，地震震级要到 200 米以上才离开零。2 公里的天体被应用封顶在 659 公里冲击波半径。",
+      "crater": "陨石坑直径（km）",
+      "blast": "冲击波半径（km）",
+      "diameter": "小行星直径（m）",
+      "energy": "能量",
+      "depth": "深度",
+      "seismic": "地震震级",
+      "tsunami": "海啸高度（海洋）",
+      "mt": "百万吨 TNT"
+    },
+    "fig3": {
+      "title": "仪表盘拉到的近地接近：多近、什么时候",
+      "sub": "0.05 AU 以内的 200 个天体，2026 年 9 月 11 日—10 月 14 日 · 纵轴 = 以地月距离计的距离，对数 · 实心 = 拉取当天已经过，空心 = 即将到来",
+      "caption": "图 3。仪表盘的近地接近标签页显示的正是这一段 CNEOS 数据。200 次里有 12 次从月球轨道内侧经过；最近的 2026 RT34 在 9 月 13 日掠过时只有 0.05 个地月距离，约 19,000 公里。中位数是 6 个地月距离，相对速度 1.9—28 km/s。",
+      "ld": "地月距离",
+      "moon": "月球轨道",
+      "dist": "距离",
+      "vel": "速度",
+      "past": "已经过",
+      "upcoming": "即将到来"
+    },
+    "fig4": {
+      "title": "CNEOS 自 2015 年起记录的火流星，按年",
+      "sub": "429 次事件 · 柱 = 每年事件数 · 下栏 = 每年撞击能量合计（千吨）· 2026 年不满一年",
+      "caption": "图 4。每年有三五十次火流星进入目录，但能量被单次事件主导：2018 年 12 月 18 日白令海上空那次 49 千吨的空爆，一次就超过大多数整年的总和。仪表盘的火流星标签页在地图上标出的是其中最近的几次。",
+      "count": "每年火流星次数",
+      "energy": "每年撞击能量（千吨）",
+      "biggest": "白令海 2018 · 49 千吨",
+      "events": "次",
+      "kt": "千吨"
+    }
+  }
+}

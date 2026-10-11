@@ -106,7 +106,8 @@
       "title": "Meteor Madness — NASA 太空应用挑战赛 2025",
       "body": "基于 NASA NEO、Fireball 与 EONET 数据的小行星撞击模拟器，展示陨石坑、海啸、冲击波影响范围及受影响人口。采用 Three.js 地球可视化与 Java REST 后端。两人团队中，我负责一半功能的完整开发，涵盖前端、后端与 API。",
       "period": "2025 年 10 月",
-      "github": "https://github.com/Zhuohengli03/Hackthon-Meteror"
+      "github": "https://github.com/Zhuohengli03/Hackthon-Meteror",
+      "caseStudy": "meteor-madness"
     },
     {
       "title": "兼职网站开发：WebDesigner、DeepEvol",

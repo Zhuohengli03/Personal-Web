@@ -11,6 +11,8 @@ const cases = [
   ['/zh/work/user-marketing-analytics/', 'zh-CN', '问题', 0],
   ['/work/web-crawler/', 'en', 'Problem', 4],
   ['/zh/work/web-crawler/', 'zh-CN', '问题', 4],
+  ['/work/meteor-madness/', 'en', 'Problem', 6],
+  ['/zh/work/meteor-madness/', 'zh-CN', '问题', 6],
 ] as const;
 
 for (const [path, lang, problem, images] of cases) {
@@ -154,3 +156,23 @@ test('the crawler mini card links to its case page and is not listed twice', asy
   await expect(page.locator('#more article a[href="/work/web-crawler/"]')).toHaveCount(2); // title and button of one card
   await expect(page.locator('#more article a[href="/work/web-crawler/"]').first()).toBeVisible();
 });
+
+for (const [locale, path, limits] of [
+  ['en', '/work/meteor-madness/', 'Limits'],
+  ['zh', '/zh/work/meteor-madness/', '局限'],
+] as const) {
+  test(`meteor-madness ${locale} case shows its four exhibits`, async ({ page }) => {
+    await page.goto(path);
+    const ex = page.locator('[data-exhibits]');
+    await expect(ex.locator('figure.exhibit')).toHaveCount(4);
+    await expect(ex.locator('.flow li')).toHaveCount(10);
+    await expect(ex.locator('svg')).toHaveCount(3);
+    await expect(ex.locator('[data-approach-chart] svg > .pt')).toHaveCount(200);
+    const svg = ex.locator('[data-sweep-chart] svg');
+    await svg.scrollIntoViewIfNeeded();
+    const box = (await svg.boundingBox())!;
+    await page.mouse.move(box.x + box.width * 0.5, box.y + box.height * 0.3);
+    await expect(ex.locator('[data-sweep-chart] .tip')).toBeVisible();
+    await expect(page.getByRole('heading', { level: 2, name: limits })).toBeVisible();
+  });
+}

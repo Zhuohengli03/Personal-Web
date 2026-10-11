@@ -106,7 +106,8 @@
       "title": "Meteor Madness — NASA Space Apps 2025",
       "body": "Asteroid-impact simulator on NASA NEO / Fireball / EONET data: crater, tsunami and blast-radius effects plus population exposure, with a Three.js globe and a Java REST backend. Two-person team; I built half of the features end to end — front end, backend and API.",
       "period": "2025.10",
-      "github": "https://github.com/Zhuohengli03/Hackthon-Meteror"
+      "github": "https://github.com/Zhuohengli03/Hackthon-Meteror",
+      "caseStudy": "meteor-madness"
     },
     {
       "title": "Freelance web development: WebDesigner, DeepEvol",
