@@ -26,6 +26,8 @@ const photos = await Promise.all(
   }),
 );
 const byHobby = (id: string) => photos.filter((p) => p.hobby === id);
+const CARD_H = 220;
+const cardImage = (file: string) => { const meta = resolve(file); return { meta, w: Math.round((meta.width * CARD_H) / meta.height) }; };
 const SECONDS_PER_PHOTO = 4; // one full loop of the strip takes 4 s per photo
 
 // line icons, 24px, stroke-based so they inherit the text colour
@@ -47,14 +49,34 @@ const icons: Record<string, string> = {
     {life.hobbies.map((h) => {
       const own = byHobby(h.id);
       return (
-        <li class:list={['row', 'reveal', { 'has-photos': own.length > 0 }]} data-hobby={h.id}>
+        <li class:list={['row', 'reveal', { 'has-photos': own.length > 0, 'has-cards': own.length === 0 && (h.cards?.length ?? 0) > 0 }]} data-hobby={h.id}>
           <div class="label">
             <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={icons[h.id] ?? ''} />
             <h3 class="title">{h.title}{own.length > 0 && <span class="count">{own.length}</span>}</h3>
             <p class="blurb">{h.blurb}</p>
-            {h.facts && h.facts.length > 0 && <ul class="facts">{h.facts.map((f) => <li>{f}</li>)}</ul>}
             {h.link && <a class="link" href={h.link.href} target="_blank" rel="me noopener" data-umami-event="outbound-hobby" data-umami-event-slug={h.id}>{h.link.label} ↗</a>}
           </div>
+          {own.length === 0 && h.cards && h.cards.length > 0 && (
+            <div class="strip cards" data-strip style={`--loop: ${h.cards.length * SECONDS_PER_PHOTO}s`}>
+              <ul class="track">
+                {[false, true].map((dup) => h.cards!.map((c) => {
+                  const img = c.image ? cardImage(c.image) : null;
+                  const body = (
+                    <>
+                      {img ? <Image src={img.meta} alt={c.title} width={img.w} height={CARD_H} format="webp" quality={80} loading="lazy" /> : <span class="cover-text" aria-hidden="true">{c.title}</span>}
+                      <span class="card-title">{c.title}</span>
+                      <span class="card-meta">{c.meta}</span>
+                    </>
+                  );
+                  return (
+                    <li class:list={['game', { dup }]} aria-hidden={dup ? 'true' : undefined}>
+                      {c.href ? <a href={c.href} target="_blank" rel="noopener" tabindex={dup ? -1 : 0} data-umami-event="outbound-hobby" data-umami-event-slug={c.title}>{body}</a> : <div>{body}</div>}
+                    </li>
+                  );
+                }))}
+              </ul>
+            </div>
+          )}
           {own.length > 0 && (
             <div class="strip" data-strip style={`--loop: ${own.length * SECONDS_PER_PHOTO}s`}>
               <ul class="track">
@@ -76,15 +98,13 @@ const icons: Record<string, string> = {
 <style>
   .rows { list-style: none; margin: 0; padding: 0; counter-reset: hobby; border-top: 1px solid var(--rule); }
   .row { counter-increment: hobby; display: grid; gap: 1rem 2rem; padding: 1.4rem 0; border-bottom: 1px solid var(--rule); grid-template-columns: 1fr; }
-  @media (min-width: 720px) { .row { grid-template-columns: minmax(220px, 1fr) 2.4fr; align-items: center; } .row.has-photos { padding: 1.6rem 0; } }
+  @media (min-width: 720px) { .row { grid-template-columns: minmax(220px, 1fr) 2.4fr; align-items: center; } .row.has-photos, .row.has-cards { padding: 1.6rem 0; } }
   .label { display: grid; grid-template-columns: 24px 1fr; gap: 0.25rem 0.75rem; align-items: start; }
   .icon { width: 24px; height: 24px; color: var(--fg-muted); grid-row: span 2; margin-top: 0.1rem; }
   .title { margin: 0; font-family: var(--font-sans); font-size: 1rem; font-weight: 500; color: var(--fg); display: flex; align-items: baseline; gap: 0.5rem; }
   .title::before { content: counter(hobby, decimal-leading-zero); font-family: var(--font-mono); font-size: 0.65rem; font-weight: 400; letter-spacing: 0.08em; color: var(--fg-muted); }
   .count { font-family: var(--font-mono); font-size: 0.65rem; color: var(--fg-muted); }
   .blurb { margin: 0; font-size: 0.85rem; line-height: 1.5; color: var(--fg-muted); max-width: 34ch; }
-  .facts { grid-column: 2; list-style: none; margin: 0.5rem 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.3rem 0.4rem; max-width: 40ch; }
-  .facts li { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.02em; color: var(--fg-muted); padding: 0.15rem 0.5rem; border: 1px solid var(--rule); border-radius: 999px; white-space: nowrap; }
   .link { grid-column: 2; justify-self: start; margin-top: 0.35rem; font-family: var(--font-mono); font-size: 0.72rem; color: var(--fg); }
 
   /* the strip: a track twice as long as its photos, moved left by half its width on a loop, so the join is seamless */
@@ -99,6 +119,14 @@ const icons: Record<string, string> = {
   .track button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
   .track img { display: block; height: 220px; width: auto; }
   @media (max-width: 560px) { .track img { height: 160px; } }
+  /* game cards: cover (or the name set large when there is no cover), then name and hours underneath */
+  .game > a, .game > div { display: flex; flex-direction: column; gap: 0.3rem; width: max-content; color: inherit; text-decoration: none; }
+  .game img { display: block; height: 220px; width: auto; border-radius: 8px; background: var(--card); }
+  .cover-text { display: flex; align-items: flex-end; box-sizing: border-box; height: 220px; width: 147px; padding: 0.9rem; border-radius: 8px; background: var(--card); font-family: var(--font-serif); font-size: 1.25rem; line-height: 1.2; color: var(--fg); }
+  .card-title { margin-top: 0.2rem; font-family: var(--font-sans); font-size: 0.82rem; color: var(--fg); }
+  .card-meta { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.02em; color: var(--fg-muted); }
+  .game > a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 8px; }
+  @media (max-width: 560px) { .game img, .cover-text { height: 160px; } .cover-text { width: 107px; } }
   @keyframes life-strip { from { transform: translateX(0); } to { transform: translateX(-50%); } }
   @media (prefers-reduced-motion: reduce) {
     .track { animation: none; width: auto; }

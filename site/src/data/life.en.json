@@ -20,19 +20,51 @@
       "id": "games",
       "title": "Games",
       "blurb": "Over 4,000 hours on Steam, mostly team shooters and extraction games. One of them became a data project: the Dark and Darker price forecast above.",
-      "facts": [
-        "Squad · 1,500+ h",
-        "Dark and Darker · 1,300+ h · Demigod",
-        "CS2 · 800+ h · Premier A",
-        "Where Winds Meet · 248 h",
-        "Wardogs · ~200 h",
-        "Naraka: Bladepoint · Sunset IV",
-        "Honor of Kings · Glorious King"
-      ],
       "link": {
         "label": "Steam profile",
         "href": "https://steamcommunity.com/profiles/76561199179240743/"
-      }
+      },
+      "cards": [
+        {
+          "image": "games/squad.jpg",
+          "title": "Squad",
+          "meta": "1,500+ h",
+          "href": "https://store.steampowered.com/app/393380/"
+        },
+        {
+          "image": "games/dark-and-darker.jpg",
+          "title": "Dark and Darker",
+          "meta": "1,300+ h · Demigod",
+          "href": "https://store.steampowered.com/app/2016590/"
+        },
+        {
+          "image": "games/cs2.jpg",
+          "title": "Counter-Strike 2",
+          "meta": "800+ h · Premier A",
+          "href": "https://store.steampowered.com/app/730/"
+        },
+        {
+          "image": "games/where-winds-meet.jpg",
+          "title": "Where Winds Meet",
+          "meta": "248 h",
+          "href": "https://store.steampowered.com/app/3564740/"
+        },
+        {
+          "title": "Wardogs",
+          "meta": "~200 h",
+          "href": "https://store.steampowered.com/app/1867240/"
+        },
+        {
+          "image": "games/naraka.jpg",
+          "title": "Naraka: Bladepoint",
+          "meta": "Sunset IV",
+          "href": "https://store.steampowered.com/app/1203220/"
+        },
+        {
+          "title": "Honor of Kings",
+          "meta": "Glorious King · mobile"
+        }
+      ]
     },
     {
       "id": "swimming",

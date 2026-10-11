@@ -20,19 +20,51 @@
       "id": "games",
       "title": "游戏",
       "blurb": "Steam 上 4,000 多小时，主要是团队射击和搜打撤。其中一款成了数据项目：上面的《Dark and Darker》价格预测。",
-      "facts": [
-        "Squad · 1,500+ 小时",
-        "Dark and Darker · 1,300+ 小时 · 半神",
-        "CS2 · 800+ 小时 · 完美 A",
-        "燕云十六声 · 248 小时",
-        "Wardogs · 约 200 小时",
-        "永劫无间 · 坠日 IV",
-        "王者荣耀 · 最强王者"
-      ],
       "link": {
         "label": "Steam 主页",
         "href": "https://steamcommunity.com/profiles/76561199179240743/"
-      }
+      },
+      "cards": [
+        {
+          "image": "games/squad.jpg",
+          "title": "Squad",
+          "meta": "1,500+ 小时",
+          "href": "https://store.steampowered.com/app/393380/"
+        },
+        {
+          "image": "games/dark-and-darker.jpg",
+          "title": "Dark and Darker",
+          "meta": "1,300+ 小时 · 半神",
+          "href": "https://store.steampowered.com/app/2016590/"
+        },
+        {
+          "image": "games/cs2.jpg",
+          "title": "CS2",
+          "meta": "800+ 小时 · 完美 A",
+          "href": "https://store.steampowered.com/app/730/"
+        },
+        {
+          "image": "games/where-winds-meet.jpg",
+          "title": "燕云十六声",
+          "meta": "248 小时",
+          "href": "https://store.steampowered.com/app/3564740/"
+        },
+        {
+          "title": "Wardogs",
+          "meta": "约 200 小时",
+          "href": "https://store.steampowered.com/app/1867240/"
+        },
+        {
+          "image": "games/naraka.jpg",
+          "title": "永劫无间",
+          "meta": "坠日 IV",
+          "href": "https://store.steampowered.com/app/1203220/"
+        },
+        {
+          "title": "王者荣耀",
+          "meta": "最强王者 · 手游"
+        }
+      ]
     },
     {
       "id": "swimming",
