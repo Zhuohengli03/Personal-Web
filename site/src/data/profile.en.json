@@ -71,10 +71,10 @@
       ]
     },
     {
-      "title": "Operations & product-selection analytics",
+      "title": "Operations & product-selection analytics — Amazon (Shanghai), 2023",
       "question": "Which products and categories deserve shelf space, and where are the anomalies?",
-      "method": "Integrated data from several business systems into a product-selection metric framework: sales volume, revenue, growth, conversion, refund rate.",
-      "output": "A daily operations brief for fast decisions and a list of category-level anomalies for the business to act on.",
+      "method": "Joined five business tables (ads, orders, inventory, listing page, daily totals) into one metric framework: units, revenue, day-over-day change, page views, refund rate, ad CTR and ACoS, days of stock cover; plus a 30-metric product-selection system for category screening.",
+      "output": "A daily operations brief with a 7-day trend, brand split and per-ASIN link-health table, so the team can see which links need stock, ad spend or price action.",
       "tags": [
         "Metric framework",
         "Daily brief",
@@ -124,6 +124,15 @@
         "Produced weekly and monthly reports in Tableau and Excel, monitoring trends and anomalies for product and operations decisions.",
         "Optimized key SQL queries (indexing and query structure), cutting runtime by about 20%.",
         "Worked with product and operations teams to turn findings into actionable recommendations."
+      ]
+    },
+    {
+      "company": "Amazon (Shanghai) International Trading Co., Ltd.",
+      "role": "Intern",
+      "period": "2023.10 – 2023.11",
+      "bullets": [
+        "Designed a product-selection metric system for category screening: 5 dimensions (market demand, competition, product, ratings, price), 15 sub-dimensions and 30 metrics, from search volume and market concentration to review sentiment and margin.",
+        "Built an operations daily brief from five source tables (ads, orders, inventory, listing page, daily totals) covering 5 brands, 3 marketplaces (US, CA, JP) and 88 ASINs: a 7-day trend of units, revenue, page views and refund rate, a brand split, and a per-ASIN link-health table with 7-day average sales, estimated days to sell-out, CTR, ACoS and category rank."
       ]
     }
   ],
