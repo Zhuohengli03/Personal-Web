@@ -28,7 +28,11 @@
         "Wardogs · 约 200 小时",
         "永劫无间 · 坠日 IV",
         "王者荣耀 · 最强王者"
-      ]
+      ],
+      "link": {
+        "label": "Steam 主页",
+        "href": "https://steamcommunity.com/profiles/76561199179240743/"
+      }
     },
     {
       "id": "swimming",

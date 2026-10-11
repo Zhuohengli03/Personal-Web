@@ -25,7 +25,7 @@ for (const path of ['/', '/zh/']) {
   test(`no phone number or messenger handle on ${path}`, async ({ page }) => {
     await page.goto(path);
     const html = await page.content();
-    expect(html).not.toMatch(/\+1\s?\d{3}[\s-]?\d{3}|\+86\s?\d{3}|1[3-9]\d{9}/); // phone numbers anywhere
+    expect(html).not.toMatch(/\+1\s?\d{3}[\s-]?\d{3}|\+86\s?\d{3}|(?<!\d)1[3-9]\d{9}(?!\d)/); // phone numbers anywhere (an 11-digit run on its own; longer ids such as a Steam profile id are not phones)
     expect(html).not.toMatch(/amazon|亚马逊|google|谷歌/i); // the owner keeps these names off the site
     const external = [...html.matchAll(/<script[^>]*\ssrc="(https?:[^"]*)"/g)].map((m) => m[1]);
     for (const src of external) expect(src).toMatch(/^https:\/\/cloud\.umami\.is\//); // page-view analytics is the only third-party script

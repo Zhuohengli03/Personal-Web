@@ -14,6 +14,9 @@ for (const [path, heading] of [['/', 'Beyond work'], ['/zh/', '工作之外']] a
     await expect(photoRow.locator('.track > li.dup')).toHaveCount(await originals.count());
     await expect(photoRow.locator('.track > li.dup button').first()).toHaveAttribute('tabindex', '-1');
     await expect(page.locator('#life .row[data-hobby="cooking"] .track')).toHaveCount(0);
+    const steam = page.locator('#life .row[data-hobby="games"] a.link');
+    await expect(steam).toHaveAttribute('href', /steamcommunity\.com\/profiles\/\d+/);
+    await expect(steam).toHaveAttribute('target', '_blank');
   });
 }
 

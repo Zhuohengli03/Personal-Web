@@ -28,7 +28,11 @@
         "Wardogs · ~200 h",
         "Naraka: Bladepoint · Sunset IV",
         "Honor of Kings · Glorious King"
-      ]
+      ],
+      "link": {
+        "label": "Steam profile",
+        "href": "https://steamcommunity.com/profiles/76561199179240743/"
+      }
     },
     {
       "id": "swimming",
