@@ -7,6 +7,8 @@ const cases = [
   ['/zh/work/dad-market-forecast/', 'zh-CN', '问题', 0],
   ['/work/product-selection-analytics/', 'en', 'Problem', 0],
   ['/zh/work/product-selection-analytics/', 'zh-CN', '问题', 0],
+  ['/work/user-marketing-analytics/', 'en', 'Problem', 0],
+  ['/zh/work/user-marketing-analytics/', 'zh-CN', '问题', 0],
 ] as const;
 
 for (const [path, lang, problem, images] of cases) {
@@ -88,5 +90,29 @@ for (const [locale, path, limits] of [
     await expect(ex.locator('[data-trend-chart] .tip')).toBeVisible();
     await expect(page.getByRole('heading', { level: 2, name: limits })).toBeVisible();
     await expect(page.locator('html')).not.toContainText(/amazon|亚马逊/i);
+  });
+}
+
+for (const [locale, path, limits] of [
+  ['en', '/work/user-marketing-analytics/', 'Limits'],
+  ['zh', '/zh/work/user-marketing-analytics/', '局限'],
+] as const) {
+  test(`user-marketing ${locale} case shows its five exhibits`, async ({ page }) => {
+    await page.goto(path);
+    const ex = page.locator('[data-exhibits]');
+    await expect(ex.locator('figure.exhibit')).toHaveCount(5);
+    await expect(ex.locator('.tree .leaves li')).toHaveCount(52);
+    await expect(ex.locator('.flow li')).toHaveCount(10);
+    await expect(ex.locator('svg')).toHaveCount(2);
+    await expect(ex.locator('.segs .seg')).toHaveCount(5);
+    // per-band tooltip on the click-rate chart
+    const svg = ex.locator('[data-band-chart] svg');
+    await svg.scrollIntoViewIfNeeded();
+    const box = (await svg.boundingBox())!;
+    await page.mouse.move(box.x + box.width * 0.5, box.y + box.height * 0.3);
+    await expect(ex.locator('[data-band-chart] .tip')).toBeVisible();
+    await expect(ex.locator('[data-band-chart] .tip')).toContainText('%');
+    await expect(page.getByRole('heading', { level: 2, name: limits })).toBeVisible();
+    await expect(page.locator('html')).not.toContainText(/amazon|亚马逊|google|谷歌/i);
   });
 }

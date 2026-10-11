@@ -4,7 +4,7 @@
 import type { Locale } from '../../i18n';
 import text from '../../data/figures/ops-text.json';
 import SpecRow from '../SpecRow.astro';
-import OpsMetricTree from './OpsMetricTree.astro';
+import MetricTree from './MetricTree.astro';
 import Pipeline from './Pipeline.astro';
 import OpsTrendChart from './OpsTrendChart.astro';
 import OpsLinkChart from './OpsLinkChart.astro';
@@ -21,7 +21,7 @@ const t = text[locale];
 
   <figure class="exhibit reveal">
     <div class="head"><h3>{t.fig1.title}</h3><p class="sub">{t.fig1.sub}</p></div>
-    <OpsMetricTree tree={t.fig1.tree} />
+    <MetricTree tree={t.fig1.tree} />
     <figcaption>{t.fig1.caption}</figcaption>
   </figure>
 

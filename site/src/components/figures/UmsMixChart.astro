@@ -1,0 +1,81 @@
+---
+// Exhibit 4 — who sees each price band: 100% stacked bars of impressions by the viewer's consumption level.
+// Three ordinal levels on one hue, light → dark; a legend above and direct labels on the first and last bands.
+import data from '../../data/figures/ums.json';
+import type { Locale } from '../../i18n';
+interface Props { locale: Locale; t: { legend: string; levels: string[]; share: string } }
+const { t, locale } = Astro.props;
+const dateLocale = locale === 'zh' ? 'zh-CN' : 'en-US';
+
+const W = 960, L = 56, R = 24, T = 16, PH = 220;
+const H = T + PH + 34;
+const bands = data.bands;
+const n = bands.length;
+const slot = (W - L - R) / n;
+const xc = (i: number) => L + slot * (i + 0.5);
+const f = (v: number) => v.toFixed(1);
+const pct = (v: number) => `${Math.round(v * 100)}%`;
+const y = (v: number) => T + (1 - v) * PH;
+// segments stack from the bottom: level 1 (low) first
+const stacks = bands.map((b) => { let acc = 0; return b.consume.map((s) => { const seg = { y0: acc, y1: acc + s, s }; acc += s; return seg; }); });
+---
+<div class="chart" data-mix-chart>
+  <ul class="legend" aria-label={t.legend}>
+    <li class="eyebrow">{t.legend}</li>
+    {t.levels.map((name, k) => <li><span class={`sw l${k + 1}`}></span>{name}</li>)}
+  </ul>
+  <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label={t.legend}>
+    <g class="grid">
+      {[0, 0.25, 0.5, 0.75, 1].map((v) => (<g><line x1={L} x2={W - R} y1={f(y(v))} y2={f(y(v))} /><text x={L - 8} y={f(y(v))} text-anchor="end" dominant-baseline="middle">{pct(v)}</text></g>))}
+    </g>
+    {stacks.map((segs, i) => (
+      <g>
+        {segs.map((seg, k) => <rect class={`seg l${k + 1}`} x={f(xc(i) - slot * 0.3)} y={f(y(seg.y1))} width={f(slot * 0.6)} height={f(Math.max(0, y(seg.y0) - y(seg.y1)))} />)}
+        {(i === 0 || i === n - 1) && <text class="lab dark" x={f(xc(i))} y={f((y(segs[0].y0) + y(segs[0].y1)) / 2)} text-anchor="middle" dominant-baseline="middle">{pct(segs[0].s)}</text>}
+        {(i === 0 || i === n - 1) && <text class="lab" x={f(xc(i))} y={f((y(segs[2].y0) + y(segs[2].y1)) / 2)} text-anchor="middle" dominant-baseline="middle">{pct(segs[2].s)}</text>}
+      </g>
+    ))}
+    <g class="xaxis">
+      {bands.map((b, i) => <text x={f(xc(i))} y={H - 10} text-anchor="middle">{b.band}</text>)}
+    </g>
+  </svg>
+  <div class="tip" hidden></div>
+  <script type="application/json" data-points set:html={JSON.stringify({ bands: bands.map((b) => ({ band: b.band, consume: b.consume })), L, R, W, levels: t.levels })} />
+</div>
+<style>
+  .chart { position: relative; }
+  .legend { list-style: none; margin: 0 0 0.6rem; padding: 0; display: flex; flex-wrap: wrap; gap: 0.4rem 1.1rem; font-family: var(--font-mono); font-size: 0.72rem; color: var(--fg-muted); }
+  .legend li { display: inline-flex; align-items: center; gap: 0.4rem; }
+  .sw { width: 0.7rem; height: 0.7rem; border-radius: 2px; }
+  .l1 { fill: color-mix(in srgb, var(--accent) 28%, var(--bg)); background: color-mix(in srgb, var(--accent) 28%, var(--bg)); }
+  .l2 { fill: color-mix(in srgb, var(--accent) 60%, var(--bg)); background: color-mix(in srgb, var(--accent) 60%, var(--bg)); }
+  .l3 { fill: var(--accent); background: var(--accent); }
+  svg { width: 100%; height: auto; display: block; font-family: var(--font-mono); font-size: 11px; }
+  .grid line { stroke: var(--rule); }
+  .grid text, .xaxis text { fill: var(--fg-muted); }
+  .seg { stroke: var(--bg); stroke-width: 2; }
+  .lab { fill: var(--bg); font-weight: 600; }
+  .lab.dark { fill: var(--fg); font-weight: 600; }
+  .tip { position: absolute; pointer-events: none; transform: translate(-50%, calc(-100% - 10px)); background: var(--fg); color: var(--bg); font-family: var(--font-mono); font-size: 0.72rem; line-height: 1.6; padding: 0.35rem 0.55rem; border-radius: 6px; white-space: pre-line; width: max-content; max-width: 100%; }
+</style>
+<script>
+  for (const root of document.querySelectorAll<HTMLElement>('[data-mix-chart]')) {
+    const cfg = JSON.parse(root.querySelector('[data-points]')?.textContent ?? '{}') as { bands: { band: string; consume: number[] }[]; L: number; R: number; W: number; levels: string[] };
+    const svg = root.querySelector('svg')!;
+    const tip = root.querySelector<HTMLElement>('.tip')!;
+    const slot = (cfg.W - cfg.L - cfg.R) / cfg.bands.length;
+    svg.addEventListener('pointermove', (e: PointerEvent) => {
+      const r = svg.getBoundingClientRect();
+      const px = ((e.clientX - r.left) / r.width) * cfg.W;
+      const i = Math.max(0, Math.min(cfg.bands.length - 1, Math.floor((px - cfg.L) / slot)));
+      const b = cfg.bands[i];
+      const cx = cfg.L + slot * (i + 0.5);
+      tip.hidden = false;
+      tip.textContent = [b.band, ...cfg.levels.map((name, k) => `${name} ${(b.consume[k] * 100).toFixed(1)}%`).reverse()].join('\n');
+      const halfWidth = tip.getBoundingClientRect().width / 2;
+      tip.style.left = `${Math.max(halfWidth, Math.min(r.width - halfWidth, (cx / cfg.W) * r.width))}px`;
+      tip.style.top = `${Math.max(0, e.clientY - r.top - 8)}px`;
+    });
+    svg.addEventListener('pointerleave', () => { tip.hidden = true; });
+  }
+</script>

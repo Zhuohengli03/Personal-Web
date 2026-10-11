@@ -1,0 +1,102 @@
+---
+// Exhibit 3 — click rate (dots) and share of impressions (bars) per price band, stacked on one band axis.
+import data from '../../data/figures/ums.json';
+import type { Locale } from '../../i18n';
+interface Props { locale: Locale; t: { ctr: string; share: string; imp: string; clk: string; max: string; min: string } }
+const { t, locale } = Astro.props;
+const dateLocale = locale === 'zh' ? 'zh-CN' : 'en-US';
+
+const W = 960, L = 56, R = 24;
+const bands = data.bands;
+const n = bands.length;
+const slot = (W - L - R) / n;
+const xc = (i: number) => L + slot * (i + 0.5);
+const f = (v: number) => v.toFixed(1);
+const pct = (v: number, d = 0) => `${(v * 100).toFixed(d)}%`;
+
+// panel A: click rate
+const A_T = 18, A_H = 150;
+const cMin = 0.03, cMax = 0.06;
+const ya = (v: number) => A_T + (1 - (v - cMin) / (cMax - cMin)) * A_H;
+const aTicks = [0.03, 0.04, 0.05, 0.06];
+const hi = bands.reduce((a, b, i) => (b.ctr > bands[a].ctr ? i : a), 0);
+const lo = bands.reduce((a, b, i) => (b.ctr < bands[a].ctr ? i : a), 0);
+const ctrPath = bands.map((b, i) => `${i ? 'L' : 'M'}${f(xc(i))} ${f(ya(b.ctr))}`).join(' ');
+// panel B: share of impressions
+const B_T = A_T + A_H + 44, B_H = 100;
+const sMax = 0.5;
+const yb = (v: number) => B_T + (1 - v / sMax) * B_H;
+const H = B_T + B_H + 34;
+---
+<div class="chart" data-band-chart>
+  <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label={`${t.ctr}; ${t.share}`}>
+    <text class="panel" x={L} y={A_T - 6}>{t.ctr}</text>
+    <g class="grid">
+      {aTicks.map((v) => (<g><line x1={L} x2={W - R} y1={f(ya(v))} y2={f(ya(v))} /><text x={L - 8} y={f(ya(v))} text-anchor="end" dominant-baseline="middle">{pct(v)}</text></g>))}
+    </g>
+    <path class="ctr" d={ctrPath} />
+    {bands.map((b, i) => <circle class="dot" cx={f(xc(i))} cy={f(ya(b.ctr))} r="5" />)}
+    <text class="val" x={f(xc(hi))} y={f(ya(bands[hi].ctr) - 12)} text-anchor="middle">{t.max} {pct(bands[hi].ctr, 1)}</text>
+    <text class="val" x={f(xc(lo))} y={f(ya(bands[lo].ctr) + 20)} text-anchor="middle">{t.min} {pct(bands[lo].ctr, 1)}</text>
+
+    <text class="panel" x={L} y={B_T - 8}>{t.share}</text>
+    <g class="grid">
+      {[0, 0.25, 0.5].map((v) => (<g><line x1={L} x2={W - R} y1={f(yb(v))} y2={f(yb(v))} /><text x={L - 8} y={f(yb(v))} text-anchor="end" dominant-baseline="middle">{pct(v)}</text></g>))}
+    </g>
+    {bands.map((b, i) => (
+      <g>
+        <rect class="bar" x={f(xc(i) - slot * 0.3)} y={f(yb(b.share))} width={f(slot * 0.6)} height={f(Math.max(1, yb(0) - yb(b.share)))} rx="2" />
+        <text class="val" x={f(xc(i))} y={f(yb(b.share) - 6)} text-anchor="middle">{pct(b.share)}</text>
+      </g>
+    ))}
+    <g class="xaxis">
+      {bands.map((b, i) => <text x={f(xc(i))} y={H - 10} text-anchor="middle">{b.band}</text>)}
+    </g>
+    <g class="hover" display="none"><line class="xline" y1={A_T} y2={B_T + B_H} /></g>
+  </svg>
+  <div class="tip" hidden></div>
+  <script type="application/json" data-points set:html={JSON.stringify({ bands: bands.map((b) => ({ band: b.band, imp: b.imp, clk: b.clk, ctr: b.ctr, share: b.share })), L, R, W, dateLocale, labels: { imp: t.imp, clk: t.clk, ctr: t.ctr, share: t.share } })} />
+</div>
+<style>
+  .chart { position: relative; }
+  svg { width: 100%; height: auto; display: block; font-family: var(--font-mono); font-size: 11px; }
+  .panel { fill: var(--fg); font-family: var(--font-sans); font-size: 12px; font-weight: 500; }
+  .grid line { stroke: var(--rule); }
+  .grid text, .xaxis text { fill: var(--fg-muted); }
+  .ctr { fill: none; stroke: var(--accent); stroke-width: 1.6; stroke-linejoin: round; }
+  .dot { fill: var(--accent); stroke: var(--bg); stroke-width: 2; }
+  .bar { fill: color-mix(in srgb, var(--fg) 28%, var(--bg)); }
+  .val { fill: var(--fg-muted); }
+  .hover .xline { stroke: var(--fg-muted); stroke-dasharray: 2 3; }
+  .tip { position: absolute; pointer-events: none; transform: translate(-50%, calc(-100% - 10px)); background: var(--fg); color: var(--bg); font-family: var(--font-mono); font-size: 0.72rem; line-height: 1.6; padding: 0.35rem 0.55rem; border-radius: 6px; white-space: pre-line; width: max-content; max-width: 100%; }
+</style>
+<script>
+  // Crosshair + tooltip: snap to the nearest band.
+  for (const root of document.querySelectorAll<HTMLElement>('[data-band-chart]')) {
+    const cfg = JSON.parse(root.querySelector('[data-points]')?.textContent ?? '{}') as {
+      bands: { band: string; imp: number; clk: number; ctr: number; share: number }[]; L: number; R: number; W: number; dateLocale: string;
+      labels: { imp: string; clk: string; ctr: string; share: string };
+    };
+    const svg = root.querySelector('svg')!;
+    const hover = root.querySelector<SVGGElement>('.hover')!;
+    const xline = hover.querySelector<SVGLineElement>('.xline')!;
+    const tip = root.querySelector<HTMLElement>('.tip')!;
+    const slot = (cfg.W - cfg.L - cfg.R) / cfg.bands.length;
+    const pct = (v: number, d = 1) => `${(v * 100).toFixed(d)}%`;
+    svg.addEventListener('pointermove', (e: PointerEvent) => {
+      const r = svg.getBoundingClientRect();
+      const px = ((e.clientX - r.left) / r.width) * cfg.W;
+      const i = Math.max(0, Math.min(cfg.bands.length - 1, Math.floor((px - cfg.L) / slot)));
+      const b = cfg.bands[i];
+      const cx = cfg.L + slot * (i + 0.5);
+      xline.setAttribute('x1', String(cx)); xline.setAttribute('x2', String(cx));
+      hover.setAttribute('display', 'inline');
+      tip.hidden = false;
+      tip.textContent = [b.band, `${cfg.labels.imp} ${b.imp.toLocaleString(cfg.dateLocale)} · ${pct(b.share)}`, `${cfg.labels.clk} ${b.clk.toLocaleString(cfg.dateLocale)}`, `${cfg.labels.ctr} ${pct(b.ctr, 2)}`].join('\n');
+      const halfWidth = tip.getBoundingClientRect().width / 2;
+      tip.style.left = `${Math.max(halfWidth, Math.min(r.width - halfWidth, (cx / cfg.W) * r.width))}px`;
+      tip.style.top = `${Math.max(0, e.clientY - r.top - 8)}px`;
+    });
+    svg.addEventListener('pointerleave', () => { hover.setAttribute('display', 'none'); tip.hidden = true; });
+  }
+</script>

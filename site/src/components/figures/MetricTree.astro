@@ -1,5 +1,5 @@
 ---
-// Exhibit 1 — the product-selection metric system as five columns: dimension → group → metric.
+// A metric system as five columns: dimension → group → metric. Used by the two analytics cases.
 interface Group { name: string; items: string[] }
 interface Dim { name: string; items?: string[]; groups: Group[] }
 interface Props { tree: Dim[] }

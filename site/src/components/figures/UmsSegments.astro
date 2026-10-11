@@ -1,0 +1,43 @@
+---
+// Exhibit 5 — the five K-means segments of clicking users as columns: tier name, share, then the profile rows.
+import data from '../../data/figures/ums.json';
+import type { Locale } from '../../i18n';
+interface Props { locale: Locale; t: { tiers: Record<string, string>; of: string; users: string; ctr: string; price: string; shop: string; female: string; age: string } }
+const { t, locale } = Astro.props;
+const dateLocale = locale === 'zh' ? 'zh-CN' : 'en-US';
+const segs = data.segments;
+const maxShare = Math.max(...segs.map((s) => s.share));
+const pct = (v: number) => `${Math.round(v * 100)}%`;
+---
+<ol class="segs">
+  {segs.map((s) => (
+    <li class="seg">
+      <h4>{t.tiers[s.key]}</h4>
+      <p class="share">{pct(s.share)}<span class="of">{t.of}</span></p>
+      <div class="bar" role="presentation"><span style={`width:${(s.share / maxShare) * 100}%`}></span></div>
+      <dl>
+        <dt>{t.users}</dt><dd>{s.users.toLocaleString(dateLocale)}</dd>
+        <dt>{t.ctr}</dt><dd>{pct(s.ctr)}</dd>
+        <dt>{t.price}</dt><dd>{s.price.toLocaleString(dateLocale)}</dd>
+        <dt>{t.shop}</dt><dd>{s.shop.toFixed(1)}</dd>
+        <dt>{t.female}</dt><dd>{pct(s.female)}</dd>
+        <dt>{t.age}</dt><dd>{s.age}</dd>
+      </dl>
+    </li>
+  ))}
+</ol>
+<style>
+  .segs { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(5, 1fr); gap: 1.25rem; counter-reset: seg; }
+  .seg { counter-increment: seg; padding-top: 0.75rem; border-top: 2px solid var(--accent); }
+  h4 { margin: 0 0 0.5rem; font-family: var(--font-sans); font-size: 0.9rem; font-weight: 600; letter-spacing: -0.01em; }
+  h4::before { content: counter(seg) ' · '; font-family: var(--font-mono); font-weight: 400; font-size: 0.7rem; color: var(--fg-muted); }
+  .share { margin: 0; font-family: var(--font-serif); font-size: 1.6rem; line-height: 1.1; color: var(--fg); }
+  .of { display: block; margin-top: 0.3rem; font-family: var(--font-sans); font-size: 0.72rem; color: var(--fg-muted); }
+  .bar { margin: 0.6rem 0 0.9rem; height: 6px; border-radius: 3px; background: var(--rule); overflow: hidden; }
+  .bar span { display: block; height: 100%; border-radius: 3px; background: var(--accent); }
+  dl { margin: 0; }
+  dt { font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--fg-muted); margin-top: 0.55rem; }
+  dd { margin: 0.1rem 0 0; font-size: 0.85rem; color: var(--fg); font-variant-numeric: tabular-nums; }
+  @media (max-width: 900px) { .segs { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 560px) { .segs { grid-template-columns: repeat(2, 1fr); gap: 1rem; } }
+</style>

@@ -1,0 +1,552 @@
+{
+  "en": {
+    "exhibits": "Exhibits",
+    "note": "Internship project, Aug–Oct 2023. The source is an anonymized display-ad sample — an ad table, an impression log and a user table with coded attribute levels — covering nine days; every number on this page is computed from it at build time.",
+    "stats": [
+      {
+        "label": "Impressions",
+        "value": "1.05M",
+        "hint": "9 days · 51,900 clicks"
+      },
+      {
+        "label": "Click rate",
+        "value": "4.95%",
+        "hint": "overall, across all price bands"
+      },
+      {
+        "label": "Users in the log",
+        "value": "384,559",
+        "hint": "93% matched to the user table"
+      },
+      {
+        "label": "Ads shown",
+        "value": "61,117",
+        "hint": "of 846,811 in the ad table"
+      },
+      {
+        "label": "Segments",
+        "value": "5",
+        "hint": "K-means on 40,997 clicking users"
+      }
+    ],
+    "fig1": {
+      "title": "The metric map: what an e-commerce analyst should measure",
+      "sub": "five questions · 52 metrics and models, as written up for the team",
+      "caption": "Exhibit 1. The map was the first deliverable: a shared vocabulary from traffic (UV, PV, new users) through demand, the funnel and retention to user value. The RFM tiers in the last column are the ones the segmentation below is labelled with.",
+      "tree": [
+        {
+          "name": "Traffic & new users",
+          "items": [
+            "UV — unique visitors",
+            "PV — page views"
+          ],
+          "groups": [
+            {
+              "name": "New users",
+              "items": [
+                "Market growth potential",
+                "Market user portrait",
+                "New vs returning customers"
+              ]
+            },
+            {
+              "name": "Strategy personas",
+              "items": [
+                "FMCG strategy groups",
+                "White-collar",
+                "Middle-aged & older",
+                "Mid-to-high spenders",
+                "Low spenders"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Demand & scenarios",
+          "groups": [
+            {
+              "name": "User research",
+              "items": [
+                "Search terms",
+                "Brand terms",
+                "Category terms"
+              ]
+            },
+            {
+              "name": "Review analysis",
+              "items": [
+                "Service & logistics",
+                "Product attributes & gifts",
+                "Scenario words · positive-review rate"
+              ]
+            },
+            {
+              "name": "Off-site marketing",
+              "items": [
+                "Keyword matching by platform",
+                "KOL seeding & placement"
+              ]
+            },
+            {
+              "name": "Customer flow",
+              "items": [
+                "Where they come from",
+                "Where they go",
+                "Bought together"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Funnel & leakage",
+          "groups": [
+            {
+              "name": "Stages",
+              "items": [
+                "Browse",
+                "Follow / favourite",
+                "Cart",
+                "Order / pay",
+                "Shipped",
+                "Completed"
+              ]
+            },
+            {
+              "name": "Leak reasons",
+              "items": [
+                "Returns & exchanges",
+                "Removed from cart",
+                "Interest moved · order failed",
+                "Order cancelled · bounce"
+              ]
+            },
+            {
+              "name": "Models",
+              "items": [
+                "AARRR",
+                "AIDMA · AISAS",
+                "Consumer & e-commerce funnels"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Retention & repurchase",
+          "groups": [
+            {
+              "name": "Retention",
+              "items": [
+                "Initial event",
+                "Return event & comparison group",
+                "Time window"
+              ]
+            },
+            {
+              "name": "Repurchase",
+              "items": [
+                "Formula & repurchasing users",
+                "Repurchase rate",
+                "By product · user · channel",
+                "Visualisation"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "User value",
+          "groups": [
+            {
+              "name": "RFM",
+              "items": [
+                "Recency",
+                "Frequency",
+                "Monetary"
+              ]
+            },
+            {
+              "name": "Tiers",
+              "items": [
+                "Keep — important, active",
+                "Develop — important, growing",
+                "Win back — important, lapsing",
+                "General",
+                "Low value"
+              ]
+            },
+            {
+              "name": "ABC inventory",
+              "items": [
+                "A · 10% of items, 70% of value",
+                "B · 30% of items, 20% of value",
+                "C · 60% of items, 10% of value"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "fig2": {
+      "title": "The analysis, step by step",
+      "caption": "Exhibit 2. The analysis as it was run, in pandas: three tables joined on user and ad, cleaned, banded by price, then read two ways — what gets clicked at each price, and who is looking — before the clicking users were clustered and labelled with the RFM tiers from the map.",
+      "nodes": [
+        {
+          "name": "Ad table",
+          "num": "846,811 ads · price, category, campaign, brand"
+        },
+        {
+          "name": "Impression log",
+          "num": "1,048,575 rows · one per impression"
+        },
+        {
+          "name": "User table",
+          "num": "1,048,575 users · 6 coded attributes"
+        },
+        {
+          "name": "Join",
+          "num": "userid · ad_id → 975,441 rows"
+        },
+        {
+          "name": "Clean",
+          "num": "drop rows without gender or age level"
+        },
+        {
+          "name": "Price bands",
+          "num": "9 bands, 100 → 12,800+"
+        },
+        {
+          "name": "Click rate by band",
+          "num": "clicks ÷ impressions"
+        },
+        {
+          "name": "User mix by band",
+          "num": "age · consumption · shopping depth"
+        },
+        {
+          "name": "K-means",
+          "num": "5 segments · 40,997 clicking users"
+        },
+        {
+          "name": "RFM tiers",
+          "num": "keep · develop · win back · general · low"
+        }
+      ]
+    },
+    "fig3": {
+      "title": "Click rate by price band",
+      "sub": "9 price bands · dots = click rate · bars = share of impressions · 975,441 joined impressions",
+      "caption": "Exhibit 3. Four in ten impressions were ads under 100, and they were clicked most: 5.5% against 4.2% in the 1,600–6,400 bands. Click rate falls with price until the top band, where it recovers to 5.1% on a base of only 6,236 impressions. Cheap goods carry the traffic; high-ticket ads earn their clicks from a far smaller audience.",
+      "ctr": "Click rate",
+      "share": "Share of impressions",
+      "imp": "impressions",
+      "clk": "clicks",
+      "max": "highest",
+      "min": "lowest"
+    },
+    "fig4": {
+      "title": "Who is looking at each price band",
+      "sub": "share of impressions by the viewer's consumption level · users without a level excluded",
+      "caption": "Exhibit 4. The audience shifts with price even though click rate barely does. Low-consumption users see 39% of the under-100 impressions and 17% of the 6,400–12,800 band; high-consumption users go from 6% to 20%. Age and shopping depth hardly move across bands, which is why consumption level became the targeting dimension in the recommendations.",
+      "legend": "Consumption level",
+      "levels": [
+        "Low",
+        "Mid",
+        "High"
+      ],
+      "share": "share"
+    },
+    "fig5": {
+      "title": "Five segments of clicking users, labelled with the RFM tiers",
+      "sub": "K-means on shopping depth, click rate and the price of what was clicked · 40,997 users with at least one click · re-run at build time with a fixed seed",
+      "caption": "Exhibit 5. Tiers follow the report's rule: click rate stands in for frequency, the price of clicked ads for monetary value. The largest group, 37%, clicks high-priced ads rarely — the win-back tier the recommendations aimed retargeting at. The two groups near a 99% click rate are mostly users seen once, which is the weakness of a nine-day log, not a loyal core.",
+      "tiers": {
+        "keep": "Keep",
+        "develop": "Develop",
+        "winback": "Win back",
+        "general": "General",
+        "low": "Low value"
+      },
+      "of": "of clicking users",
+      "users": "users",
+      "ctr": "click rate",
+      "price": "median price clicked",
+      "shop": "shopping depth (1–3)",
+      "female": "female",
+      "age": "modal age level"
+    }
+  },
+  "zh": {
+    "exhibits": "图表",
+    "note": "2023 年 8—10 月实习项目。数据源是一份脱敏的展示广告样本——广告表、曝光日志和一张属性已编码为层级的用户表——覆盖九天；本页所有数字都在构建时由它算出。",
+    "stats": [
+      {
+        "label": "曝光",
+        "value": "105 万",
+        "hint": "9 天 · 51,900 次点击"
+      },
+      {
+        "label": "点击率",
+        "value": "4.95%",
+        "hint": "全部价格区间整体"
+      },
+      {
+        "label": "日志中的用户",
+        "value": "384,559",
+        "hint": "93% 能匹配到用户表"
+      },
+      {
+        "label": "展示过的广告",
+        "value": "61,117",
+        "hint": "广告表共 846,811 条"
+      },
+      {
+        "label": "用户群体",
+        "value": "5",
+        "hint": "对 40,997 个有点击的用户做 K-means"
+      }
+    ],
+    "fig1": {
+      "title": "指标地图：电商分析该量什么",
+      "sub": "五个问题 · 52 项指标与模型，按当时写给团队的版本",
+      "caption": "图 1。指标地图是第一份交付物：一套从流量（UV、PV、新客）到需求、漏斗、留存，再到用户价值的共同语言。最后一列的 RFM 用户层次，就是下面用户分群所用的名字。",
+      "tree": [
+        {
+          "name": "流量与新客",
+          "items": [
+            "UV 独立访客",
+            "PV 页面浏览量"
+          ],
+          "groups": [
+            {
+              "name": "新增用户",
+              "items": [
+                "市场增长潜力",
+                "市场用户画像",
+                "新老客分析"
+              ]
+            },
+            {
+              "name": "策略人群",
+              "items": [
+                "大快消策略人群",
+                "白领人群",
+                "中老年",
+                "中高消费人群",
+                "低消费人群"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "需求与场景",
+          "groups": [
+            {
+              "name": "用户调研",
+              "items": [
+                "搜索词",
+                "品牌词",
+                "品类词"
+              ]
+            },
+            {
+              "name": "评价分析",
+              "items": [
+                "客服与物流",
+                "产品属性与赠品",
+                "场景词 · 好评率"
+              ]
+            },
+            {
+              "name": "站外营销",
+              "items": [
+                "分平台关键词匹配",
+                "达人种草与投放"
+              ]
+            },
+            {
+              "name": "消费者流向",
+              "items": [
+                "从哪里来",
+                "到哪里去",
+                "同期购买"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "漏斗与流失",
+          "groups": [
+            {
+              "name": "环节",
+              "items": [
+                "浏览",
+                "关注 / 收藏",
+                "购物车",
+                "下单 / 支付",
+                "出库",
+                "完成交易"
+              ]
+            },
+            {
+              "name": "流失原因",
+              "items": [
+                "退货换货",
+                "移除购物车",
+                "兴趣转移 · 下单失败",
+                "订单取消 · 跳出"
+              ]
+            },
+            {
+              "name": "模型",
+              "items": [
+                "AARRR",
+                "AIDMA · AISAS",
+                "消费漏斗 · 电商漏斗"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "留存与复购",
+          "groups": [
+            {
+              "name": "留存",
+              "items": [
+                "初始事件",
+                "回访事件与对比群组",
+                "分析时间段"
+              ]
+            },
+            {
+              "name": "复购",
+              "items": [
+                "计算公式与复购用户",
+                "复购率",
+                "按商品 · 用户 · 渠道拆分",
+                "可视化"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "用户价值",
+          "groups": [
+            {
+              "name": "RFM",
+              "items": [
+                "最近消费",
+                "消费频率",
+                "消费金额"
+              ]
+            },
+            {
+              "name": "用户层次",
+              "items": [
+                "重要保持用户",
+                "重要发展用户",
+                "重要挽留用户",
+                "一般用户",
+                "低价值用户"
+              ]
+            },
+            {
+              "name": "ABC 库存分析",
+              "items": [
+                "A 类 · 10% 商品，70% 金额",
+                "B 类 · 30% 商品，20% 金额",
+                "C 类 · 60% 商品，10% 金额"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "fig2": {
+      "title": "分析步骤",
+      "caption": "图 2。分析按当时在 pandas 里跑的顺序：三张表按用户和广告关联、清洗、按价格分区，再从两个方向读——每个价位什么会被点、谁在看——最后对有点击的用户聚类，并用图 1 里的 RFM 层次命名。",
+      "nodes": [
+        {
+          "name": "广告表",
+          "num": "846,811 条广告 · 价格、类目、计划、品牌"
+        },
+        {
+          "name": "曝光日志",
+          "num": "1,048,575 行 · 每行一次曝光"
+        },
+        {
+          "name": "用户表",
+          "num": "1,048,575 个用户 · 6 项编码属性"
+        },
+        {
+          "name": "关联",
+          "num": "userid · ad_id → 975,441 行"
+        },
+        {
+          "name": "清洗",
+          "num": "删去性别或年龄层级为空的记录"
+        },
+        {
+          "name": "价格分区",
+          "num": "9 个区间，100 → 12,800+"
+        },
+        {
+          "name": "分区点击率",
+          "num": "点击 ÷ 曝光"
+        },
+        {
+          "name": "分区用户构成",
+          "num": "年龄 · 消费层级 · 购物层级"
+        },
+        {
+          "name": "K-means 聚类",
+          "num": "5 个群体 · 40,997 个有点击的用户"
+        },
+        {
+          "name": "RFM 分层",
+          "num": "重要保持 · 发展 · 挽留 · 一般 · 低价值"
+        }
+      ]
+    },
+    "fig3": {
+      "title": "各价格区间的点击率",
+      "sub": "9 个价格区间 · 圆点 = 点击率 · 柱 = 曝光占比 · 975,441 次关联曝光",
+      "caption": "图 3。四成曝光是 100 以下的商品，点击率也最高：5.5%，而 1,600—6,400 区间只有 4.2%。点击率随价格下降，到最高区间回升到 5.1%，但基数只有 6,236 次曝光。低价商品承接流量，高客单价广告的点击来自小得多的人群。",
+      "ctr": "点击率",
+      "share": "曝光占比",
+      "imp": "曝光",
+      "clk": "点击",
+      "max": "最高",
+      "min": "最低"
+    },
+    "fig4": {
+      "title": "每个价格区间是谁在看",
+      "sub": "按观看者消费层级划分的曝光占比 · 不含缺失层级的用户",
+      "caption": "图 4。点击率随价格变化不大，看的人却明显在换。低消费层级用户占 100 以下区间曝光的 39%，到 6,400—12,800 区间只占 17%；高消费层级则从 6% 升到 20%。年龄和购物层级在各区间几乎不变，所以建议里把消费层级作为投放的人群维度。",
+      "legend": "消费层级",
+      "levels": [
+        "低",
+        "中",
+        "高"
+      ],
+      "share": "占比"
+    },
+    "fig5": {
+      "title": "有点击用户的五个群体，按 RFM 层次命名",
+      "sub": "以购物层级、点击率、所点广告价格做 K-means · 40,997 个至少点击一次的用户 · 构建时用固定随机种子重跑",
+      "caption": "图 5。分层沿用报告里的规则：点击率代表频次，所点广告的价格代表金额。最大的群体占 37%，很少点击但点的是高价广告——即建议里要做再营销的重要挽留用户。两个点击率接近 99% 的群体大多只被看到过一次，这是九天日志的短板，不是忠实核心。",
+      "tiers": {
+        "keep": "重要保持",
+        "develop": "重要发展",
+        "winback": "重要挽留",
+        "general": "一般",
+        "low": "低价值"
+      },
+      "of": "占有点击用户",
+      "users": "用户数",
+      "ctr": "点击率",
+      "price": "所点广告价格中位数",
+      "shop": "购物层级（1—3）",
+      "female": "女性占比",
+      "age": "最多的年龄层级"
+    }
+  }
+}

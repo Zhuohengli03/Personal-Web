@@ -8,7 +8,7 @@ for (const [path, lang, work] of [['/', 'en', 'Selected work'], ['/zh/', 'zh-CN'
     await expect(page.locator('html')).toHaveAttribute('lang', lang);
     await expect(page.locator('h1')).toBeVisible();
     await expect(page.getByRole('heading', { level: 2, name: work })).toBeVisible();
-    await expect(page.locator('#work article')).toHaveCount(3);
+    await expect(page.locator('#work article')).toHaveCount(4);
     await expect(page.locator('#analytics li')).toHaveCount(3);
     await expect(page.locator('#more article')).toHaveCount(3);
     await expect(page.locator('#experience li').first()).toBeVisible();
