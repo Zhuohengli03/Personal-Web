@@ -132,12 +132,13 @@ for (const [locale, path, limits] of [
   ['en', '/work/web-crawler/', 'Limits'],
   ['zh', '/zh/work/web-crawler/', '局限'],
 ] as const) {
-  test(`web-crawler ${locale} case shows its four exhibits and the screenshots`, async ({ page }) => {
+  test(`web-crawler ${locale} case shows its five exhibits and the screenshots`, async ({ page }) => {
     await page.goto(path);
     const ex = page.locator('[data-exhibits]');
-    await expect(ex.locator('figure.exhibit')).toHaveCount(4);
+    await expect(ex.locator('figure.exhibit')).toHaveCount(5);
     await expect(ex.locator('.flow li')).toHaveCount(10);
     await expect(ex.locator('svg')).toHaveCount(1);
+    await expect(ex.locator('img.run[src="/work/web-crawler/run.gif"]')).toHaveAttribute('alt', /.+/);
     await expect(ex.locator('table.schema tbody tr')).not.toHaveCount(0);
     const svg = ex.locator('[data-scroll-chart] svg');
     await svg.scrollIntoViewIfNeeded();

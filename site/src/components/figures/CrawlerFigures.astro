@@ -1,6 +1,6 @@
 ---
-// The exhibit set for the "Dynamic web crawler" case: stat strip, the pipeline, one instrumented run of the scroll
-// loop, the capability matrix, and the table the run would create.
+// The exhibit set for the "Dynamic web crawler" case: stat strip, the pipeline, a recording of the UI running a crawl,
+// one instrumented run of the scroll loop, the capability matrix, and the table the run would create.
 import type { Locale } from '../../i18n';
 import text from '../../data/figures/crawler-text.json';
 import SpecRow from '../SpecRow.astro';
@@ -26,20 +26,26 @@ const t = text[locale];
 
   <figure class="exhibit reveal">
     <div class="head"><h3>{t.fig2.title}</h3><p class="sub">{t.fig2.sub}</p></div>
-    <CrawlerScrollChart t={t.fig2} locale={locale} />
+    <img class="run" src="/work/web-crawler/run.gif" alt={t.fig2.alt} width="960" height="611" loading="lazy" decoding="async" />
     <figcaption>{t.fig2.caption}</figcaption>
   </figure>
 
   <figure class="exhibit reveal">
     <div class="head"><h3>{t.fig3.title}</h3><p class="sub">{t.fig3.sub}</p></div>
-    <MetricTree tree={t.fig3.tree} />
+    <CrawlerScrollChart t={t.fig3} locale={locale} />
     <figcaption>{t.fig3.caption}</figcaption>
   </figure>
 
   <figure class="exhibit reveal">
     <div class="head"><h3>{t.fig4.title}</h3><p class="sub">{t.fig4.sub}</p></div>
-    <CrawlerSchemaTable t={t.fig4} />
+    <MetricTree tree={t.fig4.tree} />
     <figcaption>{t.fig4.caption}</figcaption>
+  </figure>
+
+  <figure class="exhibit reveal">
+    <div class="head"><h3>{t.fig5.title}</h3><p class="sub">{t.fig5.sub}</p></div>
+    <CrawlerSchemaTable t={t.fig5} />
+    <figcaption>{t.fig5.caption}</figcaption>
   </figure>
 </section>
 <style>
@@ -49,6 +55,7 @@ const t = text[locale];
   .strip { margin-bottom: 3rem; }
   .exhibit { margin: 0 0 3.5rem; padding: 1.5rem 1.5rem 1.25rem; border: 1px solid var(--rule); border-radius: var(--radius); background: var(--bg); }
   .head { margin-bottom: 1.1rem; }
+  .run { display: block; width: 100%; height: auto; border: 1px solid var(--rule); border-radius: 8px; }
   h3 { font-family: var(--font-sans); font-size: 1rem; font-weight: 600; letter-spacing: -0.01em; }
   .sub { margin-top: 0.3rem; font-family: var(--font-mono); font-size: 0.72rem; line-height: 1.5; color: var(--fg-muted); }
   figcaption { margin-top: 1.1rem; font-size: 0.9rem; line-height: 1.55; color: color-mix(in srgb, var(--fg) 80%, var(--bg)); }

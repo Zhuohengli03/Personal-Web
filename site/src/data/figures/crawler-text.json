@@ -1,7 +1,7 @@
 {
   "en": {
     "exhibits": "Exhibits",
-    "note": "Personal project, summer 2025. Exhibits 2 and 4 come from one instrumented run of the tool against juejin.cn on 11 October 2026, driven by the tool's own crawler class: counts and timings were recorded, page content was not kept.",
+    "note": "Personal project, summer 2025. Exhibits 3 and 5 come from one instrumented run of the tool against juejin.cn on 11 October 2026, driven by the tool's own crawler class: counts and timings were recorded, page content was not kept.",
     "stats": [
       {
         "label": "Code",
@@ -71,9 +71,15 @@
       ]
     },
     "fig2": {
+      "title": "The tool running: the same crawl, recorded",
+      "sub": "Streamlit UI · 40 articles from juejin.cn · real time for the first seconds, then sped up · ends on the results table",
+      "caption": "Exhibit 2. Target URL, item count and the locators go in at the top; the log below shows each scroll round and what it added, then each article page as it is visited, and the run ends on a table with a title, body, images and the custom fields per row, ready to download or write to MySQL.",
+      "alt": "Screen recording of the crawler app: the form is filled in, the crawl starts, progress lines appear for scrolling and for each article, and a results table appears at the end"
+    },
+    "fig3": {
       "title": "One run on juejin.cn: what each scroll round loaded",
       "sub": "bars = article links on the page when the round started · dots = links collected by the end of it · x = seconds since the page opened · target 60",
-      "caption": "Exhibit 2. The home page opened with 29 article links. The first scroll added nothing, the next two added 17 each, and the fourth round crossed the 60-link target 10 seconds in. Collection then switched to visiting the 60 pages one by one, which took the remaining four and a half minutes of the run.",
+      "caption": "Exhibit 3. The home page opened with 29 article links. The first scroll added nothing, the next two added 17 each, and the fourth round crossed the 60-link target 10 seconds in. Collection then switched to visiting the 60 pages one by one, which took the remaining four and a half minutes of the run.",
       "elements": "links on page",
       "collected": "collected",
       "seconds": "s",
@@ -83,10 +89,10 @@
       "stopNoGrowth": "stopped: no new content",
       "stopMax": "stopped: scroll limit"
     },
-    "fig3": {
+    "fig4": {
       "title": "What the tool can be pointed at",
       "sub": "locate → extract → store, as implemented",
-      "caption": "Exhibit 3. Five exact locators plus eight regular expressions cover most list pages; custom fields reuse the same locators, so a run can add author, date and view count without code. Storage infers the MySQL column types from the values it sees.",
+      "caption": "Exhibit 4. Five exact locators plus eight regular expressions cover most list pages; custom fields reuse the same locators, so a run can add author, date and view count without code. Storage infers the MySQL column types from the values it sees.",
       "tree": [
         {
           "name": "Locate",
@@ -182,10 +188,10 @@
         }
       ]
     },
-    "fig4": {
+    "fig5": {
       "title": "The table this run would create",
       "sub": "column types inferred from the 60 extracted rows · fill = share of rows with a value",
-      "caption": "Exhibit 4. Titles and bodies were found on every page; the three custom fields were filled on 93% of pages and images on 75%. The body column is LONGTEXT because the median article ran 3,760 characters and the longest 22,332; everything short became VARCHAR(500).",
+      "caption": "Exhibit 5. Titles and bodies were found on every page; the three custom fields were filled on 93% of pages and images on 75%. The body column is LONGTEXT because the median article ran 3,760 characters and the longest 22,332; everything short became VARCHAR(500).",
       "column": "Column",
       "type": "MySQL type",
       "source": "Where it comes from",
@@ -204,7 +210,7 @@
   },
   "zh": {
     "exhibits": "图表",
-    "note": "2025 年夏天的个人项目。图 2 和图 4 来自 2026 年 10 月 11 日用这个工具自带的爬虫类对掘金（juejin.cn）跑的一次带记录的运行：只记录了数量和耗时，没有保留任何页面内容。",
+    "note": "2025 年夏天的个人项目。图 3 和图 5 来自 2026 年 10 月 11 日用这个工具自带的爬虫类对掘金（juejin.cn）跑的一次带记录的运行：只记录了数量和耗时，没有保留任何页面内容。",
     "stats": [
       {
         "label": "代码",
@@ -274,9 +280,15 @@
       ]
     },
     "fig2": {
+      "title": "工具运行实录：同一次采集的录屏",
+      "sub": "Streamlit 界面 · 从掘金抓 40 篇 · 前几秒为实时，之后加速 · 结束于结果表",
+      "caption": "图 2。顶部填目标网址、条数和定位方式；下方日志先显示每轮滚动和新增的条数，再显示逐篇访问的进度，最后出现一张每行带标题、正文、图片和自定义字段的结果表，可直接下载或写入 MySQL。",
+      "alt": "爬虫应用的录屏：填写表单、开始采集、滚动和逐篇访问的进度日志依次出现，最后出现结果表"
+    },
+    "fig3": {
       "title": "在掘金上跑一次：每轮滚动加载了多少",
       "sub": "柱 = 本轮开始时页面上的文章链接数 · 圆点 = 本轮结束时已收集的链接数 · 横轴 = 页面打开后的秒数 · 目标 60",
-      "caption": "图 2。首页打开时有 29 条文章链接。第一次滚动没有新增，接下来两轮各加 17 条，第四轮在第 10 秒越过 60 条的目标。随后切换为逐一访问这 60 个页面，占掉了整次运行剩下的四分半钟。",
+      "caption": "图 3。首页打开时有 29 条文章链接。第一次滚动没有新增，接下来两轮各加 17 条，第四轮在第 10 秒越过 60 条的目标。随后切换为逐一访问这 60 个页面，占掉了整次运行剩下的四分半钟。",
       "elements": "页面链接数",
       "collected": "已收集",
       "seconds": "秒",
@@ -286,10 +298,10 @@
       "stopNoGrowth": "停止：无新内容",
       "stopMax": "停止：滚动次数上限"
     },
-    "fig3": {
+    "fig4": {
       "title": "这个工具能对准什么",
       "sub": "定位 → 提取 → 存储，按实际实现列出",
-      "caption": "图 3。五种精确定位加八种正则覆盖大多数列表页；自定义字段复用同一套定位方式，所以不改代码就能多抓作者、日期、阅读数。写库时按看到的值推断 MySQL 列类型。",
+      "caption": "图 4。五种精确定位加八种正则覆盖大多数列表页；自定义字段复用同一套定位方式，所以不改代码就能多抓作者、日期、阅读数。写库时按看到的值推断 MySQL 列类型。",
       "tree": [
         {
           "name": "定位",
@@ -385,10 +397,10 @@
         }
       ]
     },
-    "fig4": {
+    "fig5": {
       "title": "这次运行会建出的表",
       "sub": "列类型由提取到的 60 行推断 · 填充率 = 有值的行占比",
-      "caption": "图 4。每一页都取到了标题和正文；三个自定义字段在 93% 的页面有值，图片 75%。正文列是 LONGTEXT，因为文章长度中位数 3,760 字、最长 22,332 字；短字段都成了 VARCHAR(500)。",
+      "caption": "图 5。每一页都取到了标题和正文；三个自定义字段在 93% 的页面有值，图片 75%。正文列是 LONGTEXT，因为文章长度中位数 3,760 字、最长 22,332 字；短字段都成了 VARCHAR(500)。",
       "column": "列",
       "type": "MySQL 类型",
       "source": "来源",

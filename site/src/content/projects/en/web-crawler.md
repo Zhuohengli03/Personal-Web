@@ -24,15 +24,15 @@ News and community sites load their lists as you scroll: a request to the page r
 
 **Drive a real browser, count before scrolling.** The crawler opens the page in Edge, waits for the main element, and counts how many items are already there. Only if that is short of the target does it scroll (Exhibit 1). Each round scrolls to the bottom, pauses one second, and counts again; it stops when the target is met, after three rounds that add nothing, or at twenty scrolls.
 
-**Locate by selector or by pattern.** Items can be found exactly, with XPath, a CSS selector, an ID, a class or a tag, or by a regular expression over the page: URLs, phone numbers, emails, images, names (Exhibit 3). Custom fields use the same locators, so author, date and view count were added to the run without touching code.
+**Locate by selector or by pattern.** Items can be found exactly, with XPath, a CSS selector, an ID, a class or a tag, or by a regular expression over the page: URLs, phone numbers, emails, images, names (Exhibit 4). Custom fields use the same locators, so author, date and view count were added to the run without touching code.
 
-**Let the data decide the table.** Exporting to MySQL creates the table from the rows: integers, floats, dates and datetimes get their own types, short strings become VARCHAR(500), long ones LONGTEXT (Exhibit 4). Table names are validated so a user cannot inject SQL through the form.
+**Let the data decide the table.** Exporting to MySQL creates the table from the rows: integers, floats, dates and datetimes get their own types, short strings become VARCHAR(500), long ones LONGTEXT (Exhibit 5). Table names are validated so a user cannot inject SQL through the form.
 
 **Keep the configuration.** Every run's settings are saved to JSON and reloaded next time, and the UI is bilingual, because the users were.
 
 ## Result
 
-The run behind the exhibits asked for 60 article links from juejin.cn. The page opened with 29, three scroll rounds brought it to 63, and the crawler had its 60 within 10 seconds (Exhibit 2). Visiting the 60 pages took four and a half more minutes and produced 60 rows with a title and body on every one, custom fields on 93% and images on 75%. The tool wrote the table schema from those rows: five short columns as VARCHAR(500), body, images and raw HTML as LONGTEXT.
+The run behind the exhibits asked for 60 article links from juejin.cn. The page opened with 29, three scroll rounds brought it to 63, and the crawler had its 60 within 10 seconds (Exhibit 3). Visiting the 60 pages took four and a half more minutes and produced 60 rows with a title and body on every one, custom fields on 93% and images on 75%. The tool wrote the table schema from those rows: five short columns as VARCHAR(500), body, images and raw HTML as LONGTEXT.
 
 ## Limits
 
