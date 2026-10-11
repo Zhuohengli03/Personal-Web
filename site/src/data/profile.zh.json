@@ -97,7 +97,7 @@
   "miniProjects": [
     {
       "title": "动态网页爬虫",
-      "body": "基于 Streamlit 与 Selenium 的采集工具：抓取无限滚动页面，通过 XPath、CSS 选择器或正则表达式提取字段，存入 MySQL 或导出至 Excel。",
+      "body": "基于 Streamlit 与 Selenium 的采集工具：抓取无限滚动页面，通过 XPath、CSS 选择器或正则表达式提取字段，存入 MySQL 或导出至 Excel。2025 年花两个月手工完成。",
       "period": "2025 年 8 月",
       "github": "https://github.com/Zhuohengli03/Crawler",
       "caseStudy": "web-crawler"

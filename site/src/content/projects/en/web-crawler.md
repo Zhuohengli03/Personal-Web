@@ -2,7 +2,7 @@
 title: "Dynamic web crawler"
 summary: "A Streamlit + Selenium tool for pages that load as you scroll: point it at a list page, say how to find the items — XPath, CSS, ID, class, tag or a regular expression — and it scrolls, collects the links, visits each page, extracts built-in and custom fields, and lands the rows in Excel, CSV or a MySQL table it creates itself."
 category: product
-role: "Solo developer"
+role: "Solo developer — built by hand, summer 2025"
 period: "2025.06 – 2025.08"
 stack: ["Python", "Streamlit", "Selenium (Edge WebDriver)", "BeautifulSoup + lxml", "pandas", "MySQL"]
 scale: ["3,404 lines of Python · 11 modules", "5 locator modes + 8 regex patterns", "Bilingual UI (ZH / EN)", "Run on juejin.cn: 60 links, 60 pages, 4.6 min"]
@@ -18,7 +18,7 @@ gallery:
 
 ## Problem
 
-News and community sites load their lists as you scroll: a request to the page returns the first twenty items and nothing else. Scraping them means driving a real browser, and the people who wanted the data — classmates collecting articles for coursework — did not want to write Selenium code for every site. The tool had to take a URL and a description of where the items are, and do the rest.
+News and community sites load their lists as you scroll: a request to the page returns the first twenty items and nothing else. Scraping them means driving a real browser, and the people who wanted the data — classmates collecting articles for coursework — did not want to write Selenium code for every site. The tool had to take a URL and a description of where the items are, and do the rest. It was built by hand over two months in the summer of 2025.
 
 ## Decisions
 

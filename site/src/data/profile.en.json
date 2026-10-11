@@ -97,7 +97,7 @@
   "miniProjects": [
     {
       "title": "Dynamic web crawler",
-      "body": "Streamlit + Selenium tool that scrapes infinite-scroll pages, extracts fields by XPath/CSS/regex and lands them in MySQL or Excel.",
+      "body": "Streamlit + Selenium tool that scrapes infinite-scroll pages, extracts fields by XPath/CSS/regex and lands them in MySQL or Excel. Built by hand over two months in 2025.",
       "period": "2025.08",
       "github": "https://github.com/Zhuohengli03/Crawler",
       "caseStudy": "web-crawler"
