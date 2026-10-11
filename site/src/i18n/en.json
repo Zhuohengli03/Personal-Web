@@ -17,7 +17,7 @@
   },
   "sections": {
     "work": "Selected work",
-    "workSub": "Two projects that show how I work: a product I built and still run, and a data pipeline I built so I could decide with numbers instead of hunches.",
+    "workSub": "Four projects that show how I work: a product I built and still run, a data pipeline I built so I could decide with numbers instead of hunches, and two internship analyses with every chart drawn from the data.",
     "analytics": "Analytics",
     "analyticsSub": "Question → method → output. Conclusions reached with metric systems, cohorts and segmentation, not just code.",
     "more": "More projects",
