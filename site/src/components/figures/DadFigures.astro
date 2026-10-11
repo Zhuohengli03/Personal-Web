@@ -18,13 +18,13 @@ const t = text[locale];
 
   <figure class="exhibit reveal">
     <div class="head"><h3>{t.fig1.title}</h3><p class="sub">{t.fig1.sub}</p></div>
-    <DadForecastChart t={t.fig1} />
+    <DadForecastChart t={t.fig1} locale={locale} />
     <figcaption>{t.fig1.caption}</figcaption>
   </figure>
 
   <figure class="exhibit reveal">
     <div class="head"><h3>{t.fig2.title}</h3><p class="sub">{t.fig2.sub}</p></div>
-    <DadWindowsChart t={t.fig2} />
+    <DadWindowsChart t={t.fig2} locale={locale} />
     <figcaption>{t.fig2.caption}</figcaption>
   </figure>
 

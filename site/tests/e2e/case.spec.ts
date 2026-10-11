@@ -41,18 +41,28 @@ test('lingxian links to the live site, not a placeholder', async ({ page }) => {
   await expect(page.locator('a[href="https://lingxian.app"]').first()).toBeVisible();
 });
 
-test('DaD case shows the exhibits drawn from real data', async ({ page }) => {
-  await page.goto('/work/dad-market-forecast/');
-  const ex = page.locator('[data-exhibits]');
-  await expect(ex.locator('figure.exhibit')).toHaveCount(3);
-  await expect(ex.locator('svg').first()).toBeVisible();
-  await expect(ex.locator('.flow li')).toHaveCount(9);
-  // hover tooltip on the forecast chart
-  const svg = ex.locator('[data-forecast-chart] svg');
-  await svg.scrollIntoViewIfNeeded();
-  const box = (await svg.boundingBox())!;
-  await page.mouse.move(box.x + box.width * 0.5, box.y + box.height * 0.5);
-  await expect(ex.locator('[data-forecast-chart] .tip')).toBeVisible();
-  await expect(page.getByRole('heading', { level: 2, name: 'Post-mortem' })).toBeVisible();
-  await expect(ex).toContainText('61%'); // the honest coverage number is on the page
-});
+for (const [locale, path, heading] of [
+  ['en', '/work/dad-market-forecast/', 'Post-mortem'],
+  ['zh', '/zh/work/dad-market-forecast/', '复盘与改进'],
+] as const) {
+  test(`DaD ${locale} case shows localized exhibits drawn from real data`, async ({ page }) => {
+    await page.goto(path);
+    const ex = page.locator('[data-exhibits]');
+    await expect(ex.locator('figure.exhibit')).toHaveCount(3);
+    await expect(ex.locator('svg').first()).toBeVisible();
+    await expect(ex.locator('.flow li')).toHaveCount(9);
+    // hover tooltip on the forecast chart
+    const svg = ex.locator('[data-forecast-chart] svg');
+    await svg.scrollIntoViewIfNeeded();
+    const box = (await svg.boundingBox())!;
+    await page.mouse.move(box.x + box.width * 0.5, box.y + box.height * 0.5);
+    await expect(ex.locator('[data-forecast-chart] .tip')).toBeVisible();
+    await expect(ex.locator('[data-forecast-chart] .tip')).toContainText(locale === 'zh' ? /\d+月\d+日/ : /Sep|Oct/);
+    await expect(ex.locator('[data-forecast-chart] .tip')).toContainText(locale === 'zh' ? '模型预测' : 'forecast');
+    for (const axis of ['[data-forecast-chart] .xaxis', '.windows .xaxis']) {
+      await expect(ex.locator(axis)).toContainText(locale === 'zh' ? /\d+月\d+日/ : /Sep|Oct/);
+    }
+    await expect(page.getByRole('heading', { level: 2, name: heading })).toBeVisible();
+    await expect(ex).toContainText('61%'); // the honest coverage number is on the page
+  });
+}

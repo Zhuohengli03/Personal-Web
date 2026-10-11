@@ -2,8 +2,9 @@
 // Exhibit 2 — the 21 daily holdout windows: skill against naive (bar, diverging around 0) and the share of
 // hours inside the 90% interval (dot), with the nominal and achieved coverage as reference lines.
 import data from '../../data/figures/dad.json';
-interface Props { t: { skill: string; coverage: string; nominal: string; achieved: string } }
-const { t } = Astro.props;
+import type { Locale } from '../../i18n';
+interface Props { locale: Locale; t: { skill: string; coverage: string; nominal: string; achieved: string } }
+const { t, locale } = Astro.props;
 
 const W = 960, L = 60, R = 24;
 const wins = data.windows;
@@ -22,7 +23,7 @@ const B_T = A_T + A_H + 44, B_H = 110;
 const yb = (v: number) => B_T + (1 - v) * B_H;
 const H = B_T + B_H + 34;
 const achieved = data.metrics.coverage, nominal = data.nominalCoverage;
-const fmtDay = (iso: string) => new Date(iso).toLocaleDateString('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' });
+const fmtDay = (iso: string) => new Date(iso).toLocaleDateString(locale === 'zh' ? 'zh-CN' : 'en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' });
 const extremes = new Set([wins.reduce((a, w, i) => ((w.skill ?? 0) > (wins[a].skill ?? 0) ? i : a), 0), wins.reduce((a, w, i) => ((w.skill ?? 0) < (wins[a].skill ?? 0) ? i : a), 0)]);
 ---
 <svg viewBox={`0 0 ${W} ${H}`} class="windows" role="img" aria-label={`${t.skill}; ${t.coverage}`}>

@@ -3,8 +3,10 @@
 // hourly median, the selected model's 24-hour-ahead forecast, the naive baseline and the 90% empirical interval.
 // Pure SVG at build time; colours come from the site tokens; a small script adds a crosshair tooltip.
 import data from '../../data/figures/dad.json';
-interface Props { t: { train: string; actual: string; pred: string; naive: string; band: string; split: string } }
-const { t } = Astro.props;
+import type { Locale } from '../../i18n';
+interface Props { locale: Locale; t: { train: string; actual: string; pred: string; naive: string; band: string; split: string } }
+const { t, locale } = Astro.props;
+const dateLocale = locale === 'zh' ? 'zh-CN' : 'en-US';
 
 const W = 960, H = 400, L = 46, R = 28, T = 26, B = 40;
 const DAY = 86_400_000;
@@ -28,7 +30,7 @@ const band = `${pts.map((p, i) => `${i ? 'L' : 'M'}${f(x(p.t))} ${f(y(p.hi))}`).
 const yTicks = Array.from({ length: yMax / 20 + 1 }, (_, i) => i * 20);
 const dayTicks: number[] = [];
 for (let d = Math.ceil(t0 / DAY) * DAY; d <= t1; d += DAY) dayTicks.push(d);
-const fmtDay = (ms: number) => new Date(ms).toLocaleDateString('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' });
+const fmtDay = (ms: number) => new Date(ms).toLocaleDateString(dateLocale, { month: 'short', day: 'numeric', timeZone: 'UTC' });
 const splitX = x(Date.parse(data.split));
 const hover = [...tail.map((p) => ({ t: p.t, a: p.a, p: null as number | null, n: null as number | null })), ...pts.map((p) => ({ t: p.t, a: p.a, p: p.p, n: p.n }))];
 ---
@@ -62,7 +64,7 @@ const hover = [...tail.map((p) => ({ t: p.t, a: p.a, p: null as number | null, n
     <li><i class="sw naive"></i>{t.naive}</li>
     <li><i class="sw band"></i>{t.band}</li>
   </ul>
-  <script type="application/json" data-points set:html={JSON.stringify({ points: hover, t0, t1, L, R, W, yMax, T, H, B, labels: { a: t.actual, p: t.pred, n: t.naive } })} />
+  <script type="application/json" data-points set:html={JSON.stringify({ points: hover, t0, t1, L, R, W, yMax, T, H, B, dateLocale, labels: { a: t.actual, p: t.pred, n: t.naive } })} />
 </div>
 <style>
   .chart { position: relative; }
@@ -79,7 +81,7 @@ const hover = [...tail.map((p) => ({ t: p.t, a: p.a, p: null as number | null, n
   .split text { fill: var(--fg-muted); }
   .hover .xline { stroke: var(--fg-muted); stroke-dasharray: 2 3; }
   .hover .ring { fill: var(--bg); stroke: var(--fg); stroke-width: 2; }
-  .tip { position: absolute; pointer-events: none; transform: translate(-50%, calc(-100% - 10px)); background: var(--fg); color: var(--bg); font-family: var(--font-mono); font-size: 0.72rem; line-height: 1.4; padding: 0.35rem 0.55rem; border-radius: 6px; white-space: nowrap; }
+  .tip { position: absolute; pointer-events: none; transform: translate(-50%, calc(-100% - 10px)); background: var(--fg); color: var(--bg); font-family: var(--font-mono); font-size: 0.72rem; line-height: 1.6; padding: 0.35rem 0.55rem; border-radius: 6px; white-space: pre-line; width: max-content; max-width: 100%; }
   .legend { list-style: none; display: flex; flex-wrap: wrap; gap: 0.4rem 1.2rem; margin: 0.6rem 0 0; padding: 0; font-family: var(--font-mono); font-size: 0.7rem; color: var(--fg-muted); }
   .legend li { display: flex; align-items: center; gap: 0.4rem; }
   .sw { display: inline-block; width: 18px; height: 3px; border-radius: 2px; }
@@ -96,13 +98,14 @@ const hover = [...tail.map((p) => ({ t: p.t, a: p.a, p: null as number | null, n
       points: { t: number; a: number | null; p: number | null; n: number | null }[];
       t0: number; t1: number; L: number; R: number; W: number; yMax: number; T: number; H: number; B: number;
       labels: { a: string; p: string; n: string };
+      dateLocale: string;
     };
     const svg = root.querySelector('svg')!;
     const hover = root.querySelector<SVGGElement>('.hover')!;
     const xline = hover.querySelector<SVGLineElement>('.xline')!;
     const ring = hover.querySelector<SVGCircleElement>('.ring')!;
     const tip = root.querySelector<HTMLElement>('.tip')!;
-    const fmt = (t: number) => new Date(t).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', hour12: false, timeZone: 'UTC' });
+    const fmt = (t: number) => new Date(t).toLocaleString(cfg.dateLocale, { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', hourCycle: 'h23', timeZone: 'UTC' });
     svg.addEventListener('pointermove', (e: PointerEvent) => {
       const r = svg.getBoundingClientRect();
       const px = ((e.clientX - r.left) / r.width) * cfg.W;
@@ -116,12 +119,13 @@ const hover = [...tail.map((p) => ({ t: p.t, a: p.a, p: null as number | null, n
       ring.setAttribute('cx', String(cx)); ring.setAttribute('cy', String(cy));
       hover.setAttribute('display', 'inline');
       tip.hidden = false;
-      const parts = [fmt(p.t)];
+      const parts = [`${fmt(p.t)} UTC`];
       if (p.a !== null) parts.push(`${cfg.labels.a} ${p.a}`);
       if (p.p !== null) parts.push(`${cfg.labels.p} ${p.p}`);
       if (p.n !== null) parts.push(`${cfg.labels.n} ${p.n}`);
-      tip.textContent = parts.join(' · ');
-      tip.style.left = `${(cx / cfg.W) * r.width}px`;
+      tip.textContent = parts.join('\n');
+      const halfWidth = tip.getBoundingClientRect().width / 2;
+      tip.style.left = `${Math.max(halfWidth, Math.min(r.width - halfWidth, (cx / cfg.W) * r.width))}px`;
       tip.style.top = `${(cy / cfg.H) * r.height}px`;
     });
     svg.addEventListener('pointerleave', () => { hover.setAttribute('display', 'none'); tip.hidden = true; });
