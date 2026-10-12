@@ -80,6 +80,8 @@
     "places": "places",
     "countries": "countries",
     "photos": "photos",
-    "map": "Map of the places these photos were taken"
+    "map": "Map of the places these photos were taken",
+    "all": "All photos",
+    "showAll": "Show all"
   }
 }

@@ -1,7 +1,7 @@
 ---
 // TravelMap.astro — a world map rendered at build time (Equal Earth, Natural Earth 1:110m countries from world-atlas)
 // with one pin per place in places.json, sized by photo count. Places closer than MERGE_PX on the map share a pin.
-// Each pin links to its place's section on the page; a small script adds a tooltip.
+// Each pin is a toggle: it filters the photo wall below to its place(s) (TravelLayout listens for the event).
 import { geoEqualEarth, geoPath, geoGraticule10 } from 'd3-geo';
 import { feature, mesh } from 'topojson-client';
 import type { Topology, GeometryCollection } from 'topojson-specification';
@@ -44,11 +44,11 @@ const r = (n: number) => 4 + 2.2 * Math.sqrt(n);
     {pins.map((g) => {
       const n = count(g), rad = r(n), right = g.x < W * 0.72;
       return (
-        <a href={`#${g.places[0].id}`} class="pin" data-pin data-title={g.places.map(name).join(' · ')} data-sub={`${[...new Set(g.places.map(country))].join(' · ')} · ${n} ${photosWord}`}>
+        <g class="pin" role="button" tabindex="0" aria-pressed="false" aria-label={`${g.places.map(name).join(' · ')}, ${n} ${photosWord}`} data-pin data-places={g.places.map((p) => p.id).join(' ')} data-title={g.places.map(name).join(' · ')} data-sub={`${[...new Set(g.places.map(country))].join(' · ')} · ${n} ${photosWord}`}>
           <circle class="halo" cx={f(g.x)} cy={f(g.y)} r={f(rad + 5)} />
           <circle class="dot" cx={f(g.x)} cy={f(g.y)} r={f(rad)} />
           <text class="lab" x={f(right ? g.x + rad + 6 : g.x - rad - 6)} y={f(g.y)} text-anchor={right ? 'start' : 'end'} dominant-baseline="middle">{g.places.map(name).join(' · ')}</text>
-        </a>
+        </g>
       );
     })}
   </svg>
@@ -66,7 +66,10 @@ const r = (n: number) => 4 + 2.2 * Math.sqrt(n);
   .dot { fill: var(--accent); stroke: var(--bg); stroke-width: 2; }
   .lab { font-size: 12px; font-weight: 500; fill: var(--fg); paint-order: stroke; stroke: var(--bg); stroke-width: 3px; stroke-linejoin: round; }
   .pin:hover .halo, .pin:focus-visible .halo { opacity: 0.4; }
-  .pin:focus-visible { outline: none; }
+  .pin[aria-pressed='true'] .halo { opacity: 0.55; }
+  .pin[aria-pressed='true'] .dot { stroke: var(--fg); }
+  .pin[aria-pressed='true'] .lab { fill: var(--accent); }
+  .pin:focus { outline: none; }
   .pin:focus-visible .dot { stroke: var(--fg); }
   .tip { position: absolute; pointer-events: none; transform: translate(-50%, calc(-100% - 14px)); background: var(--fg); color: var(--bg); font-family: var(--font-mono); font-size: 0.72rem; line-height: 1.6; padding: 0.35rem 0.55rem; border-radius: 6px; white-space: pre-line; width: max-content; max-width: 90%; }
   @media (max-width: 560px) { .lab { font-size: 15px; } }
@@ -85,6 +88,14 @@ const r = (n: number) => 4 + 2.2 * Math.sqrt(n);
       };
       pin.addEventListener('pointerenter', show); pin.addEventListener('focus', show);
       pin.addEventListener('pointerleave', () => { tip.hidden = true; }); pin.addEventListener('blur', () => { tip.hidden = true; });
+      const toggle = () => {
+        const on = pin.getAttribute('aria-pressed') !== 'true';
+        root.querySelectorAll('[data-pin]').forEach((p) => p.setAttribute('aria-pressed', 'false'));
+        pin.setAttribute('aria-pressed', String(on));
+        root.dispatchEvent(new CustomEvent('travel:place', { bubbles: true, detail: on ? { ids: (pin.dataset.places ?? '').split(' '), title: pin.dataset.title ?? '' } : null }));
+      };
+      pin.addEventListener('click', toggle);
+      pin.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); } });
     }
     svg.addEventListener('pointerleave', () => { tip.hidden = true; });
   }

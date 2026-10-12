@@ -1,12 +1,13 @@
 ---
 // TravelLayout.astro — the photography & travel page: the world map of where the photos were taken (places.json,
-// built by scripts/photo-places.mjs from the originals' EXIF), then one section per place with its photos.
+// built by scripts/photo-places.mjs from the originals' EXIF) above one photo wall. All photos show by default;
+// clicking a place on the map shows only that place's photos, clicking it again (or "show all") brings them back.
 import { Image, getImage } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 import BaseLayout from './BaseLayout.astro';
 import Lightbox from '../components/Lightbox.astro';
 import TravelMap from '../components/figures/TravelMap.astro';
-import { t, localePath, formatDate, type Locale } from '../i18n';
+import { t, localePath, type Locale } from '../i18n';
 import { loadLife } from '../lib/life';
 import data from '../data/figures/places.json';
 
@@ -24,18 +25,15 @@ const resolve = (file: string): ImageMetadata => {
   return meta;
 };
 const places = [...data.places].sort((a, b) => (a.from ?? '9999').localeCompare(b.from ?? '9999'));
-const sections = await Promise.all(places.map(async (p) => ({
-  ...p,
-  shots: await Promise.all(p.photos.map(async (ph) => { const meta = resolve(ph.file); return { ...ph, meta, large: await getImage({ src: meta, width: 1800, format: 'webp', quality: 80 }), caption: caption.get(ph.file) ?? '' }; })),
-})));
+// newest first; the one undated photo goes last
+const shots = await Promise.all(
+  places.flatMap((p) => p.photos.map((ph) => ({ ...ph, place: p.id })))
+    .sort((a, b) => (b.date ?? '').localeCompare(a.date ?? ''))
+    .map(async (ph) => { const meta = resolve(ph.file); return { ...ph, meta, large: await getImage({ src: meta, width: 1800, format: 'webp', quality: 80 }), caption: caption.get(ph.file) ?? '' }; }),
+);
 const nPhotos = places.reduce((n, p) => n + p.photos.length, 0);
 const nCountries = new Set(places.map((p) => p.country[0])).size;
-const range = (p: (typeof places)[number]) => {
-  if (!p.from) return '';
-  const a = formatDate(p.from, locale), b = p.to && p.to !== p.from ? formatDate(p.to, locale) : null;
-  return b ? `${a} – ${b}` : a;
-};
-let n = 0;
+
 ---
 <BaseLayout title={`${hobby.page.title} — ${tr('site.title')}`} description={hobby.page.intro} locale={locale} path="/life/photo/">
   <main class="wrap section">
@@ -46,39 +44,64 @@ let n = 0;
       <p class="counts center fade-up" data-delay="4">{places.length} {tr('life.places')} · {nCountries} {tr('life.countries')} · {nPhotos} {tr('life.photos')}</p>
     </header>
     <div class="map-wrap reveal"><TravelMap locale={locale} label={tr('life.map')} photosWord={tr('life.photos')} /></div>
-    {sections.map((p) => (
-      <section class="place reveal" id={p.id}>
-        <h2><span class="name">{locale === 'zh' ? p.zh : p.en}</span><span class="country">{p.country[locale === 'zh' ? 1 : 0]}</span><span class="when">{range(p)}</span></h2>
-        <ul class="shots">
-          {p.shots.map((s) => {
-            n += 1;
-            return (
-              <li>
-                <figure>
-                  <button type="button" data-lightbox-src={s.large.src} data-lightbox-alt={s.caption} aria-label={tr('a11y.openImage').replace('{n}', String(n)).replace('{alt}', s.caption)}>
-                    <Image src={s.meta} alt={s.caption} width={640} format="webp" quality={80} loading="lazy" />
-                  </button>
-                  <figcaption>{s.caption}</figcaption>
-                </figure>
-              </li>
-            );
-          })}
-        </ul>
-      </section>
-    ))}
+    <section class="wall" data-wall>
+      <p class="filter" aria-live="polite">
+        <span data-filter-label data-all={`${tr('life.all')} · ${nPhotos}`}>{tr('life.all')} · {nPhotos}</span>
+        <button type="button" class="clear" data-clear hidden>{tr('life.showAll')}</button>
+      </p>
+      <ul class="shots">
+        {shots.map((s, i) => (
+          <li data-place={s.place}>
+            <figure>
+              <button type="button" data-lightbox-src={s.large.src} data-lightbox-alt={s.caption} aria-label={tr('a11y.openImage').replace('{n}', String(i + 1)).replace('{alt}', s.caption)}>
+                <Image src={s.meta} alt={s.caption} width={640} format="webp" quality={80} loading="lazy" />
+              </button>
+              <figcaption>{s.caption}</figcaption>
+            </figure>
+          </li>
+        ))}
+      </ul>
+    </section>
     <p class="center back"><a class="btn" href={localePath('/#life', locale)}>← {tr('life.back')}</a></p>
   </main>
   <Lightbox closeLabel={tr('case.close')} label={tr('a11y.imagePreview')} />
 </BaseLayout>
+<script>
+  // The map sends travel:place with the place ids of the pin that was pressed (or null when it is released).
+  const wall = document.querySelector<HTMLElement>('[data-wall]');
+  if (wall) {
+    const items = [...wall.querySelectorAll<HTMLElement>('.shots > li')];
+    const label = wall.querySelector<HTMLElement>('[data-filter-label]')!;
+    const clear = wall.querySelector<HTMLButtonElement>('[data-clear]')!;
+    const apply = (ids: string[] | null, title = '') => {
+      let shown = 0;
+      for (const li of items) { const on = !ids || ids.includes(li.dataset.place ?? ''); li.hidden = !on; if (on) shown += 1; }
+      label.textContent = ids ? `${title} · ${shown}` : (label.dataset.all ?? '');
+      clear.hidden = !ids;
+    };
+    document.addEventListener('travel:place', (e) => {
+      const d = (e as CustomEvent<{ ids: string[]; title: string } | null>).detail;
+      apply(d?.ids ?? null, d?.title);
+      if (d) wall.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
+    });
+    clear.addEventListener('click', () => {
+      document.querySelectorAll('[data-travel-map] [data-pin]').forEach((p) => p.setAttribute('aria-pressed', 'false'));
+      apply(null);
+    });
+  }
+</script>
 <style>
   .head { max-width: var(--measure); margin: 0 auto 2rem; }
   .head h1 { margin: 0.4rem 0 1rem; }
   .counts { margin-top: 0.8rem; font-family: var(--font-mono); font-size: 0.75rem; color: var(--fg-muted); }
   .map-wrap { margin: 0 0 3.5rem; }
-  .place { margin-bottom: 3rem; scroll-margin-top: calc(var(--header-h) + 1.5rem); }
-  .place h2 { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.3rem 0.8rem; margin-bottom: 1.1rem; padding-bottom: 0.6rem; border-bottom: 1px solid var(--rule); font-family: var(--font-sans); font-size: 1.05rem; font-weight: 600; }
-  .country { font-weight: 400; color: var(--fg-muted); font-size: 0.9rem; }
-  .when { margin-left: auto; font-family: var(--font-mono); font-size: 0.72rem; font-weight: 400; color: var(--fg-muted); }
+  .wall { margin-bottom: 3rem; scroll-margin-top: calc(var(--header-h) + 1rem); }
+  .filter { display: flex; align-items: baseline; gap: 0.9rem; margin: 0 0 1.1rem; padding-bottom: 0.6rem; border-bottom: 1px solid var(--rule); font-family: var(--font-sans); font-size: 1.05rem; font-weight: 600; }
+  .clear { all: unset; cursor: pointer; font-family: var(--font-mono); font-size: 0.72rem; font-weight: 400; color: var(--fg-muted); }
+  .clear[hidden] { display: none; }
+  .clear:hover { color: var(--fg); }
+  .clear:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+  .shots li[hidden] { display: none; }
   .shots { list-style: none; margin: 0; padding: 0; columns: 1; column-gap: 1.1rem; }
   @media (min-width: 560px) { .shots { columns: 2; } }
   @media (min-width: 900px) { .shots { columns: 3; } }

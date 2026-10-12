@@ -85,21 +85,29 @@ test('the games row is one link to its page, with a button-like outline on hover
 });
 
 for (const [path, lang] of [['/life/photo/', 'en'], ['/zh/life/photo/', 'zh-CN']] as const) {
-  test(`travel page ${path}: a world map with a pin per place, and every site photo under its place`, async ({ page }) => {
+  test(`travel page ${path}: every photo by default, a map pin filters to its place and toggles back`, async ({ page }) => {
     await page.goto(path);
     await expect(page.locator('html')).toHaveAttribute('lang', lang);
     const map = page.locator('[data-travel-map] svg');
     await expect(map).toBeVisible();
     expect(await map.locator('[data-pin]').count()).toBeGreaterThanOrEqual(4);
-    const sections = page.locator('main .place');
-    expect(await sections.count()).toBeGreaterThanOrEqual(5);
-    expect(await page.locator('main .place .shots li').count()).toBe(16);
-    // a pin links to its place's section and shows a tooltip
-    const pin = map.locator('[data-pin]').first();
-    const href = await pin.getAttribute('href');
-    await expect(page.locator(`main ${href}`)).toHaveCount(1);
-    await pin.hover({ force: true });
-    await expect(page.locator('[data-travel-map] .tip')).toBeVisible();
+    const shots = page.locator('[data-wall] .shots > li');
+    await expect(shots).toHaveCount(16);
+    await expect(page.locator('[data-wall] .shots > li:visible')).toHaveCount(16);
+    await expect(page.locator('[data-wall] [data-clear]')).toBeHidden(); // nothing to clear yet
+    // pick the pin for San Francisco: one photo
+    const sf = map.locator('[data-pin][data-places="sanfrancisco"]');
+    await sf.locator('.dot').click({ force: true });
+    await expect(sf).toHaveAttribute('aria-pressed', 'true');
+    await expect(page.locator('[data-wall] .shots > li:visible')).toHaveCount(1);
+    await expect(page.locator('[data-wall] [data-clear]')).toBeVisible();
+    await sf.locator('.dot').click({ force: true }); // again: everything back
+    await expect(page.locator('[data-wall] .shots > li:visible')).toHaveCount(16);
+    // the show-all button also resets
+    await map.locator('[data-pin][data-places="ili"] .dot').click({ force: true });
+    await expect(page.locator('[data-wall] .shots > li:visible')).toHaveCount(7);
+    await page.locator('[data-wall] [data-clear]').click();
+    await expect(page.locator('[data-wall] .shots > li:visible')).toHaveCount(16);
     // the page never carries a photo's own coordinates, only city centroids
     expect(await page.content()).not.toMatch(/40\.734|-74\.028|42\.477|80\.826/);
   });
