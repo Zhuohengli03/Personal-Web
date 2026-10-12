@@ -7,32 +7,32 @@
     {
       "appid": 393380,
       "name": "Squad",
-      "hours": 1545
+      "hours": 1545.2
     },
     {
       "appid": 2016590,
       "name": "Dark and Darker",
-      "hours": 1420
+      "hours": 1420.4
     },
     {
       "appid": 730,
       "name": "Counter-Strike 2",
-      "hours": 855
+      "hours": 854.6
     },
     {
       "appid": 1867240,
       "name": "WARDOGS",
-      "hours": 233
+      "hours": 232.7
     },
     {
       "appid": 1238810,
       "name": "Battlefield™ V",
-      "hours": 119
+      "hours": 119.4
     },
     {
       "appid": 359550,
       "name": "Tom Clancy's Rainbow Six Siege",
-      "hours": 105
+      "hours": 104.6
     },
     {
       "appid": 1938090,
@@ -42,17 +42,17 @@
     {
       "appid": 1085660,
       "name": "Destiny 2",
-      "hours": 75
+      "hours": 74.9
     },
     {
       "appid": 261550,
       "name": "Mount & Blade II: Bannerlord",
-      "hours": 67
+      "hours": 67.1
     },
     {
       "appid": 236390,
       "name": "War Thunder",
-      "hours": 65
+      "hours": 64.9
     },
     {
       "appid": 594650,
@@ -62,12 +62,12 @@
     {
       "appid": 271590,
       "name": "Grand Theft Auto V Legacy",
-      "hours": 43
+      "hours": 42.9
     },
     {
       "appid": 242760,
       "name": "The Forest",
-      "hours": 36
+      "hours": 35.6
     },
     {
       "appid": 225540,
@@ -78,6 +78,171 @@
       "appid": 289070,
       "name": "Sid Meier's Civilization VI",
       "hours": 31
+    },
+    {
+      "appid": 1465460,
+      "name": "Infection Free Zone",
+      "hours": 19.4
+    },
+    {
+      "appid": 553850,
+      "name": "HELLDIVERS™ 2",
+      "hours": 18.2
+    },
+    {
+      "appid": 1675900,
+      "name": "Warlander",
+      "hours": 17.9
+    },
+    {
+      "appid": 518790,
+      "name": "theHunter: Call of the Wild™",
+      "hours": 17.1
+    },
+    {
+      "appid": 1531430,
+      "name": "Paragon: The Overprime",
+      "hours": 16.9
+    },
+    {
+      "appid": 255710,
+      "name": "Cities: Skylines",
+      "hours": 13.5
+    },
+    {
+      "appid": 289650,
+      "name": "Assassin's Creed Unity",
+      "hours": 13.5
+    },
+    {
+      "appid": 2076040,
+      "name": "THE FINALS PLAYTEST",
+      "hours": 13.2
+    },
+    {
+      "appid": 227300,
+      "name": "Euro Truck Simulator 2",
+      "hours": 12
+    },
+    {
+      "appid": 464920,
+      "name": "Surviving Mars",
+      "hours": 11.5
+    },
+    {
+      "appid": 3527290,
+      "name": "PEAK",
+      "hours": 10.5
+    },
+    {
+      "appid": 312660,
+      "name": "Sniper Elite 4",
+      "hours": 10.4
+    },
+    {
+      "appid": 1597480,
+      "name": "Zombie Gunship Survival",
+      "hours": 7.9
+    },
+    {
+      "appid": 248610,
+      "name": "Door Kickers",
+      "hours": 7.6
+    },
+    {
+      "appid": 2107680,
+      "name": "Warhaven Playtest",
+      "hours": 5
+    },
+    {
+      "appid": 863550,
+      "name": "HITMAN™ 2",
+      "hours": 4.5
+    },
+    {
+      "appid": 2567870,
+      "name": "Chained Together",
+      "hours": 4.5
+    },
+    {
+      "appid": 349040,
+      "name": "NARUTO SHIPPUDEN: Ultimate Ninja STORM 4",
+      "hours": 4.3
+    },
+    {
+      "appid": 1222700,
+      "name": "A Way Out",
+      "hours": 3.5
+    },
+    {
+      "appid": 403640,
+      "name": "Dishonored 2",
+      "hours": 3
+    },
+    {
+      "appid": 2073850,
+      "name": "THE FINALS",
+      "hours": 2.7
+    },
+    {
+      "appid": 1509960,
+      "name": "PICO PARK",
+      "hours": 2.5
+    },
+    {
+      "appid": 2943650,
+      "name": "FragPunk",
+      "hours": 2.4
+    },
+    {
+      "appid": 239140,
+      "name": "Dying Light",
+      "hours": 1.7
+    },
+    {
+      "appid": 646910,
+      "name": "The Crew 2",
+      "hours": 1.3
+    },
+    {
+      "appid": 1620690,
+      "name": "Rubber Bandits: Summer Prologue",
+      "hours": 0.8
+    },
+    {
+      "appid": 218620,
+      "name": "PAYDAY 2",
+      "hours": 0.6
+    },
+    {
+      "appid": 1568590,
+      "name": "Goose Goose Duck",
+      "hours": 0.6
+    },
+    {
+      "appid": 1222670,
+      "name": "The Sims™ 4",
+      "hours": 0.5
+    },
+    {
+      "appid": 1240440,
+      "name": "Halo Infinite",
+      "hours": 0.5
+    },
+    {
+      "appid": 868270,
+      "name": "The Cycle: Frontier",
+      "hours": 0.3
+    },
+    {
+      "appid": 493340,
+      "name": "Planet Coaster",
+      "hours": 0.2
+    },
+    {
+      "appid": 346110,
+      "name": "ARK: Survival Evolved",
+      "hours": 0.1
     }
   ]
 }

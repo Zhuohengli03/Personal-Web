@@ -64,7 +64,7 @@
           {
             "id": "pc",
             "heading": "PC · Steam",
-            "note": "Steam 时长截至 2026-10-12：20 小时以上的全部游戏，按时长排序。",
+            "note": "Steam 时长截至 2026-10-12：玩过的全部游戏，按时长排序。",
             "cards": [
               {
                 "image": "games/squad.jpg",
@@ -155,6 +155,204 @@
                 "title": "文明 6",
                 "meta": "31 小时",
                 "href": "https://store.steampowered.com/app/289070/"
+              },
+              {
+                "image": "games/app-1465460.jpg",
+                "title": "无感染区",
+                "meta": "19 小时",
+                "href": "https://store.steampowered.com/app/1465460/"
+              },
+              {
+                "image": "games/app-553850.jpg",
+                "title": "绝地潜兵 2",
+                "meta": "18 小时",
+                "href": "https://store.steampowered.com/app/553850/"
+              },
+              {
+                "image": "games/app-1675900.jpg",
+                "title": "Warlander",
+                "meta": "18 小时",
+                "href": "https://store.steampowered.com/app/1675900/"
+              },
+              {
+                "image": "games/app-518790.jpg",
+                "title": "猎人：荒野的召唤",
+                "meta": "17 小时",
+                "href": "https://store.steampowered.com/app/518790/"
+              },
+              {
+                "image": "games/app-1531430.jpg",
+                "title": "Paragon: The Overprime",
+                "meta": "17 小时",
+                "href": "https://store.steampowered.com/app/1531430/"
+              },
+              {
+                "image": "games/app-255710.jpg",
+                "title": "Cities: Skylines",
+                "meta": "14 小时",
+                "href": "https://store.steampowered.com/app/255710/"
+              },
+              {
+                "image": "games/app-289650.jpg",
+                "title": "刺客信条：大革命",
+                "meta": "14 小时",
+                "href": "https://store.steampowered.com/app/289650/"
+              },
+              {
+                "image": "games/app-2076040.jpg",
+                "title": "The Finals Playtest",
+                "meta": "13 小时",
+                "href": "https://store.steampowered.com/app/2076040/"
+              },
+              {
+                "image": "games/app-227300.jpg",
+                "title": "Euro Truck Simulator 2",
+                "meta": "12 小时",
+                "href": "https://store.steampowered.com/app/227300/"
+              },
+              {
+                "image": "games/app-464920.jpg",
+                "title": "Surviving Mars",
+                "meta": "12 小时",
+                "href": "https://store.steampowered.com/app/464920/"
+              },
+              {
+                "image": "games/app-3527290.jpg",
+                "title": "PEAK",
+                "meta": "11 小时",
+                "href": "https://store.steampowered.com/app/3527290/"
+              },
+              {
+                "image": "games/app-312660.jpg",
+                "title": "Sniper Elite 4",
+                "meta": "10 小时",
+                "href": "https://store.steampowered.com/app/312660/"
+              },
+              {
+                "image": "games/app-1597480.jpg",
+                "title": "Zombie Gunship Survival",
+                "meta": "7.9 小时",
+                "href": "https://store.steampowered.com/app/1597480/"
+              },
+              {
+                "image": "games/app-248610.jpg",
+                "title": "Door Kickers",
+                "meta": "7.6 小时",
+                "href": "https://store.steampowered.com/app/248610/"
+              },
+              {
+                "image": "games/app-2107680.jpg",
+                "title": "Warhaven Playtest",
+                "meta": "5 小时",
+                "href": "https://store.steampowered.com/app/2107680/"
+              },
+              {
+                "image": "games/app-863550.jpg",
+                "title": "HITMAN 2",
+                "meta": "4.5 小时",
+                "href": "https://store.steampowered.com/app/863550/"
+              },
+              {
+                "image": "games/app-2567870.jpg",
+                "title": "Chained Together",
+                "meta": "4.5 小时",
+                "href": "https://store.steampowered.com/app/2567870/"
+              },
+              {
+                "image": "games/app-349040.jpg",
+                "title": "火影忍者疾风传：终极风暴 4",
+                "meta": "4.3 小时",
+                "href": "https://store.steampowered.com/app/349040/"
+              },
+              {
+                "image": "games/app-1222700.jpg",
+                "title": "A Way Out",
+                "meta": "3.5 小时",
+                "href": "https://store.steampowered.com/app/1222700/"
+              },
+              {
+                "image": "games/app-403640.jpg",
+                "title": "Dishonored 2",
+                "meta": "3 小时",
+                "href": "https://store.steampowered.com/app/403640/"
+              },
+              {
+                "image": "games/app-2073850.jpg",
+                "title": "THE FINALS",
+                "meta": "2.7 小时",
+                "href": "https://store.steampowered.com/app/2073850/"
+              },
+              {
+                "image": "games/app-1509960.jpg",
+                "title": "PICO PARK",
+                "meta": "2.5 小时",
+                "href": "https://store.steampowered.com/app/1509960/"
+              },
+              {
+                "image": "games/app-2943650.jpg",
+                "title": "界外狂潮",
+                "meta": "2.4 小时",
+                "href": "https://store.steampowered.com/app/2943650/"
+              },
+              {
+                "image": "games/app-239140.jpg",
+                "title": "Dying Light",
+                "meta": "1.7 小时",
+                "href": "https://store.steampowered.com/app/239140/"
+              },
+              {
+                "image": "games/app-646910.jpg",
+                "title": "The Crew 2",
+                "meta": "1.3 小时",
+                "href": "https://store.steampowered.com/app/646910/"
+              },
+              {
+                "image": "games/app-1620690.jpg",
+                "title": "Rubber Bandits: Summer Prologue",
+                "meta": "0.8 小时",
+                "href": "https://store.steampowered.com/app/1620690/"
+              },
+              {
+                "image": "games/app-218620.jpg",
+                "title": "PAYDAY 2",
+                "meta": "0.6 小时",
+                "href": "https://store.steampowered.com/app/218620/"
+              },
+              {
+                "image": "games/app-1568590.jpg",
+                "title": "Goose Goose Duck",
+                "meta": "0.6 小时",
+                "href": "https://store.steampowered.com/app/1568590/"
+              },
+              {
+                "image": "games/the-sims-4.jpg",
+                "title": "模拟人生 4",
+                "meta": "0.5 小时",
+                "href": "https://store.steampowered.com/app/1222670/"
+              },
+              {
+                "image": "games/app-1240440.jpg",
+                "title": "Halo Infinite",
+                "meta": "0.5 小时",
+                "href": "https://store.steampowered.com/app/1240440/"
+              },
+              {
+                "image": "games/app-868270.jpg",
+                "title": "The Cycle: Frontier",
+                "meta": "0.3 小时",
+                "href": "https://store.steampowered.com/app/868270/"
+              },
+              {
+                "image": "games/app-493340.jpg",
+                "title": "过山车之星",
+                "meta": "0.2 小时",
+                "href": "https://store.steampowered.com/app/493340/"
+              },
+              {
+                "image": "games/app-346110.jpg",
+                "title": "ARK: Survival Evolved",
+                "meta": "0.1 小时",
+                "href": "https://store.steampowered.com/app/346110/"
               }
             ]
           },
