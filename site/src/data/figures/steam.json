@@ -1,0 +1,83 @@
+{
+  "asOf": "2026-10-12",
+  "steamId": "76561199179240743",
+  "totalHours": 5184,
+  "gameCount": 66,
+  "games": [
+    {
+      "appid": 393380,
+      "name": "Squad",
+      "hours": 1545
+    },
+    {
+      "appid": 2016590,
+      "name": "Dark and Darker",
+      "hours": 1420
+    },
+    {
+      "appid": 730,
+      "name": "Counter-Strike 2",
+      "hours": 855
+    },
+    {
+      "appid": 1867240,
+      "name": "WARDOGS",
+      "hours": 233
+    },
+    {
+      "appid": 1238810,
+      "name": "Battlefield™ V",
+      "hours": 119
+    },
+    {
+      "appid": 359550,
+      "name": "Tom Clancy's Rainbow Six Siege",
+      "hours": 105
+    },
+    {
+      "appid": 1938090,
+      "name": "Call of Duty®",
+      "hours": 83
+    },
+    {
+      "appid": 1085660,
+      "name": "Destiny 2",
+      "hours": 75
+    },
+    {
+      "appid": 261550,
+      "name": "Mount & Blade II: Bannerlord",
+      "hours": 67
+    },
+    {
+      "appid": 236390,
+      "name": "War Thunder",
+      "hours": 65
+    },
+    {
+      "appid": 594650,
+      "name": "Hunt: Showdown 1896",
+      "hours": 63
+    },
+    {
+      "appid": 271590,
+      "name": "Grand Theft Auto V Legacy",
+      "hours": 43
+    },
+    {
+      "appid": 242760,
+      "name": "The Forest",
+      "hours": 36
+    },
+    {
+      "appid": 225540,
+      "name": "Just Cause 3",
+      "hours": 33
+    },
+    {
+      "appid": 289070,
+      "name": "Sid Meier's Civilization VI",
+      "hours": 31
+    }
+  ]
+}

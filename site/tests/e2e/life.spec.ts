@@ -62,8 +62,10 @@ for (const [path, lang, mobile] of [['/life/games/', 'en', 'Mobile'], ['/zh/life
     await expect(page.locator('h1')).toBeVisible();
     const pc = page.locator('main .group[data-group="pc"]'), mob = page.locator('main .group[data-group="mobile"]');
     await expect(pc.locator('h2')).toContainText('Steam');
-    expect(await pc.locator('.cards li').count()).toBeGreaterThanOrEqual(13);
-    await expect(pc.locator('.cards li .meta').first()).toContainText(/h|小时/); // the heavy ones lead, with hours
+    expect(await pc.locator('.cards li').count()).toBeGreaterThanOrEqual(15); // every Steam game with 20 h or more
+    await expect(pc.locator('.cards li .meta').first()).toContainText(/^1,\d{3} (h|小时)/); // Squad leads, with live hours
+    await expect(pc.locator('.cards li .meta').last()).not.toContainText(/h|小时/); // under 200 h: genre only
+    await expect(page.locator('main .group[data-group="other"] .cards li')).toHaveCount(2); // played outside Steam
     await expect(mob.locator('h2')).toContainText(mobile);
     await expect(mob.locator('.cards li')).toHaveCount(2);
     await expect(page.locator('main .cards img').first()).toHaveAttribute('alt', /.+/);

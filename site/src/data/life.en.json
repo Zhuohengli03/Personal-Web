@@ -14,7 +14,7 @@
     {
       "id": "games",
       "title": "Games",
-      "blurb": "Over 4,000 hours on Steam, mostly team shooters and extraction games. One of them became a data project: the Dark and Darker price forecast above.",
+      "blurb": "5,184 hours on Steam, mostly team shooters and extraction games. One of them became a data project: the Dark and Darker price forecast above.",
       "link": {
         "label": "Steam profile",
         "href": "https://steamcommunity.com/profiles/76561199179240743/"
@@ -23,19 +23,19 @@
         {
           "image": "games/squad.jpg",
           "title": "Squad",
-          "meta": "1,500+ h",
+          "meta": "1,545 h",
           "href": "https://store.steampowered.com/app/393380/"
         },
         {
           "image": "games/dark-and-darker.jpg",
           "title": "Dark and Darker",
-          "meta": "1,300+ h · Demigod",
+          "meta": "1,420 h · Demigod",
           "href": "https://store.steampowered.com/app/2016590/"
         },
         {
           "image": "games/cs2.jpg",
           "title": "Counter-Strike 2",
-          "meta": "800+ h · Premier A",
+          "meta": "855 h · Premier A",
           "href": "https://store.steampowered.com/app/730/"
         },
         {
@@ -45,10 +45,10 @@
           "href": "https://store.steampowered.com/app/3564740/"
         },
         {
+          "image": "games/wardogs.jpg",
           "title": "Wardogs",
-          "meta": "~200 h",
-          "href": "https://store.steampowered.com/app/1867240/",
-          "image": "games/wardogs.jpg"
+          "meta": "233 h",
+          "href": "https://store.steampowered.com/app/1867240/"
         },
         {
           "image": "games/naraka.jpg",
@@ -59,60 +59,36 @@
       ],
       "page": {
         "title": "Games",
-        "intro": "Over 4,000 hours on Steam, mostly team shooters and extraction games, and a habit of watching how versions, seasons and battle passes are designed and received. One of these games became a data project: the Dark and Darker price forecast.",
+        "intro": "5,184 hours on Steam as of 2026-10-12, mostly team shooters and extraction games, and a habit of watching how versions, seasons and battle passes are designed and received. One of these games became a data project: the Dark and Darker price forecast.",
         "groups": [
           {
             "id": "pc",
             "heading": "PC · Steam",
-            "note": "Hours shown where they pass 200; the rest by genre.",
+            "note": "Steam playtime as of 2026-10-12: every game with 20 h or more, hours shown from 200 h, the rest by genre.",
             "cards": [
               {
                 "image": "games/squad.jpg",
                 "title": "Squad",
-                "meta": "1,500+ h",
+                "meta": "1,545 h",
                 "href": "https://store.steampowered.com/app/393380/"
               },
               {
                 "image": "games/dark-and-darker.jpg",
                 "title": "Dark and Darker",
-                "meta": "1,300+ h · Demigod",
+                "meta": "1,420 h · Demigod",
                 "href": "https://store.steampowered.com/app/2016590/"
               },
               {
                 "image": "games/cs2.jpg",
                 "title": "Counter-Strike 2",
-                "meta": "800+ h · Premier A",
+                "meta": "855 h · Premier A",
                 "href": "https://store.steampowered.com/app/730/"
-              },
-              {
-                "image": "games/where-winds-meet.jpg",
-                "title": "Where Winds Meet",
-                "meta": "248 h",
-                "href": "https://store.steampowered.com/app/3564740/"
               },
               {
                 "image": "games/wardogs.jpg",
                 "title": "Wardogs",
-                "meta": "~200 h",
+                "meta": "233 h",
                 "href": "https://store.steampowered.com/app/1867240/"
-              },
-              {
-                "image": "games/naraka.jpg",
-                "title": "Naraka: Bladepoint",
-                "meta": "Sunset IV",
-                "href": "https://store.steampowered.com/app/1203220/"
-              },
-              {
-                "image": "games/delta-force.jpg",
-                "title": "Delta Force",
-                "meta": "tactical shooter",
-                "href": "https://store.steampowered.com/app/2507950/"
-              },
-              {
-                "image": "games/call-of-duty.jpg",
-                "title": "Call of Duty",
-                "meta": "shooter",
-                "href": "https://store.steampowered.com/app/1938090/"
               },
               {
                 "image": "games/battlefield-v.jpg",
@@ -121,10 +97,16 @@
                 "href": "https://store.steampowered.com/app/1238810/"
               },
               {
-                "image": "games/black-myth-wukong.jpg",
-                "title": "Black Myth: Wukong",
-                "meta": "action RPG",
-                "href": "https://store.steampowered.com/app/2358720/"
+                "image": "games/rainbow-six-siege.jpg",
+                "title": "Rainbow Six Siege",
+                "meta": "tactical shooter",
+                "href": "https://store.steampowered.com/app/359550/"
+              },
+              {
+                "image": "games/call-of-duty.jpg",
+                "title": "Call of Duty",
+                "meta": "shooter",
+                "href": "https://store.steampowered.com/app/1938090/"
               },
               {
                 "image": "games/destiny-2.jpg",
@@ -133,16 +115,65 @@
                 "href": "https://store.steampowered.com/app/1085660/"
               },
               {
+                "image": "games/bannerlord.jpg",
+                "title": "Mount & Blade II: Bannerlord",
+                "meta": "medieval sandbox",
+                "href": "https://store.steampowered.com/app/261550/"
+              },
+              {
+                "image": "games/war-thunder.jpg",
+                "title": "War Thunder",
+                "meta": "vehicle combat",
+                "href": "https://store.steampowered.com/app/236390/"
+              },
+              {
+                "image": "games/hunt-showdown.jpg",
+                "title": "Hunt: Showdown 1896",
+                "meta": "extraction shooter",
+                "href": "https://store.steampowered.com/app/594650/"
+              },
+              {
+                "image": "games/gta-v.jpg",
+                "title": "Grand Theft Auto V",
+                "meta": "open world",
+                "href": "https://store.steampowered.com/app/271590/"
+              },
+              {
+                "image": "games/the-forest.jpg",
+                "title": "The Forest",
+                "meta": "survival",
+                "href": "https://store.steampowered.com/app/242760/"
+              },
+              {
+                "image": "games/just-cause-3.jpg",
+                "title": "Just Cause 3",
+                "meta": "open-world action",
+                "href": "https://store.steampowered.com/app/225540/"
+              },
+              {
                 "image": "games/civilization-vi.jpg",
                 "title": "Civilization VI",
                 "meta": "4X strategy",
                 "href": "https://store.steampowered.com/app/289070/"
+              }
+            ]
+          },
+          {
+            "id": "other",
+            "heading": "PC · other launchers",
+            "note": "Played outside Steam; hours from my own records.",
+            "cards": [
+              {
+                "image": "games/where-winds-meet.jpg",
+                "title": "Where Winds Meet",
+                "meta": "248 h",
+                "href": "https://store.steampowered.com/app/3564740/"
               },
               {
-                "image": "games/the-sims-4.jpg",
-                "title": "The Sims 4",
-                "meta": "life sim",
-                "href": "https://store.steampowered.com/app/1222670/"
+                "image": "games/naraka.jpg",
+                "title": "Naraka: Bladepoint",
+                "meta": "Sunset IV",
+                "href": "https://store.steampowered.com/app/1203220/"
               }
             ]
           },
