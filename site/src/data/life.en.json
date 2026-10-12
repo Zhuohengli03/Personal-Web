@@ -4,7 +4,11 @@
     {
       "id": "photo",
       "title": "Photography & travel",
-      "blurb": "Mostly skylines, mountains and the hour before dark: New York, San Francisco, Philadelphia, Japan — and a few places still to be labelled."
+      "blurb": "Mostly skylines, mountains and the hour before dark: New York, San Francisco, Philadelphia, Japan — and a few places still to be labelled.",
+      "page": {
+        "title": "Photography & travel",
+        "intro": "Where the photos on this site were taken, read from the photos themselves: the location and date each camera recorded, snapped to the nearest city. Click a place on the map to jump to its photos."
+      }
     },
     {
       "id": "cooking",
@@ -457,27 +461,27 @@
     {
       "file": "photo/p05.jpg",
       "hobby": "photo",
-      "caption": "Lower Manhattan at dusk, from the Jersey City waterfront · [TODO: year]"
+      "caption": "Lower Manhattan at dusk, from the Jersey City waterfront · 2025"
     },
     {
       "file": "photo/p15.jpg",
       "hobby": "photo",
-      "caption": "Statue of Liberty after sunset · [TODO: year]"
+      "caption": "Statue of Liberty after sunset · 2025"
     },
     {
       "file": "photo/p03.jpg",
       "hobby": "photo",
-      "caption": "One World Trade Center across the Hudson, with a gull on the rail · [TODO: year]"
+      "caption": "One World Trade Center across the Hudson, with a gull on the rail · 2025"
     },
     {
       "file": "photo/p10.jpg",
       "hobby": "photo",
-      "caption": "Golden Gate Bridge, San Francisco · [TODO: year]"
+      "caption": "Golden Gate Bridge, San Francisco · 2025"
     },
     {
       "file": "photo/p11.jpg",
       "hobby": "photo",
-      "caption": "City Hall, Philadelphia · [TODO: year]"
+      "caption": "City Hall, Philadelphia · 2025"
     },
     {
       "file": "photo/p16.jpg",
@@ -487,52 +491,52 @@
     {
       "file": "photo/p08.jpg",
       "hobby": "photo",
-      "caption": "Cherry blossoms over a cycle path · [TODO: place, year]"
+      "caption": "Cherry blossoms over a cycle path · Osaka, 2025"
     },
     {
       "file": "photo/p12.jpg",
       "hobby": "photo",
-      "caption": "Switchbacks down to a glacial lake · [TODO: place, year]"
+      "caption": "Switchbacks down to a glacial lake · Ili, Xinjiang, 2025"
     },
     {
       "file": "photo/p13.jpg",
       "hobby": "photo",
-      "caption": "Snow peaks above the firs · [TODO: place, year]"
+      "caption": "Snow peaks above the firs · Ili, Xinjiang, 2025"
     },
     {
       "file": "photo/p06.jpg",
       "hobby": "photo",
-      "caption": "Sun breaking over a lake · [TODO: place, year]"
+      "caption": "Sun breaking over a lake · Ili, Xinjiang, 2025"
     },
     {
       "file": "photo/p01.jpg",
       "hobby": "photo",
-      "caption": "Grassland in high summer · [TODO: place, year]"
+      "caption": "Grassland in high summer · Ili, Xinjiang, 2025"
     },
     {
       "file": "photo/p04.jpg",
       "hobby": "photo",
-      "caption": "Shallows and salt flats · [TODO: place, year]"
+      "caption": "Shallows and salt flats · Ili, Xinjiang, 2025"
     },
     {
       "file": "photo/p14.jpg",
       "hobby": "photo",
-      "caption": "A pavilion by the lake · [TODO: place, year]"
+      "caption": "A pavilion by the lake · Ili, Xinjiang, 2025"
     },
     {
       "file": "photo/p09.jpg",
       "hobby": "photo",
-      "caption": "A deer on the ridge at sunset · [TODO: place, year]"
+      "caption": "A deer on the ridge at sunset · Nara, 2025"
     },
     {
       "file": "photo/p02.jpg",
       "hobby": "photo",
-      "caption": "Red sky over the car park · [TODO: place, year]"
+      "caption": "Red sky over the car park · Ili, Xinjiang, 2025"
     },
     {
       "file": "photo/p07.jpg",
       "hobby": "photo",
-      "caption": "Benjamin Franklin in front of College Hall, University of Pennsylvania, Philadelphia · [TODO: year]"
+      "caption": "Benjamin Franklin in front of College Hall, University of Pennsylvania, Philadelphia · 2025"
     }
   ]
 }

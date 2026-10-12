@@ -12,7 +12,7 @@ const { locale, hobbyId } = Astro.props;
 const tr = t(locale);
 const life = loadLife(locale);
 const hobby = life.hobbies.find((h) => h.id === hobbyId);
-if (!hobby?.page) throw new Error(`life: hobby "${hobbyId}" has no detail page`);
+if (!hobby?.page?.groups) throw new Error(`life: hobby "${hobbyId}" has no card groups for a detail page`);
 const page = hobby.page;
 const files = import.meta.glob<ImageMetadata>('../assets/life/**/*.{jpg,jpeg,png,webp}', { eager: true, import: 'default' });
 const resolve = (file: string): ImageMetadata => {
@@ -21,7 +21,7 @@ const resolve = (file: string): ImageMetadata => {
   return meta;
 };
 type Card = { image?: string; title: string; meta: string; href?: string };
-const groups: { id: string; heading: string; cards: Card[]; note?: string }[] = page.groups;
+const groups: { id: string; heading: string; cards: Card[]; note?: string }[] = page.groups!;
 ---
 <BaseLayout title={`${page.title} — ${tr('site.title')}`} description={page.intro} locale={locale} path={`/life/${hobbyId}/`}>
   <main class="wrap section">

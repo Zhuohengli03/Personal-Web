@@ -1,0 +1,92 @@
+---
+// TravelLayout.astro — the photography & travel page: the world map of where the photos were taken (places.json,
+// built by scripts/photo-places.mjs from the originals' EXIF), then one section per place with its photos.
+import { Image, getImage } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import BaseLayout from './BaseLayout.astro';
+import Lightbox from '../components/Lightbox.astro';
+import TravelMap from '../components/figures/TravelMap.astro';
+import { t, localePath, formatDate, type Locale } from '../i18n';
+import { loadLife } from '../lib/life';
+import data from '../data/figures/places.json';
+
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const tr = t(locale);
+const life = loadLife(locale);
+const hobby = life.hobbies.find((h) => h.id === 'photo');
+if (!hobby?.page) throw new Error('life: the photo hobby has no page text');
+const caption = new Map(life.photos.map((p) => [p.file, p.caption]));
+const files = import.meta.glob<ImageMetadata>('../assets/life/**/*.{jpg,jpeg,png,webp}', { eager: true, import: 'default' });
+const resolve = (file: string): ImageMetadata => {
+  const meta = files[`../assets/life/${file}`];
+  if (!meta) throw new Error(`travel: photo "${file}" not found under src/assets/life/`);
+  return meta;
+};
+const places = [...data.places].sort((a, b) => (a.from ?? '9999').localeCompare(b.from ?? '9999'));
+const sections = await Promise.all(places.map(async (p) => ({
+  ...p,
+  shots: await Promise.all(p.photos.map(async (ph) => { const meta = resolve(ph.file); return { ...ph, meta, large: await getImage({ src: meta, width: 1800, format: 'webp', quality: 80 }), caption: caption.get(ph.file) ?? '' }; })),
+})));
+const nPhotos = places.reduce((n, p) => n + p.photos.length, 0);
+const nCountries = new Set(places.map((p) => p.country[0])).size;
+const range = (p: (typeof places)[number]) => {
+  if (!p.from) return '';
+  const a = formatDate(p.from, locale), b = p.to && p.to !== p.from ? formatDate(p.to, locale) : null;
+  return b ? `${a} – ${b}` : a;
+};
+let n = 0;
+---
+<BaseLayout title={`${hobby.page.title} — ${tr('site.title')}`} description={hobby.page.intro} locale={locale} path="/life/photo/">
+  <main class="wrap section">
+    <header class="head">
+      <p class="eyebrow center fade-up" data-delay="1">{tr('sections.life')}</p>
+      <h1 class="center fade-up" data-delay="2">{hobby.page.title}</h1>
+      <p class="prose center fade-up" data-delay="3">{hobby.page.intro}</p>
+      <p class="counts center fade-up" data-delay="4">{places.length} {tr('life.places')} · {nCountries} {tr('life.countries')} · {nPhotos} {tr('life.photos')}</p>
+    </header>
+    <div class="map-wrap reveal"><TravelMap locale={locale} label={tr('life.map')} photosWord={tr('life.photos')} /></div>
+    {sections.map((p) => (
+      <section class="place reveal" id={p.id}>
+        <h2><span class="name">{locale === 'zh' ? p.zh : p.en}</span><span class="country">{p.country[locale === 'zh' ? 1 : 0]}</span><span class="when">{range(p)}</span></h2>
+        <ul class="shots">
+          {p.shots.map((s) => {
+            n += 1;
+            return (
+              <li>
+                <figure>
+                  <button type="button" data-lightbox-src={s.large.src} data-lightbox-alt={s.caption} aria-label={tr('a11y.openImage').replace('{n}', String(n)).replace('{alt}', s.caption)}>
+                    <Image src={s.meta} alt={s.caption} width={640} format="webp" quality={80} loading="lazy" />
+                  </button>
+                  <figcaption>{s.caption}</figcaption>
+                </figure>
+              </li>
+            );
+          })}
+        </ul>
+      </section>
+    ))}
+    <p class="center back"><a class="btn" href={localePath('/#life', locale)}>← {tr('life.back')}</a></p>
+  </main>
+  <Lightbox closeLabel={tr('case.close')} label={tr('a11y.imagePreview')} />
+</BaseLayout>
+<style>
+  .head { max-width: var(--measure); margin: 0 auto 2rem; }
+  .head h1 { margin: 0.4rem 0 1rem; }
+  .counts { margin-top: 0.8rem; font-family: var(--font-mono); font-size: 0.75rem; color: var(--fg-muted); }
+  .map-wrap { margin: 0 0 3.5rem; }
+  .place { margin-bottom: 3rem; scroll-margin-top: calc(var(--header-h) + 1.5rem); }
+  .place h2 { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.3rem 0.8rem; margin-bottom: 1.1rem; padding-bottom: 0.6rem; border-bottom: 1px solid var(--rule); font-family: var(--font-sans); font-size: 1.05rem; font-weight: 600; }
+  .country { font-weight: 400; color: var(--fg-muted); font-size: 0.9rem; }
+  .when { margin-left: auto; font-family: var(--font-mono); font-size: 0.72rem; font-weight: 400; color: var(--fg-muted); }
+  .shots { list-style: none; margin: 0; padding: 0; columns: 1; column-gap: 1.1rem; }
+  @media (min-width: 560px) { .shots { columns: 2; } }
+  @media (min-width: 900px) { .shots { columns: 3; } }
+  .shots li { break-inside: avoid; margin-bottom: 1.1rem; }
+  figure { margin: 0; }
+  .shots button { all: unset; display: block; width: 100%; cursor: zoom-in; border-radius: 10px; overflow: hidden; background: var(--card); }
+  .shots button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  .shots img { display: block; width: 100%; height: auto; }
+  figcaption { font-size: 0.8rem; color: var(--fg-muted); margin-top: 0.45rem; line-height: 1.45; }
+  .back { margin-top: 1rem; }
+</style>

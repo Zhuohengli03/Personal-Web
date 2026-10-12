@@ -83,3 +83,34 @@ test('the games row is one link to its page, with a button-like outline on hover
   await page.mouse.click(box.x + box.width / 2, box.y + box.height / 2); // lands on the stretched link, not the text
   await expect(page).toHaveURL(/\/life\/games\/$/);
 });
+
+for (const [path, lang] of [['/life/photo/', 'en'], ['/zh/life/photo/', 'zh-CN']] as const) {
+  test(`travel page ${path}: a world map with a pin per place, and every site photo under its place`, async ({ page }) => {
+    await page.goto(path);
+    await expect(page.locator('html')).toHaveAttribute('lang', lang);
+    const map = page.locator('[data-travel-map] svg');
+    await expect(map).toBeVisible();
+    expect(await map.locator('[data-pin]').count()).toBeGreaterThanOrEqual(4);
+    const sections = page.locator('main .place');
+    expect(await sections.count()).toBeGreaterThanOrEqual(5);
+    expect(await page.locator('main .place .shots li').count()).toBe(16);
+    // a pin links to its place's section and shows a tooltip
+    const pin = map.locator('[data-pin]').first();
+    const href = await pin.getAttribute('href');
+    await expect(page.locator(`main ${href}`)).toHaveCount(1);
+    await pin.hover({ force: true });
+    await expect(page.locator('[data-travel-map] .tip')).toBeVisible();
+    // the page never carries a photo's own coordinates, only city centroids
+    expect(await page.content()).not.toMatch(/40\.734|-74\.028|42\.477|80\.826/);
+  });
+}
+
+test('the photography row links to the travel page', async ({ page }) => {
+  await page.goto('/');
+  const label = page.locator('#life .row[data-hobby="photo"] .label');
+  await expect(label).toHaveClass(/linked/);
+  await label.locator('.blurb').scrollIntoViewIfNeeded();
+  const box = (await label.locator('.blurb').boundingBox())!;
+  await page.mouse.click(box.x + box.width / 2, box.y + box.height / 2);
+  await expect(page).toHaveURL(/\/life\/photo\/$/);
+});

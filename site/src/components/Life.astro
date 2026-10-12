@@ -57,7 +57,7 @@ const icons: Record<string, string> = {
         <li class:list={['row', 'reveal', { 'has-photos': own.length > 0, 'has-cards': own.length === 0 && (h.cards?.length ?? 0) > 0 }]} data-hobby={h.id}>
           <div class:list={['label', { linked: Boolean(h.page) }]}>
             <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={icons[h.id] ?? ''} />
-            <h3 class="title">{h.page ? <a href={localePath(`/life/${h.id}/`, locale)} aria-label={`${h.title} — ${tr('life.more')}`} data-umami-event="hobby-open" data-umami-event-slug={h.id}>{h.title}</a> : h.title}{own.length > 0 && <span class="count">{own.length}</span>}</h3>
+            <h3 class="title">{h.page ? <a href={localePath(`/life/${h.id}/`, locale)} data-umami-event="hobby-open" data-umami-event-slug={h.id}>{h.title}</a> : h.title}{own.length > 0 && <span class="count">{own.length}</span>}</h3>
             <p class="blurb">{h.blurb}</p>
             {h.link && <a class="link" href={h.link.href} target="_blank" rel="me noopener" data-umami-event="outbound-hobby" data-umami-event-slug={h.id}>{h.link.label} ↗</a>}
           </div>

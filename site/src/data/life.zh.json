@@ -4,7 +4,11 @@
     {
       "id": "photo",
       "title": "摄影与旅行",
-      "blurb": "喜欢拍天际线、山川和日落前的光线，足迹包括纽约、旧金山、费城和日本。"
+      "blurb": "喜欢拍天际线、山川和日落前的光线，足迹包括纽约、旧金山、费城和日本。",
+      "page": {
+        "title": "摄影与旅行",
+        "intro": "这些照片拍在哪里，由照片自己记录的位置和日期读出，归到最近的城市。点地图上的地点可以跳到那里的照片。"
+      }
     },
     {
       "id": "cooking",
@@ -457,27 +461,27 @@
     {
       "file": "photo/p05.jpg",
       "hobby": "photo",
-      "caption": "黄昏的曼哈顿下城，从泽西城岸边望去"
+      "caption": "黄昏的曼哈顿下城，从泽西城岸边望去 · 2025"
     },
     {
       "file": "photo/p15.jpg",
       "hobby": "photo",
-      "caption": "日落后的自由女神像"
+      "caption": "日落后的自由女神像 · 2025"
     },
     {
       "file": "photo/p03.jpg",
       "hobby": "photo",
-      "caption": "哈德逊河对岸的世贸中心一号楼，栏杆上停着一只海鸥"
+      "caption": "哈德逊河对岸的世贸中心一号楼，栏杆上停着一只海鸥 · 2025"
     },
     {
       "file": "photo/p10.jpg",
       "hobby": "photo",
-      "caption": "旧金山金门大桥"
+      "caption": "旧金山金门大桥 · 2025"
     },
     {
       "file": "photo/p11.jpg",
       "hobby": "photo",
-      "caption": "费城市政厅"
+      "caption": "费城市政厅 · 2025"
     },
     {
       "file": "photo/p16.jpg",
@@ -487,52 +491,52 @@
     {
       "file": "photo/p08.jpg",
       "hobby": "photo",
-      "caption": "樱花下的骑行道"
+      "caption": "樱花下的骑行道 · 大阪，2025"
     },
     {
       "file": "photo/p12.jpg",
       "hobby": "photo",
-      "caption": "盘山路下的冰川湖"
+      "caption": "盘山路下的冰川湖 · 新疆伊犁，2025"
     },
     {
       "file": "photo/p13.jpg",
       "hobby": "photo",
-      "caption": "冷杉林上的雪峰"
+      "caption": "冷杉林上的雪峰 · 新疆伊犁，2025"
     },
     {
       "file": "photo/p06.jpg",
       "hobby": "photo",
-      "caption": "湖面上破云而出的太阳"
+      "caption": "湖面上破云而出的太阳 · 新疆伊犁，2025"
     },
     {
       "file": "photo/p01.jpg",
       "hobby": "photo",
-      "caption": "盛夏的草原"
+      "caption": "盛夏的草原 · 新疆伊犁，2025"
     },
     {
       "file": "photo/p04.jpg",
       "hobby": "photo",
-      "caption": "浅滩与盐碱地"
+      "caption": "浅滩与盐碱地 · 新疆伊犁，2025"
     },
     {
       "file": "photo/p14.jpg",
       "hobby": "photo",
-      "caption": "湖边的长亭"
+      "caption": "湖边的长亭 · 新疆伊犁，2025"
     },
     {
       "file": "photo/p09.jpg",
       "hobby": "photo",
-      "caption": "日落时山脊上的鹿"
+      "caption": "日落时山脊上的鹿 · 奈良，2025"
     },
     {
       "file": "photo/p02.jpg",
       "hobby": "photo",
-      "caption": "停车场上空的火烧云"
+      "caption": "停车场上空的火烧云 · 新疆伊犁，2025"
     },
     {
       "file": "photo/p07.jpg",
       "hobby": "photo",
-      "caption": "费城宾夕法尼亚大学 学院楼（College Hall） 前的富兰克林像"
+      "caption": "费城宾夕法尼亚大学 学院楼（College Hall） 前的富兰克林像 · 2025"
     }
   ]
 }

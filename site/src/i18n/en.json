@@ -76,6 +76,10 @@
   },
   "life": {
     "more": "All games",
-    "back": "Back to home"
+    "back": "Back to home",
+    "places": "places",
+    "countries": "countries",
+    "photos": "photos",
+    "map": "Map of the places these photos were taken"
   }
 }

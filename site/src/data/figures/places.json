@@ -1,0 +1,175 @@
+{
+  "places": [
+    {
+      "id": "newyork",
+      "en": "New York & Jersey City",
+      "zh": "纽约与泽西城",
+      "country": [
+        "United States",
+        "美国"
+      ],
+      "lat": 40.72,
+      "lon": -74.02,
+      "from": "2025-08-27",
+      "to": "2025-11-11",
+      "photos": [
+        {
+          "file": "photo/p03.jpg",
+          "date": "2025-11-11",
+          "how": "gps"
+        },
+        {
+          "file": "photo/p05.jpg",
+          "date": "2025-10-23",
+          "how": "gps"
+        },
+        {
+          "file": "photo/p15.jpg",
+          "date": "2025-08-27",
+          "how": "gps"
+        }
+      ]
+    },
+    {
+      "id": "philadelphia",
+      "en": "Philadelphia",
+      "zh": "费城",
+      "country": [
+        "United States",
+        "美国"
+      ],
+      "lat": 39.95,
+      "lon": -75.17,
+      "from": "2025-11-23",
+      "to": "2025-11-24",
+      "photos": [
+        {
+          "file": "photo/p07.jpg",
+          "date": "2025-11-24",
+          "how": "trip"
+        },
+        {
+          "file": "photo/p11.jpg",
+          "date": "2025-11-23",
+          "how": "gps"
+        }
+      ]
+    },
+    {
+      "id": "sanfrancisco",
+      "en": "San Francisco",
+      "zh": "旧金山",
+      "country": [
+        "United States",
+        "美国"
+      ],
+      "lat": 37.77,
+      "lon": -122.42,
+      "from": "2025-08-17",
+      "to": "2025-08-17",
+      "photos": [
+        {
+          "file": "photo/p10.jpg",
+          "date": "2025-08-17",
+          "how": "gps"
+        }
+      ]
+    },
+    {
+      "id": "osaka",
+      "en": "Osaka",
+      "zh": "大阪",
+      "country": [
+        "Japan",
+        "日本"
+      ],
+      "lat": 34.69,
+      "lon": 135.5,
+      "from": "2025-04-05",
+      "to": "2025-04-05",
+      "photos": [
+        {
+          "file": "photo/p08.jpg",
+          "date": "2025-04-05",
+          "how": "gps"
+        }
+      ]
+    },
+    {
+      "id": "nara",
+      "en": "Nara",
+      "zh": "奈良",
+      "country": [
+        "Japan",
+        "日本"
+      ],
+      "lat": 34.69,
+      "lon": 135.8,
+      "from": "2025-04-07",
+      "to": "2025-04-07",
+      "photos": [
+        {
+          "file": "photo/p09.jpg",
+          "date": "2025-04-07",
+          "how": "gps"
+        },
+        {
+          "file": "photo/p16.jpg",
+          "date": null,
+          "how": "caption"
+        }
+      ]
+    },
+    {
+      "id": "ili",
+      "en": "Ili, Xinjiang",
+      "zh": "新疆伊犁",
+      "country": [
+        "China",
+        "中国"
+      ],
+      "lat": 43.2,
+      "lon": 81.3,
+      "from": "2025-07-30",
+      "to": "2025-08-08",
+      "photos": [
+        {
+          "file": "photo/p01.jpg",
+          "date": "2025-08-06",
+          "how": "trip"
+        },
+        {
+          "file": "photo/p02.jpg",
+          "date": "2025-08-04",
+          "how": "trip"
+        },
+        {
+          "file": "photo/p04.jpg",
+          "date": "2025-08-04",
+          "how": "trip"
+        },
+        {
+          "file": "photo/p06.jpg",
+          "date": "2025-07-30",
+          "how": "trip"
+        },
+        {
+          "file": "photo/p12.jpg",
+          "date": "2025-08-08",
+          "how": "trip"
+        },
+        {
+          "file": "photo/p13.jpg",
+          "date": "2025-08-03",
+          "how": "gps"
+        },
+        {
+          "file": "photo/p14.jpg",
+          "date": "2025-07-31",
+          "how": "trip"
+        }
+      ]
+    }
+  ],
+  "unplaced": []
+}

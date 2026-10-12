@@ -1,0 +1,91 @@
+---
+// TravelMap.astro — a world map rendered at build time (Equal Earth, Natural Earth 1:110m countries from world-atlas)
+// with one pin per place in places.json, sized by photo count. Places closer than MERGE_PX on the map share a pin.
+// Each pin links to its place's section on the page; a small script adds a tooltip.
+import { geoEqualEarth, geoPath, geoGraticule10 } from 'd3-geo';
+import { feature, mesh } from 'topojson-client';
+import type { Topology, GeometryCollection } from 'topojson-specification';
+import world from 'world-atlas/countries-110m.json';
+import data from '../../data/figures/places.json';
+import type { Locale } from '../../i18n';
+
+interface Props { locale: Locale; label: string; photosWord: string }
+const { locale, label, photosWord } = Astro.props;
+const W = 960, H = 470, MERGE_PX = 16;
+const topo = world as unknown as Topology<{ countries: GeometryCollection; land: GeometryCollection }>;
+const projection = geoEqualEarth().fitExtent([[6, 6], [W - 6, H - 6]], { type: 'Sphere' });
+const path = geoPath(projection);
+const land = path(feature(topo, topo.objects.land)) ?? '';
+const borders = path(mesh(topo, topo.objects.countries, (a, b) => a !== b)) ?? '';
+const sphere = path({ type: 'Sphere' }) ?? '';
+const graticule = path(geoGraticule10()) ?? '';
+const f = (v: number) => v.toFixed(1);
+
+type Place = (typeof data.places)[number];
+const name = (p: Place) => (locale === 'zh' ? p.zh : p.en);
+const country = (p: Place) => p.country[locale === 'zh' ? 1 : 0];
+const pts = data.places.map((p) => { const [x, y] = projection([p.lon, p.lat]) ?? [0, 0]; return { p, x, y }; });
+// merge places that would overlap at this scale into one pin
+const pins: { x: number; y: number; places: Place[] }[] = [];
+for (const q of pts) {
+  const hit = pins.find((g) => Math.hypot(g.x - q.x, g.y - q.y) < MERGE_PX);
+  if (hit) { hit.places.push(q.p); const n = hit.places.length; hit.x += (q.x - hit.x) / n; hit.y += (q.y - hit.y) / n; }
+  else pins.push({ x: q.x, y: q.y, places: [q.p] });
+}
+const count = (g: { places: Place[] }) => g.places.reduce((n, p) => n + p.photos.length, 0);
+const r = (n: number) => 4 + 2.2 * Math.sqrt(n);
+---
+<figure class="map" data-travel-map>
+  <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label={label}>
+    <path class="sphere" d={sphere} />
+    <path class="graticule" d={graticule} />
+    <path class="land" d={land} />
+    <path class="borders" d={borders} />
+    {pins.map((g) => {
+      const n = count(g), rad = r(n), right = g.x < W * 0.72;
+      return (
+        <a href={`#${g.places[0].id}`} class="pin" data-pin data-title={g.places.map(name).join(' · ')} data-sub={`${[...new Set(g.places.map(country))].join(' · ')} · ${n} ${photosWord}`}>
+          <circle class="halo" cx={f(g.x)} cy={f(g.y)} r={f(rad + 5)} />
+          <circle class="dot" cx={f(g.x)} cy={f(g.y)} r={f(rad)} />
+          <text class="lab" x={f(right ? g.x + rad + 6 : g.x - rad - 6)} y={f(g.y)} text-anchor={right ? 'start' : 'end'} dominant-baseline="middle">{g.places.map(name).join(' · ')}</text>
+        </a>
+      );
+    })}
+  </svg>
+  <div class="tip" hidden></div>
+</figure>
+<style>
+  .map { position: relative; margin: 0; }
+  svg { width: 100%; height: auto; display: block; font-family: var(--font-sans); }
+  .sphere { fill: color-mix(in srgb, var(--accent) 4%, var(--bg)); stroke: var(--rule); }
+  .graticule { fill: none; stroke: var(--rule); stroke-width: 0.5; opacity: 0.6; }
+  .land { fill: color-mix(in srgb, var(--fg) 11%, var(--bg)); }
+  .borders { fill: none; stroke: var(--bg); stroke-width: 0.6; }
+  .pin { cursor: pointer; }
+  .halo { fill: var(--accent); opacity: 0.18; transition: opacity 0.16s ease; }
+  .dot { fill: var(--accent); stroke: var(--bg); stroke-width: 2; }
+  .lab { font-size: 12px; font-weight: 500; fill: var(--fg); paint-order: stroke; stroke: var(--bg); stroke-width: 3px; stroke-linejoin: round; }
+  .pin:hover .halo, .pin:focus-visible .halo { opacity: 0.4; }
+  .pin:focus-visible { outline: none; }
+  .pin:focus-visible .dot { stroke: var(--fg); }
+  .tip { position: absolute; pointer-events: none; transform: translate(-50%, calc(-100% - 14px)); background: var(--fg); color: var(--bg); font-family: var(--font-mono); font-size: 0.72rem; line-height: 1.6; padding: 0.35rem 0.55rem; border-radius: 6px; white-space: pre-line; width: max-content; max-width: 90%; }
+  @media (max-width: 560px) { .lab { font-size: 15px; } }
+</style>
+<script>
+  for (const root of document.querySelectorAll<HTMLElement>('[data-travel-map]')) {
+    const svg = root.querySelector('svg')!, tip = root.querySelector<HTMLElement>('.tip')!;
+    for (const pin of root.querySelectorAll<SVGAElement>('[data-pin]')) {
+      const show = () => {
+        const dot = pin.querySelector('.dot')!.getBoundingClientRect(), box = root.getBoundingClientRect();
+        tip.textContent = `${pin.dataset.title}\n${pin.dataset.sub}`;
+        tip.hidden = false;
+        const half = tip.getBoundingClientRect().width / 2;
+        tip.style.left = `${Math.max(half, Math.min(box.width - half, dot.left - box.left + dot.width / 2))}px`;
+        tip.style.top = `${dot.top - box.top}px`;
+      };
+      pin.addEventListener('pointerenter', show); pin.addEventListener('focus', show);
+      pin.addEventListener('pointerleave', () => { tip.hidden = true; }); pin.addEventListener('blur', () => { tip.hidden = true; });
+    }
+    svg.addEventListener('pointerleave', () => { tip.hidden = true; });
+  }
+</script>
