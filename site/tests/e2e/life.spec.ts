@@ -5,8 +5,8 @@ for (const [path, heading] of [['/', 'Beyond work'], ['/zh/', '工作之外']] a
     await page.goto(path);
     await expect(page.getByRole('heading', { level: 2, name: heading })).toBeVisible();
     const rows = page.locator('#life .row');
-    await expect(rows).toHaveCount(5);
-    await expect(page.locator('#life .tile')).toHaveCount(5); // the small hobbies after the rows
+    await expect(rows).toHaveCount(3); // photography, cooking, games
+    await expect(page.locator('#life .tile')).toHaveCount(7); // guqin, swimming and the five small hobbies
     const photoRow = page.locator('#life .row[data-hobby="photo"]');
     await expect(photoRow).toHaveClass(/has-photos/);
     const originals = photoRow.locator('.track > li:not(.dup) img');

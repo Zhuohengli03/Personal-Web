@@ -2,11 +2,6 @@
   "intro": "What the rest of the time looks like. The strips drift on their own; hover to pause, click a photo to open it.",
   "hobbies": [
     {
-      "id": "guqin",
-      "title": "Guqin",
-      "blurb": "Four years as a performance major at Xi'an Conservatory and two competition awards. Also the reason Lingxian exists."
-    },
-    {
       "id": "photo",
       "title": "Photography & travel",
       "blurb": "Mostly skylines, mountains and the hour before dark: New York, San Francisco, Philadelphia, Japan — and a few places still to be labelled."
@@ -171,9 +166,16 @@
       }
     },
     {
+      "id": "guqin",
+      "title": "Guqin",
+      "blurb": "Four years as a performance major at Xi'an Conservatory and two competition awards. Also the reason Lingxian exists.",
+      "small": true
+    },
+    {
       "id": "swimming",
       "title": "Swimming",
-      "blurb": "Lengths, not laps around the pool deck."
+      "blurb": "Lengths, not laps around the pool deck.",
+      "small": true
     },
     {
       "id": "fitness",

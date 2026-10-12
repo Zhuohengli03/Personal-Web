@@ -135,8 +135,9 @@ const icons: Record<string, string> = {
 
   /* the small hobbies: one tile each, numbered on from the rows */
   .tiles { list-style: none; margin: 1.25rem 0 0; padding: 0; display: grid; gap: 0.9rem; grid-template-columns: repeat(2, 1fr); }
-  @media (min-width: 720px) { .tiles { grid-template-columns: repeat(5, 1fr); } }
-  .tile { counter-increment: hobby; display: flex; flex-direction: column; gap: 0.35rem; padding: 1rem 1rem 1.1rem; border-radius: var(--radius); background: var(--card); }
+  @media (min-width: 720px) { .tiles { grid-template-columns: repeat(4, 1fr); } }
+  @media (min-width: 1000px) { .tiles { grid-template-columns: repeat(7, 1fr); gap: 0.8rem; } }
+  .tile { counter-increment: hobby; display: flex; flex-direction: column; gap: 0.35rem; padding: 1rem 0.9rem 1.1rem; border-radius: var(--radius); background: var(--card); }
   .tile .icon { margin-bottom: 0.2rem; }
   .tile .blurb { max-width: none; font-size: 0.8rem; }
 
