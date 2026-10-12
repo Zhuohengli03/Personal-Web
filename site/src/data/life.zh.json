@@ -64,7 +64,7 @@
           {
             "id": "pc",
             "heading": "PC · Steam",
-            "note": "Steam 时长截至 2026-10-12：列出 20 小时以上的全部游戏，200 小时以上标时长，其余只标类型。",
+            "note": "Steam 时长截至 2026-10-12：20 小时以上的全部游戏，按时长排序。",
             "cards": [
               {
                 "image": "games/squad.jpg",
@@ -93,67 +93,67 @@
               {
                 "image": "games/battlefield-v.jpg",
                 "title": "战地 5",
-                "meta": "射击",
+                "meta": "119 小时",
                 "href": "https://store.steampowered.com/app/1238810/"
               },
               {
                 "image": "games/rainbow-six-siege.jpg",
                 "title": "彩虹六号：围攻",
-                "meta": "战术射击",
+                "meta": "105 小时",
                 "href": "https://store.steampowered.com/app/359550/"
               },
               {
                 "image": "games/call-of-duty.jpg",
                 "title": "使命召唤",
-                "meta": "射击",
+                "meta": "83 小时",
                 "href": "https://store.steampowered.com/app/1938090/"
               },
               {
                 "image": "games/destiny-2.jpg",
                 "title": "命运 2",
-                "meta": "刷宝射击",
+                "meta": "75 小时",
                 "href": "https://store.steampowered.com/app/1085660/"
               },
               {
                 "image": "games/bannerlord.jpg",
                 "title": "骑马与砍杀 II：霸主",
-                "meta": "中世纪沙盒",
+                "meta": "67 小时",
                 "href": "https://store.steampowered.com/app/261550/"
               },
               {
                 "image": "games/war-thunder.jpg",
                 "title": "战争雷霆",
-                "meta": "载具对战",
+                "meta": "65 小时",
                 "href": "https://store.steampowered.com/app/236390/"
               },
               {
                 "image": "games/hunt-showdown.jpg",
                 "title": "猎杀：对决 1896",
-                "meta": "搜打撤",
+                "meta": "63 小时",
                 "href": "https://store.steampowered.com/app/594650/"
               },
               {
                 "image": "games/gta-v.jpg",
                 "title": "GTA V",
-                "meta": "开放世界",
+                "meta": "43 小时",
                 "href": "https://store.steampowered.com/app/271590/"
               },
               {
                 "image": "games/the-forest.jpg",
                 "title": "森林",
-                "meta": "生存",
+                "meta": "36 小时",
                 "href": "https://store.steampowered.com/app/242760/"
               },
               {
                 "image": "games/just-cause-3.jpg",
                 "title": "正当防卫 3",
-                "meta": "开放世界动作",
+                "meta": "33 小时",
                 "href": "https://store.steampowered.com/app/225540/"
               },
               {
                 "image": "games/civilization-vi.jpg",
                 "title": "文明 6",
-                "meta": "回合策略",
+                "meta": "31 小时",
                 "href": "https://store.steampowered.com/app/289070/"
               }
             ]

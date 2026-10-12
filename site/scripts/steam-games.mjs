@@ -1,17 +1,16 @@
 // Pulls the owner's Steam playtime and rewrites the games data in src/data/life.{en,zh}.json:
-//   STEAM_API_KEY=… node scripts/steam-games.mjs
-// Writes src/data/figures/steam.json (app id, name, hours — games with 20 h or more, software excluded) and from it
-// the "PC · Steam" group of the games page plus the hours on the home strip. Titles, covers and genre labels come
-// from the curated map below; a new game above 20 h is reported so it can be added. The key stays in the
-// environment; nothing secret is written.
+//   STEAM_API_KEY=… node scripts/steam-games.mjs        (fetches; writes src/data/figures/steam.json)
+//   node scripts/steam-games.mjs                        (no key: rebuilds the cards from the saved steam.json)
+// The "PC · Steam" group of the games page lists every game with 20 h or more, sorted by hours, hours on every
+// card; the home strip gets the same hours. Titles and covers come from the curated map below; a new game above
+// 20 h is reported so it can be added. The key stays in the environment; nothing secret is written.
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 
 const STEAM_ID = '76561199179240743';
-const MIN_HOURS = 20, HOURS_SHOWN_FROM = 200;
+const MIN_HOURS = 20;
 const NOT_GAMES = new Set([431960]); // Wallpaper Engine
 const key = process.env.STEAM_API_KEY;
-if (!key) { console.error('STEAM_API_KEY is not set'); process.exit(1); }
 
 // app id → cover file, titles, genre label (shown when under HOURS_SHOWN_FROM) and an optional rank suffix
 const KNOWN = {
@@ -35,26 +34,33 @@ const KNOWN = {
   2507950: { cover: 'games/delta-force.jpg', en: 'Delta Force', zh: '三角洲行动', genre: ['tactical shooter', '战术射击'] },
 };
 
-const url = `https://api.steampowered.com/IPlayerService/GetOwnedGames/v1/?key=${key}&steamid=${STEAM_ID}&include_appinfo=1&include_played_free_games=1&format=json`;
-const res = await fetch(url, { headers: { 'User-Agent': 'Mozilla/5.0' } });
-if (!res.ok) { console.error(`Steam API ${res.status}`); process.exit(1); }
-const owned = (await res.json()).response?.games ?? [];
-const games = owned
-  .map((g) => ({ appid: g.appid, name: g.name, hours: Math.round(g.playtime_forever / 60) }))
-  .filter((g) => g.hours >= MIN_HOURS && !NOT_GAMES.has(g.appid))
-  .sort((a, b) => b.hours - a.hours);
-const asOf = new Date().toISOString().slice(0, 10);
-const totalHours = Math.round(owned.reduce((n, g) => n + g.playtime_forever, 0) / 60);
-const steam = { asOf, steamId: STEAM_ID, totalHours, gameCount: owned.length, games };
 const here = (p) => fileURLToPath(new URL(p, import.meta.url));
-writeFileSync(here('../src/data/figures/steam.json'), JSON.stringify(steam, null, 2) + '\n');
+const cachePath = here('../src/data/figures/steam.json');
+let steam;
+if (key) {
+  const url = `https://api.steampowered.com/IPlayerService/GetOwnedGames/v1/?key=${key}&steamid=${STEAM_ID}&include_appinfo=1&include_played_free_games=1&format=json`;
+  const res = await fetch(url, { headers: { 'User-Agent': 'Mozilla/5.0' } });
+  if (!res.ok) { console.error(`Steam API ${res.status}`); process.exit(1); }
+  const owned = (await res.json()).response?.games ?? [];
+  const games = owned
+    .map((g) => ({ appid: g.appid, name: g.name, hours: Math.round(g.playtime_forever / 60) }))
+    .filter((g) => g.hours >= MIN_HOURS && !NOT_GAMES.has(g.appid))
+    .sort((a, b) => b.hours - a.hours);
+  steam = { asOf: new Date().toISOString().slice(0, 10), steamId: STEAM_ID, totalHours: Math.round(owned.reduce((n, g) => n + g.playtime_forever, 0) / 60), gameCount: owned.length, games };
+  writeFileSync(cachePath, JSON.stringify(steam, null, 2) + '\n');
+} else if (existsSync(cachePath)) {
+  steam = JSON.parse(readFileSync(cachePath, 'utf8'));
+  console.log(`STEAM_API_KEY not set: rebuilding from steam.json saved ${steam.asOf}`);
+} else { console.error('STEAM_API_KEY is not set and there is no saved steam.json'); process.exit(1); }
+const { games, asOf, totalHours } = steam;
+const owned = { length: steam.gameCount };
 
 const unknown = games.filter((g) => !KNOWN[g.appid]);
 for (const g of unknown) console.warn(`not in the curated map (add cover + titles): ${g.appid} ${g.name} ${g.hours} h`);
 const fmtHours = (h, loc) => `${h.toLocaleString('en-US')}${loc === 'en' ? ' h' : ' 小时'}`;
 const card = (g, loc) => {
   const k = KNOWN[g.appid];
-  const meta = g.hours >= HOURS_SHOWN_FROM ? [fmtHours(g.hours, loc), k.rank?.[loc === 'en' ? 0 : 1]].filter(Boolean).join(' · ') : k.genre[loc === 'en' ? 0 : 1];
+  const meta = [fmtHours(g.hours, loc), k.rank?.[loc === 'en' ? 0 : 1]].filter(Boolean).join(' · ');
   const c = { image: k.cover, title: k[loc], meta, href: `https://store.steampowered.com/app/${g.appid}/` };
   if (!existsSync(here(`../src/assets/life/${k.cover}`))) delete c.image;
   return c;
@@ -66,8 +72,8 @@ for (const loc of ['en', 'zh']) {
   const pc = hobby.page.groups.find((g) => g.id === 'pc');
   pc.cards = games.filter((g) => KNOWN[g.appid]).map((g) => card(g, loc));
   pc.note = loc === 'en'
-    ? `Steam playtime as of ${asOf}: every game with ${MIN_HOURS} h or more, hours shown from ${HOURS_SHOWN_FROM} h, the rest by genre.`
-    : `Steam 时长截至 ${asOf}：列出 ${MIN_HOURS} 小时以上的全部游戏，${HOURS_SHOWN_FROM} 小时以上标时长，其余只标类型。`;
+    ? `Steam playtime as of ${asOf}: every game with ${MIN_HOURS} h or more, sorted by hours.`
+    : `Steam 时长截至 ${asOf}：${MIN_HOURS} 小时以上的全部游戏，按时长排序。`;
   // the home strip keeps its curated order; Steam games on it get their live hours
   hobby.cards = hobby.cards.map((c) => {
     const appid = Number((c.href ?? '').match(/\/app\/(\d+)/)?.[1]);

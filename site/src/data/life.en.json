@@ -64,7 +64,7 @@
           {
             "id": "pc",
             "heading": "PC · Steam",
-            "note": "Steam playtime as of 2026-10-12: every game with 20 h or more, hours shown from 200 h, the rest by genre.",
+            "note": "Steam playtime as of 2026-10-12: every game with 20 h or more, sorted by hours.",
             "cards": [
               {
                 "image": "games/squad.jpg",
@@ -93,67 +93,67 @@
               {
                 "image": "games/battlefield-v.jpg",
                 "title": "Battlefield V",
-                "meta": "shooter",
+                "meta": "119 h",
                 "href": "https://store.steampowered.com/app/1238810/"
               },
               {
                 "image": "games/rainbow-six-siege.jpg",
                 "title": "Rainbow Six Siege",
-                "meta": "tactical shooter",
+                "meta": "105 h",
                 "href": "https://store.steampowered.com/app/359550/"
               },
               {
                 "image": "games/call-of-duty.jpg",
                 "title": "Call of Duty",
-                "meta": "shooter",
+                "meta": "83 h",
                 "href": "https://store.steampowered.com/app/1938090/"
               },
               {
                 "image": "games/destiny-2.jpg",
                 "title": "Destiny 2",
-                "meta": "looter shooter",
+                "meta": "75 h",
                 "href": "https://store.steampowered.com/app/1085660/"
               },
               {
                 "image": "games/bannerlord.jpg",
                 "title": "Mount & Blade II: Bannerlord",
-                "meta": "medieval sandbox",
+                "meta": "67 h",
                 "href": "https://store.steampowered.com/app/261550/"
               },
               {
                 "image": "games/war-thunder.jpg",
                 "title": "War Thunder",
-                "meta": "vehicle combat",
+                "meta": "65 h",
                 "href": "https://store.steampowered.com/app/236390/"
               },
               {
                 "image": "games/hunt-showdown.jpg",
                 "title": "Hunt: Showdown 1896",
-                "meta": "extraction shooter",
+                "meta": "63 h",
                 "href": "https://store.steampowered.com/app/594650/"
               },
               {
                 "image": "games/gta-v.jpg",
                 "title": "Grand Theft Auto V",
-                "meta": "open world",
+                "meta": "43 h",
                 "href": "https://store.steampowered.com/app/271590/"
               },
               {
                 "image": "games/the-forest.jpg",
                 "title": "The Forest",
-                "meta": "survival",
+                "meta": "36 h",
                 "href": "https://store.steampowered.com/app/242760/"
               },
               {
                 "image": "games/just-cause-3.jpg",
                 "title": "Just Cause 3",
-                "meta": "open-world action",
+                "meta": "33 h",
                 "href": "https://store.steampowered.com/app/225540/"
               },
               {
                 "image": "games/civilization-vi.jpg",
                 "title": "Civilization VI",
-                "meta": "4X strategy",
+                "meta": "31 h",
                 "href": "https://store.steampowered.com/app/289070/"
               }
             ]
