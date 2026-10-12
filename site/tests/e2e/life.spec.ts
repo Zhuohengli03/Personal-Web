@@ -6,6 +6,7 @@ for (const [path, heading] of [['/', 'Beyond work'], ['/zh/', '工作之外']] a
     await expect(page.getByRole('heading', { level: 2, name: heading })).toBeVisible();
     const rows = page.locator('#life .row');
     await expect(rows).toHaveCount(5);
+    await expect(page.locator('#life .tile')).toHaveCount(5); // the small hobbies after the rows
     const photoRow = page.locator('#life .row[data-hobby="photo"]');
     await expect(photoRow).toHaveClass(/has-photos/);
     const originals = photoRow.locator('.track > li:not(.dup) img');
@@ -54,22 +55,29 @@ test('the strip drifts, pauses on hover, and stands still under reduced motion',
   await still.close();
 });
 
-for (const [path, lang, deep] of [['/life/games/', 'en', 'Played a lot'], ['/zh/life/games/', 'zh-CN', '深度体验']] as const) {
-  test(`games page ${path}: the six played-a-lot games with hours, then the rest`, async ({ page }) => {
+for (const [path, lang, mobile] of [['/life/games/', 'en', 'Mobile'], ['/zh/life/games/', 'zh-CN', '手游']] as const) {
+  test(`games page ${path}: PC games (hours above 200 h) and mobile games apart`, async ({ page }) => {
     await page.goto(path);
     await expect(page.locator('html')).toHaveAttribute('lang', lang);
     await expect(page.locator('h1')).toBeVisible();
-    const groups = page.locator('main .group');
-    await expect(groups).toHaveCount(2);
-    await expect(groups.first().locator('h2')).toContainText(deep);
-    await expect(groups.first().locator('.cards li')).toHaveCount(6);
-    expect(await groups.nth(1).locator('.cards li').count()).toBeGreaterThanOrEqual(5);
+    const pc = page.locator('main .group[data-group="pc"]'), mob = page.locator('main .group[data-group="mobile"]');
+    await expect(pc.locator('h2')).toContainText('Steam');
+    expect(await pc.locator('.cards li').count()).toBeGreaterThanOrEqual(13);
+    await expect(pc.locator('.cards li .meta').first()).toContainText(/h|小时/); // the heavy ones lead, with hours
+    await expect(mob.locator('h2')).toContainText(mobile);
+    await expect(mob.locator('.cards li')).toHaveCount(2);
     await expect(page.locator('main .cards img').first()).toHaveAttribute('alt', /.+/);
   });
 }
 
-test('the games row links to its page', async ({ page }) => {
+test('the games row is one link to its page, with a button-like outline on hover', async ({ page }) => {
   await page.goto('/');
-  await page.locator('#life .row[data-hobby="games"] .title a').first().click();
+  const label = page.locator('#life .row[data-hobby="games"] .label');
+  await expect(label).toHaveClass(/linked/);
+  await label.hover();
+  expect(await label.evaluate((el) => getComputedStyle(el).boxShadow)).not.toBe('none');
+  // clicking the blurb (not the title) still opens the page: the title's link is stretched over the label
+  const box = (await label.locator('.blurb').boundingBox())!;
+  await page.mouse.click(box.x + box.width / 2, box.y + box.height / 2); // lands on the stretched link, not the text
   await expect(page).toHaveURL(/\/life\/games\/$/);
 });

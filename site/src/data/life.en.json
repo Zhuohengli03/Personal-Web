@@ -65,51 +65,107 @@
       "page": {
         "title": "Games",
         "intro": "Over 4,000 hours on Steam, mostly team shooters and extraction games, and a habit of watching how versions, seasons and battle passes are designed and received. One of these games became a data project: the Dark and Darker price forecast.",
-        "deep": "Played a lot",
-        "more": "Also played",
-        "moreNote": "Plus Genshin Impact and Naruto Mobile on the phone.",
-        "cards": [
+        "groups": [
           {
-            "image": "games/delta-force.jpg",
-            "title": "Delta Force",
-            "meta": "tactical shooter",
-            "href": "https://store.steampowered.com/app/2507950/"
+            "id": "pc",
+            "heading": "PC · Steam",
+            "note": "Hours shown where they pass 200; the rest by genre.",
+            "cards": [
+              {
+                "image": "games/squad.jpg",
+                "title": "Squad",
+                "meta": "1,500+ h",
+                "href": "https://store.steampowered.com/app/393380/"
+              },
+              {
+                "image": "games/dark-and-darker.jpg",
+                "title": "Dark and Darker",
+                "meta": "1,300+ h · Demigod",
+                "href": "https://store.steampowered.com/app/2016590/"
+              },
+              {
+                "image": "games/cs2.jpg",
+                "title": "Counter-Strike 2",
+                "meta": "800+ h · Premier A",
+                "href": "https://store.steampowered.com/app/730/"
+              },
+              {
+                "image": "games/where-winds-meet.jpg",
+                "title": "Where Winds Meet",
+                "meta": "248 h",
+                "href": "https://store.steampowered.com/app/3564740/"
+              },
+              {
+                "image": "games/wardogs.jpg",
+                "title": "Wardogs",
+                "meta": "~200 h",
+                "href": "https://store.steampowered.com/app/1867240/"
+              },
+              {
+                "image": "games/naraka.jpg",
+                "title": "Naraka: Bladepoint",
+                "meta": "Sunset IV",
+                "href": "https://store.steampowered.com/app/1203220/"
+              },
+              {
+                "image": "games/delta-force.jpg",
+                "title": "Delta Force",
+                "meta": "tactical shooter",
+                "href": "https://store.steampowered.com/app/2507950/"
+              },
+              {
+                "image": "games/call-of-duty.jpg",
+                "title": "Call of Duty",
+                "meta": "shooter",
+                "href": "https://store.steampowered.com/app/1938090/"
+              },
+              {
+                "image": "games/battlefield-v.jpg",
+                "title": "Battlefield V",
+                "meta": "shooter",
+                "href": "https://store.steampowered.com/app/1238810/"
+              },
+              {
+                "image": "games/black-myth-wukong.jpg",
+                "title": "Black Myth: Wukong",
+                "meta": "action RPG",
+                "href": "https://store.steampowered.com/app/2358720/"
+              },
+              {
+                "image": "games/destiny-2.jpg",
+                "title": "Destiny 2",
+                "meta": "looter shooter",
+                "href": "https://store.steampowered.com/app/1085660/"
+              },
+              {
+                "image": "games/civilization-vi.jpg",
+                "title": "Civilization VI",
+                "meta": "4X strategy",
+                "href": "https://store.steampowered.com/app/289070/"
+              },
+              {
+                "image": "games/the-sims-4.jpg",
+                "title": "The Sims 4",
+                "meta": "life sim",
+                "href": "https://store.steampowered.com/app/1222670/"
+              }
+            ]
           },
           {
-            "image": "games/call-of-duty.jpg",
-            "title": "Call of Duty",
-            "meta": "shooter",
-            "href": "https://store.steampowered.com/app/1938090/"
-          },
-          {
-            "image": "games/battlefield-v.jpg",
-            "title": "Battlefield V",
-            "meta": "shooter",
-            "href": "https://store.steampowered.com/app/1238810/"
-          },
-          {
-            "image": "games/black-myth-wukong.jpg",
-            "title": "Black Myth: Wukong",
-            "meta": "action RPG",
-            "href": "https://store.steampowered.com/app/2358720/"
-          },
-          {
-            "image": "games/destiny-2.jpg",
-            "title": "Destiny 2",
-            "meta": "looter shooter",
-            "href": "https://store.steampowered.com/app/1085660/"
-          },
-          {
-            "image": "games/civilization-vi.jpg",
-            "title": "Civilization VI",
-            "meta": "4X strategy",
-            "href": "https://store.steampowered.com/app/289070/"
-          },
-          {
-            "image": "games/the-sims-4.jpg",
-            "title": "The Sims 4",
-            "meta": "life sim",
-            "href": "https://store.steampowered.com/app/1222670/"
+            "id": "mobile",
+            "heading": "Mobile",
+            "cards": [
+              {
+                "image": "games/genshin-impact.jpg",
+                "title": "Genshin Impact",
+                "meta": "open-world RPG"
+              },
+              {
+                "image": "games/naruto-mobile.jpg",
+                "title": "Naruto Mobile",
+                "meta": "fighting"
+              }
+            ]
           }
         ]
       }
@@ -118,6 +174,36 @@
       "id": "swimming",
       "title": "Swimming",
       "blurb": "Lengths, not laps around the pool deck."
+    },
+    {
+      "id": "fitness",
+      "title": "Fitness",
+      "blurb": "Weights and cardio.",
+      "small": true
+    },
+    {
+      "id": "boardgames",
+      "title": "Board games",
+      "blurb": "The default plan when friends are over.",
+      "small": true
+    },
+    {
+      "id": "gatherings",
+      "title": "Gatherings",
+      "blurb": "Weekends with friends.",
+      "small": true
+    },
+    {
+      "id": "badminton",
+      "title": "Badminton",
+      "blurb": "The racket sport I play most.",
+      "small": true
+    },
+    {
+      "id": "pingpong",
+      "title": "Table tennis",
+      "blurb": "The other racket sport.",
+      "small": true
     }
   ],
   "photos": [

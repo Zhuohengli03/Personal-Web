@@ -37,6 +37,11 @@ const icons: Record<string, string> = {
   cooking: '<path d="M4 10h16l-1.5 9a2 2 0 0 1-2 1.8h-9a2 2 0 0 1-2-1.8L4 10z" /><path d="M2 10h20M8 6c0-2 2-2 2-4M12 6c0-2 2-2 2-4" />',
   games: '<rect x="2" y="7" width="20" height="11" rx="5" /><path d="M7 11v3M5.5 12.5h3M15.5 11.5h.01M18 13.5h.01" />',
   swimming: '<path d="M2 17c2 0 2-1.5 4-1.5s2 1.5 4 1.5 2-1.5 4-1.5 2 1.5 4 1.5 2-1.5 4-1.5" /><circle cx="16" cy="7" r="2" /><path d="M4 13l5-5 4 3" />',
+  fitness: '<path d="M6 8v8M18 8v8M3 10v4M21 10v4M6 12h12" /><path d="M8 6v12M16 6v12" opacity=".5" />',
+  boardgames: '<rect x="3" y="3" width="18" height="18" rx="3" /><circle cx="8" cy="8" r="1.2" /><circle cx="16" cy="8" r="1.2" /><circle cx="12" cy="12" r="1.2" /><circle cx="8" cy="16" r="1.2" /><circle cx="16" cy="16" r="1.2" />',
+  gatherings: '<circle cx="8" cy="8" r="3" /><circle cx="16.5" cy="9" r="2.5" /><path d="M2.5 19c0-3 2.5-5 5.5-5s5.5 2 5.5 5" /><path d="M14 18c.4-2.3 2-3.5 4-3.5s3.5 1.5 3.5 3.5" />',
+  badminton: '<path d="M14 10l6-6" /><path d="M9 15a4 4 0 1 0 5.5-5.5A4 4 0 0 0 9 15z" /><path d="M3 21l5-5" /><path d="M11 11l4 4" opacity=".5" />',
+  pingpong: '<circle cx="9.5" cy="9.5" r="6" /><path d="M14 14l6 6" /><circle cx="18" cy="6" r="1.8" /><path d="M5 9.5h9M9.5 5v9" opacity=".4" />',
 };
 ---
 <section id="life" class="wrap section">
@@ -46,13 +51,13 @@ const icons: Record<string, string> = {
   </div>
 
   <ol class="rows" data-hobbies>
-    {life.hobbies.map((h) => {
+    {life.hobbies.filter((h) => !h.small).map((h) => {
       const own = byHobby(h.id);
       return (
         <li class:list={['row', 'reveal', { 'has-photos': own.length > 0, 'has-cards': own.length === 0 && (h.cards?.length ?? 0) > 0 }]} data-hobby={h.id}>
-          <div class="label">
+          <div class:list={['label', { linked: Boolean(h.page) }]}>
             <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={icons[h.id] ?? ''} />
-            <h3 class="title">{h.page ? <a href={localePath(`/life/${h.id}/`, locale)} data-umami-event="hobby-open" data-umami-event-slug={h.id}>{h.title}</a> : h.title}{own.length > 0 && <span class="count">{own.length}</span>}{h.page && <a class="more" href={localePath(`/life/${h.id}/`, locale)}>{tr('life.more')} →</a>}</h3>
+            <h3 class="title">{h.page ? <a href={localePath(`/life/${h.id}/`, locale)} aria-label={`${h.title} — ${tr('life.more')}`} data-umami-event="hobby-open" data-umami-event-slug={h.id}>{h.title}</a> : h.title}{own.length > 0 && <span class="count">{own.length}</span>}</h3>
             <p class="blurb">{h.blurb}</p>
             {h.link && <a class="link" href={h.link.href} target="_blank" rel="me noopener" data-umami-event="outbound-hobby" data-umami-event-slug={h.id}>{h.link.label} ↗</a>}
           </div>
@@ -94,6 +99,18 @@ const icons: Record<string, string> = {
       );
     })}
   </ol>
+
+  {life.hobbies.some((h) => h.small) && (
+    <ol class="tiles" data-tiles style={`counter-reset: hobby ${life.hobbies.filter((h) => !h.small).length}`}>
+      {life.hobbies.filter((h) => h.small).map((h) => (
+        <li class="tile reveal" data-hobby={h.id}>
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={icons[h.id] ?? ''} />
+          <h3 class="title">{h.title}</h3>
+          <p class="blurb">{h.blurb}</p>
+        </li>
+      ))}
+    </ol>
+  )}
 </section>
 <style>
   .rows { list-style: none; margin: 0; padding: 0; counter-reset: hobby; border-top: 1px solid var(--rule); }
@@ -104,10 +121,24 @@ const icons: Record<string, string> = {
   .title { margin: 0; font-family: var(--font-sans); font-size: 1rem; font-weight: 500; color: var(--fg); display: flex; align-items: baseline; gap: 0.5rem; }
   .title::before { content: counter(hobby, decimal-leading-zero); font-family: var(--font-mono); font-size: 0.65rem; font-weight: 400; letter-spacing: 0.08em; color: var(--fg-muted); }
   .count { font-family: var(--font-mono); font-size: 0.65rem; color: var(--fg-muted); }
-  .title a { color: inherit; }
-  .more { font-family: var(--font-mono); font-size: 0.68rem; font-weight: 400; color: var(--fg-muted); margin-left: 0.2rem; }
+  .title a { color: inherit; text-decoration: none; }
+  /* a hobby with its own page: the whole label is the link (the title's link is stretched over it) and shows a
+     button-like outline on hover; the outbound link inside stays its own target */
+  .label.linked { position: relative; padding: 0.8rem 0.9rem; margin: -0.8rem -0.9rem; border-radius: 10px; cursor: pointer; transition: box-shadow 0.16s ease, background-color 0.16s ease; }
+  .label.linked .title a::after { content: ''; position: absolute; inset: 0; border-radius: 10px; }
+  .label.linked .link { position: relative; z-index: 1; }
+  .label.linked:hover, .label.linked:has(.title a:focus-visible) { box-shadow: inset 0 0 0 1px var(--fg); }
+  .label.linked:has(.link:hover) { box-shadow: none; }
+  .label.linked .title a:focus-visible { outline: none; }
   .blurb { margin: 0; font-size: 0.85rem; line-height: 1.5; color: var(--fg-muted); max-width: 34ch; }
   .link { grid-column: 2; justify-self: start; margin-top: 0.35rem; font-family: var(--font-mono); font-size: 0.72rem; color: var(--fg); }
+
+  /* the small hobbies: one tile each, numbered on from the rows */
+  .tiles { list-style: none; margin: 1.25rem 0 0; padding: 0; display: grid; gap: 0.9rem; grid-template-columns: repeat(2, 1fr); }
+  @media (min-width: 720px) { .tiles { grid-template-columns: repeat(5, 1fr); } }
+  .tile { counter-increment: hobby; display: flex; flex-direction: column; gap: 0.35rem; padding: 1rem 1rem 1.1rem; border-radius: var(--radius); background: var(--card); }
+  .tile .icon { margin-bottom: 0.2rem; }
+  .tile .blurb { max-width: none; font-size: 0.8rem; }
 
   /* the strip: a track twice as long as its photos, moved left by half its width on a loop, so the join is seamless */
   .strip { position: relative; overflow: hidden; border-radius: 10px; }

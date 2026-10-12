@@ -9,7 +9,7 @@ Items that only the site owner can supply. Everything else on the site is source
 | Game cards and the games page | `site/src/data/life.*.json` → the games hobby's `cards` (played a lot: title, hours/rank, Steam link, cover) and `page.cards` (also played, genre only) rendered at `/life/games/` | Covers are Steam store library art (`library_600x900.jpg`) saved to `site/src/assets/life/games/`; Wardogs uses its Steam capsule cropped to portrait. Hours come from the owner's résumé — update both locales together. |
 | Cooking photos (optional) | `site/src/assets/life/cooking/` | Same as the guqin row with `"hobby": "cooking"`. |
 | Photo captions | `site/src/data/life.*.json` → `photos[].caption` | 16 travel photos carry draft captions; add confirmed places and years in both languages. English captions retain `[TODO: …]` markers; Chinese captions show only the available descriptions, with unconfirmed details omitted. Both locales list the same files in the same order (a unit test enforces it). |
-| Hobby blurbs | `site/src/data/life.*.json` → `hobbies[].blurb` | Cooking, games and swimming have neutral one-liners; rewrite freely. |
+| Hobby blurbs | `site/src/data/life.*.json` → `hobbies[].blurb` | Cooking and swimming, and the five small tiles (fitness, board games, gatherings, badminton, table tennis), carry neutral one-liners written without facts from the owner; rewrite freely. |
 
 Done: LinkedIn URL is in `profile.*.json` → `contact.linkedin` and renders in the footer. Profile photo is in `site/src/assets/photo.jpg`. Résumés without phone numbers are in `site/public/resume-{en,zh}.pdf`.
 

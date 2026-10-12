@@ -21,10 +21,7 @@ const resolve = (file: string): ImageMetadata => {
   return meta;
 };
 type Card = { image?: string; title: string; meta: string; href?: string };
-const groups: { heading: string; cards: Card[]; note?: string }[] = [
-  { heading: page.deep, cards: hobby.cards ?? [] },
-  { heading: page.more, cards: page.cards, note: page.moreNote },
-];
+const groups: { id: string; heading: string; cards: Card[]; note?: string }[] = page.groups;
 ---
 <BaseLayout title={`${page.title} — ${tr('site.title')}`} description={page.intro} locale={locale} path={`/life/${hobbyId}/`}>
   <main class="wrap section">
@@ -35,7 +32,7 @@ const groups: { heading: string; cards: Card[]; note?: string }[] = [
       {hobby.link && <p class="center fade-up" data-delay="4"><a class="btn" href={hobby.link.href} target="_blank" rel="me noopener" data-umami-event="outbound-hobby" data-umami-event-slug={hobby.id}>{hobby.link.label} ↗</a></p>}
     </header>
     {groups.map((g) => g.cards.length > 0 && (
-      <section class="group reveal">
+      <section class="group reveal" data-group={g.id}>
         <h2 class="eyebrow">{g.heading}<span class="n">{g.cards.length}</span></h2>
         <ul class="cards">
           {g.cards.map((c) => {
@@ -67,6 +64,8 @@ const groups: { heading: string; cards: Card[]; note?: string }[] = [
   .cards a, .cards div { display: flex; flex-direction: column; gap: 0.3rem; color: inherit; text-decoration: none; }
   .cards a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 8px; }
   .cards img { display: block; width: 100%; height: auto; aspect-ratio: 2 / 3; object-fit: cover; border-radius: 8px; background: var(--card); }
+  /* app icons are square: a mobile group keeps the same card width with square covers */
+  [data-group='mobile'] .cards img { aspect-ratio: 1; }
   .cover-text { display: flex; align-items: flex-end; box-sizing: border-box; aspect-ratio: 2 / 3; padding: 0.9rem; border-radius: 8px; background: var(--card); font-family: var(--font-serif); font-size: 1.2rem; line-height: 1.2; }
   .title { margin-top: 0.25rem; font-family: var(--font-sans); font-size: 0.88rem; }
   .meta { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.02em; color: var(--fg-muted); }
