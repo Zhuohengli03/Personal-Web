@@ -194,6 +194,11 @@
             "heading": "手游",
             "cards": [
               {
+                "image": "games/honor-of-kings.jpg",
+                "title": "王者荣耀",
+                "meta": "MOBA · 最强王者"
+              },
+              {
                 "image": "games/genshin-impact.jpg",
                 "title": "原神",
                 "meta": "开放世界"

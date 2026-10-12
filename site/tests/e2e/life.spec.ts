@@ -67,7 +67,7 @@ for (const [path, lang, mobile] of [['/life/games/', 'en', 'Mobile'], ['/zh/life
     await expect(pc.locator('.cards li .meta').last()).not.toContainText(/h|小时/); // under 200 h: genre only
     await expect(page.locator('main .group[data-group="other"] .cards li')).toHaveCount(4); // played outside Steam or on another account
     await expect(mob.locator('h2')).toContainText(mobile);
-    await expect(mob.locator('.cards li')).toHaveCount(2);
+    await expect(mob.locator('.cards li')).toHaveCount(3);
     await expect(page.locator('main .cards img').first()).toHaveAttribute('alt', /.+/);
   });
 }

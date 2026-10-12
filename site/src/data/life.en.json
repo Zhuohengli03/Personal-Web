@@ -194,6 +194,11 @@
             "heading": "Mobile",
             "cards": [
               {
+                "image": "games/honor-of-kings.jpg",
+                "title": "Honor of Kings",
+                "meta": "MOBA · Glorious King"
+              },
+              {
                 "image": "games/genshin-impact.jpg",
                 "title": "Genshin Impact",
                 "meta": "open-world RPG"
