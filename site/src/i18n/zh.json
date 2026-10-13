@@ -75,13 +75,17 @@
     "home": "回到首页"
   },
   "life": {
-    "more": "全部游戏",
+    "more": "{first}等 {total} 地",
     "back": "返回首页",
     "places": "个地点",
     "countries": "个国家",
     "photos": "张照片",
     "map": "照片拍摄地点地图",
     "all": "全部照片",
-    "showAll": "显示全部"
+    "showAll": "显示全部",
+    "libraryCount": "相册里 {n} 张带位置的照片",
+    "libraryKey": "相册里的照片",
+    "siteKey": "本站有照片",
+    "where": "所有地点，按国家"
   }
 }

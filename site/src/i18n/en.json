@@ -75,13 +75,17 @@
     "home": "Go home"
   },
   "life": {
-    "more": "All games",
+    "more": "{first} & {others} more",
     "back": "Back to home",
     "places": "places",
     "countries": "countries",
     "photos": "photos",
     "map": "Map of the places these photos were taken",
     "all": "All photos",
-    "showAll": "Show all"
+    "showAll": "Show all",
+    "libraryCount": "{n} located photos in my library",
+    "libraryKey": "photos in my library",
+    "siteKey": "photos on this site",
+    "where": "Every place, by country"
   }
 }

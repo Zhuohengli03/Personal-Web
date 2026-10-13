@@ -90,13 +90,15 @@ for (const [path, lang] of [['/life/photo/', 'en'], ['/zh/life/photo/', 'zh-CN']
     await expect(page.locator('html')).toHaveAttribute('lang', lang);
     const map = page.locator('[data-travel-map] svg');
     await expect(map).toBeVisible();
-    expect(await map.locator('[data-pin]').count()).toBeGreaterThanOrEqual(4);
+    expect(await map.locator('.pin').count()).toBeGreaterThanOrEqual(6); // the library footprint (nearby cities share a pin)
+    expect(await map.locator('.pin.site').count()).toBeGreaterThanOrEqual(4); // places with photos on this site
+    expect(await page.locator('.where .chip').count()).toBeGreaterThanOrEqual(20); // every place, by country
     const shots = page.locator('[data-wall] .shots > li');
     await expect(shots).toHaveCount(16);
     await expect(page.locator('[data-wall] .shots > li:visible')).toHaveCount(16);
     await expect(page.locator('[data-wall] [data-clear]')).toBeHidden(); // nothing to clear yet
     // pick the pin for San Francisco: one photo
-    const sf = map.locator('[data-pin][data-places="sanfrancisco"]');
+    const sf = map.locator('.pin.site[data-places="sanfrancisco"]');
     await sf.locator('.dot').click({ force: true });
     await expect(sf).toHaveAttribute('aria-pressed', 'true');
     await expect(page.locator('[data-wall] .shots > li:visible')).toHaveCount(1);
@@ -104,8 +106,10 @@ for (const [path, lang] of [['/life/photo/', 'en'], ['/zh/life/photo/', 'zh-CN']
     await sf.locator('.dot').click({ force: true }); // again: everything back
     await expect(page.locator('[data-wall] .shots > li:visible')).toHaveCount(16);
     // the show-all button also resets
-    await map.locator('[data-pin][data-places="ili"] .dot').click({ force: true });
+    // a place chip filters too, and lights up together with its pin
+    await page.locator('.where .chip.site[data-places="ili"]').click();
     await expect(page.locator('[data-wall] .shots > li:visible')).toHaveCount(7);
+    await expect(map.locator('.pin.site[data-places="ili"]')).toHaveAttribute('aria-pressed', 'true');
     await page.locator('[data-wall] [data-clear]').click();
     await expect(page.locator('[data-wall] .shots > li:visible')).toHaveCount(16);
     // the page never carries a photo's own coordinates, only city centroids

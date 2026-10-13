@@ -1,7 +1,8 @@
 ---
 // TravelMap.astro — a world map rendered at build time (Equal Earth, Natural Earth 1:110m countries from world-atlas)
-// with one pin per place in places.json, sized by photo count. Places closer than MERGE_PX on the map share a pin.
-// Each pin is a toggle: it filters the photo wall below to its place(s) (TravelLayout listens for the event).
+// with one pin per place in places.json. Pin size follows how many photos in the owner's library were taken there
+// (log scale); places that also have photos on this site are filled and act as filters (TravelLayout handles the
+// click), the rest are outlined footprints. Places closer than MERGE_PX share a pin.
 import { geoEqualEarth, geoPath, geoGraticule10 } from 'd3-geo';
 import { feature, mesh } from 'topojson-client';
 import type { Topology, GeometryCollection } from 'topojson-specification';
@@ -9,11 +10,23 @@ import world from 'world-atlas/countries-110m.json';
 import data from '../../data/figures/places.json';
 import type { Locale } from '../../i18n';
 
-interface Props { locale: Locale; label: string; photosWord: string }
-const { locale, label, photosWord } = Astro.props;
-const W = 960, H = 470, MERGE_PX = 16;
+interface Props { locale: Locale; label: string; libraryWord: string; siteWord: string; moreWord: string }
+const { locale, label, libraryWord, siteWord, moreWord } = Astro.props;
+const W = 960, H = 400, MERGE_PX = 18;
 const topo = world as unknown as Topology<{ countries: GeometryCollection; land: GeometryCollection }>;
-const projection = geoEqualEarth().fitExtent([[6, 6], [W - 6, H - 6]], { type: 'Sphere' });
+// frame the band the places sit in (with margin) rather than the whole sphere; the rest is clipped by the viewBox
+const lons = data.places.map((p) => p.lon), lats = data.places.map((p) => p.lat);
+const [w0, e0, s0, n0] = [Math.min(...lons) - 25, Math.max(...lons) + 25, Math.max(-60, Math.min(...lats) - 18), Math.min(80, Math.max(...lats) + 16)];
+// the frame as points along the box edges (a polygon would be read by its winding order, and a box this wide can
+// be taken as its complement)
+const edge: [number, number][] = [];
+for (let lon = w0; lon <= e0; lon += 5) edge.push([lon, s0], [lon, n0]);
+for (let lat = s0; lat <= n0; lat += 5) edge.push([w0, lat], [e0, lat]);
+const projection = geoEqualEarth().rotate([-(w0 + e0) / 2, 0]).fitExtent([[12, 12], [W - 12, H - 12]], { type: 'MultiPoint', coordinates: edge });
+// the box is much wider than tall, so the fit leaves height unused: crop the view from the pole line down to just
+// below the southern edge of the frame
+const VY0 = Math.max(0, (projection([(w0 + e0) / 2, 90])?.[1] ?? 0) - 2);
+const VY1 = Math.min(H, (projection([(w0 + e0) / 2, s0])?.[1] ?? H) + 24);
 const path = geoPath(projection);
 const land = path(feature(topo, topo.objects.land)) ?? '';
 const borders = path(mesh(topo, topo.objects.countries, (a, b) => a !== b)) ?? '';
@@ -22,37 +35,73 @@ const graticule = path(geoGraticule10()) ?? '';
 const f = (v: number) => v.toFixed(1);
 
 type Place = (typeof data.places)[number];
-const name = (p: Place) => (locale === 'zh' ? p.zh : p.en);
-const country = (p: Place) => p.country[locale === 'zh' ? 1 : 0];
-const pts = data.places.map((p) => { const [x, y] = projection([p.lon, p.lat]) ?? [0, 0]; return { p, x, y }; });
-// merge places that would overlap at this scale into one pin
+const zh = locale === 'zh';
+const name = (p: Place) => (zh ? p.zh : p.en);
+const weight = (p: Place) => Math.max(p.library, p.photos.length);
+// largest first, so a merged pin is named after its biggest place
+const pts = [...data.places].sort((a, b) => weight(b) - weight(a)).map((p) => { const [x, y] = projection([p.lon, p.lat]) ?? [0, 0]; return { p, x, y }; });
 const pins: { x: number; y: number; places: Place[] }[] = [];
 for (const q of pts) {
   const hit = pins.find((g) => Math.hypot(g.x - q.x, g.y - q.y) < MERGE_PX);
-  if (hit) { hit.places.push(q.p); const n = hit.places.length; hit.x += (q.x - hit.x) / n; hit.y += (q.y - hit.y) / n; }
-  else pins.push({ x: q.x, y: q.y, places: [q.p] });
+  if (hit) hit.places.push(q.p); else pins.push({ x: q.x, y: q.y, places: [q.p] });
 }
-const count = (g: { places: Place[] }) => g.places.reduce((n, p) => n + p.photos.length, 0);
-const r = (n: number) => 4 + 2.2 * Math.sqrt(n);
+const total = (g: { places: Place[] }) => g.places.reduce((n, p) => n + weight(p), 0);
+const site = (g: { places: Place[] }) => g.places.filter((p) => p.photos.length > 0);
+const r = (n: number) => 3 + 2.4 * Math.log10(n + 1);
+const pinLabel = (g: { places: Place[] }) => g.places.length === 1 ? name(g.places[0])
+  : moreWord.replace('{first}', name(g.places[0])).replace('{total}', String(g.places.length)).replace('{others}', String(g.places.length - 1));
+const tipLines = (g: { places: Place[] }) => g.places.map((p) => `${name(p)} · ${p.library.toLocaleString('en-US')}${p.photos.length ? ` · ${siteWord} ${p.photos.length}` : ''}`).join('\n');
+// greedy label placement: most important pins first, try right / left / above / below, skip any that would
+// overlap a placed label or another pin (the tooltip and the place list still carry every name)
+const FONT = 11.5;
+const textW = (s: string) => [...s].reduce((w, ch) => w + (/[\u2E80-\uFFFF]/.test(ch) ? FONT : FONT * 0.56), 0);
+type Box = { x0: number; y0: number; x1: number; y1: number };
+const hits = (a: Box, b: Box) => a.x0 < b.x1 && b.x0 < a.x1 && a.y0 < b.y1 && b.y0 < a.y1;
+const ordered = [...pins].sort((a, b) => (site(b).length > 0 ? 1 : 0) - (site(a).length > 0 ? 1 : 0) || total(b) - total(a));
+const taken: Box[] = pins.map((g) => { const rr = r(total(g)) + 2; return { x0: g.x - rr, y0: g.y - rr, x1: g.x + rr, y1: g.y + rr }; });
+const labels = new Map<(typeof pins)[number], { x: number; y: number; anchor: 'start' | 'end' | 'middle' } | null>();
+for (const g of ordered) {
+  const text = pinLabel(g), tw = textW(text), rad = r(total(g)), h = FONT + 2;
+  const tries = [
+    { x: g.x + rad + 5, y: g.y, anchor: 'start' as const, box: { x0: g.x + rad + 3, y0: g.y - h / 2, x1: g.x + rad + 7 + tw, y1: g.y + h / 2 } },
+    { x: g.x - rad - 5, y: g.y, anchor: 'end' as const, box: { x0: g.x - rad - 7 - tw, y0: g.y - h / 2, x1: g.x - rad - 3, y1: g.y + h / 2 } },
+    { x: g.x, y: g.y - rad - 9, anchor: 'middle' as const, box: { x0: g.x - tw / 2 - 2, y0: g.y - rad - 9 - h / 2, x1: g.x + tw / 2 + 2, y1: g.y - rad - 9 + h / 2 } },
+    { x: g.x, y: g.y + rad + 10, anchor: 'middle' as const, box: { x0: g.x - tw / 2 - 2, y0: g.y + rad + 10 - h / 2, x1: g.x + tw / 2 + 2, y1: g.y + rad + 10 + h / 2 } },
+  ];
+  const own = taken[pins.indexOf(g)];
+  const ok = tries.find((t) => t.box.x0 >= 2 && t.box.x1 <= W - 2 && t.box.y0 >= VY0 + 2 && t.box.y1 <= VY1 - 2 && !taken.some((b) => b !== own && hits(b, t.box)));
+  labels.set(g, ok ? { x: ok.x, y: ok.y, anchor: ok.anchor } : null);
+  if (ok) taken.push(ok.box);
+}
 ---
 <figure class="map" data-travel-map>
-  <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label={label}>
+  <svg viewBox={`0 ${f(VY0)} ${W} ${f(VY1 - VY0)}`} role="img" aria-label={label}>
     <path class="sphere" d={sphere} />
     <path class="graticule" d={graticule} />
     <path class="land" d={land} />
     <path class="borders" d={borders} />
-    {pins.map((g) => {
-      const n = count(g), rad = r(n), right = g.x < W * 0.72;
-      return (
-        <g class="pin" role="button" tabindex="0" aria-pressed="false" aria-label={`${g.places.map(name).join(' · ')}, ${n} ${photosWord}`} data-pin data-places={g.places.map((p) => p.id).join(' ')} data-title={g.places.map(name).join(' · ')} data-sub={`${[...new Set(g.places.map(country))].join(' · ')} · ${n} ${photosWord}`}>
-          <circle class="halo" cx={f(g.x)} cy={f(g.y)} r={f(rad + 5)} />
+    {pins.sort((a, b) => total(b) - total(a)).map((g) => {
+      const n = total(g), rad = r(n), filters = site(g), at = labels.get(g);
+      const lab = at ? <text class="lab" x={f(at.x)} y={f(at.y)} text-anchor={at.anchor} dominant-baseline="middle">{pinLabel(g)}</text> : null;
+      return filters.length > 0 ? (
+        <g class="pin site" role="button" tabindex="0" aria-pressed="false" aria-label={`${pinLabel(g)}, ${siteWord} ${filters.reduce((k, p) => k + p.photos.length, 0)}`} data-filter data-places={filters.map((p) => p.id).join(' ')} data-title={filters.map(name).join(' · ')} data-tip={tipLines(g)}>
+          <circle class="halo" cx={f(g.x)} cy={f(g.y)} r={f(rad + 4)} />
           <circle class="dot" cx={f(g.x)} cy={f(g.y)} r={f(rad)} />
-          <text class="lab" x={f(right ? g.x + rad + 6 : g.x - rad - 6)} y={f(g.y)} text-anchor={right ? 'start' : 'end'} dominant-baseline="middle">{g.places.map(name).join(' · ')}</text>
+          {lab}
+        </g>
+      ) : (
+        <g class="pin" data-tip={tipLines(g)}>
+          <circle class="dot" cx={f(g.x)} cy={f(g.y)} r={f(rad)} />
+          {lab}
         </g>
       );
     })}
   </svg>
   <div class="tip" hidden></div>
+  <figcaption class="key">
+    <span><i class="k site"></i>{siteWord}</span>
+    <span><i class="k"></i>{libraryWord}</span>
+  </figcaption>
 </figure>
 <style>
   .map { position: relative; margin: 0; }
@@ -61,26 +110,32 @@ const r = (n: number) => 4 + 2.2 * Math.sqrt(n);
   .graticule { fill: none; stroke: var(--rule); stroke-width: 0.5; opacity: 0.6; }
   .land { fill: color-mix(in srgb, var(--fg) 11%, var(--bg)); }
   .borders { fill: none; stroke: var(--bg); stroke-width: 0.6; }
-  .pin { cursor: pointer; }
-  .halo { fill: var(--accent); opacity: 0.18; transition: opacity 0.16s ease; }
-  .dot { fill: var(--accent); stroke: var(--bg); stroke-width: 2; }
-  .lab { font-size: 12px; font-weight: 500; fill: var(--fg); paint-order: stroke; stroke: var(--bg); stroke-width: 3px; stroke-linejoin: round; }
-  .pin:hover .halo, .pin:focus-visible .halo { opacity: 0.4; }
+  .pin .dot { fill: color-mix(in srgb, var(--accent) 22%, var(--bg)); stroke: var(--accent); stroke-width: 1.2; }
+  .pin.site { cursor: pointer; }
+  .pin.site .dot { fill: var(--accent); stroke: var(--bg); stroke-width: 2; }
+  .halo { fill: var(--accent); opacity: 0.16; transition: opacity 0.16s ease; }
+  .lab { font-size: 11.5px; font-weight: 500; fill: var(--fg); paint-order: stroke; stroke: var(--bg); stroke-width: 3px; stroke-linejoin: round; }
+  .pin:not(.site) .lab { fill: var(--fg-muted); font-weight: 400; }
+  .pin.site:hover .halo, .pin.site:focus-visible .halo { opacity: 0.4; }
+  .pin:focus { outline: none; }
+  .pin.site:focus-visible .dot { stroke: var(--fg); }
   .pin[aria-pressed='true'] .halo { opacity: 0.55; }
   .pin[aria-pressed='true'] .dot { stroke: var(--fg); }
   .pin[aria-pressed='true'] .lab { fill: var(--accent); }
-  .pin:focus { outline: none; }
-  .pin:focus-visible .dot { stroke: var(--fg); }
   .tip { position: absolute; pointer-events: none; transform: translate(-50%, calc(-100% - 14px)); background: var(--fg); color: var(--bg); font-family: var(--font-mono); font-size: 0.72rem; line-height: 1.6; padding: 0.35rem 0.55rem; border-radius: 6px; white-space: pre-line; width: max-content; max-width: 90%; }
-  @media (max-width: 560px) { .lab { font-size: 15px; } }
+  .key { display: flex; gap: 1.2rem; justify-content: center; margin-top: 0.6rem; font-family: var(--font-mono); font-size: 0.7rem; color: var(--fg-muted); }
+  .key span { display: inline-flex; align-items: center; gap: 0.4rem; }
+  .k { display: inline-block; width: 0.65rem; height: 0.65rem; border-radius: 50%; background: color-mix(in srgb, var(--accent) 22%, var(--bg)); border: 1.2px solid var(--accent); }
+  .k.site { background: var(--accent); }
+  @media (max-width: 560px) { .lab { display: none; } }
 </style>
 <script>
   for (const root of document.querySelectorAll<HTMLElement>('[data-travel-map]')) {
     const svg = root.querySelector('svg')!, tip = root.querySelector<HTMLElement>('.tip')!;
-    for (const pin of root.querySelectorAll<SVGAElement>('[data-pin]')) {
+    for (const pin of root.querySelectorAll<SVGGElement>('.pin')) {
       const show = () => {
         const dot = pin.querySelector('.dot')!.getBoundingClientRect(), box = root.getBoundingClientRect();
-        tip.textContent = `${pin.dataset.title}\n${pin.dataset.sub}`;
+        tip.textContent = pin.dataset.tip ?? '';
         tip.hidden = false;
         const half = tip.getBoundingClientRect().width / 2;
         tip.style.left = `${Math.max(half, Math.min(box.width - half, dot.left - box.left + dot.width / 2))}px`;
@@ -88,14 +143,6 @@ const r = (n: number) => 4 + 2.2 * Math.sqrt(n);
       };
       pin.addEventListener('pointerenter', show); pin.addEventListener('focus', show);
       pin.addEventListener('pointerleave', () => { tip.hidden = true; }); pin.addEventListener('blur', () => { tip.hidden = true; });
-      const toggle = () => {
-        const on = pin.getAttribute('aria-pressed') !== 'true';
-        root.querySelectorAll('[data-pin]').forEach((p) => p.setAttribute('aria-pressed', 'false'));
-        pin.setAttribute('aria-pressed', String(on));
-        root.dispatchEvent(new CustomEvent('travel:place', { bubbles: true, detail: on ? { ids: (pin.dataset.places ?? '').split(' '), title: pin.dataset.title ?? '' } : null }));
-      };
-      pin.addEventListener('click', toggle);
-      pin.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); } });
     }
     svg.addEventListener('pointerleave', () => { tip.hidden = true; });
   }

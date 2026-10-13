@@ -24,7 +24,7 @@ type Card = { image?: string; title: string; meta: string; href?: string };
 const groups: { id: string; heading: string; cards: Card[]; note?: string }[] = page.groups!;
 ---
 <BaseLayout title={`${page.title} — ${tr('site.title')}`} description={page.intro} locale={locale} path={`/life/${hobbyId}/`}>
-  <main class="wrap section">
+  <div class="wrap section page">
     <header class="head">
       <p class="eyebrow center fade-up" data-delay="1">{tr('sections.life')}</p>
       <h1 class="center fade-up" data-delay="2">{page.title}</h1>
@@ -51,7 +51,7 @@ const groups: { id: string; heading: string; cards: Card[]; note?: string }[] = 
       </section>
     ))}
     <p class="center back"><a class="btn" href={localePath('/#life', locale)}>← {tr('life.back')}</a></p>
-  </main>
+  </div>
 </BaseLayout>
 <style>
   .head { max-width: var(--measure); margin: 0 auto 3rem; }

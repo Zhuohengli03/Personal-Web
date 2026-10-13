@@ -1,4 +1,9 @@
 {
+  "asOf": "2026-10-13",
+  "library": {
+    "total": 3421,
+    "located": 1919
+  },
   "places": [
     {
       "id": "newyork",
@@ -10,8 +15,9 @@
       ],
       "lat": 40.72,
       "lon": -74.02,
-      "from": "2025-08-27",
-      "to": "2025-11-11",
+      "from": "2025-08",
+      "to": "2026-10",
+      "library": 593,
       "photos": [
         {
           "file": "photo/p03.jpg",
@@ -31,6 +37,21 @@
       ]
     },
     {
+      "id": "hudsonvalley",
+      "en": "Hudson Valley",
+      "zh": "哈德逊河谷",
+      "country": [
+        "United States",
+        "美国"
+      ],
+      "lat": 41.32,
+      "lon": -74.13,
+      "from": "2025-11",
+      "to": "2025-11",
+      "library": 7,
+      "photos": []
+    },
+    {
       "id": "philadelphia",
       "en": "Philadelphia",
       "zh": "费城",
@@ -40,8 +61,9 @@
       ],
       "lat": 39.95,
       "lon": -75.17,
-      "from": "2025-11-23",
-      "to": "2025-11-24",
+      "from": "2025-11",
+      "to": "2025-11",
+      "library": 18,
       "photos": [
         {
           "file": "photo/p07.jpg",
@@ -56,6 +78,21 @@
       ]
     },
     {
+      "id": "orlando",
+      "en": "Orlando",
+      "zh": "奥兰多",
+      "country": [
+        "United States",
+        "美国"
+      ],
+      "lat": 28.5,
+      "lon": -81.4,
+      "from": "2026-01",
+      "to": "2026-01",
+      "library": 428,
+      "photos": []
+    },
+    {
       "id": "sanfrancisco",
       "en": "San Francisco",
       "zh": "旧金山",
@@ -65,8 +102,9 @@
       ],
       "lat": 37.77,
       "lon": -122.42,
-      "from": "2025-08-17",
-      "to": "2025-08-17",
+      "from": "2025-08",
+      "to": "2026-09",
+      "library": 143,
       "photos": [
         {
           "file": "photo/p10.jpg",
@@ -74,6 +112,21 @@
           "how": "gps"
         }
       ]
+    },
+    {
+      "id": "norcalcoast",
+      "en": "Northern California coast",
+      "zh": "北加州海岸",
+      "country": [
+        "United States",
+        "美国"
+      ],
+      "lat": 38.3,
+      "lon": -122.9,
+      "from": "2026-08",
+      "to": "2026-08",
+      "library": 3,
+      "photos": []
     },
     {
       "id": "osaka",
@@ -85,8 +138,9 @@
       ],
       "lat": 34.69,
       "lon": 135.5,
-      "from": "2025-04-05",
-      "to": "2025-04-05",
+      "from": "2025-04",
+      "to": "2025-04",
+      "library": 37,
       "photos": [
         {
           "file": "photo/p08.jpg",
@@ -105,8 +159,9 @@
       ],
       "lat": 34.69,
       "lon": 135.8,
-      "from": "2025-04-07",
-      "to": "2025-04-07",
+      "from": "2025-04",
+      "to": "2025-04",
+      "library": 39,
       "photos": [
         {
           "file": "photo/p09.jpg",
@@ -121,6 +176,216 @@
       ]
     },
     {
+      "id": "seoul",
+      "en": "Seoul",
+      "zh": "首尔",
+      "country": [
+        "South Korea",
+        "韩国"
+      ],
+      "lat": 37.56,
+      "lon": 126.98,
+      "from": "2026-05",
+      "to": "2026-05",
+      "library": 15,
+      "photos": []
+    },
+    {
+      "id": "beijing",
+      "en": "Beijing",
+      "zh": "北京",
+      "country": [
+        "China",
+        "中国"
+      ],
+      "lat": 39.9,
+      "lon": 116.4,
+      "from": "2026-07",
+      "to": "2026-08",
+      "library": 92,
+      "photos": []
+    },
+    {
+      "id": "jinan",
+      "en": "Jinan",
+      "zh": "济南",
+      "country": [
+        "China",
+        "中国"
+      ],
+      "lat": 36.65,
+      "lon": 117.12,
+      "from": "2025-07",
+      "to": "2025-07",
+      "library": 36,
+      "photos": []
+    },
+    {
+      "id": "liaocheng",
+      "en": "Liaocheng",
+      "zh": "聊城",
+      "country": [
+        "China",
+        "中国"
+      ],
+      "lat": 36.46,
+      "lon": 115.98,
+      "from": "2025-06",
+      "to": "2026-06",
+      "library": 25,
+      "photos": []
+    },
+    {
+      "id": "nanjing",
+      "en": "Nanjing",
+      "zh": "南京",
+      "country": [
+        "China",
+        "中国"
+      ],
+      "lat": 32.06,
+      "lon": 118.8,
+      "from": "2026-06",
+      "to": "2026-07",
+      "library": 45,
+      "photos": []
+    },
+    {
+      "id": "zhenjiang",
+      "en": "Zhenjiang",
+      "zh": "镇江",
+      "country": [
+        "China",
+        "中国"
+      ],
+      "lat": 32.19,
+      "lon": 119.45,
+      "from": "2026-06",
+      "to": "2026-07",
+      "library": 25,
+      "photos": []
+    },
+    {
+      "id": "zhengzhou",
+      "en": "Zhengzhou",
+      "zh": "郑州",
+      "country": [
+        "China",
+        "中国"
+      ],
+      "lat": 34.75,
+      "lon": 113.62,
+      "from": "2025-08",
+      "to": "2026-05",
+      "library": 33,
+      "photos": []
+    },
+    {
+      "id": "kaifeng",
+      "en": "Kaifeng",
+      "zh": "开封",
+      "country": [
+        "China",
+        "中国"
+      ],
+      "lat": 34.8,
+      "lon": 114.31,
+      "from": "2025-07",
+      "to": "2025-07",
+      "library": 76,
+      "photos": []
+    },
+    {
+      "id": "luoyang",
+      "en": "Luoyang",
+      "zh": "洛阳",
+      "country": [
+        "China",
+        "中国"
+      ],
+      "lat": 34.62,
+      "lon": 112.45,
+      "from": "2025-05",
+      "to": "2026-06",
+      "library": 80,
+      "photos": []
+    },
+    {
+      "id": "xinyang",
+      "en": "Xinyang",
+      "zh": "信阳",
+      "country": [
+        "China",
+        "中国"
+      ],
+      "lat": 32.13,
+      "lon": 114.07,
+      "from": "2025-05",
+      "to": "2025-06",
+      "library": 52,
+      "photos": []
+    },
+    {
+      "id": "wuhan",
+      "en": "Wuhan",
+      "zh": "武汉",
+      "country": [
+        "China",
+        "中国"
+      ],
+      "lat": 30.59,
+      "lon": 114.3,
+      "from": "2025-05",
+      "to": "2025-05",
+      "library": 7,
+      "photos": []
+    },
+    {
+      "id": "xian",
+      "en": "Xi'an",
+      "zh": "西安",
+      "country": [
+        "China",
+        "中国"
+      ],
+      "lat": 34.27,
+      "lon": 108.94,
+      "from": "2025-04",
+      "to": "2025-06",
+      "library": 23,
+      "photos": []
+    },
+    {
+      "id": "urumqi",
+      "en": "Ürümqi",
+      "zh": "乌鲁木齐",
+      "country": [
+        "China",
+        "中国"
+      ],
+      "lat": 43.83,
+      "lon": 87.62,
+      "from": "2025-07",
+      "to": "2025-08",
+      "library": 9,
+      "photos": []
+    },
+    {
+      "id": "duku",
+      "en": "Duku Highway, Xinjiang",
+      "zh": "新疆独库公路",
+      "country": [
+        "China",
+        "中国"
+      ],
+      "lat": 43.9,
+      "lon": 84.8,
+      "from": "2025-08",
+      "to": "2025-08",
+      "library": 22,
+      "photos": []
+    },
+    {
       "id": "ili",
       "en": "Ili, Xinjiang",
       "zh": "新疆伊犁",
@@ -128,10 +393,11 @@
         "China",
         "中国"
       ],
-      "lat": 43.2,
-      "lon": 81.3,
-      "from": "2025-07-30",
-      "to": "2025-08-08",
+      "lat": 43.6,
+      "lon": 82.2,
+      "from": "2025-07",
+      "to": "2025-08",
+      "library": 92,
       "photos": [
         {
           "file": "photo/p01.jpg",
