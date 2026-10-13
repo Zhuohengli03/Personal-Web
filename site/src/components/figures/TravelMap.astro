@@ -1,8 +1,9 @@
 ---
 // TravelMap.astro — a world map rendered at build time (Equal Earth, Natural Earth 1:110m countries from world-atlas)
-// with one pin per place in places.json. Pin size follows how many photos in the owner's library were taken there
-// (log scale); places that also have photos on this site are filled and act as filters (TravelLayout handles the
-// click), the rest are outlined footprints. Places closer than MERGE_PX share a pin.
+// with one pin per place in places.json. Places that have photos on this site are filled and act as filters
+// (TravelLayout handles the click); the rest are outlined footprints of where I've been. No counts are shown: the
+// library's photos are not on the site. Places closer than MERGE_PX share a pin; pins are ordered by how much
+// was photographed there only to decide whose name a merged pin carries and whose label is placed first.
 import { geoEqualEarth, geoPath, geoGraticule10 } from 'd3-geo';
 import { feature, mesh } from 'topojson-client';
 import type { Topology, GeometryCollection } from 'topojson-specification';
@@ -47,10 +48,10 @@ for (const q of pts) {
 }
 const total = (g: { places: Place[] }) => g.places.reduce((n, p) => n + weight(p), 0);
 const site = (g: { places: Place[] }) => g.places.filter((p) => p.photos.length > 0);
-const r = (n: number) => 3 + 2.4 * Math.log10(n + 1);
+const r = (g: { places: Place[] }) => (site(g).length > 0 ? 6.5 : 4.5);
 const pinLabel = (g: { places: Place[] }) => g.places.length === 1 ? name(g.places[0])
   : moreWord.replace('{first}', name(g.places[0])).replace('{total}', String(g.places.length)).replace('{others}', String(g.places.length - 1));
-const tipLines = (g: { places: Place[] }) => g.places.map((p) => `${name(p)} · ${p.library.toLocaleString('en-US')}${p.photos.length ? ` · ${siteWord} ${p.photos.length}` : ''}`).join('\n');
+const tipLines = (g: { places: Place[] }) => g.places.map((p) => `${name(p)} · ${p.country[zh ? 1 : 0]}`).join('\n');
 // greedy label placement: most important pins first, try right / left / above / below, skip any that would
 // overlap a placed label or another pin (the tooltip and the place list still carry every name)
 const FONT = 11.5;
@@ -58,10 +59,10 @@ const textW = (s: string) => [...s].reduce((w, ch) => w + (/[\u2E80-\uFFFF]/.tes
 type Box = { x0: number; y0: number; x1: number; y1: number };
 const hits = (a: Box, b: Box) => a.x0 < b.x1 && b.x0 < a.x1 && a.y0 < b.y1 && b.y0 < a.y1;
 const ordered = [...pins].sort((a, b) => (site(b).length > 0 ? 1 : 0) - (site(a).length > 0 ? 1 : 0) || total(b) - total(a));
-const taken: Box[] = pins.map((g) => { const rr = r(total(g)) + 2; return { x0: g.x - rr, y0: g.y - rr, x1: g.x + rr, y1: g.y + rr }; });
+const taken: Box[] = pins.map((g) => { const rr = r(g) + 2; return { x0: g.x - rr, y0: g.y - rr, x1: g.x + rr, y1: g.y + rr }; });
 const labels = new Map<(typeof pins)[number], { x: number; y: number; anchor: 'start' | 'end' | 'middle' } | null>();
 for (const g of ordered) {
-  const text = pinLabel(g), tw = textW(text), rad = r(total(g)), h = FONT + 2;
+  const text = pinLabel(g), tw = textW(text), rad = r(g), h = FONT + 2;
   const tries = [
     { x: g.x + rad + 5, y: g.y, anchor: 'start' as const, box: { x0: g.x + rad + 3, y0: g.y - h / 2, x1: g.x + rad + 7 + tw, y1: g.y + h / 2 } },
     { x: g.x - rad - 5, y: g.y, anchor: 'end' as const, box: { x0: g.x - rad - 7 - tw, y0: g.y - h / 2, x1: g.x - rad - 3, y1: g.y + h / 2 } },
@@ -81,10 +82,10 @@ for (const g of ordered) {
     <path class="land" d={land} />
     <path class="borders" d={borders} />
     {pins.sort((a, b) => total(b) - total(a)).map((g) => {
-      const n = total(g), rad = r(n), filters = site(g), at = labels.get(g);
+      const rad = r(g), filters = site(g), at = labels.get(g);
       const lab = at ? <text class="lab" x={f(at.x)} y={f(at.y)} text-anchor={at.anchor} dominant-baseline="middle">{pinLabel(g)}</text> : null;
       return filters.length > 0 ? (
-        <g class="pin site" role="button" tabindex="0" aria-pressed="false" aria-label={`${pinLabel(g)}, ${siteWord} ${filters.reduce((k, p) => k + p.photos.length, 0)}`} data-filter data-places={filters.map((p) => p.id).join(' ')} data-title={filters.map(name).join(' · ')} data-tip={tipLines(g)}>
+        <g class="pin site" role="button" tabindex="0" aria-pressed="false" aria-label={`${pinLabel(g)} · ${siteWord}`} data-filter data-places={filters.map((p) => p.id).join(' ')} data-title={filters.map(name).join(' · ')} data-tip={tipLines(g)}>
           <circle class="halo" cx={f(g.x)} cy={f(g.y)} r={f(rad + 4)} />
           <circle class="dot" cx={f(g.x)} cy={f(g.y)} r={f(rad)} />
           {lab}

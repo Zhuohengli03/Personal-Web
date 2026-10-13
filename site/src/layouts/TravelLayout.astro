@@ -33,7 +33,6 @@ const shots = await Promise.all(
 );
 const nPhotos = places.reduce((n, p) => n + p.photos.length, 0);
 const nCountries = new Set(places.map((p) => p.country[0])).size;
-const nLibrary = places.reduce((n, p) => n + p.library, 0);
 // every place, grouped by country (biggest country first), places by photo count
 const byCountry = [...places.reduce((m, p) => m.set(p.country[0], [...(m.get(p.country[0]) ?? []), p]), new Map<string, typeof places>()).values()]
   .map((list) => list.sort((a, b) => b.library - a.library))
@@ -48,7 +47,7 @@ const span = (p: (typeof places)[number]) => (p.from && p.to && p.from !== p.to 
       <p class="eyebrow center fade-up" data-delay="1">{tr('sections.life')}</p>
       <h1 class="center fade-up" data-delay="2">{hobby.page.title}</h1>
       <p class="prose center fade-up" data-delay="3">{hobby.page.intro}</p>
-      <p class="counts center fade-up" data-delay="4">{places.length} {tr('life.places')} · {nCountries} {tr('life.countries')} · {tr('life.libraryCount').replace('{n}', nLibrary.toLocaleString('en-US'))}</p>
+      <p class="counts center fade-up" data-delay="4">{places.length} {tr('life.places')} · {nCountries} {tr('life.countries')}</p>
     </header>
     <div class="map-wrap reveal"><TravelMap locale={locale} label={tr('life.map')} libraryWord={tr('life.libraryKey')} siteWord={tr('life.siteKey')} moreWord={tr('life.more')} /></div>
     <section class="where reveal" aria-label={tr('life.where')}>
@@ -59,8 +58,8 @@ const span = (p: (typeof places)[number]) => (p.from && p.to && p.from !== p.to 
             {list.map((p) => (
               <li>
                 {p.photos.length > 0
-                  ? <button type="button" class="chip site" aria-pressed="false" data-filter data-places={p.id} data-title={locale === 'zh' ? p.zh : p.en} title={span(p)}><span>{locale === 'zh' ? p.zh : p.en}</span><b>{p.library.toLocaleString('en-US')}</b></button>
-                  : <span class="chip" title={span(p)}><span>{locale === 'zh' ? p.zh : p.en}</span><b>{p.library.toLocaleString('en-US')}</b></span>}
+                  ? <button type="button" class="chip site" aria-pressed="false" data-filter data-places={p.id} data-title={locale === 'zh' ? p.zh : p.en} title={span(p)}><span>{locale === 'zh' ? p.zh : p.en}</span></button>
+                  : <span class="chip" title={span(p)}><span>{locale === 'zh' ? p.zh : p.en}</span></span>}
               </li>
             ))}
           </ul>
@@ -131,13 +130,11 @@ const span = (p: (typeof places)[number]) => (p.from && p.to && p.from !== p.to 
   .country h2 { display: flex; align-items: baseline; gap: 0.5rem; margin: 0 0 0.5rem; font-family: var(--font-mono); font-size: 0.72rem; font-weight: 400; letter-spacing: 0.06em; text-transform: uppercase; color: var(--fg-muted); }
   .country ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.4rem; }
   .chip { all: unset; display: inline-flex; align-items: baseline; gap: 0.45rem; padding: 0.25rem 0.65rem; border: 1px solid var(--rule); border-radius: 999px; font-size: 0.82rem; color: var(--fg); }
-  .chip b { font-family: var(--font-mono); font-size: 0.68rem; font-weight: 400; color: var(--fg-muted); }
   .chip.site { cursor: pointer; border-color: color-mix(in srgb, var(--accent) 45%, var(--bg)); }
   .chip.site::before { content: ''; width: 0.45rem; height: 0.45rem; border-radius: 50%; background: var(--accent); align-self: center; }
   .chip.site:hover { background: var(--card); }
   .chip.site:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
   .chip[aria-pressed='true'] { background: var(--accent); border-color: var(--accent); color: var(--bg); }
-  .chip[aria-pressed='true'] b { color: var(--bg); }
   .chip[aria-pressed='true']::before { background: var(--bg); }
   .wall { margin-bottom: 3rem; scroll-margin-top: calc(var(--header-h) + 1rem); }
   .filter { display: flex; align-items: baseline; gap: 0.9rem; margin: 0 0 1.1rem; padding-bottom: 0.6rem; border-bottom: 1px solid var(--rule); font-family: var(--font-sans); font-size: 1.05rem; font-weight: 600; }

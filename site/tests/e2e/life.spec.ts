@@ -93,6 +93,7 @@ for (const [path, lang] of [['/life/photo/', 'en'], ['/zh/life/photo/', 'zh-CN']
     expect(await map.locator('.pin').count()).toBeGreaterThanOrEqual(6); // the library footprint (nearby cities share a pin)
     expect(await map.locator('.pin.site').count()).toBeGreaterThanOrEqual(4); // places with photos on this site
     expect(await page.locator('.where .chip').count()).toBeGreaterThanOrEqual(20); // every place, by country
+    await expect(page.locator('.where .chip').first()).not.toContainText(/\d/); // no library counts: those photos are not on the site
     const shots = page.locator('[data-wall] .shots > li');
     await expect(shots).toHaveCount(16);
     await expect(page.locator('[data-wall] .shots > li:visible')).toHaveCount(16);

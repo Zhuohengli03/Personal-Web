@@ -83,8 +83,7 @@
     "map": "照片拍摄地点地图",
     "all": "全部照片",
     "showAll": "显示全部",
-    "libraryCount": "相册里 {n} 张带位置的照片",
-    "libraryKey": "相册里的照片",
+    "libraryKey": "去过的地方",
     "siteKey": "本站有照片",
     "where": "所有地点，按国家"
   }
