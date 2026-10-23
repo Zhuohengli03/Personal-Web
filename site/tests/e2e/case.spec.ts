@@ -13,6 +13,8 @@ const cases = [
   ['/zh/work/web-crawler/', 'zh-CN', '问题', 4],
   ['/work/meteor-madness/', 'en', 'Problem', 6],
   ['/zh/work/meteor-madness/', 'zh-CN', '问题', 6],
+  ['/work/checking-acquisition-targeting/', 'en', 'Problem', 0],
+  ['/zh/work/checking-acquisition-targeting/', 'zh-CN', '问题', 0],
 ] as const;
 
 for (const [path, lang, problem, images] of cases) {
@@ -173,6 +175,38 @@ for (const [locale, path, limits] of [
     const box = (await svg.boundingBox())!;
     await page.mouse.move(box.x + box.width * 0.5, box.y + box.height * 0.3);
     await expect(ex.locator('[data-sweep-chart] .tip')).toBeVisible();
+    await expect(page.getByRole('heading', { level: 2, name: limits })).toBeVisible();
+  });
+}
+
+for (const [locale, path, limits] of [
+  ['en', '/work/checking-acquisition-targeting/', 'Limits'],
+  ['zh', '/zh/work/checking-acquisition-targeting/', '局限'],
+] as const) {
+  test(`checking-acquisition ${locale} case shows its six exhibits`, async ({ page }) => {
+    await page.goto(path);
+    const ex = page.locator('[data-exhibits]');
+    await expect(ex.locator('figure.exhibit')).toHaveCount(6);
+    await expect(ex.locator('.flow li')).toHaveCount(5);
+    await expect(ex.locator('svg')).toHaveCount(3);
+    await expect(ex.locator('[data-segment-chart] .pt')).toHaveCount(9);
+    await expect(ex.locator('.plans .plan')).toHaveCount(2);
+    await expect(ex.locator('.trio tbody tr')).toHaveCount(3);
+    await expect(ex).toContainText('$119,731');
+    await expect(ex.locator('[data-case-data] a[download]')).toHaveCount(2);
+    const csv = await page.request.get(await ex.locator('[data-case-data] a').first().getAttribute('href') ?? '');
+    expect(csv.ok()).toBe(true);
+    expect((await csv.text()).split('\n')[0]).toContain('funded_90d');
+    // per-decile tooltip on the score check
+    const svg = ex.locator('[data-decile-chart] svg');
+    await svg.scrollIntoViewIfNeeded();
+    const box = (await svg.boundingBox())!;
+    await page.mouse.move(box.x + box.width * 0.12, box.y + box.height * 0.5);
+    await expect(ex.locator('[data-decile-chart] .tip')).toBeVisible();
+    await expect(ex.locator('[data-decile-chart] .tip')).toContainText(locale === 'zh' ? '实际开户率' : 'Actual open rate');
+    // hover a segment
+    await ex.locator('[data-segment-chart] .pt circle').first().hover();
+    await expect(ex.locator('[data-segment-chart] .tip')).toBeVisible();
     await expect(page.getByRole('heading', { level: 2, name: limits })).toBeVisible();
   });
 }

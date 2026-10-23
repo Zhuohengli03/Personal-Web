@@ -1,0 +1,59 @@
+---
+// Exhibit 3 — the same numeric attributes correlated with opening (all prospects) and with the funded
+// balance (openers only), as two diverging bar panels that share one row per attribute.
+import data from '../../data/figures/bank.json';
+interface Props { t: { open: string; funded: string; fields: Record<string, string> } }
+const { t } = Astro.props;
+
+const W = 960, LABEL = 190, GAP = 40, R = 16, ROW = 30, T = 34;
+const PW = (W - LABEL - GAP - R) / 2;
+const rows = data.corr;
+const H = T + rows.length * ROW + 14;
+const span = 0.6;
+const panels = [
+  { key: 'open' as const, title: t.open, x0: LABEL },
+  { key: 'funded' as const, title: t.funded, x0: LABEL + PW + GAP },
+];
+const cx = (x0: number) => x0 + PW / 2;
+const w = (v: number) => (Math.abs(v) / span) * (PW / 2);
+const f = (v: number) => v.toFixed(1);
+const s = (v: number) => (v > 0 ? '+' : v < 0 ? '−' : '') + Math.abs(v).toFixed(2);
+---
+<div class="chart">
+  <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label={`${t.open}; ${t.funded}`}>
+    {panels.map((p) => (
+      <g>
+        <text class="panel" x={f(cx(p.x0))} y={T - 16} text-anchor="middle">{p.title}</text>
+        <line class="zero" x1={f(cx(p.x0))} x2={f(cx(p.x0))} y1={T - 4} y2={H - 8} />
+        {[-0.5, 0.5].map((v) => <text class="tick" x={f(cx(p.x0) + (v / span) * (PW / 2))} y={H - 1} text-anchor={v < 0 ? 'start' : 'end'}>{s(v)}</text>)}
+      </g>
+    ))}
+    {rows.map((row, i) => {
+      const yc = T + i * ROW + ROW / 2;
+      return (
+        <g>
+          <text class="label" x={LABEL - 14} y={f(yc)} text-anchor="end" dominant-baseline="middle">{t.fields[row.field] ?? row.field}</text>
+          {panels.map((p) => {
+            const v = row[p.key];
+            const x = v >= 0 ? cx(p.x0) : cx(p.x0) - w(v);
+            return (
+              <g>
+                <rect class:list={['bar', v >= 0 ? 'pos' : 'neg']} x={f(x)} y={f(yc - 8)} width={f(Math.max(1, w(v)))} height="16" rx="2" />
+                <text class="val" x={f(v >= 0 ? cx(p.x0) + w(v) + 6 : cx(p.x0) - w(v) - 6)} y={f(yc)} text-anchor={v >= 0 ? 'start' : 'end'} dominant-baseline="middle">{s(v)}</text>
+              </g>
+            );
+          })}
+        </g>
+      );
+    })}
+  </svg>
+</div>
+<style>
+  svg { width: 100%; height: auto; display: block; font-family: var(--font-mono); font-size: 11px; }
+  .panel { fill: var(--fg); font-family: var(--font-sans); font-size: 12px; font-weight: 500; }
+  .label { fill: var(--fg); font-family: var(--font-sans); font-size: 12px; }
+  .zero { stroke: var(--fg-faint); }
+  .tick, .val { fill: var(--fg-muted); }
+  .bar.pos { fill: var(--accent); }
+  .bar.neg { fill: color-mix(in srgb, var(--fg) 35%, var(--bg)); }
+</style>

@@ -84,14 +84,17 @@
       "caseStudy": "product-selection-analytics"
     },
     {
-      "title": "Social networks & starting salary",
-      "question": "Does social-network use relate to graduates' starting salaries?",
-      "method": "Cleaned and recoded survey data, handled missing values; descriptive statistics, group comparison and correlation analysis.",
-      "output": "Charts and a written conclusion for a team report and class presentation.",
+      "title": "Checking-account acquisition targeting",
+      "question": "Which 8,000 of 25,000 prospects should a bank mail to earn the most money, not open the most accounts?",
+      "method": "Built a funding model (regression in SAS Viya) on the 2,161 accounts that opened, with post-campaign fields left out as leakage; combined it with the response score into an expected value per letter; ranked nine segments by that value.",
+      "output": "A value-first mail plan worth about $120K in expected first-year profit against about $17K for last year's response-first rule, with a fairness check and a control-group test.",
       "tags": [
-        "Survey data",
-        "Statistics"
-      ]
+        "Regression",
+        "Expected value",
+        "Segmentation",
+        "SAS Viya"
+      ],
+      "caseStudy": "checking-acquisition-targeting"
     }
   ],
   "miniProjects": [

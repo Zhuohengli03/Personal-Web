@@ -1,0 +1,49 @@
+---
+// Exhibit 6 — three new prospects scored by hand with the linear funding model.
+import data from '../../data/figures/bank.json';
+import type { Locale } from '../../i18n';
+interface Props {
+  locale: Locale;
+  t: { prospect: string; profile: string; pOpen: string; balance: string; ev: string; rankP: string; rankEV: string; age: string; income: string; digital: string };
+  bands: Record<string, string>;
+}
+const { t, bands, locale } = Astro.props;
+const numLocale = locale === 'zh' ? 'zh-CN' : 'en-US';
+const money = (v: number, d = 0) => `${v < 0 ? '−' : ''}$${Math.abs(v).toLocaleString(numLocale, { minimumFractionDigits: d, maximumFractionDigits: d })}`;
+const profile = (x: (typeof data.trio)[number]) =>
+  locale === 'zh'
+    ? `${x.age} ${t.age} · ${t.income} $${x.income}K · ${bands[x.band]} · ${t.digital} ${x.digital}`
+    : `${t.age} ${x.age} · ${t.income} $${x.income}K · ${bands[x.band]} · ${t.digital} ${x.digital}`;
+---
+<div class="scroll">
+  <table class="trio">
+    <thead>
+      <tr><th scope="col">{t.prospect}</th><th scope="col">{t.profile}</th><th scope="col" class="num">{t.pOpen}</th><th scope="col" class="num">{t.balance}</th><th scope="col" class="num">{t.ev}</th><th scope="col" class="num">{t.rankP}</th><th scope="col" class="num">{t.rankEV}</th></tr>
+    </thead>
+    <tbody>
+      {data.trio.map((x) => (
+        <tr class:list={{ best: x.rankEV === 1 }}>
+          <th scope="row">{x.id}</th>
+          <td class="profile">{profile(x)}</td>
+          <td class="num">{x.p}</td>
+          <td class="num">{x.raw < 0 ? <span><s>{money(x.raw)}</s> → $0</span> : money(x.balance)}</td>
+          <td class:list={['num', 'ev', { neg: x.ev < 0 }]}>{x.ev > 0 ? '+' : ''}{money(x.ev, 2)}</td>
+          <td class="num">{x.rankP}</td>
+          <td class="num rank">{x.rankEV}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+<style>
+  .scroll { overflow-x: auto; }
+  .trio { width: 100%; border-collapse: collapse; font-size: 0.85rem; font-variant-numeric: tabular-nums; }
+  th, td { padding: 0.6rem 0.6rem; border-bottom: 1px solid var(--rule); text-align: left; vertical-align: baseline; }
+  thead th { font-family: var(--font-mono); font-size: 0.66rem; font-weight: 400; letter-spacing: 0.05em; text-transform: uppercase; color: var(--fg-muted); }
+  tbody th { font-family: var(--font-serif); font-size: 1.3rem; font-weight: 400; }
+  .num { text-align: right; white-space: nowrap; font-family: var(--font-mono); font-size: 0.8rem; }
+  .profile { color: var(--fg-muted); min-width: 16rem; }
+  s { color: var(--fg-muted); }
+  .ev.neg { color: var(--fg-muted); }
+  .best .ev, .best .rank, .best th { color: var(--accent); }
+</style>

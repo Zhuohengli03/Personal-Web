@@ -1,0 +1,96 @@
+---
+// Exhibit 4 — the nine segments as circles: open rate across, average balance of openers up (log scale),
+// circle area = prospects in the new file, filled = mailed under Plan A. The $2,000 break-even is marked.
+import data from '../../data/figures/bank.json';
+import type { Locale } from '../../i18n';
+interface Props {
+  locale: Locale;
+  t: { rate: string; balance: string; breakEven: string; ev: string; prospects: string; records: string; noDataShort: string; ages: Record<string, string>; bands: Record<string, string> };
+}
+const { t, locale } = Astro.props;
+const numLocale = locale === 'zh' ? 'zh-CN' : 'en-US';
+
+const W = 960, L = 70, R = 24, T = 20, PH = 330;
+const H = T + PH + 46;
+const xMin = 0.02, xMax = 0.13;
+const yMin = Math.log10(1200), yMax = Math.log10(60000);
+const x = (v: number) => L + ((v - xMin) / (xMax - xMin)) * (W - L - R);
+const y = (v: number) => T + (1 - (Math.log10(v) - yMin) / (yMax - yMin)) * PH;
+const f = (v: number) => v.toFixed(1);
+const maxP = Math.max(...data.segments.map((s) => s.prospects));
+const rad = (n: number) => 4 + 22 * Math.sqrt(n / maxP);
+const mailedA = new Set(data.plans.A.mail.map((m) => m.id));
+const name = (s: (typeof data.segments)[number]) => (s.age ? `${t.ages[s.age]} · ${t.bands[s.band!]}` : t.noDataShort);
+const pts = data.segments.map((s) => {
+  const cx = x(s.rate), cy = y(s.avgFunded), r = rad(s.prospects);
+  const left = s.rate > 0.09;
+  // a segment sitting on the break-even line gets its label just below the line
+  const ly = s.avgFunded < 2000 ? cy + 12 : cy;
+  return { ...s, cx, cy, r, left, ly, label: name(s), mailed: mailedA.has(s.id) };
+});
+const xTicks = [0.02, 0.04, 0.06, 0.08, 0.1, 0.12];
+const yTicks = [2000, 5000, 10000, 20000, 50000];
+const money = (v: number) => (v >= 1000 ? `$${v / 1000}K` : `$${v}`);
+---
+<div class="chart" data-segment-chart>
+  <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label={`${t.rate}; ${t.balance}`}>
+    <g class="grid">
+      {yTicks.map((v) => (<g><line x1={L} x2={W - R} y1={f(y(v))} y2={f(y(v))} /><text x={L - 8} y={f(y(v))} text-anchor="end" dominant-baseline="middle">{money(v)}</text></g>))}
+      {xTicks.map((v) => <text x={f(x(v))} y={T + PH + 18} text-anchor="middle">{Math.round(v * 100)}%</text>)}
+    </g>
+    <line class="be" x1={L} x2={W - R} y1={f(y(2000))} y2={f(y(2000))} />
+    <text class="be-label" x={L + 6} y={f(y(2000) - 7)}>{t.breakEven}</text>
+    {pts.map((p) => (
+      <g class="pt" data-id={p.id} tabindex="0">
+        <circle class:list={['seg', { mailed: p.mailed }]} cx={f(p.cx)} cy={f(p.cy)} r={f(p.r)} />
+        <text class="lbl" x={f(p.left ? p.cx - p.r - 6 : p.cx + p.r + 6)} y={f(p.ly)} text-anchor={p.left ? 'end' : 'start'} dominant-baseline="middle">{p.label}</text>
+      </g>
+    ))}
+    <text class="axis-title" x={W - R} y={H - 4} text-anchor="end">{t.rate} →</text>
+    <text class="axis-title" x={L - 60} y={T - 6}>↑ {t.balance}</text>
+  </svg>
+  <div class="tip" hidden></div>
+  <script type="application/json" data-points set:html={JSON.stringify({ pts: pts.map((p) => ({ id: p.id, label: p.label, cx: p.cx, cy: p.cy, records: p.records, rate: p.rate, avg: p.avgFunded, ev: p.ev, prospects: p.prospects })), W, H, numLocale, labels: t })} />
+</div>
+<style>
+  .chart { position: relative; }
+  svg { width: 100%; height: auto; display: block; font-family: var(--font-mono); font-size: 11px; }
+  .grid line { stroke: var(--rule); }
+  .grid text, .axis-title { fill: var(--fg-muted); }
+  .axis-title { font-size: 10px; }
+  .be { stroke: var(--fg); stroke-width: 1.2; stroke-dasharray: 5 4; }
+  .be-label { fill: var(--fg); font-size: 10.5px; }
+  .seg { fill: color-mix(in srgb, var(--bg) 70%, transparent); stroke: color-mix(in srgb, var(--fg) 45%, var(--bg)); stroke-width: 1.5; }
+  .seg.mailed { fill: color-mix(in srgb, var(--accent) 70%, transparent); stroke: var(--accent); }
+  .lbl { fill: var(--fg); font-family: var(--font-sans); font-size: 11.5px; }
+  .pt { cursor: default; outline: none; }
+  .pt:hover .seg, .pt:focus .seg { stroke-width: 2.5; }
+  .tip { position: absolute; pointer-events: none; transform: translate(-50%, calc(-100% - 14px)); background: var(--fg); color: var(--bg); font-family: var(--font-mono); font-size: 0.72rem; line-height: 1.6; padding: 0.35rem 0.55rem; border-radius: 6px; white-space: pre-line; width: max-content; max-width: 100%; }
+</style>
+<script>
+  for (const root of document.querySelectorAll<HTMLElement>('[data-segment-chart]')) {
+    const cfg = JSON.parse(root.querySelector('[data-points]')?.textContent ?? '{}') as {
+      pts: { id: number; label: string; cx: number; cy: number; records: number; rate: number; avg: number; ev: number; prospects: number }[];
+      W: number; H: number; numLocale: string; labels: { rate: string; balance: string; ev: string; prospects: string; records: string };
+    };
+    const svg = root.querySelector('svg')!;
+    const tip = root.querySelector<HTMLElement>('.tip')!;
+    const show = (g: SVGGElement) => {
+      const p = cfg.pts.find((q) => q.id === Number(g.dataset.id));
+      if (!p) return;
+      const r = svg.getBoundingClientRect();
+      const sign = p.ev < 0 ? '−' : '+';
+      tip.textContent = [p.label, `${cfg.labels.rate} ${(p.rate * 100).toFixed(1)}% · ${p.records.toLocaleString(cfg.numLocale)} ${cfg.labels.records}`, `${cfg.labels.balance} $${p.avg.toLocaleString(cfg.numLocale)}`, `${cfg.labels.ev} ${sign}$${Math.abs(p.ev).toFixed(2)}`, `${p.prospects.toLocaleString(cfg.numLocale)} ${cfg.labels.prospects}`].join('\n');
+      tip.hidden = false;
+      const half = tip.getBoundingClientRect().width / 2;
+      tip.style.left = `${Math.max(half, Math.min(r.width - half, (p.cx / cfg.W) * r.width))}px`;
+      tip.style.top = `${(p.cy / cfg.H) * r.height}px`;
+    };
+    for (const g of root.querySelectorAll<SVGGElement>('.pt')) {
+      g.addEventListener('pointerenter', () => show(g));
+      g.addEventListener('focus', () => show(g));
+      g.addEventListener('pointerleave', () => { tip.hidden = true; });
+      g.addEventListener('blur', () => { tip.hidden = true; });
+    }
+  }
+</script>

@@ -15,6 +15,7 @@ import OpsFigures from '../components/figures/OpsFigures.astro';
 import UmsFigures from '../components/figures/UmsFigures.astro';
 import CrawlerFigures from '../components/figures/CrawlerFigures.astro';
 import MeteorFigures from '../components/figures/MeteorFigures.astro';
+import BankFigures from '../components/figures/BankFigures.astro';
 
 interface Props { entry: CollectionEntry<'projects'>; locale: Locale }
 const { entry, locale } = Astro.props;
@@ -25,7 +26,7 @@ const path = `/work/${slugOf(entry)}/`;
 const activity = d.waffle?.source === 'github' ? repoActivity(github as GithubData, d.waffle.repo, locale) : null;
 const slug = slugOf(entry);
 // Cases with exhibits built from real data at build time, keyed by slug.
-const exhibits: Record<string, typeof DadFigures> = { 'dad-market-forecast': DadFigures, 'product-selection-analytics': OpsFigures, 'user-marketing-analytics': UmsFigures, 'web-crawler': CrawlerFigures, 'meteor-madness': MeteorFigures };
+const exhibits: Record<string, typeof DadFigures> = { 'dad-market-forecast': DadFigures, 'product-selection-analytics': OpsFigures, 'user-marketing-analytics': UmsFigures, 'web-crawler': CrawlerFigures, 'meteor-madness': MeteorFigures, 'checking-acquisition-targeting': BankFigures };
 const Exhibits = exhibits[slug];
 ---
 <BaseLayout title={`${d.title} — ${tr('site.title')}`} description={d.summary} locale={locale} path={path}>

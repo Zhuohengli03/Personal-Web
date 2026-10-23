@@ -1,0 +1,298 @@
+{
+  "en": {
+    "exhibits": "Exhibits",
+    "note": "Individual timed project for Advanced Business Analytics at NYU, October 2026, on a course case about a fictional regional bank, shared with the instructor's permission. The segment table, the score check, the correlations and the hand-scored prospects are recomputed at build time from the two case files below; the model metrics come from the SAS Visual Analytics run submitted with the report.",
+    "stats": [
+      {
+        "label": "Past prospects",
+        "value": "30,000",
+        "hint": "7.20% opened · 2,161 accounts"
+      },
+      {
+        "label": "Openers below break-even",
+        "value": "33.9%",
+        "hint": "funded under $2,000 in 90 days"
+      },
+      {
+        "label": "Funding model",
+        "value": "0.74",
+        "hint": "Spearman rank correlation · R² 0.52"
+      },
+      {
+        "label": "Plan A · rank by value",
+        "value": "$119.7K",
+        "hint": "expected first-year profit, 8,000 letters"
+      },
+      {
+        "label": "Plan B · rank by response",
+        "value": "$16.8K",
+        "hint": "last year's rule, same budget"
+      }
+    ],
+    "fig1": {
+      "title": "Two models, one number per letter",
+      "caption": "Exhibit 1. The bank already had a response score. The missing half was a funding model that predicts how much an account holds if it opens; Finance's rule turns the pair into the expected value of one letter, and the mail file is the top 8,000 by that value.",
+      "nodes": [
+        {
+          "name": "Response score p_open",
+          "num": "provided · top-decile lift 3.26"
+        },
+        {
+          "name": "Funding model: 90-day balance if opened",
+          "num": "linear regression · 2,161 openers"
+        },
+        {
+          "name": "Value of an opened account",
+          "num": "0.025 × balance − $50"
+        },
+        {
+          "name": "Expected value of a letter",
+          "num": "p_open × value − $1"
+        },
+        {
+          "name": "Mail the top 8,000",
+          "num": "$8,000 budget"
+        }
+      ]
+    },
+    "fig2": {
+      "title": "The response score ranks well and is honest about its odds",
+      "sub": "30,000 past prospects in ten equal groups by p_open · bars: actual open rate · dots: average p_open",
+      "actual": "Actual open rate",
+      "predicted": "Average p_open",
+      "decile": "Decile",
+      "lift": "lift",
+      "opened": "opened",
+      "caption": "Exhibit 2. The top tenth opens at 23.5%, 3.26 times the 7.20% average, and the rate falls almost steadily to 0.97% in the bottom tenth. In every decile the average score sits within about 0.8 points of what actually happened, so the probabilities can go straight into the value formula without recalibration."
+    },
+    "fig3": {
+      "title": "What predicts opening is not what predicts money",
+      "sub": "Pearson correlation · left: with opening, all 30,000 prospects · right: with the funded balance, 2,161 openers",
+      "open": "with opening",
+      "funded": "with funded balance",
+      "fields": {
+        "age": "Age",
+        "est_income_k": "Household income",
+        "zip_median_income_k": "ZIP median income",
+        "years_at_residence": "Years at residence",
+        "digital_engagement": "Digital engagement",
+        "web_visits_30d": "Web visits, 30 days",
+        "mailings_12m": "Mailings, 12 months",
+        "branch_distance_mi": "Distance to branch"
+      },
+      "caption": "Exhibit 3. Younger, digitally active prospects are the ones who open; older, higher-income prospects are the ones who fund. Age and digital engagement flip sign between the two columns. Net-worth band, the strongest driver of balance in the model, is categorical and does not appear here."
+    },
+    "fig4": {
+      "title": "The segments that open most hold the least",
+      "sub": "nine segments of last year's file · x: open rate · y: average 90-day balance of openers (log scale) · circle area: prospects in the new file · filled: mailed under Plan A",
+      "rate": "Open rate",
+      "balance": "Average balance",
+      "breakEven": "$2,000 break-even",
+      "ev": "EV per letter",
+      "prospects": "new prospects",
+      "records": "records",
+      "noData": "No third-party data",
+      "under45": "Under 45",
+      "over45": "45+",
+      "caption": "Exhibit 4. Young prospects with under $50K net worth open at 11.8%, the highest rate, but fund $1,958 on average, just under the $2,000 line where an account stops paying for its $100 bonus. Prospects aged 45+ with $1M+ open at 3.5% and fund $37,871: worth $30.40 per letter against −$1.13.",
+      "ages": {
+        "Under 45": "Under 45",
+        "45+": "45+"
+      },
+      "bands": {
+        "Under 50K": "<$50K",
+        "50K-250K": "$50K–250K",
+        "250K-1M": "$250K–1M",
+        "1M+": "$1M+"
+      },
+      "noDataShort": "No third-party data"
+    },
+    "fig5": {
+      "title": "Same budget, about seven times the profit",
+      "sub": "8,000 letters allocated by segment · bar length: letters · label: expected profit",
+      "planA": "Plan A · highest value per letter first",
+      "planB": "Plan B · highest open rate first (last year)",
+      "letters": "letters",
+      "profit": "expected profit",
+      "caption": "Exhibit 5. Plan B spends 5,089 of its 8,000 letters on the young, low-net-worth segment and loses about $5,750 there. Plan A mails older and wealthier segments first and expects $119,731 against $16,825. It opens fewer accounts, which the marketing team should expect and explain."
+    },
+    "fig6": {
+      "title": "Three prospects, scored by hand",
+      "sub": "linear funding model applied coefficient by coefficient · negative predictions floored at $0",
+      "prospect": "Prospect",
+      "profile": "Profile",
+      "pOpen": "p_open",
+      "balance": "Predicted balance",
+      "ev": "EV per letter",
+      "rankP": "Rank by p_open",
+      "rankEV": "Rank by EV",
+      "age": "age",
+      "income": "income",
+      "digital": "digital",
+      "caption": "Exhibit 6. Prospect A is 29 times as likely to open as C, but the model predicts a negative balance for A (the linear terms simply add up past zero), so every opening loses money. C rarely opens and is worth the most per letter. Mail C, then B; do not mail A."
+    },
+    "data": {
+      "label": "Case data",
+      "files": [
+        {
+          "href": "/work/checking-acquisition-targeting/data/campaign_history.csv",
+          "name": "campaign_history.csv",
+          "hint": "30,000 past prospects with both outcomes · 3.3 MB"
+        },
+        {
+          "href": "/work/checking-acquisition-targeting/data/prospects_to_score.csv",
+          "name": "prospects_to_score.csv",
+          "hint": "25,000 new prospects, no outcomes · 2.6 MB"
+        }
+      ]
+    }
+  },
+  "zh": {
+    "exhibits": "图表",
+    "note": "纽约大学「高级商业分析」课程的个人限时项目，2026 年 10 月，案例为一家虚构的区域银行，经授课老师同意公开。分群表、评分校验、相关系数和手工评分均在构建时由下方两份案例数据重新计算；模型指标来自随报告提交的 SAS Visual Analytics 运行结果。",
+    "stats": [
+      {
+        "label": "历史邮寄客户",
+        "value": "30,000",
+        "hint": "开户率 7.20% · 2,161 户"
+      },
+      {
+        "label": "低于盈亏线的新账户",
+        "value": "33.9%",
+        "hint": "90 天入金不足 $2,000"
+      },
+      {
+        "label": "入金模型",
+        "value": "0.74",
+        "hint": "Spearman 等级相关 · R² 0.52"
+      },
+      {
+        "label": "方案 A · 按价值排序",
+        "value": "$119.7K",
+        "hint": "8,000 封信的预期首年利润"
+      },
+      {
+        "label": "方案 B · 按响应排序",
+        "value": "$16.8K",
+        "hint": "去年的做法，预算相同"
+      }
+    ],
+    "fig1": {
+      "title": "两个模型，合成每封信的期望价值",
+      "caption": "图 1. 银行已有响应模型的评分，缺的是入金模型：如果客户开户，90 天内会存入多少钱。按财务部给出的公式，把两者合成一封信的期望价值，再按期望价值取前 8,000 名寄信。",
+      "nodes": [
+        {
+          "name": "响应评分 p_open",
+          "num": "已提供 · 最高十分位提升度 3.26"
+        },
+        {
+          "name": "入金模型：开户后 90 天余额",
+          "num": "线性回归 · 2,161 个开户样本"
+        },
+        {
+          "name": "一个新账户的价值",
+          "num": "0.025 × 余额 − $50"
+        },
+        {
+          "name": "一封信的期望价值",
+          "num": "p_open × 账户价值 − $1"
+        },
+        {
+          "name": "寄给前 8,000 名",
+          "num": "预算 $8,000"
+        }
+      ]
+    },
+    "fig2": {
+      "title": "响应评分排序有效，概率也基本准确",
+      "sub": "30,000 名历史客户按 p_open 等分为十组 · 柱：实际开户率 · 点：平均 p_open",
+      "actual": "实际开户率",
+      "predicted": "平均 p_open",
+      "decile": "十分位",
+      "lift": "提升度",
+      "opened": "开户",
+      "caption": "图 2. 评分最高的一组开户率 23.5%，是整体 7.20% 的 3.26 倍；开户率逐组下降，最低一组为 0.97%。每一组的平均评分与实际开户率相差都在约 0.8 个百分点以内，因此可以直接代入期望价值公式，无需重新校准。"
+    },
+    "fig3": {
+      "title": "影响开户的因素，与影响入金的因素方向相反",
+      "sub": "Pearson 相关系数 · 左：与是否开户，全部 30,000 人 · 右：与入金金额，2,161 名开户客户",
+      "open": "与开户",
+      "funded": "与入金金额",
+      "fields": {
+        "age": "年龄",
+        "est_income_k": "家庭收入",
+        "zip_median_income_k": "邮编区收入中位数",
+        "years_at_residence": "现居住年限",
+        "digital_engagement": "数字化活跃度",
+        "web_visits_30d": "近 30 天网站访问",
+        "mailings_12m": "近 12 个月收信次数",
+        "branch_distance_mi": "距网点距离"
+      },
+      "caption": "图 3. 更容易开户的是年轻、数字化活跃的客户；存钱更多的是年龄较大、收入较高的客户。年龄和数字化活跃度在两列中的方向正好相反。模型中影响余额最大的净资产区间是分类变量，相关矩阵里看不到。"
+    },
+    "fig4": {
+      "title": "开户率最高的群体，存的钱最少",
+      "sub": "去年数据的九个分群 · 横轴：开户率 · 纵轴：开户客户的平均 90 天余额（对数刻度）· 圆面积：新名单中的人数 · 实心：方案 A 寄信",
+      "rate": "开户率",
+      "balance": "平均余额",
+      "breakEven": "$2,000 盈亏线",
+      "ev": "每封信期望价值",
+      "prospects": "名新客户",
+      "records": "条历史记录",
+      "noData": "无第三方数据",
+      "under45": "45 岁以下",
+      "over45": "45 岁及以上",
+      "caption": "图 4. 45 岁以下、净资产低于 5 万美元的客户开户率最高（11.8%），但平均只存入 $1,958，低于 $2,000 的盈亏线，抵不过 $100 的开户奖励。45 岁及以上、净资产 100 万美元以上的客户开户率只有 3.5%，平均存入 $37,871：每封信的期望价值为 +$30.40，前者为 −$1.13。",
+      "ages": {
+        "Under 45": "45 岁以下",
+        "45+": "45 岁及以上"
+      },
+      "bands": {
+        "Under 50K": "<$50K",
+        "50K-250K": "$50K–250K",
+        "250K-1M": "$250K–1M",
+        "1M+": "$1M+"
+      },
+      "noDataShort": "无第三方数据"
+    },
+    "fig5": {
+      "title": "预算相同，利润约为去年做法的七倍",
+      "sub": "8,000 封信在各分群的分配 · 条长：寄信数 · 标注：预期利润",
+      "planA": "方案 A · 按每封信的价值从高到低",
+      "planB": "方案 B · 按开户率从高到低（去年做法）",
+      "letters": "封",
+      "profit": "预期利润",
+      "caption": "图 5. 方案 B 把 8,000 封信中的 5,089 封寄给年轻、低净资产的客户，这部分预计亏损约 $5,750。方案 A 优先寄给年龄较大、净资产较高的分群，预期利润 $119,731，方案 B 为 $16,825。方案 A 的开户数会更少，需要提前向业务方说明。"
+    },
+    "fig6": {
+      "title": "手工为三位客户评分",
+      "sub": "按线性入金模型逐项系数相加 · 负的预测值按 $0 计",
+      "prospect": "客户",
+      "profile": "画像",
+      "pOpen": "p_open",
+      "balance": "预测余额",
+      "ev": "每封信期望价值",
+      "rankP": "按 p_open 排名",
+      "rankEV": "按期望价值排名",
+      "age": "岁",
+      "income": "收入",
+      "digital": "数字化",
+      "caption": "图 6. 客户 A 的开户概率是 C 的 29 倍，但模型给 A 的预测余额为负（线性模型只是把各项相加，会加到零以下），开户越多亏得越多。C 很少开户，但每封信的价值最高。应先寄给 C，再寄给 B，不寄给 A。"
+    },
+    "data": {
+      "label": "案例数据",
+      "files": [
+        {
+          "href": "/work/checking-acquisition-targeting/data/campaign_history.csv",
+          "name": "campaign_history.csv",
+          "hint": "30,000 名历史客户，含两个结果字段 · 3.3 MB"
+        },
+        {
+          "href": "/work/checking-acquisition-targeting/data/prospects_to_score.csv",
+          "name": "prospects_to_score.csv",
+          "hint": "25,000 名新客户，无结果字段 · 2.6 MB"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,375 @@
+{
+  "totals": {
+    "history": 30000,
+    "opened": 2161,
+    "openRate": 0.072,
+    "prospects": 25000,
+    "budget": 8000,
+    "noThirdParty": 4194,
+    "neverContacted": 4166
+  },
+  "deciles": [
+    {
+      "decile": 1,
+      "n": 3000,
+      "p": 0.2426,
+      "rate": 0.235,
+      "opened": 705,
+      "lift": 3.26
+    },
+    {
+      "decile": 2,
+      "n": 3000,
+      "p": 0.1243,
+      "rate": 0.1313,
+      "opened": 394,
+      "lift": 1.82
+    },
+    {
+      "decile": 3,
+      "n": 3000,
+      "p": 0.0901,
+      "rate": 0.0857,
+      "opened": 257,
+      "lift": 1.19
+    },
+    {
+      "decile": 4,
+      "n": 3000,
+      "p": 0.0697,
+      "rate": 0.0757,
+      "opened": 227,
+      "lift": 1.05
+    },
+    {
+      "decile": 5,
+      "n": 3000,
+      "p": 0.0557,
+      "rate": 0.059,
+      "opened": 177,
+      "lift": 0.82
+    },
+    {
+      "decile": 6,
+      "n": 3000,
+      "p": 0.0455,
+      "rate": 0.0453,
+      "opened": 136,
+      "lift": 0.63
+    },
+    {
+      "decile": 7,
+      "n": 3000,
+      "p": 0.0365,
+      "rate": 0.033,
+      "opened": 99,
+      "lift": 0.46
+    },
+    {
+      "decile": 8,
+      "n": 3000,
+      "p": 0.0277,
+      "rate": 0.0273,
+      "opened": 82,
+      "lift": 0.38
+    },
+    {
+      "decile": 9,
+      "n": 3000,
+      "p": 0.0191,
+      "rate": 0.0183,
+      "opened": 55,
+      "lift": 0.25
+    },
+    {
+      "decile": 10,
+      "n": 3000,
+      "p": 0.0094,
+      "rate": 0.0097,
+      "opened": 29,
+      "lift": 0.13
+    }
+  ],
+  "funded": {
+    "n": 2161,
+    "min": 195.71,
+    "median": 3100,
+    "mean": 6267,
+    "max": 138870.3,
+    "belowBreakEven": 732,
+    "bins": [
+      {
+        "lo": 0,
+        "hi": 1000,
+        "n": 273
+      },
+      {
+        "lo": 1000,
+        "hi": 2000,
+        "n": 459
+      },
+      {
+        "lo": 2000,
+        "hi": 5000,
+        "n": 711
+      },
+      {
+        "lo": 5000,
+        "hi": 10000,
+        "n": 378
+      },
+      {
+        "lo": 10000,
+        "hi": 25000,
+        "n": 257
+      },
+      {
+        "lo": 25000,
+        "hi": 50000,
+        "n": 57
+      },
+      {
+        "lo": 50000,
+        "hi": null,
+        "n": 26
+      }
+    ]
+  },
+  "corr": [
+    {
+      "field": "est_income_k",
+      "open": -0.044,
+      "funded": 0.479
+    },
+    {
+      "field": "age",
+      "open": -0.149,
+      "funded": 0.478
+    },
+    {
+      "field": "zip_median_income_k",
+      "open": -0.031,
+      "funded": 0.276
+    },
+    {
+      "field": "years_at_residence",
+      "open": -0.089,
+      "funded": 0.109
+    },
+    {
+      "field": "branch_distance_mi",
+      "open": -0.036,
+      "funded": 0.012
+    },
+    {
+      "field": "web_visits_30d",
+      "open": 0.115,
+      "funded": -0.004
+    },
+    {
+      "field": "mailings_12m",
+      "open": -0.016,
+      "funded": -0.01
+    },
+    {
+      "field": "digital_engagement",
+      "open": 0.137,
+      "funded": -0.316
+    }
+  ],
+  "segments": [
+    {
+      "id": 1,
+      "age": "Under 45",
+      "band": "Under 50K",
+      "records": 6073,
+      "openers": 716,
+      "rate": 0.1179,
+      "avgFunded": 1958,
+      "ev": -1.13,
+      "prospects": 5089
+    },
+    {
+      "id": 2,
+      "age": "Under 45",
+      "band": "50K-250K",
+      "records": 3247,
+      "openers": 361,
+      "rate": 0.1112,
+      "avgFunded": 4626,
+      "ev": 6.3,
+      "prospects": 2683
+    },
+    {
+      "id": 3,
+      "age": "Under 45",
+      "band": "250K-1M",
+      "records": 600,
+      "openers": 58,
+      "rate": 0.0967,
+      "avgFunded": 12709,
+      "ev": 24.88,
+      "prospects": 451
+    },
+    {
+      "id": 4,
+      "age": "Under 45",
+      "band": "1M+",
+      "records": 48,
+      "openers": 2,
+      "rate": 0.0417,
+      "avgFunded": 22167,
+      "ev": 20.01,
+      "prospects": 47
+    },
+    {
+      "id": 5,
+      "age": "45+",
+      "band": "Under 50K",
+      "records": 3278,
+      "openers": 165,
+      "rate": 0.0503,
+      "avgFunded": 3134,
+      "ev": 0.43,
+      "prospects": 2745
+    },
+    {
+      "id": 6,
+      "age": "45+",
+      "band": "50K-250K",
+      "records": 6665,
+      "openers": 326,
+      "rate": 0.0489,
+      "avgFunded": 7077,
+      "ev": 5.21,
+      "prospects": 5571
+    },
+    {
+      "id": 7,
+      "age": "45+",
+      "band": "250K-1M",
+      "records": 4153,
+      "openers": 167,
+      "rate": 0.0402,
+      "avgFunded": 16738,
+      "ev": 13.82,
+      "prospects": 3504
+    },
+    {
+      "id": 8,
+      "age": "45+",
+      "band": "1M+",
+      "records": 1742,
+      "openers": 61,
+      "rate": 0.035,
+      "avgFunded": 37871,
+      "ev": 30.4,
+      "prospects": 1409
+    },
+    {
+      "id": 9,
+      "age": null,
+      "band": null,
+      "records": 4194,
+      "openers": 305,
+      "rate": 0.0727,
+      "avgFunded": 5774,
+      "ev": 5.86,
+      "prospects": 3501
+    }
+  ],
+  "plans": {
+    "A": {
+      "mail": [
+        {
+          "id": 8,
+          "n": 1409,
+          "profit": 42834
+        },
+        {
+          "id": 3,
+          "n": 451,
+          "profit": 11221
+        },
+        {
+          "id": 4,
+          "n": 47,
+          "profit": 940
+        },
+        {
+          "id": 7,
+          "n": 3504,
+          "profit": 48425
+        },
+        {
+          "id": 2,
+          "n": 2589,
+          "profit": 16311
+        }
+      ],
+      "profit": 119731
+    },
+    "B": {
+      "mail": [
+        {
+          "id": 1,
+          "n": 5089,
+          "profit": -5751
+        },
+        {
+          "id": 2,
+          "n": 2683,
+          "profit": 16903
+        },
+        {
+          "id": 3,
+          "n": 228,
+          "profit": 5673
+        }
+      ],
+      "profit": 16825
+    },
+    "positiveProspects": 19911
+  },
+  "trio": [
+    {
+      "id": "A",
+      "p": 0.35,
+      "age": 27,
+      "income": 48,
+      "band": "Under 50K",
+      "digital": 88,
+      "raw": -593,
+      "balance": 0,
+      "ev": -18.5,
+      "rankP": 1,
+      "rankEV": 3
+    },
+    {
+      "id": "B",
+      "p": 0.04,
+      "age": 46,
+      "income": 95,
+      "band": "50K-250K",
+      "digital": 60,
+      "raw": 9484,
+      "balance": 9484,
+      "ev": 6.48,
+      "rankP": 2,
+      "rankEV": 2
+    },
+    {
+      "id": "C",
+      "p": 0.012,
+      "age": 66,
+      "income": 140,
+      "band": "1M+",
+      "digital": 35,
+      "raw": 44203,
+      "balance": 44203,
+      "ev": 11.66,
+      "rankP": 3,
+      "rankEV": 1
+    }
+  ]
+}

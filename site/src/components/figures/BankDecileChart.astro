@@ -1,0 +1,94 @@
+---
+// Exhibit 2 — the provided response score in ten equal groups: actual open rate (bars) against the average
+// score (dots), with the top decile's lift called out.
+import data from '../../data/figures/bank.json';
+import type { Locale } from '../../i18n';
+interface Props { locale: Locale; t: { actual: string; predicted: string; decile: string; lift: string; opened: string } }
+const { t, locale } = Astro.props;
+const numLocale = locale === 'zh' ? 'zh-CN' : 'en-US';
+
+const W = 960, L = 56, R = 24, T = 30, PH = 230;
+const ds = data.deciles;
+const n = ds.length;
+const slot = (W - L - R) / n;
+const xc = (i: number) => L + slot * (i + 0.5);
+const yMax = 0.25;
+const y = (v: number) => T + (1 - v / yMax) * PH;
+const H = T + PH + 40;
+const f = (v: number) => v.toFixed(1);
+const pct = (v: number, d = 0) => `${(v * 100).toFixed(d)}%`;
+const ticks = [0, 0.05, 0.1, 0.15, 0.2, 0.25];
+const avg = data.totals.openRate;
+---
+<div class="chart" data-decile-chart>
+  <p class="legend"><span class="key bar-key"></span>{t.actual}<span class="key dot-key"></span>{t.predicted}</p>
+  <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label={`${t.actual}; ${t.predicted}`}>
+    <g class="grid">
+      {ticks.map((v) => (<g><line x1={L} x2={W - R} y1={f(y(v))} y2={f(y(v))} /><text x={L - 8} y={f(y(v))} text-anchor="end" dominant-baseline="middle">{pct(v)}</text></g>))}
+    </g>
+    <line class="avg" x1={L} x2={W - R} y1={f(y(avg))} y2={f(y(avg))} />
+    <text class="val" x={W - R} y={f(y(avg) - 6)} text-anchor="end">{pct(avg, 2)}</text>
+    {ds.map((d, i) => (
+      <g>
+        <rect class="bar" x={f(xc(i) - slot * 0.3)} y={f(y(d.rate))} width={f(slot * 0.6)} height={f(y(0) - y(d.rate))} rx="2" />
+        <circle class="dot" cx={f(xc(i))} cy={f(y(d.p))} r="5" />
+      </g>
+    ))}
+    <text class="val strong" x={f(xc(0))} y={f(Math.min(y(ds[0].rate), y(ds[0].p)) - 12)} text-anchor="middle">{t.lift} {ds[0].lift.toFixed(2)}×</text>
+    <g class="xaxis">
+      {ds.map((d, i) => <text x={f(xc(i))} y={H - 14} text-anchor="middle">{d.decile}</text>)}
+      <text x={L} y={H - 1} class="axis-title">{t.decile} →</text>
+    </g>
+    <g class="hover" display="none"><line class="xline" y1={T} y2={T + PH} /></g>
+  </svg>
+  <div class="tip" hidden></div>
+  <script type="application/json" data-points set:html={JSON.stringify({ ds, L, R, W, numLocale, labels: t })} />
+</div>
+<style>
+  .chart { position: relative; }
+  .legend { display: flex; align-items: center; flex-wrap: wrap; gap: 0.4rem 0.5rem; margin: 0 0 0.6rem; font-family: var(--font-mono); font-size: 0.7rem; color: var(--fg-muted); }
+  .key { display: inline-block; width: 10px; height: 10px; border-radius: 2px; }
+  .key + .key, .legend .dot-key { margin-left: 0.9rem; }
+  .bar-key { background: color-mix(in srgb, var(--fg) 28%, var(--bg)); }
+  .dot-key { border-radius: 50%; background: var(--accent); }
+  svg { width: 100%; height: auto; display: block; font-family: var(--font-mono); font-size: 11px; }
+  .grid line { stroke: var(--rule); }
+  .grid text, .xaxis text { fill: var(--fg-muted); }
+  .axis-title { font-size: 10px; }
+  .avg { stroke: var(--fg-muted); stroke-dasharray: 3 4; }
+  .bar { fill: color-mix(in srgb, var(--fg) 28%, var(--bg)); }
+  .dot { fill: var(--accent); stroke: var(--bg); stroke-width: 2; }
+  .val { fill: var(--fg-muted); }
+  .val.strong { fill: var(--fg); font-weight: 600; }
+  .hover .xline { stroke: var(--fg-muted); stroke-dasharray: 2 3; }
+  .tip { position: absolute; pointer-events: none; transform: translate(-50%, calc(-100% - 10px)); background: var(--fg); color: var(--bg); font-family: var(--font-mono); font-size: 0.72rem; line-height: 1.6; padding: 0.35rem 0.55rem; border-radius: 6px; white-space: pre-line; width: max-content; max-width: 100%; }
+</style>
+<script>
+  for (const root of document.querySelectorAll<HTMLElement>('[data-decile-chart]')) {
+    const cfg = JSON.parse(root.querySelector('[data-points]')?.textContent ?? '{}') as {
+      ds: { decile: number; n: number; p: number; rate: number; opened: number; lift: number }[]; L: number; R: number; W: number; numLocale: string;
+      labels: { actual: string; predicted: string; decile: string; lift: string; opened: string };
+    };
+    const svg = root.querySelector('svg')!;
+    const hover = root.querySelector<SVGGElement>('.hover')!;
+    const xline = hover.querySelector<SVGLineElement>('.xline')!;
+    const tip = root.querySelector<HTMLElement>('.tip')!;
+    const slot = (cfg.W - cfg.L - cfg.R) / cfg.ds.length;
+    const pct = (v: number) => `${(v * 100).toFixed(1)}%`;
+    svg.addEventListener('pointermove', (e: PointerEvent) => {
+      const r = svg.getBoundingClientRect();
+      const px = ((e.clientX - r.left) / r.width) * cfg.W;
+      const i = Math.max(0, Math.min(cfg.ds.length - 1, Math.floor((px - cfg.L) / slot)));
+      const d = cfg.ds[i];
+      const cx = cfg.L + slot * (i + 0.5);
+      xline.setAttribute('x1', String(cx)); xline.setAttribute('x2', String(cx));
+      hover.setAttribute('display', 'inline');
+      tip.hidden = false;
+      tip.textContent = [`${cfg.labels.decile} ${d.decile}`, `${cfg.labels.actual} ${pct(d.rate)}`, `${cfg.labels.predicted} ${pct(d.p)}`, `${cfg.labels.opened} ${d.opened.toLocaleString(cfg.numLocale)} / ${d.n.toLocaleString(cfg.numLocale)}`, `${cfg.labels.lift} ${d.lift.toFixed(2)}×`].join('\n');
+      const half = tip.getBoundingClientRect().width / 2;
+      tip.style.left = `${Math.max(half, Math.min(r.width - half, (cx / cfg.W) * r.width))}px`;
+      tip.style.top = `${Math.max(0, e.clientY - r.top - 8)}px`;
+    });
+    svg.addEventListener('pointerleave', () => { hover.setAttribute('display', 'none'); tip.hidden = true; });
+  }
+</script>
