@@ -1,0 +1,69 @@
+{
+  "projects": {
+    "guqin-ai": { "en": "Lingxian", "zh": "灵弦" },
+    "dad-market-forecast": { "en": "DaD market forecast", "zh": "DaD 市场预测" },
+    "checking-acquisition-targeting": { "en": "Checking-account targeting", "zh": "支票账户获客定向" },
+    "user-marketing-analytics": { "en": "User & marketing analytics", "zh": "用户与营销分析" },
+    "product-selection-analytics": { "en": "Product-selection analytics", "zh": "运营与选品分析" },
+    "web-crawler": { "en": "Web crawler", "zh": "动态网页爬虫" },
+    "meteor-madness": { "en": "Meteor Madness", "zh": "Meteor Madness" }
+  },
+  "site": { "en": "This site", "zh": "本网站", "href": "https://github.com/Zhuohengli03/Personal-Web" },
+  "ignore": ["^Word$", "^CSV exports"],
+  "groups": [
+    {
+      "label": { "en": "Product & front end", "zh": "产品与前端" },
+      "tools": [
+        { "name": "TypeScript", "match": "TypeScript", "site": true },
+        { "name": "React", "match": "React" },
+        { "name": "Next.js", "match": "Next\\.js" },
+        { "name": "Astro", "site": true },
+        { "name": "JavaScript", "match": "JavaScript" },
+        { "name": "Three.js · Leaflet", "match": "Three\\.js|Leaflet" },
+        { "name": "VexFlow", "match": "VexFlow" }
+      ]
+    },
+    {
+      "label": { "en": "Back end & databases", "zh": "后端与数据库" },
+      "tools": [
+        { "name": "PostgreSQL", "match": "PostgreSQL" },
+        { "name": "Prisma", "match": "Prisma" },
+        { "name": "MySQL · SQLite", "match": "MySQL|SQLite" },
+        { "name": "FastAPI", "match": "FastAPI" },
+        { "name": "Java", "match": "^Java \\d|HttpServer" },
+        { "name": "Auth.js", "match": "Auth\\.js" },
+        { "name": "WebSocket · Yjs", "match": "Yjs" }
+      ]
+    },
+    {
+      "label": { "en": "Data analysis & modeling", "zh": "数据分析与建模" },
+      "tools": [
+        { "name": "Python", "match": "^Python$" },
+        { "name": "pandas", "match": "pandas" },
+        { "name": "scikit-learn", "match": "scikit-learn" },
+        { "name": "statsmodels", "match": "statsmodels" },
+        { "name": "SAS Viya", "match": "SAS Viya" },
+        { "name": "matplotlib", "match": "matplotlib" },
+        { "name": "Excel", "match": "^Excel$" }
+      ]
+    },
+    {
+      "label": { "en": "Data collection", "zh": "数据采集" },
+      "tools": [
+        { "name": "Selenium", "match": "Selenium" },
+        { "name": "BeautifulSoup · lxml", "match": "BeautifulSoup" },
+        { "name": "Streamlit", "match": "Streamlit" },
+        { "name": { "en": "Public data APIs", "zh": "公开数据接口" }, "match": "\\sAPI$|NeoWs" }
+      ]
+    },
+    {
+      "label": { "en": "AI & engineering", "zh": "AI 与工程" },
+      "tools": [
+        { "name": { "en": "Qwen (LLM)", "zh": "Qwen（大语言模型）" }, "match": "Qwen" },
+        { "name": { "en": "pnpm monorepo", "zh": "pnpm 单仓库" }, "match": "pnpm" },
+        { "name": "Playwright · Vitest", "site": true },
+        { "name": "GitHub Actions", "site": true }
+      ]
+    }
+  ]
+}

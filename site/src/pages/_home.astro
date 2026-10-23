@@ -13,6 +13,8 @@ import Lightbox from '../components/Lightbox.astro';
 import { t, type Locale } from '../i18n';
 import { loadProfile } from '../lib/profile';
 import { getProjects, slugOf } from '../lib/projects';
+import Stack from '../components/Stack.astro';
+import { buildStack } from '../lib/stack';
 import type { GithubData } from '../lib/github';
 import { fill, siteTokens } from '../lib/tokens';
 import github from '../data/github.json';
@@ -36,6 +38,8 @@ const moreProjects = [
   })),
   ...p.miniProjects,
 ];
+// the stack section reads the canonical (English) stack lists, so both locales show the same evidence
+const stackGroups = buildStack((await getProjects('en')).map((e) => ({ slug: slugOf(e), stack: e.data.stack })), locale);
 const tokens = siteTokens(github as GithubData, 'Guqin-AI', locale);
 const stats = p.stats.map((s) =>
   s.source === 'tokens' ? { label: s.label, value: fill(s.value, tokens), hint: s.hint && fill(s.hint, tokens) } : { label: s.label, value: s.value, hint: s.hint },
@@ -60,6 +64,11 @@ const stats = p.stats.map((s) =>
   <section id="more" class="wrap section">
     <div class="section-head reveal"><h2>{tr('sections.more')}</h2></div>
     <div class="grid-2 tight">{moreProjects.map((m) => <ProjectMini item={m} locale={locale} />)}</div>
+  </section>
+
+  <section id="stack" class="wrap section">
+    <div class="section-head reveal"><h2>{tr('sections.stack')}</h2><p class="sub">{tr('sections.stackSub')}</p></div>
+    <Stack groups={stackGroups} locale={locale} />
   </section>
 
   <Divider />

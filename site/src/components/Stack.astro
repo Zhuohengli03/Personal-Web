@@ -1,0 +1,41 @@
+---
+// Home-page stack: tools grouped by area, each followed by the projects that use it (links to the cases).
+import { localePath, type Locale } from '../i18n';
+import type { StackGroup } from '../lib/stack';
+interface Props { groups: StackGroup[]; locale: Locale }
+const { groups, locale } = Astro.props;
+---
+<div class="stack">
+  {groups.map((g) => (
+    <section class="group reveal">
+      <h3 class="eyebrow">{g.label}</h3>
+      <ul>
+        {g.tools.map((tool) => (
+          <li>
+            <span class="tool">{tool.name}</span>
+            <span class="used">
+              {tool.evidence.map((e, i) => (
+                <>{i > 0 && <span class="sep" aria-hidden="true"> · </span>}{e.slug
+                  ? <a href={localePath(`/work/${e.slug}/`, locale)} data-umami-event="case-open" data-umami-event-slug={e.slug} data-umami-event-place="stack">{e.label}</a>
+                  : <a href={e.href} target="_blank" rel="noopener" data-umami-event="outbound-github" data-umami-event-place="stack">{e.label} ↗</a>}</>
+              ))}
+            </span>
+          </li>
+        ))}
+      </ul>
+    </section>
+  ))}
+</div>
+<style>
+  .stack { display: grid; gap: 2.25rem 2.5rem; grid-template-columns: 1fr; }
+  @media (min-width: 720px) { .stack { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1040px) { .stack { grid-template-columns: repeat(3, 1fr); } }
+  .group { border-top: 1px solid var(--rule); padding-top: 1rem; }
+  h3 { margin: 0 0 0.85rem; }
+  ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.7rem; }
+  li { display: grid; gap: 0.15rem; }
+  .tool { font-size: 0.95rem; font-weight: 500; color: var(--fg); }
+  .used { font-size: 0.8rem; line-height: 1.45; color: var(--fg-muted); }
+  .used a { color: var(--fg-muted); text-decoration: underline; text-decoration-color: var(--rule); text-underline-offset: 3px; }
+  .used a:hover { color: var(--fg); text-decoration-color: currentColor; }
+</style>

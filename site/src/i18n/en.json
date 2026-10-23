@@ -21,6 +21,8 @@
     "analytics": "Analytics",
     "analyticsSub": "Question → method → output. Conclusions reached with metric systems, cohorts and segmentation, not just code.",
     "more": "More projects",
+    "stack": "Stack",
+    "stackSub": "Grouped by area. Every tool links to the projects that use it — nothing listed here without a project to show for it.",
     "experience": "Experience",
     "education": "Education & honors",
     "honors": "Honors and awards",

@@ -11,6 +11,8 @@ for (const [path, lang, work] of [['/', 'en', 'Selected work'], ['/zh/', 'zh-CN'
     await expect(page.locator('#work article')).toHaveCount(1);
     await expect(page.locator('#analytics li')).toHaveCount(3);
     await expect(page.locator('#more article')).toHaveCount(4);
+    await expect(page.locator('#stack .group')).toHaveCount(5);
+    await expect(page.locator('#stack .used a').first()).toBeVisible();
     await expect(page.locator('#experience li').first()).toBeVisible();
     await expect(page.locator('#education .honors li')).not.toHaveCount(0); // honors are listed open, no collapse
     await expect(page.locator('.waffle').first()).toBeVisible();
